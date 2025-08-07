@@ -6,6 +6,9 @@ ARG ARG_UID=1000
 ARG ARG_GID=1000
 
 FROM base AS build-arm64
+# Re-declare ARG values for this stage
+ARG ARG_UID=1000
+ARG ARG_GID=1000
 RUN echo "Preparing build of AnythingLLM image for arm64 architecture"
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -72,6 +75,9 @@ RUN echo "Done running arm64 specific installation steps"
 
 # amd64-specific stage
 FROM base AS build-amd64
+# Re-declare ARG values for this stage
+ARG ARG_UID=1000
+ARG ARG_GID=1000
 RUN echo "Preparing build of AnythingLLM image for non-ARM architecture"
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -123,6 +129,9 @@ RUN chmod +x /usr/local/bin/docker-entrypoint.sh && \
 
 # hadolint ignore=DL3006
 FROM build-${TARGETARCH} AS build
+# Re-declare ARG values for this stage
+ARG ARG_UID=1000
+ARG ARG_GID=1000
 RUN echo "Running common build flow of AnythingLLM image for all architectures"
 
 USER anythingllm
