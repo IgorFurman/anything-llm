@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
 import System from "@/models/system";
+import { useEffect, useState } from "react";
 
 export default function XAILLMOptions({ settings }) {
   const [inputValue, setInputValue] = useState(settings?.XAIApiKey);
@@ -8,9 +8,7 @@ export default function XAILLMOptions({ settings }) {
   return (
     <div className="flex gap-[36px] mt-1.5">
       <div className="flex flex-col w-60">
-        <label className="text-white text-sm font-semibold block mb-3">
-          xAI API Key
-        </label>
+        <label className="text-white text-sm font-semibold block mb-3">xAI API Key</label>
         <input
           type="password"
           name="XAIApiKey"
@@ -25,9 +23,7 @@ export default function XAILLMOptions({ settings }) {
         />
       </div>
 
-      {!settings?.credentialsOnly && (
-        <XAIModelSelection settings={settings} apiKey={apiKey} />
-      )}
+      {!settings?.credentialsOnly && <XAIModelSelection settings={settings} apiKey={apiKey} />}
     </div>
   );
 }

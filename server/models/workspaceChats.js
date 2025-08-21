@@ -2,7 +2,7 @@ const prisma = require("../utils/prisma");
 const { safeJSONStringify } = require("../utils/helpers/chat/responses");
 
 const WorkspaceChats = {
-  new: async function ({
+  new: async ({
     workspaceId,
     prompt,
     response = {},
@@ -10,7 +10,7 @@ const WorkspaceChats = {
     threadId = null,
     include = true,
     apiSessionId = null,
-  }) {
+  }) => {
     try {
       const chat = await prisma.workspace_chats.create({
         data: {
@@ -30,12 +30,7 @@ const WorkspaceChats = {
     }
   },
 
-  forWorkspaceByUser: async function (
-    workspaceId = null,
-    userId = null,
-    limit = null,
-    orderBy = null
-  ) {
+  forWorkspaceByUser: async (workspaceId = null, userId = null, limit = null, orderBy = null) => {
     if (!workspaceId || !userId) return [];
     try {
       const chats = await prisma.workspace_chats.findMany({
@@ -56,12 +51,12 @@ const WorkspaceChats = {
     }
   },
 
-  forWorkspaceByApiSessionId: async function (
+  forWorkspaceByApiSessionId: async (
     workspaceId = null,
     apiSessionId = null,
     limit = null,
     orderBy = null
-  ) {
+  ) => {
     if (!workspaceId || !apiSessionId) return [];
     try {
       const chats = await prisma.workspace_chats.findMany({
@@ -81,11 +76,7 @@ const WorkspaceChats = {
     }
   },
 
-  forWorkspace: async function (
-    workspaceId = null,
-    limit = null,
-    orderBy = null
-  ) {
+  forWorkspace: async (workspaceId = null, limit = null, orderBy = null) => {
     if (!workspaceId) return [];
     try {
       const chats = await prisma.workspace_chats.findMany({
@@ -108,7 +99,7 @@ const WorkspaceChats = {
   /**
    * @deprecated Use markThreadHistoryInvalidV2 instead.
    */
-  markHistoryInvalid: async function (workspaceId = null, user = null) {
+  markHistoryInvalid: async (workspaceId = null, user = null) => {
     if (!workspaceId) return;
     try {
       await prisma.workspace_chats.updateMany({
@@ -130,11 +121,7 @@ const WorkspaceChats = {
   /**
    * @deprecated Use markThreadHistoryInvalidV2 instead.
    */
-  markThreadHistoryInvalid: async function (
-    workspaceId = null,
-    user = null,
-    threadId = null
-  ) {
+  markThreadHistoryInvalid: async (workspaceId = null, user = null, threadId = null) => {
     if (!workspaceId || !threadId) return;
     try {
       await prisma.workspace_chats.updateMany({
@@ -160,7 +147,7 @@ const WorkspaceChats = {
    * @param {Object} data - The data to update the chats with.
    * @returns {Promise<void>}
    */
-  markThreadHistoryInvalidV2: async function (whereClause = {}) {
+  markThreadHistoryInvalidV2: async (whereClause = {}) => {
     if (!whereClause) return;
     try {
       await prisma.workspace_chats.updateMany({
@@ -175,7 +162,7 @@ const WorkspaceChats = {
     }
   },
 
-  get: async function (clause = {}, limit = null, orderBy = null) {
+  get: async (clause = {}, limit = null, orderBy = null) => {
     try {
       const chat = await prisma.workspace_chats.findFirst({
         where: clause,
@@ -189,7 +176,7 @@ const WorkspaceChats = {
     }
   },
 
-  delete: async function (clause = {}) {
+  delete: async (clause = {}) => {
     try {
       await prisma.workspace_chats.deleteMany({
         where: clause,
@@ -201,12 +188,7 @@ const WorkspaceChats = {
     }
   },
 
-  where: async function (
-    clause = {},
-    limit = null,
-    orderBy = null,
-    offset = null
-  ) {
+  where: async (clause = {}, limit = null, orderBy = null, offset = null) => {
     try {
       const chats = await prisma.workspace_chats.findMany({
         where: clause,
@@ -221,7 +203,7 @@ const WorkspaceChats = {
     }
   },
 
-  count: async function (clause = {}) {
+  count: async (clause = {}) => {
     try {
       const count = await prisma.workspace_chats.count({
         where: clause,
@@ -233,12 +215,7 @@ const WorkspaceChats = {
     }
   },
 
-  whereWithData: async function (
-    clause = {},
-    limit = null,
-    offset = null,
-    orderBy = null
-  ) {
+  whereWithData: async function (clause = {}, limit = null, offset = null, orderBy = null) {
     const { Workspace } = require("./workspace");
     const { User } = require("./user");
 
@@ -263,7 +240,7 @@ const WorkspaceChats = {
       return [];
     }
   },
-  updateFeedbackScore: async function (chatId = null, feedbackScore = null) {
+  updateFeedbackScore: async (chatId = null, feedbackScore = null) => {
     if (!chatId) return;
     try {
       await prisma.workspace_chats.update({
@@ -271,8 +248,7 @@ const WorkspaceChats = {
           id: Number(chatId),
         },
         data: {
-          feedbackScore:
-            feedbackScore === null ? null : Number(feedbackScore) === 1,
+          feedbackScore: feedbackScore === null ? null : Number(feedbackScore) === 1,
         },
       });
       return;
@@ -284,7 +260,7 @@ const WorkspaceChats = {
   // Explicit update of settings + key validations.
   // Only use this method when directly setting a key value
   // that takes no user input for the keys being modified.
-  _update: async function (id = null, data = {}) {
+  _update: async (id = null, data = {}) => {
     if (!id) throw new Error("No workspace chat id provided for update");
 
     try {
@@ -298,7 +274,7 @@ const WorkspaceChats = {
       return false;
     }
   },
-  bulkCreate: async function (chatsData) {
+  bulkCreate: async (chatsData) => {
     // TODO: Replace with createMany when we update prisma to latest version
     // The version of prisma that we are currently using does not support createMany with SQLite
     try {

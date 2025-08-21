@@ -125,11 +125,7 @@ export default class PiperTTSClient {
 
     const { blobURL, error } = await this.waitForBlobResponse();
     if (!!error) {
-      showToast(
-        `Could not generate voice prediction. Error: ${error}`,
-        "error",
-        { clear: true }
-      );
+      showToast(`Could not generate voice prediction. Error: ${error}`, "error", { clear: true });
       return;
     }
 

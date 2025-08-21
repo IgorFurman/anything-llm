@@ -1,15 +1,13 @@
 import System from "@/models/system";
 import { CaretDown, CaretUp } from "@phosphor-icons/react";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function OpenRouterOptions({ settings }) {
   return (
     <div className="flex flex-col gap-y-4 mt-1.5">
       <div className="flex gap-[36px]">
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
-            OpenRouter API Key
-          </label>
+          <label className="text-white text-sm font-semibold block mb-3">OpenRouter API Key</label>
           <input
             type="password"
             name="OpenRouterApiKey"
@@ -21,9 +19,7 @@ export default function OpenRouterOptions({ settings }) {
             spellCheck={false}
           />
         </div>
-        {!settings?.credentialsOnly && (
-          <OpenRouterModelSelection settings={settings} />
-        )}
+        {!settings?.credentialsOnly && <OpenRouterModelSelection settings={settings} />}
       </div>
       <AdvancedControls settings={settings} />
     </div>
@@ -49,9 +45,7 @@ function AdvancedControls({ settings }) {
       </button>
       <div hidden={!showAdvancedControls}>
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
-            Stream Timeout (ms)
-          </label>
+          <label className="text-white text-sm font-semibold block mb-3">Stream Timeout (ms)</label>
           <input
             type="number"
             name="OpenRouterTimeout"
@@ -95,9 +89,7 @@ function OpenRouterModelSelection({ settings }) {
   if (loading || Object.keys(groupedModels).length === 0) {
     return (
       <div className="flex flex-col w-60">
-        <label className="text-white text-sm font-semibold block mb-3">
-          Chat Model Selection
-        </label>
+        <label className="text-white text-sm font-semibold block mb-3">Chat Model Selection</label>
         <select
           name="OpenRouterModelPref"
           disabled={true}
@@ -113,9 +105,7 @@ function OpenRouterModelSelection({ settings }) {
 
   return (
     <div className="flex flex-col w-60">
-      <label className="text-white text-sm font-semibold block mb-3">
-        Chat Model Selection
-      </label>
+      <label className="text-white text-sm font-semibold block mb-3">Chat Model Selection</label>
       <select
         name="OpenRouterModelPref"
         required={true}

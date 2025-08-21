@@ -19,8 +19,7 @@ const TRANSLATIONS = {
       instancePassword: "Senha da Instância",
       setPassword: "Deseja configurar uma senha?",
       passwordReq: "Senhas devem ter pelo menos 8 caracteres.",
-      passwordWarn:
-        "É importante salvar esta senha pois não há método de recuperação.",
+      passwordWarn: "É importante salvar esta senha pois não há método de recuperação.",
       adminUsername: "Nome de usuário admin",
       adminUsernameReq:
         "O nome deve ter pelo menos 6 caracteres e conter apenas letras minúsculas, números, sublinhados e hífens, sem espaços.",
@@ -31,10 +30,8 @@ const TRANSLATIONS = {
     },
     data: {
       title: "Privacidade de Dados",
-      description:
-        "Estamos comprometidos com transparência e controle sobre seus dados pessoais.",
-      settingsHint:
-        "Estas configurações podem ser alteradas a qualquer momento.",
+      description: "Estamos comprometidos com transparência e controle sobre seus dados pessoais.",
+      settingsHint: "Estas configurações podem ser alteradas a qualquer momento.",
     },
     survey: {
       title: "Bem-vindo ao AnythingLLM",
@@ -45,8 +42,7 @@ const TRANSLATIONS = {
       useCasePersonal: "Uso pessoal",
       useCaseOther: "Outro",
       comment: "Como você conheceu o AnythingLLM?",
-      commentPlaceholder:
-        "Reddit, Twitter, GitHub, YouTube, etc. - Conte como nos encontrou!",
+      commentPlaceholder: "Reddit, Twitter, GitHub, YouTube, etc. - Conte como nos encontrou!",
       skip: "Pular Pesquisa",
       thankYou: "Obrigado pelo seu feedback!",
     },
@@ -118,8 +114,7 @@ const TRANSLATIONS = {
     },
     "password-reset": {
       title: "Redefinição de Senha",
-      description:
-        "Forneça as informações necessárias para redefinir sua senha.",
+      description: "Forneça as informações necessárias para redefinir sua senha.",
       "recovery-codes": "Códigos de Recuperação",
       "recovery-code": "Código de Recuperação {{index}}",
       "back-to-login": "Voltar ao Login",
@@ -150,8 +145,7 @@ const TRANSLATIONS = {
     checklist: {
       title: "Primeiros Passos",
       tasksLeft: "tarefas restantes",
-      completed:
-        "Você está no caminho para se tornar um expert em AnythingLLM!",
+      completed: "Você está no caminho para se tornar um expert em AnythingLLM!",
       dismiss: "fechar",
       tasks: {
         create_workspace: {
@@ -209,8 +203,7 @@ const TRANSLATIONS = {
         },
         systemPrompts: {
           title: "Prompts de Sistema",
-          description:
-            "Modifique o prompt para personalizar as respostas da IA.",
+          description: "Modifique o prompt para personalizar as respostas da IA.",
           primaryAction: "Modificar Prompt",
           secondaryAction: "Gerenciar variáveis",
         },
@@ -249,8 +242,7 @@ const TRANSLATIONS = {
     },
     message: {
       title: "Sugestões de Chat",
-      description:
-        "Personalize as mensagens sugeridas aos usuários do workspace.",
+      description: "Personalize as mensagens sugeridas aos usuários do workspace.",
       add: "Adicionar mensagem",
       save: "Salvar Mensagens",
       heading: "Explique para mim",
@@ -264,8 +256,7 @@ const TRANSLATIONS = {
     },
     delete: {
       title: "Excluir Workspace",
-      description:
-        "Exclua este workspace e todos seus dados. Isso afetará todos os usuários.",
+      description: "Exclua este workspace e todos seus dados. Isso afetará todos os usuários.",
       delete: "Excluir Workspace",
       deleting: "Excluindo Workspace...",
       "confirm-start": "Você está prestes a excluir todo o",
@@ -303,11 +294,9 @@ const TRANSLATIONS = {
     },
     history: {
       title: "Histórico de Chat",
-      "desc-start":
-        "Número de chats anteriores que serão incluídos na memória de curto prazo.",
+      "desc-start": "Número de chats anteriores que serão incluídos na memória de curto prazo.",
       recommend: "Recomendado: 20. ",
-      "desc-end":
-        "Valores acima de 45 podem causar falhas dependendo do tamanho das mensagens.",
+      "desc-end": "Valores acima de 45 podem causar falhas dependendo do tamanho das mensagens.",
     },
     prompt: {
       title: "Prompt de Sistema",
@@ -347,8 +336,7 @@ const TRANSLATIONS = {
     identifier: "Identificador do banco de dados",
     snippets: {
       title: "Máximo de Trechos",
-      description:
-        "Controla a quantidade máxima de trechos de contexto enviados ao LLM por chat.",
+      description: "Controla a quantidade máxima de trechos de contexto enviados ao LLM por chat.",
       recommend: "Recomendado: 4",
     },
     doc: {
@@ -380,12 +368,10 @@ const TRANSLATIONS = {
     mode: {
       chat: {
         title: "Modelo de Chat para Agente de workspace",
-        description:
-          "O modelo de chat específico para o agente @agent deste workspace.",
+        description: "O modelo de chat específico para o agente @agent deste workspace.",
       },
       title: "Modelo para Agente de workspace",
-      description:
-        "O modelo LLM específico que será usado pelo agente @agent deste workspace.",
+      description: "O modelo LLM específico que será usado pelo agente @agent deste workspace.",
       wait: "-- aguardando modelos --",
     },
     skill: {
@@ -404,8 +390,7 @@ const TRANSLATIONS = {
       },
       scrape: {
         title: "Extrair sites",
-        description:
-          "Permite ao agente visitar e extrair conteúdo de websites.",
+        description: "Permite ao agente visitar e extrair conteúdo de websites.",
       },
       generate: {
         title: "Gerar gráficos",
@@ -427,8 +412,7 @@ const TRANSLATIONS = {
   },
   recorded: {
     title: "Chats do Workspace",
-    description:
-      "Todos os chats registrados enviados por usuários, ordenados por data de criação.",
+    description: "Todos os chats registrados enviados por usuários, ordenados por data de criação.",
     export: "Exportar",
     table: {
       id: "ID",
@@ -479,8 +463,7 @@ const TRANSLATIONS = {
       },
       "app-name": {
         title: "Nome",
-        description:
-          "Defina um nome exibido na página de login para todos os usuários.",
+        description: "Defina um nome exibido na página de login para todos os usuários.",
       },
       "chat-message-alignment": {
         title: "Alinhamento de Mensagens",
@@ -488,8 +471,7 @@ const TRANSLATIONS = {
       },
       "display-language": {
         title: "Idioma",
-        description:
-          "Selecione o idioma preferido para a interface - quando houver traduções.",
+        description: "Selecione o idioma preferido para a interface - quando houver traduções.",
       },
       logo: {
         title: "Logo",
@@ -501,8 +483,7 @@ const TRANSLATIONS = {
       },
       "welcome-messages": {
         title: "Mensagens de Boas-vindas",
-        description:
-          "Personalize as mensagens exibidas aos usuários que não são administradores.",
+        description: "Personalize as mensagens exibidas aos usuários que não são administradores.",
         new: "Novo",
         system: "sistema",
         user: "usuário",
@@ -525,8 +506,7 @@ const TRANSLATIONS = {
       },
       "sidebar-footer": {
         title: "Itens do Rodapé",
-        description:
-          "Personalize os itens exibidos no rodapé da barra lateral.",
+        description: "Personalize os itens exibidos no rodapé da barra lateral.",
         icon: "Ícone",
         link: "Link",
       },
@@ -568,8 +548,7 @@ const TRANSLATIONS = {
     "warn-start":
       "Usar o modelo local whisper em máquinas com RAM ou CPU limitada pode travar o AnythingLLM.",
     "warn-recommend": "Recomendamos pelo menos 2GB de RAM e arquivos <10Mb.",
-    "warn-end":
-      "O modelo interno será baixado automaticamente no primeiro uso.",
+    "warn-end": "O modelo interno será baixado automaticamente no primeiro uso.",
   },
   embedding: {
     title: "Preferência de Vínculo",
@@ -593,8 +572,7 @@ const TRANSLATIONS = {
     },
     overlap: {
       title: "Sobreposição de Trechos",
-      description:
-        "Sobreposição máxima de caracteres entre dois trechos adjacentes.",
+      description: "Sobreposição máxima de caracteres entre dois trechos adjacentes.",
     },
   },
   vector: {
@@ -632,8 +610,7 @@ const TRANSLATIONS = {
   },
   multi: {
     title: "Modo Multi-Usuário",
-    description:
-      "Configure sua instância para suportar sua equipe ativando o modo multi-usuário.",
+    description: "Configure sua instância para suportar sua equipe ativando o modo multi-usuário.",
     enable: {
       "is-enable": "Modo Multi-Usuário Ativo",
       enable: "Ativar Modo Multi-Usuário",
@@ -651,8 +628,7 @@ const TRANSLATIONS = {
   },
   event: {
     title: "Logs de Eventos",
-    description:
-      "Visualize todas as ações e eventos nesta instância para monitoramento.",
+    description: "Visualize todas as ações e eventos nesta instância para monitoramento.",
     clear: "Limpar Logs de eventos",
     table: {
       type: "Tipo de Evento",
@@ -662,8 +638,7 @@ const TRANSLATIONS = {
   },
   privacy: {
     title: "Privacidade & Dados",
-    description:
-      "Configurações de como provedores terceiros e o AnythingLLM lidam com seus dados.",
+    description: "Configurações de como provedores terceiros e o AnythingLLM lidam com seus dados.",
     llm: "Seleção de LLM",
     embedding: "Preferência de Vínculo",
     vector: "Banco de Dados Vetorial",
@@ -676,19 +651,16 @@ const TRANSLATIONS = {
       name: "Obsidian",
       description: "Importe um vault do Obsidian com um clique.",
       vault_location: "Local do Cofre",
-      vault_description:
-        "Selecione sua pasta do Obsidian para importar todas as notas.",
+      vault_description: "Selecione sua pasta do Obsidian para importar todas as notas.",
       selected_files: "Encontrados {{count}} arquivos markdown",
       importing: "Importando cofre...",
       import_vault: "Importar Cofre",
       processing_time: "Pode levar algum tempo dependendo do tamanho do cofre.",
-      vault_warning:
-        "Para evitar conflitos, certifique-se que seu cofre Obsidian não está aberto.",
+      vault_warning: "Para evitar conflitos, certifique-se que seu cofre Obsidian não está aberto.",
     },
     github: {
       name: "Repositório GitHub",
-      description:
-        "Importe um repositório GitHub público ou privado com um clique.",
+      description: "Importe um repositório GitHub público ou privado com um clique.",
       URL: "URL do Repositório",
       URL_explained: "URL do repositório que deseja coletar.",
       token: "Token de Acesso",
@@ -703,8 +675,7 @@ const TRANSLATIONS = {
       ignores: "Arquivos Ignorados",
       git_ignore:
         "Liste no formato .gitignore para ignorar arquivos específicos. Pressione enter após cada entrada.",
-      task_explained:
-        "Após conclusão, todos os arquivos estarão disponíveis para vínculo.",
+      task_explained: "Após conclusão, todos os arquivos estarão disponíveis para vínculo.",
       branch: "Branch",
       branch_loading: "-- carregando branches --",
       branch_explained: "Branch para coletar arquivos.",
@@ -714,8 +685,7 @@ const TRANSLATIONS = {
     },
     gitlab: {
       name: "Repositório GitLab",
-      description:
-        "Importe um repositório GitLab público ou privado com um clique.",
+      description: "Importe um repositório GitLab público ou privado com um clique.",
       URL: "URL do Repositório",
       URL_explained: "URL do repositório que deseja coletar.",
       token: "Token de Acesso",
@@ -732,8 +702,7 @@ const TRANSLATIONS = {
       ignores: "Arquivos Ignorados",
       git_ignore:
         "Liste no formato .gitignore para ignorar arquivos específicos. Pressione enter após cada entrada.",
-      task_explained:
-        "Após conclusão, todos os arquivos estarão disponíveis para vínculo.",
+      task_explained: "Após conclusão, todos os arquivos estarão disponíveis para vínculo.",
       branch: "Branch",
       branch_loading: "-- carregando branches --",
       branch_explained: "Branch para coletar arquivos.",
@@ -743,33 +712,27 @@ const TRANSLATIONS = {
     },
     youtube: {
       name: "Transcrição do YouTube",
-      description:
-        "Importe a transcrição de um vídeo do YouTube a partir de um link.",
+      description: "Importe a transcrição de um vídeo do YouTube a partir de um link.",
       URL: "URL do Vídeo",
       URL_explained_start:
         "Insira a URL de qualquer vídeo do YouTube para buscar sua transcrição. O vídeo deve ter ",
       URL_explained_link: "legendas",
       URL_explained_end: " disponíveis.",
-      task_explained:
-        "Após conclusão, a transcrição estará disponível para vínculo.",
+      task_explained: "Após conclusão, a transcrição estará disponível para vínculo.",
       language: "Idioma da Transcrição",
-      language_explained:
-        "Selecione o idioma da transcrição que deseja coletar.",
+      language_explained: "Selecione o idioma da transcrição que deseja coletar.",
       loading_languages: "-- carregando idiomas --",
     },
     "website-depth": {
       name: "Coletor de Links",
-      description:
-        "Extraia um site e seus sublinks até uma certa profundidade.",
+      description: "Extraia um site e seus sublinks até uma certa profundidade.",
       URL: "URL do Site",
       URL_explained: "URL do site que deseja extrair.",
       depth: "Profundidade",
-      depth_explained:
-        "Número de links filhos que o coletor deve seguir a partir da URL original.",
+      depth_explained: "Número de links filhos que o coletor deve seguir a partir da URL original.",
       max_pages: "Máximo de Páginas",
       max_pages_explained: "Número máximo de links para extrair.",
-      task_explained:
-        "Após conclusão, todo o conteúdo estará disponível para vínculo.",
+      task_explained: "Após conclusão, todo o conteúdo estará disponível para vínculo.",
     },
     confluence: {
       name: "Confluence",
@@ -780,13 +743,11 @@ const TRANSLATIONS = {
       base_url: "URL Base",
       base_url_explained: "URL base do seu espaço no Confluence.",
       space_key: "Chave do Espaço",
-      space_key_explained:
-        "Chave do espaço no Confluence que será usada. Geralmente começa com ~",
+      space_key_explained: "Chave do espaço no Confluence que será usada. Geralmente começa com ~",
       username: "Nome de Usuário",
       username_explained: "Seu nome de usuário no Confluence",
       auth_type: "Tipo de Autenticação",
-      auth_type_explained:
-        "Selecione o tipo de autenticação para acessar suas páginas.",
+      auth_type_explained: "Selecione o tipo de autenticação para acessar suas páginas.",
       auth_type_username: "Usuário e Token",
       auth_type_personal: "Token Pessoal",
       token: "Token de Acesso",
@@ -796,8 +757,7 @@ const TRANSLATIONS = {
       token_desc: "Token para autenticação",
       pat_token: "Token Pessoal",
       pat_token_explained: "Seu token pessoal de acesso.",
-      task_explained:
-        "Após conclusão, o conteúdo da página estará disponível para vínculo.",
+      task_explained: "Após conclusão, o conteúdo da página estará disponível para vínculo.",
     },
     manage: {
       documents: "Documentos",
@@ -816,8 +776,7 @@ const TRANSLATIONS = {
       name: "Nome",
       "delete-confirmation":
         "Tem certeza que deseja excluir estes arquivos e pastas?\nIsso removerá os arquivos do sistema e de todos os workspaces automaticamente.\nEsta ação é irreversível.",
-      "removing-message":
-        "Removendo {{count}} documentos e {{folderCount}} pastas. Aguarde.",
+      "removing-message": "Removendo {{count}} documentos e {{folderCount}} pastas. Aguarde.",
       "move-success": "{{count}} documentos movidos com sucesso.",
       date: "Data",
       type: "Tipo",
@@ -855,10 +814,8 @@ const TRANSLATIONS = {
       what_watching: "O que é monitorar um documento?",
       watch_explained_block1:
         "Ao <b>monitorar</b>, o conteúdo será <i>sincronizado</i> com a fonte em intervalos regulares.",
-      watch_explained_block2:
-        "Funciona apenas com conteúdo online, não com uploads manuais.",
-      watch_explained_block3_start:
-        "Você pode gerenciar documentos monitorados no ",
+      watch_explained_block2: "Funciona apenas com conteúdo online, não com uploads manuais.",
+      watch_explained_block3_start: "Você pode gerenciar documentos monitorados no ",
       watch_explained_block3_link: "Gerenciador de arquivos",
       watch_explained_block3_end: " na visão de admin.",
       accept: "Ok, entendi",
@@ -902,8 +859,7 @@ const TRANSLATIONS = {
     add_new_preset: " Insere um novo Preset",
     command: "Comando",
     your_command: "seu-comando",
-    placeholder_prompt:
-      "Este é o conteúdo que será injetado a frente do seu prompt.",
+    placeholder_prompt: "Este é o conteúdo que será injetado a frente do seu prompt.",
     description: "Descrição",
     placeholder_description: "Responde como um poema sobre LLMs.",
     save: "Salvar",
@@ -926,8 +882,7 @@ const TRANSLATIONS = {
     profile_picture: "Foto de perfil",
     remove_profile_picture: "Remover foto de perfil",
     username: "Nome de usuário",
-    username_description:
-      "Somente letras minúsculas, números, sublinhados e hífens. Sem espaços.",
+    username_description: "Somente letras minúsculas, números, sublinhados e hífens. Sem espaços.",
     new_password: "Nova senha",
     password_description: "A senha deve ter no mínimo 8 caracteres",
     cancel: "Cancelar",

@@ -1,8 +1,8 @@
+import fs from "fs";
 // This script is used to normalize the translations files to ensure they are all the same.
 // This will take the en file and compare it to all other files and ensure they are all the same.
 // If a non-en file is missing a key, it will be added to the file and set to null
 import { resources } from "./resources.js";
-import fs from "fs";
 const languageNames = new Intl.DisplayNames(Object.keys(resources), {
   type: "language",
 });
@@ -50,11 +50,7 @@ function compareStructures(lang, a, b, subdir = null) {
     }
 
     //if keys aren't all the same, unequal
-    if (
-      !keysA.every(function (k, i) {
-        return k === keysB[i];
-      })
-    ) {
+    if (!keysA.every((k, i) => k === keysB[i])) {
       console.log("Keys are not equal!", {
         [lang]: keysA,
         en: keysB,
@@ -64,7 +60,7 @@ function compareStructures(lang, a, b, subdir = null) {
     }
 
     //recurse on the values for each key
-    return keysA.every(function (key) {
+    return keysA.every((key) => {
       //if we made it here, they have identical keys
       return compareStructures(lang, a[key], b[key], key);
     });
@@ -86,12 +82,7 @@ function normalizeTranslations(lang, source, target, subdir = null) {
 
   // Add all keys from source (English), setting to null if missing
   for (const key of Object.keys(source)) {
-    normalized[key] = normalizeTranslations(
-      lang,
-      source[key],
-      normalized[key],
-      key
-    );
+    normalized[key] = normalizeTranslations(lang, source[key], normalized[key], key);
   }
 
   // If a non-en file has a key that is NOT in the en file, it will be removed
@@ -149,14 +140,9 @@ export default TRANSLATIONS;`
 }
 
 if (failed.length !== 0) {
-  throw new Error(
-    `Error verifying normalized translations. Please check the logs.`,
-    failed
-  );
+  throw new Error(`Error verifying normalized translations. Please check the logs.`, failed);
 }
 
-console.log(
-  `👍 All translation files have been normalized to match the English schema!`
-);
+console.log(`👍 All translation files have been normalized to match the English schema!`);
 
 process.exit(0);

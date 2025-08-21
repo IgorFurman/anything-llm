@@ -13,7 +13,7 @@ const WorkspaceThread = {
    * @param  {...any} args - slugify args for npm package.
    * @returns {string}
    */
-  slugify: function (...args) {
+  slugify: (...args) => {
     slugifyModule.extend({
       "+": " plus ",
       "!": " bang ",
@@ -36,9 +36,7 @@ const WorkspaceThread = {
       const thread = await prisma.workspace_threads.create({
         data: {
           name: data.name ? String(data.name) : this.defaultName,
-          slug: data.slug
-            ? this.slugify(data.slug, { lowercase: true })
-            : uuidv4(),
+          slug: data.slug ? this.slugify(data.slug, { lowercase: true }) : uuidv4(),
           user_id: userId ? Number(userId) : null,
           workspace_id: workspace.id,
         },
@@ -75,7 +73,7 @@ const WorkspaceThread = {
     }
   },
 
-  get: async function (clause = {}) {
+  get: async (clause = {}) => {
     try {
       const thread = await prisma.workspace_threads.findFirst({
         where: clause,
@@ -88,7 +86,7 @@ const WorkspaceThread = {
     }
   },
 
-  delete: async function (clause = {}) {
+  delete: async (clause = {}) => {
     try {
       await prisma.workspace_threads.deleteMany({
         where: clause,
@@ -100,12 +98,7 @@ const WorkspaceThread = {
     }
   },
 
-  where: async function (
-    clause = {},
-    limit = null,
-    orderBy = null,
-    include = null
-  ) {
+  where: async (clause = {}, limit = null, orderBy = null, include = null) => {
     try {
       const results = await prisma.workspace_threads.findMany({
         where: clause,

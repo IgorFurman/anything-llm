@@ -17,15 +17,12 @@ const PromptHistory = {
    * @param {number} workspaceId - The ID of the workspace
    * @returns {Promise<PromptHistory[]>} - An array of prompt history entries
    */
-  forWorkspace: async function (workspaceId) {
+  forWorkspace: async (workspaceId) => {
     try {
-      return await fetch(
-        `${API_BASE}/workspace/${workspaceId}/prompt-history`,
-        {
-          method: "GET",
-          headers: baseHeaders(),
-        }
-      )
+      return await fetch(`${API_BASE}/workspace/${workspaceId}/prompt-history`, {
+        method: "GET",
+        headers: baseHeaders(),
+      })
         .then((res) => res.json())
         .then((res) => res.history || [])
         .catch((error) => {
@@ -43,15 +40,12 @@ const PromptHistory = {
    * @param {number} workspaceId - The ID of the workspace
    * @returns {Promise<{success: boolean, error: string}>} - A promise that resolves to an object containing a success flag and an error message
    */
-  clearAll: async function (workspaceId) {
+  clearAll: async (workspaceId) => {
     try {
-      return await fetch(
-        `${API_BASE}/workspace/${workspaceId}/prompt-history`,
-        {
-          method: "DELETE",
-          headers: baseHeaders(),
-        }
-      )
+      return await fetch(`${API_BASE}/workspace/${workspaceId}/prompt-history`, {
+        method: "DELETE",
+        headers: baseHeaders(),
+      })
         .then((res) => res.json())
         .catch((error) => {
           console.error("Error clearing prompt history:", error);
@@ -63,7 +57,7 @@ const PromptHistory = {
     }
   },
 
-  delete: async function (id) {
+  delete: async (id) => {
     try {
       return await fetch(`${API_BASE}/workspace/prompt-history/${id}`, {
         method: "DELETE",

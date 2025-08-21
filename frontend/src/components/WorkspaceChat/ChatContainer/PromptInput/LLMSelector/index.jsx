@@ -1,8 +1,13 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import PreLoader from "@/components/Preloader";
-import ChatModelSelection from "./ChatModelSelection";
+import System from "@/models/system";
+import Workspace from "@/models/workspace";
+import showToast from "@/utils/toast";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
+import ChatModelSelection from "./ChatModelSelection";
+import LLMSelectorSidePanel from "./LLMSelector";
+import { NoSetupWarning } from "./SetupProvider";
 import { PROVIDER_SETUP_EVENT, SAVE_LLM_SELECTOR_EVENT } from "./action";
 import {
   WORKSPACE_LLM_PROVIDERS,
@@ -10,11 +15,6 @@ import {
   hasMissingCredentials,
   validatedModelSelection,
 } from "./utils";
-import LLMSelectorSidePanel from "./LLMSelector";
-import { NoSetupWarning } from "./SetupProvider";
-import showToast from "@/utils/toast";
-import Workspace from "@/models/workspace";
-import System from "@/models/system";
 
 export default function LLMSelectorModal() {
   const { slug } = useParams();
@@ -23,9 +23,7 @@ export default function LLMSelectorModal() {
   const [settings, setSettings] = useState(null);
   const [selectedLLMProvider, setSelectedLLMProvider] = useState(null);
   const [selectedLLMModel, setSelectedLLMModel] = useState("");
-  const [availableProviders, setAvailableProviders] = useState(
-    WORKSPACE_LLM_PROVIDERS
-  );
+  const [availableProviders, setAvailableProviders] = useState(WORKSPACE_LLM_PROVIDERS);
   const [hasChanges, setHasChanges] = useState(false);
   const [saving, setSaving] = useState(false);
   const [missingCredentials, setMissingCredentials] = useState(false);
@@ -35,8 +33,7 @@ export default function LLMSelectorModal() {
     setLoading(true);
     Promise.all([Workspace.bySlug(slug), System.keys()])
       .then(([workspace, systemSettings]) => {
-        const selectedLLMProvider =
-          workspace.chatProvider ?? systemSettings.LLMProvider;
+        const selectedLLMProvider = workspace.chatProvider ?? systemSettings.LLMProvider;
         const selectedLLMModel = workspace.chatModel ?? systemSettings.LLMModel;
 
         setSettings(systemSettings);
@@ -101,10 +98,7 @@ export default function LLMSelectorModal() {
   }
 
   return (
-    <div
-      id="llm-selector-modal"
-      className="w-full h-[500px] p-0 overflow-y-scroll flex"
-    >
+    <div id="llm-selector-modal" className="w-full h-[500px] p-0 overflow-y-scroll flex">
       <LLMSelectorSidePanel
         availableProviders={availableProviders}
         selectedLLMProvider={selectedLLMProvider}
@@ -118,9 +112,7 @@ export default function LLMSelectorModal() {
             window.dispatchEvent(
               new CustomEvent(PROVIDER_SETUP_EVENT, {
                 detail: {
-                  provider: WORKSPACE_LLM_PROVIDERS.find(
-                    (p) => p.value === selectedLLMProvider
-                  ),
+                  provider: WORKSPACE_LLM_PROVIDERS.find((p) => p.value === selectedLLMProvider),
                   settings,
                 },
               })

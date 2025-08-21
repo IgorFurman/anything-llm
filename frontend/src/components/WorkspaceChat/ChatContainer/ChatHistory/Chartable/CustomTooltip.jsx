@@ -14,9 +14,9 @@ function invertColor(hex, bw) {
   if (hex.length !== 6) {
     throw new Error("Invalid HEX color.");
   }
-  var r = parseInt(hex.slice(0, 2), 16),
-    g = parseInt(hex.slice(2, 4), 16),
-    b = parseInt(hex.slice(4, 6), 16);
+  var r = Number.parseInt(hex.slice(0, 2), 16),
+    g = Number.parseInt(hex.slice(2, 4), 16),
+    b = Number.parseInt(hex.slice(4, 6), 16);
   if (bw) {
     // https://stackoverflow.com/a/3943023/112731
     return r * 0.299 + g * 0.587 + b * 0.114 > 186 ? "#FFFFFF" : "#000000";
@@ -52,10 +52,7 @@ export default function Tooltip({ legendColor, ...props }) {
             </div>
             <div className="space-y-1 py-2 px-4">
               {payload.map(({ value, name }, idx) => (
-                <div
-                  key={`id-${idx}`}
-                  className="flex items-center justify-between space-x-8"
-                >
+                <div key={`id-${idx}`} className="flex items-center justify-between space-x-8">
                   <div className="flex items-center space-x-2">
                     <span
                       className="shrink-0 h-3 w-3 border-theme-bg-primary rounded-md rounded-full border-2 shadow-md"

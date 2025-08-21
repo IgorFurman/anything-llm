@@ -8,9 +8,7 @@ const {
 const fs = require("fs");
 const path = require("path");
 const { safeJsonParse } = require("../../http");
-const {
-  LLMPerformanceMonitor,
-} = require("../../helpers/chat/LLMPerformanceMonitor");
+const { LLMPerformanceMonitor } = require("../../helpers/chat/LLMPerformanceMonitor");
 const cacheFolder = path.resolve(
   process.env.STORAGE_DIR
     ? path.resolve(process.env.STORAGE_DIR, "models", "novita")
@@ -19,8 +17,7 @@ const cacheFolder = path.resolve(
 
 class NovitaLLM {
   constructor(embedder = null, modelPreference = null) {
-    if (!process.env.NOVITA_LLM_API_KEY)
-      throw new Error("No Novita API key was set.");
+    if (!process.env.NOVITA_LLM_API_KEY) throw new Error("No Novita API key was set.");
 
     const { OpenAI: OpenAIApi } = require("openai");
     this.basePath = "https://api.novita.ai/v3/openai";
@@ -32,10 +29,7 @@ class NovitaLLM {
         "X-Novita-Source": "anythingllm",
       },
     });
-    this.model =
-      modelPreference ||
-      process.env.NOVITA_LLM_MODEL_PREF ||
-      "deepseek/deepseek-r1";
+    this.model = modelPreference || process.env.NOVITA_LLM_MODEL_PREF || "deepseek/deepseek-r1";
     this.limits = {
       history: this.promptWindowLimit() * 0.15,
       system: this.promptWindowLimit() * 0.15,
@@ -46,8 +40,7 @@ class NovitaLLM {
     this.defaultTemp = 0.7;
     this.timeout = this.#parseTimeout();
 
-    if (!fs.existsSync(cacheFolder))
-      fs.mkdirSync(cacheFolder, { recursive: true });
+    if (!fs.existsSync(cacheFolder)) fs.mkdirSync(cacheFolder, { recursive: true });
     this.cacheModelPath = path.resolve(cacheFolder, "models.json");
     this.cacheAtPath = path.resolve(cacheFolder, ".cached_at");
 
@@ -88,8 +81,7 @@ class NovitaLLM {
   // for each model and this is a constructor property - so we can really only get it if this cache exists.
   // We used to have this as a chore, but given there is an API to get the info - this makes little sense.
   async #syncModels() {
-    if (fs.existsSync(this.cacheModelPath) && !this.#cacheIsStale())
-      return false;
+    if (fs.existsSync(this.cacheModelPath) && !this.#cacheIsStale()) return false;
 
     this.log("Model cache is not present or stale. Fetching from Novita API.");
     await fetchNovitaModels();
@@ -110,10 +102,7 @@ class NovitaLLM {
 
   models() {
     if (!fs.existsSync(this.cacheModelPath)) return {};
-    return safeJsonParse(
-      fs.readFileSync(this.cacheModelPath, { encoding: "utf-8" }),
-      {}
-    );
+    return safeJsonParse(fs.readFileSync(this.cacheModelPath, { encoding: "utf-8" }), {});
   }
 
   streamingEnabled() {
@@ -123,10 +112,7 @@ class NovitaLLM {
   static promptWindowLimit(modelName) {
     const cacheModelPath = path.resolve(cacheFolder, "models.json");
     const availableModels = fs.existsSync(cacheModelPath)
-      ? safeJsonParse(
-          fs.readFileSync(cacheModelPath, { encoding: "utf-8" }),
-          {}
-        )
+      ? safeJsonParse(fs.readFileSync(cacheModelPath, { encoding: "utf-8" }), {})
       : {};
     return availableModels[modelName]?.maxLength || 4096;
   }
@@ -153,7 +139,7 @@ class NovitaLLM {
     }
 
     const content = [{ type: "text", text: userPrompt }];
-    for (let attachment of attachments) {
+    for (const attachment of attachments) {
       content.push({
         type: "image_url",
         image_url: {
@@ -188,9 +174,7 @@ class NovitaLLM {
 
   async getChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!(await this.isValidChatCompletionModel(this.model)))
-      throw new Error(
-        `Novita chat: ${this.model} is not valid for chat completion!`
-      );
+      throw new Error(`Novita chat: ${this.model} is not valid for chat completion!`);
 
     const result = await LLMPerformanceMonitor.measureAsyncFunction(
       this.openai.chat.completions
@@ -204,11 +188,7 @@ class NovitaLLM {
         })
     );
 
-    if (
-      !result.output.hasOwnProperty("choices") ||
-      result.output.choices.length === 0
-    )
-      return null;
+    if (!result.output.hasOwnProperty("choices") || result.output.choices.length === 0) return null;
 
     return {
       textResponse: result.output.choices[0].message.content,
@@ -224,9 +204,7 @@ class NovitaLLM {
 
   async streamGetChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!(await this.isValidChatCompletionModel(this.model)))
-      throw new Error(
-        `Novita chat: ${this.model} is not valid for chat completion!`
-      );
+      throw new Error(`Novita chat: ${this.model} is not valid for chat completion!`);
 
     const measuredStreamRequest = await LLMPerformanceMonitor.measureStream(
       this.openai.chat.completions.create({
@@ -382,29 +360,19 @@ async function fetchNovitaModels() {
           id: model.id,
           name: model.title,
           organization:
-            model.id.split("/")[0].charAt(0).toUpperCase() +
-            model.id.split("/")[0].slice(1),
+            model.id.split("/")[0].charAt(0).toUpperCase() + model.id.split("/")[0].slice(1),
           maxLength: model.context_size,
         };
       });
 
       // Cache all response information
-      if (!fs.existsSync(cacheFolder))
-        fs.mkdirSync(cacheFolder, { recursive: true });
-      fs.writeFileSync(
-        path.resolve(cacheFolder, "models.json"),
-        JSON.stringify(models),
-        {
-          encoding: "utf-8",
-        }
-      );
-      fs.writeFileSync(
-        path.resolve(cacheFolder, ".cached_at"),
-        String(Number(new Date())),
-        {
-          encoding: "utf-8",
-        }
-      );
+      if (!fs.existsSync(cacheFolder)) fs.mkdirSync(cacheFolder, { recursive: true });
+      fs.writeFileSync(path.resolve(cacheFolder, "models.json"), JSON.stringify(models), {
+        encoding: "utf-8",
+      });
+      fs.writeFileSync(path.resolve(cacheFolder, ".cached_at"), String(Number(new Date())), {
+        encoding: "utf-8",
+      });
       return models;
     })
     .catch((e) => {

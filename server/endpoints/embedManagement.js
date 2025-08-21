@@ -3,33 +3,24 @@ const { EmbedConfig } = require("../models/embedConfig");
 const { EventLogs } = require("../models/eventLogs");
 const { reqBody, userFromSession } = require("../utils/http");
 const { validEmbedConfigId } = require("../utils/middleware/embedMiddleware");
-const {
-  flexUserRoleValid,
-  ROLES,
-} = require("../utils/middleware/multiUserProtected");
+const { flexUserRoleValid, ROLES } = require("../utils/middleware/multiUserProtected");
 const { validatedRequest } = require("../utils/middleware/validatedRequest");
-const {
-  chatHistoryViewable,
-} = require("../utils/middleware/chatHistoryViewable");
+const { chatHistoryViewable } = require("../utils/middleware/chatHistoryViewable");
 
 function embedManagementEndpoints(app) {
   if (!app) return;
 
-  app.get(
-    "/embeds",
-    [validatedRequest, flexUserRoleValid([ROLES.admin])],
-    async (_, response) => {
-      try {
-        const embeds = await EmbedConfig.whereWithWorkspace({}, null, {
-          createdAt: "desc",
-        });
-        response.status(200).json({ embeds });
-      } catch (e) {
-        console.error(e);
-        response.sendStatus(500).end();
-      }
+  app.get("/embeds", [validatedRequest, flexUserRoleValid([ROLES.admin])], async (_, response) => {
+    try {
+      const embeds = await EmbedConfig.whereWithWorkspace({}, null, {
+        createdAt: "desc",
+      });
+      response.status(200).json({ embeds });
+    } catch (e) {
+      console.error(e);
+      response.sendStatus(500).end();
     }
-  );
+  });
 
   app.post(
     "/embeds/new",
@@ -39,11 +30,7 @@ function embedManagementEndpoints(app) {
         const user = await userFromSession(request, response);
         const data = reqBody(request);
         const { embed, message: error } = await EmbedConfig.new(data, user?.id);
-        await EventLogs.logEvent(
-          "embed_created",
-          { embedId: embed.id },
-          user?.id
-        );
+        await EventLogs.logEvent("embed_created", { embedId: embed.id }, user?.id);
         response.status(200).json({ embed, error });
       } catch (e) {
         console.error(e);
@@ -77,11 +64,7 @@ function embedManagementEndpoints(app) {
       try {
         const { embedId } = request.params;
         await EmbedConfig.delete({ id: Number(embedId) });
-        await EventLogs.logEvent(
-          "embed_deleted",
-          { embedId },
-          response?.locals?.user?.id
-        );
+        await EventLogs.logEvent("embed_deleted", { embedId }, response?.locals?.user?.id);
         response.status(200).json({ success: true, error: null });
       } catch (e) {
         console.error(e);

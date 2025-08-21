@@ -56,8 +56,7 @@ async function canRespond(request, response, next) {
         textResponse: null,
         sources: [],
         close: true,
-        error:
-          "This chat has been disabled by the administrator - try again later.",
+        error: "This chat has been disabled by the administrator - try again later.",
       });
       return;
     }
@@ -97,17 +96,12 @@ async function canRespond(request, response, next) {
         textResponse: null,
         sources: [],
         close: true,
-        error: !message?.length
-          ? "Message is empty."
-          : `${embed.chat_mode} is not a valid mode.`,
+        error: !message?.length ? "Message is empty." : `${embed.chat_mode} is not a valid mode.`,
       });
       return;
     }
 
-    if (
-      !isNaN(embed.max_chats_per_day) &&
-      Number(embed.max_chats_per_day) > 0
-    ) {
+    if (!isNaN(embed.max_chats_per_day) && Number(embed.max_chats_per_day) > 0) {
       const dailyChatCount = await EmbedChats.count({
         embed_id: embed.id,
         createdAt: {
@@ -130,10 +124,7 @@ async function canRespond(request, response, next) {
       }
     }
 
-    if (
-      !isNaN(embed.max_chats_per_session) &&
-      Number(embed.max_chats_per_session) > 0
-    ) {
+    if (!isNaN(embed.max_chats_per_session) && Number(embed.max_chats_per_session) > 0) {
       const dailySessionCount = await EmbedChats.count({
         embed_id: embed.id,
         session_id: sessionId,

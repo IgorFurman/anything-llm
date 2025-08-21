@@ -13,9 +13,7 @@
   "paths": {
     "/v1/auth": {
       "get": {
-        "tags": [
-          "Authentication"
-        ],
+        "tags": ["Authentication"],
         "description": "Verify the attached Authentication header contains a valid API token.",
         "parameters": [],
         "responses": {
@@ -52,9 +50,7 @@
     },
     "/v1/admin/is-multi-user-mode": {
       "get": {
-        "tags": [
-          "Admin"
-        ],
+        "tags": ["Admin"],
         "description": "Check to see if the instance is in multi-user-mode first. Methods are disabled until multi user mode is enabled via the UI.",
         "parameters": [],
         "responses": {
@@ -91,9 +87,7 @@
     },
     "/v1/admin/users": {
       "get": {
-        "tags": [
-          "Admin"
-        ],
+        "tags": ["Admin"],
         "description": "Check to see if the instance is in multi-user-mode first. Methods are disabled until multi user mode is enabled via the UI.",
         "parameters": [],
         "responses": {
@@ -141,9 +135,7 @@
     },
     "/v1/admin/users/new": {
       "post": {
-        "tags": [
-          "Admin"
-        ],
+        "tags": ["Admin"],
         "description": "Create a new user with username and password. Methods are disabled until multi user mode is enabled via the UI.",
         "parameters": [],
         "responses": {
@@ -207,9 +199,7 @@
     },
     "/v1/admin/users/{id}": {
       "post": {
-        "tags": [
-          "Admin"
-        ],
+        "tags": ["Admin"],
         "description": "Update existing user settings. Methods are disabled until multi user mode is enabled via the UI.",
         "parameters": [
           {
@@ -275,9 +265,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Admin"
-        ],
+        "tags": ["Admin"],
         "description": "Delete existing user by id. Methods are disabled until multi user mode is enabled via the UI.",
         "parameters": [
           {
@@ -331,9 +319,7 @@
     },
     "/v1/admin/invites": {
       "get": {
-        "tags": [
-          "Admin"
-        ],
+        "tags": ["Admin"],
         "description": "List all existing invitations to instance regardless of status. Methods are disabled until multi user mode is enabled via the UI.",
         "parameters": [],
         "responses": {
@@ -383,9 +369,7 @@
     },
     "/v1/admin/invite/new": {
       "post": {
-        "tags": [
-          "Admin"
-        ],
+        "tags": ["Admin"],
         "description": "Create a new invite code for someone to use to register with instance. Methods are disabled until multi user mode is enabled via the UI.",
         "parameters": [],
         "responses": {
@@ -435,11 +419,7 @@
           "content": {
             "application/json": {
               "example": {
-                "workspaceIds": [
-                  1,
-                  2,
-                  45
-                ]
+                "workspaceIds": [1, 2, 45]
               }
             }
           }
@@ -448,9 +428,7 @@
     },
     "/v1/admin/invite/{id}": {
       "delete": {
-        "tags": [
-          "Admin"
-        ],
+        "tags": ["Admin"],
         "description": "Deactivates (soft-delete) invite by id. Methods are disabled until multi user mode is enabled via the UI.",
         "parameters": [
           {
@@ -504,9 +482,7 @@
     },
     "/v1/admin/workspaces/{workspaceId}/users": {
       "get": {
-        "tags": [
-          "Admin"
-        ],
+        "tags": ["Admin"],
         "description": "Retrieve a list of users with permissions to access the specified workspace.",
         "parameters": [
           {
@@ -568,9 +544,7 @@
     },
     "/v1/admin/workspaces/{workspaceId}/update-users": {
       "post": {
-        "tags": [
-          "Admin"
-        ],
+        "tags": ["Admin"],
         "description": "Overwrite workspace permissions to only be accessible by the given user ids and admins. Methods are disabled until multi user mode is enabled via the UI.",
         "parameters": [
           {
@@ -626,12 +600,7 @@
           "content": {
             "application/json": {
               "example": {
-                "userIds": [
-                  1,
-                  2,
-                  4,
-                  12
-                ]
+                "userIds": [1, 2, 4, 12]
               }
             }
           }
@@ -641,9 +610,7 @@
     },
     "/v1/admin/workspaces/{workspaceSlug}/manage-users": {
       "post": {
-        "tags": [
-          "Admin"
-        ],
+        "tags": ["Admin"],
         "description": "Set workspace permissions to be accessible by the given user ids and admins. Methods are disabled until multi user mode is enabled via the UI.",
         "parameters": [
           {
@@ -714,12 +681,7 @@
           "content": {
             "application/json": {
               "example": {
-                "userIds": [
-                  1,
-                  2,
-                  4,
-                  12
-                ],
+                "userIds": [1, 2, 4, 12],
                 "reset": false
               }
             }
@@ -729,9 +691,7 @@
     },
     "/v1/admin/workspace-chats": {
       "post": {
-        "tags": [
-          "Admin"
-        ],
+        "tags": ["Admin"],
         "description": "All chats in the system ordered by most recent. Methods are disabled until multi user mode is enabled via the UI.",
         "parameters": [],
         "responses": {
@@ -783,9 +743,7 @@
     },
     "/v1/admin/preferences": {
       "post": {
-        "tags": [
-          "Admin"
-        ],
+        "tags": ["Admin"],
         "description": "Update multi-user preferences for instance. Methods are disabled until multi user mode is enabled via the UI.",
         "parameters": [],
         "responses": {
@@ -840,9 +798,7 @@
     },
     "/v1/document/upload": {
       "post": {
-        "tags": [
-          "Documents"
-        ],
+        "tags": ["Documents"],
         "description": "Upload a new file to AnythingLLM to be parsed and prepared for embedding.",
         "parameters": [],
         "responses": {
@@ -901,9 +857,7 @@
             "multipart/form-data": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "file"
-                ],
+                "required": ["file"],
                 "properties": {
                   "file": {
                     "type": "string",
@@ -923,9 +877,7 @@
     },
     "/v1/document/upload/{folderName}": {
       "post": {
-        "tags": [
-          "Documents"
-        ],
+        "tags": ["Documents"],
         "description": "Upload a new file to a specific folder in AnythingLLM to be parsed and prepared for embedding. If the folder does not exist, it will be created.",
         "parameters": [
           {
@@ -1006,9 +958,7 @@
             "multipart/form-data": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "file"
-                ],
+                "required": ["file"],
                 "properties": {
                   "file": {
                     "type": "string",
@@ -1028,9 +978,7 @@
     },
     "/v1/document/upload-link": {
       "post": {
-        "tags": [
-          "Documents"
-        ],
+        "tags": ["Documents"],
         "description": "Upload a valid URL for AnythingLLM to scrape and prepare for embedding. Optionally, specify a comma-separated list of workspace slugs to embed the document into post-upload.",
         "parameters": [],
         "responses": {
@@ -1106,9 +1054,7 @@
     },
     "/v1/document/raw-text": {
       "post": {
-        "tags": [
-          "Documents"
-        ],
+        "tags": ["Documents"],
         "description": "Upload a file by specifying its raw text content and metadata values without having to upload a file.",
         "parameters": [],
         "responses": {
@@ -1189,9 +1135,7 @@
     },
     "/v1/documents": {
       "get": {
-        "tags": [
-          "Documents"
-        ],
+        "tags": ["Documents"],
         "description": "List of all locally-stored documents in instance",
         "parameters": [],
         "responses": {
@@ -1244,9 +1188,7 @@
     },
     "/v1/documents/folder/{folderName}": {
       "get": {
-        "tags": [
-          "Documents"
-        ],
+        "tags": ["Documents"],
         "description": "Get all documents stored in a specific folder.",
         "parameters": [
           {
@@ -1314,9 +1256,7 @@
     },
     "/v1/document/accepted-file-types": {
       "get": {
-        "tags": [
-          "Documents"
-        ],
+        "tags": ["Documents"],
         "description": "Check available filetypes and MIMEs that can be uploaded.",
         "parameters": [],
         "responses": {
@@ -1328,22 +1268,13 @@
                   "type": "object",
                   "example": {
                     "types": {
-                      "application/mbox": [
-                        ".mbox"
-                      ],
-                      "application/pdf": [
-                        ".pdf"
-                      ],
-                      "application/vnd.oasis.opendocument.text": [
-                        ".odt"
-                      ],
+                      "application/mbox": [".mbox"],
+                      "application/pdf": [".pdf"],
+                      "application/vnd.oasis.opendocument.text": [".odt"],
                       "application/vnd.openxmlformats-officedocument.wordprocessingml.document": [
                         ".docx"
                       ],
-                      "text/plain": [
-                        ".txt",
-                        ".md"
-                      ]
+                      "text/plain": [".txt", ".md"]
                     }
                   }
                 }
@@ -1376,9 +1307,7 @@
     },
     "/v1/document/metadata-schema": {
       "get": {
-        "tags": [
-          "Documents"
-        ],
+        "tags": ["Documents"],
         "description": "Get the known available metadata schema for when doing a raw-text upload and the acceptable type of value for each key.",
         "parameters": [],
         "responses": {
@@ -1423,9 +1352,7 @@
     },
     "/v1/document/{docName}": {
       "get": {
-        "tags": [
-          "Documents"
-        ],
+        "tags": ["Documents"],
         "description": "Get a single document by its unique AnythingLLM document name",
         "parameters": [
           {
@@ -1491,9 +1418,7 @@
     },
     "/v1/document/create-folder": {
       "post": {
-        "tags": [
-          "Documents"
-        ],
+        "tags": ["Documents"],
         "description": "Create a new folder inside the documents storage directory.",
         "parameters": [],
         "responses": {
@@ -1548,9 +1473,7 @@
     },
     "/v1/document/remove-folder": {
       "delete": {
-        "tags": [
-          "Documents"
-        ],
+        "tags": ["Documents"],
         "description": "Remove a folder and all its contents from the documents storage directory.",
         "parameters": [],
         "responses": {
@@ -1608,9 +1531,7 @@
     },
     "/v1/document/move-files": {
       "post": {
-        "tags": [
-          "Documents"
-        ],
+        "tags": ["Documents"],
         "description": "Move files within the documents storage directory.",
         "parameters": [],
         "responses": {
@@ -1670,9 +1591,7 @@
     },
     "/v1/workspace/new": {
       "post": {
-        "tags": [
-          "Workspaces"
-        ],
+        "tags": ["Workspaces"],
         "description": "Create a new workspace",
         "parameters": [],
         "responses": {
@@ -1743,9 +1662,7 @@
     },
     "/v1/workspaces": {
       "get": {
-        "tags": [
-          "Workspaces"
-        ],
+        "tags": ["Workspaces"],
         "description": "List all current workspaces",
         "parameters": [],
         "responses": {
@@ -1797,9 +1714,7 @@
     },
     "/v1/workspace/{slug}": {
       "get": {
-        "tags": [
-          "Workspaces"
-        ],
+        "tags": ["Workspaces"],
         "description": "Get a workspace by its unique slug.",
         "parameters": [
           {
@@ -1860,9 +1775,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Workspaces"
-        ],
+        "tags": ["Workspaces"],
         "description": "Deletes a workspace by its slug.",
         "parameters": [
           {
@@ -1905,9 +1818,7 @@
     },
     "/v1/workspace/{slug}/update": {
       "post": {
-        "tags": [
-          "Workspaces"
-        ],
+        "tags": ["Workspaces"],
         "description": "Update workspace settings by its unique slug.",
         "parameters": [
           {
@@ -1985,9 +1896,7 @@
     },
     "/v1/workspace/{slug}/chats": {
       "get": {
-        "tags": [
-          "Workspaces"
-        ],
+        "tags": ["Workspaces"],
         "description": "Get a workspaces chats regardless of user by its unique slug.",
         "parameters": [
           {
@@ -2082,9 +1991,7 @@
     },
     "/v1/workspace/{slug}/update-embeddings": {
       "post": {
-        "tags": [
-          "Workspaces"
-        ],
+        "tags": ["Workspaces"],
         "description": "Add or remove documents from a workspace by its unique slug.",
         "parameters": [
           {
@@ -2150,12 +2057,8 @@
           "content": {
             "application/json": {
               "example": {
-                "adds": [
-                  "custom-documents/my-pdf.pdf-hash.json"
-                ],
-                "deletes": [
-                  "custom-documents/anythingllm.txt-hash.json"
-                ]
+                "adds": ["custom-documents/my-pdf.pdf-hash.json"],
+                "deletes": ["custom-documents/anythingllm.txt-hash.json"]
               }
             }
           }
@@ -2164,9 +2067,7 @@
     },
     "/v1/workspace/{slug}/update-pin": {
       "post": {
-        "tags": [
-          "Workspaces"
-        ],
+        "tags": ["Workspaces"],
         "description": "Add or remove pin from a document in a workspace by its unique slug.",
         "parameters": [
           {
@@ -2219,9 +2120,7 @@
     },
     "/v1/workspace/{slug}/chat": {
       "post": {
-        "tags": [
-          "Workspaces"
-        ],
+        "tags": ["Workspaces"],
         "description": "Execute a chat with a workspace",
         "parameters": [
           {
@@ -2304,9 +2203,7 @@
     },
     "/v1/workspace/{slug}/stream-chat": {
       "post": {
-        "tags": [
-          "Workspaces"
-        ],
+        "tags": ["Workspaces"],
         "description": "Execute a streamable chat with a workspace",
         "parameters": [
           {
@@ -2407,9 +2304,7 @@
     },
     "/v1/workspace/{slug}/vector-search": {
       "post": {
-        "tags": [
-          "Workspaces"
-        ],
+        "tags": ["Workspaces"],
         "description": "Perform a vector similarity search in a workspace",
         "parameters": [
           {
@@ -2481,9 +2376,7 @@
     },
     "/v1/system/env-dump": {
       "get": {
-        "tags": [
-          "System Settings"
-        ],
+        "tags": ["System Settings"],
         "description": "Dump all settings to file storage",
         "parameters": [],
         "responses": {
@@ -2513,9 +2406,7 @@
     },
     "/v1/system": {
       "get": {
-        "tags": [
-          "System Settings"
-        ],
+        "tags": ["System Settings"],
         "description": "Get all current system settings that are defined.",
         "parameters": [],
         "responses": {
@@ -2561,9 +2452,7 @@
     },
     "/v1/system/vector-count": {
       "get": {
-        "tags": [
-          "System Settings"
-        ],
+        "tags": ["System Settings"],
         "description": "Number of all vectors in connected vector database",
         "parameters": [],
         "responses": {
@@ -2603,9 +2492,7 @@
     },
     "/v1/system/update-env": {
       "post": {
-        "tags": [
-          "System Settings"
-        ],
+        "tags": ["System Settings"],
         "description": "Update a system setting or preference.",
         "parameters": [],
         "responses": {
@@ -2660,9 +2547,7 @@
     },
     "/v1/system/export-chats": {
       "get": {
-        "tags": [
-          "System Settings"
-        ],
+        "tags": ["System Settings"],
         "description": "Export all of the chats from the system in a known format. Output depends on the type sent. Will be send with the correct header for the output.",
         "parameters": [
           {
@@ -2719,9 +2604,7 @@
     },
     "/v1/system/remove-documents": {
       "delete": {
-        "tags": [
-          "System Settings"
-        ],
+        "tags": ["System Settings"],
         "description": "Permanently remove documents from the system.",
         "parameters": [],
         "responses": {
@@ -2784,9 +2667,7 @@
     },
     "/v1/workspace/{slug}/thread/new": {
       "post": {
-        "tags": [
-          "Workspace Threads"
-        ],
+        "tags": ["Workspace Threads"],
         "description": "Create a new workspace thread",
         "parameters": [
           {
@@ -2859,9 +2740,7 @@
     },
     "/v1/workspace/{slug}/thread/{threadSlug}/update": {
       "post": {
-        "tags": [
-          "Workspace Threads"
-        ],
+        "tags": ["Workspace Threads"],
         "description": "Update thread name by its unique slug.",
         "parameters": [
           {
@@ -2941,9 +2820,7 @@
     },
     "/v1/workspace/{slug}/thread/{threadSlug}": {
       "delete": {
-        "tags": [
-          "Workspace Threads"
-        ],
+        "tags": ["Workspace Threads"],
         "description": "Delete a workspace thread",
         "parameters": [
           {
@@ -2995,9 +2872,7 @@
     },
     "/v1/workspace/{slug}/thread/{threadSlug}/chats": {
       "get": {
-        "tags": [
-          "Workspace Threads"
-        ],
+        "tags": ["Workspace Threads"],
         "description": "Get chats for a workspace thread",
         "parameters": [
           {
@@ -3074,9 +2949,7 @@
     },
     "/v1/workspace/{slug}/thread/{threadSlug}/chat": {
       "post": {
-        "tags": [
-          "Workspace Threads"
-        ],
+        "tags": ["Workspace Threads"],
         "description": "Chat with a workspace thread",
         "parameters": [
           {
@@ -3169,9 +3042,7 @@
     },
     "/v1/workspace/{slug}/thread/{threadSlug}/stream-chat": {
       "post": {
-        "tags": [
-          "Workspace Threads"
-        ],
+        "tags": ["Workspace Threads"],
         "description": "Stream chat with a workspace thread",
         "parameters": [
           {
@@ -3282,9 +3153,7 @@
     },
     "/v1/users": {
       "get": {
-        "tags": [
-          "User Management"
-        ],
+        "tags": ["User Management"],
         "description": "List all users",
         "parameters": [],
         "responses": {
@@ -3338,9 +3207,7 @@
     },
     "/v1/users/{id}/issue-auth-token": {
       "get": {
-        "tags": [
-          "User Management"
-        ],
+        "tags": ["User Management"],
         "description": "Issue a temporary auth token for a user",
         "parameters": [
           {
@@ -3397,9 +3264,7 @@
     },
     "/v1/openai/models": {
       "get": {
-        "tags": [
-          "OpenAI Compatible Endpoints"
-        ],
+        "tags": ["OpenAI Compatible Endpoints"],
         "description": "Get all available \"models\" which are workspaces you can use for chatting.",
         "parameters": [],
         "responses": {
@@ -3456,9 +3321,7 @@
     },
     "/v1/openai/chat/completions": {
       "post": {
-        "tags": [
-          "OpenAI Compatible Endpoints"
-        ],
+        "tags": ["OpenAI Compatible Endpoints"],
         "description": "Execute a chat with a workspace with OpenAI compatibility. Supports streaming as well. Model must be a workspace slug from /models.",
         "parameters": [],
         "responses": {
@@ -3525,9 +3388,7 @@
     },
     "/v1/openai/embeddings": {
       "post": {
-        "tags": [
-          "OpenAI Compatible Endpoints"
-        ],
+        "tags": ["OpenAI Compatible Endpoints"],
         "description": "Get the embeddings of any arbitrary text string. This will use the embedder provider set in the system. Please ensure the token length of each string fits within the context of your embedder model.",
         "parameters": [],
         "responses": {
@@ -3559,10 +3420,7 @@
           "content": {
             "application/json": {
               "example": {
-                "input": [
-                  "This is my first string to embed",
-                  "This is my second string to embed"
-                ],
+                "input": ["This is my first string to embed", "This is my second string to embed"],
                 "model": null
               }
             }
@@ -3572,9 +3430,7 @@
     },
     "/v1/openai/vector_stores": {
       "get": {
-        "tags": [
-          "OpenAI Compatible Endpoints"
-        ],
+        "tags": ["OpenAI Compatible Endpoints"],
         "description": "List all the vector database collections connected to AnythingLLM. These are essentially workspaces but return their unique vector db identifier - this is the same as the workspace slug.",
         "parameters": [],
         "responses": {
@@ -3624,9 +3480,7 @@
     },
     "/v1/embed": {
       "get": {
-        "tags": [
-          "Embed"
-        ],
+        "tags": ["Embed"],
         "description": "List all active embeds",
         "parameters": [],
         "responses": {
@@ -3691,9 +3545,7 @@
     },
     "/v1/embed/{embedUuid}/chats": {
       "get": {
-        "tags": [
-          "Embed"
-        ],
+        "tags": ["Embed"],
         "description": "Get all chats for a specific embed",
         "parameters": [
           {
@@ -3761,9 +3613,7 @@
     },
     "/v1/embed/{embedUuid}/chats/{sessionUuid}": {
       "get": {
-        "tags": [
-          "Embed"
-        ],
+        "tags": ["Embed"],
         "description": "Get chats for a specific embed and session",
         "parameters": [
           {
@@ -3832,9 +3682,7 @@
     },
     "/v1/embed/new": {
       "post": {
-        "tags": [
-          "Embed"
-        ],
+        "tags": ["Embed"],
         "description": "Create a new embed configuration",
         "parameters": [],
         "responses": {
@@ -3850,9 +3698,7 @@
                       "uuid": "embed-uuid-1",
                       "enabled": true,
                       "chat_mode": "chat",
-                      "allowlist_domains": [
-                        "example.com"
-                      ],
+                      "allowlist_domains": ["example.com"],
                       "allow_model_override": false,
                       "allow_temperature_override": false,
                       "allow_prompt_override": false,
@@ -3902,9 +3748,7 @@
                 "example": {
                   "workspace_slug": "workspace-slug-1",
                   "chat_mode": "chat",
-                  "allowlist_domains": [
-                    "example.com"
-                  ],
+                  "allowlist_domains": ["example.com"],
                   "allow_model_override": false,
                   "allow_temperature_override": false,
                   "allow_prompt_override": false,
@@ -3919,9 +3763,7 @@
     },
     "/v1/embed/{embedUuid}": {
       "post": {
-        "tags": [
-          "Embed"
-        ],
+        "tags": ["Embed"],
         "description": "Update an existing embed configuration",
         "parameters": [
           {
@@ -3981,9 +3823,7 @@
                 "example": {
                   "enabled": true,
                   "chat_mode": "chat",
-                  "allowlist_domains": [
-                    "example.com"
-                  ],
+                  "allowlist_domains": ["example.com"],
                   "allow_model_override": false,
                   "allow_temperature_override": false,
                   "allow_prompt_override": false,
@@ -3996,9 +3836,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Embed"
-        ],
+        "tags": ["Embed"],
         "description": "Delete an existing embed configuration",
         "parameters": [
           {

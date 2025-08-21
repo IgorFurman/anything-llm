@@ -14,8 +14,7 @@ class FlowExecutor {
   }
 
   attachLogging(introspectFn = null, loggerFn = null) {
-    this.introspect =
-      introspectFn || ((...args) => console.log("[introspect] ", ...args));
+    this.introspect = introspectFn || ((...args) => console.log("[introspect] ", ...args));
     this.logger = loggerFn || console.info;
   }
 
@@ -81,7 +80,7 @@ class FlowExecutor {
 
         if (!isNaN(cleanKey)) {
           if (!Array.isArray(current)) return undefined;
-          current = current[parseInt(cleanKey)];
+          current = current[Number.parseInt(cleanKey)];
         } else {
           if (!(cleanKey in current)) return undefined;
           current = current[cleanKey];
@@ -190,10 +189,10 @@ class FlowExecutor {
 
     // Initialize variables with both initial values and any passed-in values
     this.variables = {
-      ...(
-        flow.config.steps.find((s) => s.type === "start")?.config?.variables ||
-        []
-      ).reduce((acc, v) => ({ ...acc, [v.name]: v.value }), {}),
+      ...(flow.config.steps.find((s) => s.type === "start")?.config?.variables || []).reduce(
+        (acc, v) => ({ ...acc, [v.name]: v.value }),
+        {}
+      ),
       ...initialVariables, // This will override any default values with passed-in values
     };
 

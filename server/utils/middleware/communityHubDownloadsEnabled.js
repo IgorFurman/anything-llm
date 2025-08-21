@@ -55,11 +55,7 @@ async function communityHubItem(request, response, next) {
       error: "Import ID is required",
     });
 
-  const {
-    url,
-    item,
-    error: fetchError,
-  } = await CommunityHub.getBundleItem(importId);
+  const { url, item, error: fetchError } = await CommunityHub.getBundleItem(importId);
   if (fetchError)
     return response.status(500).json({
       success: false,

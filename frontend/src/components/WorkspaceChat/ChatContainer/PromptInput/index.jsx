@@ -1,29 +1,23 @@
-import React, { useState, useRef, useEffect } from "react";
-import SlashCommandsButton, {
-  SlashCommands,
-  useSlashCommands,
-} from "./SlashCommands";
-import debounce from "lodash.debounce";
+import useTextSize from "@/hooks/useTextSize";
+import Appearance from "@/models/appearance";
 import { PaperPlaneRight } from "@phosphor-icons/react";
-import StopGenerationButton from "./StopGenerationButton";
-import AvailableAgentsButton, {
-  AvailableAgents,
-  useAvailableAgents,
-} from "./AgentMenu";
-import TextSizeButton from "./TextSizeMenu";
-import LLMSelectorAction from "./LLMSelector/action";
-import SpeechToText from "./SpeechToText";
+import debounce from "lodash.debounce";
+import React, { useState, useRef, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { Tooltip } from "react-tooltip";
-import AttachmentManager from "./Attachments";
-import AttachItem from "./AttachItem";
 import {
   ATTACHMENTS_PROCESSED_EVENT,
   ATTACHMENTS_PROCESSING_EVENT,
   PASTE_ATTACHMENT_EVENT,
 } from "../DnDWrapper";
-import useTextSize from "@/hooks/useTextSize";
-import { useTranslation } from "react-i18next";
-import Appearance from "@/models/appearance";
+import AvailableAgentsButton, { AvailableAgents, useAvailableAgents } from "./AgentMenu";
+import AttachItem from "./AttachItem";
+import AttachmentManager from "./Attachments";
+import LLMSelectorAction from "./LLMSelector/action";
+import SlashCommandsButton, { SlashCommands, useSlashCommands } from "./SlashCommands";
+import SpeechToText from "./SpeechToText";
+import StopGenerationButton from "./StopGenerationButton";
+import TextSizeButton from "./TextSizeMenu";
 
 export const PROMPT_INPUT_ID = "primary-prompt-input";
 export const PROMPT_INPUT_EVENT = "set_prompt_input";
@@ -61,10 +55,8 @@ export default function PromptInput({
   }
 
   useEffect(() => {
-    if (!!window)
-      window.addEventListener(PROMPT_INPUT_EVENT, handlePromptUpdate);
-    return () =>
-      window?.removeEventListener(PROMPT_INPUT_EVENT, handlePromptUpdate);
+    if (!!window) window.addEventListener(PROMPT_INPUT_EVENT, handlePromptUpdate);
+    return () => window?.removeEventListener(PROMPT_INPUT_EVENT, handlePromptUpdate);
   }, []);
 
   useEffect(() => {
@@ -77,8 +69,7 @@ export default function PromptInput({
    * @param {number} adjustment
    */
   function saveCurrentState(adjustment = 0) {
-    if (undoStack.current.length >= MAX_EDIT_STACK_SIZE)
-      undoStack.current.shift();
+    if (undoStack.current.length >= MAX_EDIT_STACK_SIZE) undoStack.current.shift();
     undoStack.current.push({
       value: promptInput,
       cursorPositionStart: textareaRef.current.selectionStart + adjustment,
@@ -126,11 +117,7 @@ export default function PromptInput({
     }
 
     // Is undo with Ctrl+Z or Cmd+Z + Shift key = Redo
-    if (
-      (event.ctrlKey || event.metaKey) &&
-      event.key === "z" &&
-      event.shiftKey
-    ) {
+    if ((event.ctrlKey || event.metaKey) && event.key === "z" && event.shiftKey) {
       event.preventDefault();
       if (redoStack.current.length === 0) return;
 
@@ -152,11 +139,7 @@ export default function PromptInput({
     }
 
     // Undo with Ctrl+Z or Cmd+Z
-    if (
-      (event.ctrlKey || event.metaKey) &&
-      event.key === "z" &&
-      !event.shiftKey
-    ) {
+    if ((event.ctrlKey || event.metaKey) && event.key === "z" && !event.shiftKey) {
       if (undoStack.current.length === 0) return;
       const lastState = undoStack.current.pop();
       if (!lastState) return;
@@ -216,17 +199,14 @@ export default function PromptInput({
       const start = textarea.selectionStart;
       const end = textarea.selectionEnd;
       const newPromptInput =
-        promptInput.substring(0, start) +
-        pasteText +
-        promptInput.substring(end);
+        promptInput.substring(0, start) + pasteText + promptInput.substring(end);
       setPromptInput(newPromptInput);
       onChange({ target: { value: newPromptInput } });
 
       // Set the cursor position after the pasted text
       // we need to use setTimeout to prevent the cursor from being set to the end of the text
       setTimeout(() => {
-        textarea.selectionStart = textarea.selectionEnd =
-          start + pasteText.length;
+        textarea.selectionStart = textarea.selectionEnd = start + pasteText.length;
       }, 0);
     }
     return;
@@ -294,9 +274,7 @@ export default function PromptInput({
                     className="border-none inline-flex justify-center rounded-2xl cursor-pointer opacity-60 hover:opacity-100 light:opacity-100 light:hover:opacity-60 ml-4 disabled:cursor-not-allowed group"
                     data-tooltip-id="send-prompt"
                     data-tooltip-content={
-                      isDisabled
-                        ? t("chat_window.attachments_processing")
-                        : t("chat_window.send")
+                      isDisabled ? t("chat_window.attachments_processing") : t("chat_window.send")
                     }
                     aria-label={t("chat_window.send")}
                   >
@@ -323,10 +301,7 @@ export default function PromptInput({
                   showing={showSlashCommand}
                   setShowSlashCommand={setShowSlashCommand}
                 />
-                <AvailableAgentsButton
-                  showing={showAgents}
-                  setShowAgents={setShowAgents}
-                />
+                <AvailableAgentsButton showing={showAgents} setShowAgents={setShowAgents} />
                 <TextSizeButton />
                 <LLMSelectorAction />
               </div>
@@ -355,20 +330,12 @@ function useIsDisabled() {
    */
   useEffect(() => {
     if (!window) return;
-    window.addEventListener(ATTACHMENTS_PROCESSING_EVENT, () =>
-      setIsDisabled(true)
-    );
-    window.addEventListener(ATTACHMENTS_PROCESSED_EVENT, () =>
-      setIsDisabled(false)
-    );
+    window.addEventListener(ATTACHMENTS_PROCESSING_EVENT, () => setIsDisabled(true));
+    window.addEventListener(ATTACHMENTS_PROCESSED_EVENT, () => setIsDisabled(false));
 
     return () => {
-      window?.removeEventListener(ATTACHMENTS_PROCESSING_EVENT, () =>
-        setIsDisabled(true)
-      );
-      window?.removeEventListener(ATTACHMENTS_PROCESSED_EVENT, () =>
-        setIsDisabled(false)
-      );
+      window?.removeEventListener(ATTACHMENTS_PROCESSING_EVENT, () => setIsDisabled(true));
+      window?.removeEventListener(ATTACHMENTS_PROCESSED_EVENT, () => setIsDisabled(false));
     };
   }, []);
 

@@ -1,9 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const { NativeEmbedder } = require("../../EmbeddingEngines/native");
-const {
-  LLMPerformanceMonitor,
-} = require("../../helpers/chat/LLMPerformanceMonitor");
+const { LLMPerformanceMonitor } = require("../../helpers/chat/LLMPerformanceMonitor");
 const {
   formatChatHistory,
   handleDefaultStreamResponseV2,
@@ -26,14 +24,10 @@ const NO_SYSTEM_PROMPT_MODELS = [
 
 class GeminiLLM {
   constructor(embedder = null, modelPreference = null) {
-    if (!process.env.GEMINI_API_KEY)
-      throw new Error("No Gemini API key was set.");
+    if (!process.env.GEMINI_API_KEY) throw new Error("No Gemini API key was set.");
 
     const { OpenAI: OpenAIApi } = require("openai");
-    this.model =
-      modelPreference ||
-      process.env.GEMINI_LLM_MODEL_PREF ||
-      "gemini-2.0-flash-lite";
+    this.model = modelPreference || process.env.GEMINI_LLM_MODEL_PREF || "gemini-2.0-flash-lite";
 
     const isExperimental = this.isExperimentalModel(this.model);
     this.openai = new OpenAIApi({
@@ -51,8 +45,7 @@ class GeminiLLM {
     this.embedder = embedder ?? new NativeEmbedder();
     this.defaultTemp = 0.7;
 
-    if (!fs.existsSync(cacheFolder))
-      fs.mkdirSync(cacheFolder, { recursive: true });
+    if (!fs.existsSync(cacheFolder)) fs.mkdirSync(cacheFolder, { recursive: true });
     this.cacheModelPath = path.resolve(cacheFolder, "models.json");
     this.cacheAtPath = path.resolve(cacheFolder, ".cached_at");
     this.#log(
@@ -81,9 +74,7 @@ class GeminiLLM {
     const MAX_STALE = 8.64e7; // 1 day in MS
     if (!fs.existsSync(path.resolve(cacheFolder, ".cached_at"))) return true;
     const now = Number(new Date());
-    const timestampMs = Number(
-      fs.readFileSync(path.resolve(cacheFolder, ".cached_at"))
-    );
+    const timestampMs = Number(fs.readFileSync(path.resolve(cacheFolder, ".cached_at")));
     return now - timestampMs > MAX_STALE;
   }
 
@@ -106,15 +97,11 @@ class GeminiLLM {
   static promptWindowLimit(modelName) {
     try {
       const cacheModelPath = path.resolve(cacheFolder, "models.json");
-      if (!fs.existsSync(cacheModelPath))
-        return MODEL_MAP.get("gemini", modelName) ?? 30_720;
+      if (!fs.existsSync(cacheModelPath)) return MODEL_MAP.get("gemini", modelName) ?? 30_720;
 
       const models = safeJsonParse(fs.readFileSync(cacheModelPath));
       const model = models.find((model) => model.id === modelName);
-      if (!model)
-        throw new Error(
-          "Model not found in cache - falling back to default model."
-        );
+      if (!model) throw new Error("Model not found in cache - falling back to default model.");
       return model.contextWindow;
     } catch (e) {
       console.error(`GeminiLLM:promptWindowLimit`, e.message);
@@ -124,14 +111,10 @@ class GeminiLLM {
 
   promptWindowLimit() {
     try {
-      if (!fs.existsSync(this.cacheModelPath))
-        return MODEL_MAP.get("gemini", this.model) ?? 30_720;
+      if (!fs.existsSync(this.cacheModelPath)) return MODEL_MAP.get("gemini", this.model) ?? 30_720;
       const models = safeJsonParse(fs.readFileSync(this.cacheModelPath));
       const model = models.find((model) => model.id === this.model);
-      if (!model)
-        throw new Error(
-          "Model not found in cache - falling back to default model."
-        );
+      if (!model) throw new Error("Model not found in cache - falling back to default model.");
       return model.contextWindow;
     } catch (e) {
       console.error(`GeminiLLM:promptWindowLimit`, e.message);
@@ -146,13 +129,8 @@ class GeminiLLM {
    * @returns {boolean} A boolean indicating if the model is experimental
    */
   isExperimentalModel(modelName) {
-    if (
-      fs.existsSync(cacheFolder) &&
-      fs.existsSync(path.resolve(cacheFolder, "models.json"))
-    ) {
-      const models = safeJsonParse(
-        fs.readFileSync(path.resolve(cacheFolder, "models.json"))
-      );
+    if (fs.existsSync(cacheFolder) && fs.existsSync(path.resolve(cacheFolder, "models.json"))) {
+      const models = safeJsonParse(fs.readFileSync(path.resolve(cacheFolder, "models.json")));
       const model = models.find((model) => model.id === modelName);
       if (!model) return false;
       return model.experimental;
@@ -171,12 +149,8 @@ class GeminiLLM {
   static async fetchModels(apiKey, limit = 1_000, pageToken = null) {
     if (!apiKey) return [];
     if (fs.existsSync(cacheFolder) && !this.cacheIsStale()) {
-      console.log(
-        `\x1b[32m[GeminiLLM]\x1b[0m Using cached models API response.`
-      );
-      return safeJsonParse(
-        fs.readFileSync(path.resolve(cacheFolder, "models.json"))
-      );
+      console.log(`\x1b[32m[GeminiLLM]\x1b[0m Using cached models API response.`);
+      return safeJsonParse(fs.readFileSync(path.resolve(cacheFolder, "models.json")));
     }
 
     const stableModels = [];
@@ -184,9 +158,7 @@ class GeminiLLM {
 
     // Fetch from v1
     try {
-      const url = new URL(
-        "https://generativelanguage.googleapis.com/v1/models"
-      );
+      const url = new URL("https://generativelanguage.googleapis.com/v1/models");
       url.searchParams.set("pageSize", limit);
       url.searchParams.set("key", apiKey);
       if (pageToken) url.searchParams.set("pageToken", pageToken);
@@ -201,13 +173,8 @@ class GeminiLLM {
         })
         .then((models) => {
           return models
-            .filter(
-              (model) => !model.displayName?.toLowerCase()?.includes("tuning")
-            ) // remove tuning models
-            .filter(
-              (model) =>
-                !model.description?.toLowerCase()?.includes("deprecated")
-            ) // remove deprecated models (in comment)
+            .filter((model) => !model.displayName?.toLowerCase()?.includes("tuning")) // remove tuning models
+            .filter((model) => !model.description?.toLowerCase()?.includes("deprecated")) // remove deprecated models (in comment)
             .filter((model) =>
               //  Only generateContent is supported
               model.supportedGenerationMethods.includes("generateContent")
@@ -232,9 +199,7 @@ class GeminiLLM {
 
     // Fetch from v1beta
     try {
-      const url = new URL(
-        "https://generativelanguage.googleapis.com/v1beta/models"
-      );
+      const url = new URL("https://generativelanguage.googleapis.com/v1beta/models");
       url.searchParams.set("pageSize", limit);
       url.searchParams.set("key", apiKey);
       if (pageToken) url.searchParams.set("pageToken", pageToken);
@@ -250,13 +215,8 @@ class GeminiLLM {
         .then((models) => {
           return models
             .filter((model) => !stableModels.includes(model.name)) // remove stable models that are already in the v1 list
-            .filter(
-              (model) => !model.displayName?.toLowerCase()?.includes("tuning")
-            ) // remove tuning models
-            .filter(
-              (model) =>
-                !model.description?.toLowerCase()?.includes("deprecated")
-            ) // remove deprecated models (in comment)
+            .filter((model) => !model.displayName?.toLowerCase()?.includes("tuning")) // remove tuning models
+            .filter((model) => !model.description?.toLowerCase()?.includes("deprecated")) // remove deprecated models (in comment)
             .filter((model) =>
               //  Only generateContent is supported
               model.supportedGenerationMethods.includes("generateContent")
@@ -283,19 +243,10 @@ class GeminiLLM {
       return defaultGeminiModels();
     }
 
-    console.log(
-      `\x1b[32m[GeminiLLM]\x1b[0m Writing cached models API response to disk.`
-    );
-    if (!fs.existsSync(cacheFolder))
-      fs.mkdirSync(cacheFolder, { recursive: true });
-    fs.writeFileSync(
-      path.resolve(cacheFolder, "models.json"),
-      JSON.stringify(allModels)
-    );
-    fs.writeFileSync(
-      path.resolve(cacheFolder, ".cached_at"),
-      new Date().getTime().toString()
-    );
+    console.log(`\x1b[32m[GeminiLLM]\x1b[0m Writing cached models API response to disk.`);
+    if (!fs.existsSync(cacheFolder)) fs.mkdirSync(cacheFolder, { recursive: true });
+    fs.writeFileSync(path.resolve(cacheFolder, "models.json"), JSON.stringify(allModels));
+    fs.writeFileSync(path.resolve(cacheFolder, ".cached_at"), new Date().getTime().toString());
 
     return allModels;
   }
@@ -320,7 +271,7 @@ class GeminiLLM {
     if (!attachments.length) return userPrompt;
 
     const content = [{ type: "text", text: userPrompt }];
-    for (let attachment of attachments) {
+    for (const attachment of attachments) {
       content.push({
         type: "image_url",
         image_url: {
@@ -344,16 +295,14 @@ class GeminiLLM {
     userPrompt = "",
     attachments = [], // This is the specific attachment for only this prompt
   }) {
-    let prompt = [];
+    const prompt = [];
     if (this.supportsSystemPrompt) {
       prompt.push({
         role: "system",
         content: `${systemPrompt}${this.#appendContext(contextTexts)}`,
       });
     } else {
-      this.#log(
-        `${this.model} - does not support system prompts - emulating...`
-      );
+      this.#log(`${this.model} - does not support system prompts - emulating...`);
       prompt.push(
         {
           role: "user",
@@ -390,11 +339,7 @@ class GeminiLLM {
         })
     );
 
-    if (
-      !result.output.hasOwnProperty("choices") ||
-      result.output.choices.length === 0
-    )
-      return null;
+    if (!result.output.hasOwnProperty("choices") || result.output.choices.length === 0) return null;
 
     return {
       textResponse: result.output.choices[0].message.content,

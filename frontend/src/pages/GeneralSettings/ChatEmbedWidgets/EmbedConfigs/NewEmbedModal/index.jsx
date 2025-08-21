@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { X } from "@phosphor-icons/react";
-import Workspace from "@/models/workspace";
-import { TagsInput } from "react-tag-input-component";
 import Embed from "@/models/embed";
+import Workspace from "@/models/workspace";
+import { X } from "@phosphor-icons/react";
+import React, { useEffect, useState } from "react";
+import { TagsInput } from "react-tag-input-component";
 
 export function enforceSubmissionSchema(form) {
   const data = {};
@@ -14,12 +14,9 @@ export function enforceSubmissionSchema(form) {
 
   // Always set value on nullable keys since empty or off will not send anything from form element.
   if (!data.hasOwnProperty("allowlist_domains")) data.allowlist_domains = null;
-  if (!data.hasOwnProperty("allow_model_override"))
-    data.allow_model_override = false;
-  if (!data.hasOwnProperty("allow_temperature_override"))
-    data.allow_temperature_override = false;
-  if (!data.hasOwnProperty("allow_prompt_override"))
-    data.allow_prompt_override = false;
+  if (!data.hasOwnProperty("allow_model_override")) data.allow_model_override = false;
+  if (!data.hasOwnProperty("allow_temperature_override")) data.allow_temperature_override = false;
+  if (!data.hasOwnProperty("allow_prompt_override")) data.allow_prompt_override = false;
   if (!data.hasOwnProperty("message_limit")) data.message_limit = 20;
   return data;
 }
@@ -94,8 +91,8 @@ export default function NewEmbedModal({ closeModal }) {
 
               {error && <p className="text-red-400 text-sm">Error: {error}</p>}
               <p className="text-white text-opacity-60 text-xs md:text-sm">
-                After creating an embed you will be provided a link that you can
-                publish on your website with a simple
+                After creating an embed you will be provided a link that you can publish on your
+                website with a simple
                 <code className="light:bg-stone-300 bg-stone-900 text-white mx-1 px-1 rounded-sm">
                   &lt;script&gt;
                 </code>{" "}
@@ -137,15 +134,12 @@ export const WorkspaceSelection = ({ defaultValue = null }) => {
   return (
     <div>
       <div className="flex flex-col mb-2">
-        <label
-          htmlFor="workspace_id"
-          className="block  text-sm font-medium text-white"
-        >
+        <label htmlFor="workspace_id" className="block  text-sm font-medium text-white">
           Workspace
         </label>
         <p className="text-theme-text-secondary text-xs">
-          This is the workspace your chat window will be based on. All defaults
-          will be inherited from the workspace unless overridden by this config.
+          This is the workspace your chat window will be based on. All defaults will be inherited
+          from the workspace unless overridden by this config.
         </p>
       </div>
       <select
@@ -176,18 +170,15 @@ export const ChatModeSelection = ({ defaultValue = null }) => {
   return (
     <div>
       <div className="flex flex-col mb-2">
-        <label
-          className="block text-sm font-medium text-white"
-          htmlFor="chat_mode"
-        >
+        <label className="block text-sm font-medium text-white" htmlFor="chat_mode">
           Allowed chat method
         </label>
         <p className="text-theme-text-secondary text-xs">
-          Set how your chatbot should operate. Query means it will only respond
-          if a document helps answer the query.
+          Set how your chatbot should operate. Query means it will only respond if a document helps
+          answer the query.
           <br />
-          Chat opens the chat to even general questions and can answer totally
-          unrelated queries to your workspace.
+          Chat opens the chat to even general questions and can answer totally unrelated queries to
+          your workspace.
         </p>
       </div>
       <div className="mt-2 gap-y-3 flex flex-col">
@@ -208,9 +199,7 @@ export const ChatModeSelection = ({ defaultValue = null }) => {
           />
           <div
             className={`w-4 h-4 rounded-full border-2 border-theme-sidebar-border mr-2 ${
-              chatMode === "chat"
-                ? "bg-[var(--theme-sidebar-item-workspace-active)]"
-                : ""
+              chatMode === "chat" ? "bg-[var(--theme-sidebar-item-workspace-active)]" : ""
             }`}
           ></div>
           <div className="text-theme-text-primary text-sm font-medium font-['Plus Jakarta Sans'] leading-tight">
@@ -234,9 +223,7 @@ export const ChatModeSelection = ({ defaultValue = null }) => {
           />
           <div
             className={`w-4 h-4 rounded-full border-2 border-theme-sidebar-border mr-2 ${
-              chatMode === "query"
-                ? "bg-[var(--theme-sidebar-item-workspace-active)]"
-                : ""
+              chatMode === "query" ? "bg-[var(--theme-sidebar-item-workspace-active)]" : ""
             }`}
           ></div>
           <div className="text-theme-text-primary text-sm font-medium font-['Plus Jakarta Sans'] leading-tight">
@@ -254,8 +241,7 @@ export const PermittedDomains = ({ defaultValue = [] }) => {
     const validDomains = data
       .map((input) => {
         let url = input;
-        if (!url.includes("http://") && !url.includes("https://"))
-          url = `https://${url}`;
+        if (!url.includes("http://") && !url.includes("https://")) url = `https://${url}`;
         try {
           new URL(url);
           return url;
@@ -273,8 +259,7 @@ export const PermittedDomains = ({ defaultValue = [] }) => {
 
     const validDomains = [...domains, currentInput].map((input) => {
       let url = input;
-      if (!url.includes("http://") && !url.includes("https://"))
-        url = `https://${url}`;
+      if (!url.includes("http://") && !url.includes("https://")) url = `https://${url}`;
       try {
         new URL(url);
         return url;
@@ -289,15 +274,11 @@ export const PermittedDomains = ({ defaultValue = [] }) => {
   return (
     <div>
       <div className="flex flex-col mb-2">
-        <label
-          htmlFor="allowlist_domains"
-          className="block text-sm font-medium text-white"
-        >
+        <label htmlFor="allowlist_domains" className="block text-sm font-medium text-white">
           Restrict requests from domains
         </label>
         <p className="text-theme-text-secondary text-xs">
-          This filter will block any requests that come from a domain other than
-          the list below.
+          This filter will block any requests that come from a domain other than the list below.
           <br />
           Leaving this empty means anyone can use your embed on any site.
         </p>

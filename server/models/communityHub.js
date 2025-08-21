@@ -17,11 +17,7 @@ const CommunityHub = {
    * @returns {{entityType: string | null, entityId: string | null}}
    */
   validateImportId: function (importId) {
-    if (
-      !importId ||
-      !importId.startsWith(this.importPrefix) ||
-      importId.split(":").length !== 3
-    )
+    if (!importId || !importId.startsWith(this.importPrefix) || importId.split(":").length !== 3)
       return { entityType: null, entityId: null };
     const [_, entityType, entityId] = importId.split(":");
     if (!entityType || !entityId) return { entityType: null, entityId: null };
@@ -71,29 +67,20 @@ const CommunityHub = {
    */
   getBundleItem: async function (importId) {
     const { entityType, entityId } = this.validateImportId(importId);
-    if (!entityType || !entityId)
-      return { item: null, error: "Invalid import ID" };
+    if (!entityType || !entityId) return { item: null, error: "Invalid import ID" };
 
     const { SystemSettings } = require("./systemSettings");
     const { connectionKey } = await SystemSettings.hubSettings();
-    const { url, item, error } = await fetch(
-      `${this.apiBase}/${entityType}/${entityId}/pull`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          ...(connectionKey
-            ? { Authorization: `Bearer ${connectionKey}` }
-            : {}),
-        },
-      }
-    )
+    const { url, item, error } = await fetch(`${this.apiBase}/${entityType}/${entityId}/pull`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        ...(connectionKey ? { Authorization: `Bearer ${connectionKey}` } : {}),
+      },
+    })
       .then((response) => response.json())
       .catch((error) => {
-        console.error(
-          `Error fetching bundle item for import ID ${importId}:`,
-          error
-        );
+        console.error(`Error fetching bundle item for import ID ${importId}:`, error);
         return { url: null, item: null, error: error.message };
       });
     return { url, item, error };
@@ -106,12 +93,11 @@ const CommunityHub = {
    * @param {object|null} options.currentUser - The current user object.
    * @returns {Promise<{success: boolean, error: string | null}>}
    */
-  applyItem: async function (item, options = {}) {
+  applyItem: async (item, options = {}) => {
     if (!item) return { success: false, error: "Item is required" };
 
     if (item.itemType === "system-prompt") {
-      if (!options?.workspaceSlug)
-        return { success: false, error: "Workspace slug is required" };
+      if (!options?.workspaceSlug) return { success: false, error: "Workspace slug is required" };
 
       const { Workspace } = require("./workspace");
       const workspace = await Workspace.get({
@@ -144,10 +130,9 @@ const CommunityHub = {
    * @param {{url: string, item: object}} params
    * @returns {Promise<{success: boolean, error: string | null}>}
    */
-  importBundleItem: async function ({ url, item }) {
+  importBundleItem: async ({ url, item }) => {
     if (item.itemType === "agent-skill") {
-      const { success, error } =
-        await ImportedPlugin.importCommunityItemFromUrl(url, item);
+      const { success, error } = await ImportedPlugin.importCommunityItemFromUrl(url, item);
       return { success, error };
     }
 
@@ -182,8 +167,7 @@ const CommunityHub = {
    * @returns {Promise<{success: boolean, error: string | null}>}
    */
   createStaticItem: async function (itemType, data, connectionKey) {
-    if (!connectionKey)
-      return { success: false, error: "Connection key is required" };
+    if (!connectionKey) return { success: false, error: "Connection key is required" };
     if (!this.supportedStaticItemTypes.includes(itemType))
       return { success: false, error: "Unsupported item type" };
 

@@ -1,18 +1,14 @@
-import { useState, useEffect } from "react";
 import System from "@/models/system";
+import { useEffect, useState } from "react";
 
 export default function MoonshotAiOptions({ settings }) {
   const [inputValue, setInputValue] = useState(settings?.MoonshotAiApiKey);
-  const [moonshotAiKey, setMoonshotAiKey] = useState(
-    settings?.MoonshotAiApiKey
-  );
+  const [moonshotAiKey, setMoonshotAiKey] = useState(settings?.MoonshotAiApiKey);
 
   return (
     <div className="flex gap-[36px] mt-1.5">
       <div className="flex flex-col w-60">
-        <label className="text-white text-sm font-semibold block mb-3">
-          API Key
-        </label>
+        <label className="text-white text-sm font-semibold block mb-3">API Key</label>
         <input
           type="password"
           name="MoonshotAiApiKey"
@@ -57,9 +53,7 @@ function MoonshotAiModelSelection({ apiKey, settings }) {
   if (!apiKey) {
     return (
       <div className="flex flex-col w-60">
-        <label className="text-white text-sm font-semibold block mb-3">
-          Chat Model Selection
-        </label>
+        <label className="text-white text-sm font-semibold block mb-3">Chat Model Selection</label>
         <select
           name="MoonshotAiModelPref"
           disabled={true}
@@ -76,9 +70,7 @@ function MoonshotAiModelSelection({ apiKey, settings }) {
   if (loading) {
     return (
       <div className="flex flex-col w-60">
-        <label className="text-white text-sm font-semibold block mb-3">
-          Chat Model Selection
-        </label>
+        <label className="text-white text-sm font-semibold block mb-3">Chat Model Selection</label>
         <select
           name="MoonshotAiModelPref"
           disabled={true}
@@ -94,9 +86,7 @@ function MoonshotAiModelSelection({ apiKey, settings }) {
 
   return (
     <div className="flex flex-col w-60">
-      <label className="text-white text-sm font-semibold block mb-3">
-        Chat Model Selection
-      </label>
+      <label className="text-white text-sm font-semibold block mb-3">Chat Model Selection</label>
       <select
         name="MoonshotAiModelPref"
         required={true}

@@ -1,7 +1,5 @@
 const { NativeEmbedder } = require("../../EmbeddingEngines/native");
-const {
-  LLMPerformanceMonitor,
-} = require("../../helpers/chat/LLMPerformanceMonitor");
+const { LLMPerformanceMonitor } = require("../../helpers/chat/LLMPerformanceMonitor");
 const {
   handleDefaultStreamResponseV2,
   formatChatHistory,
@@ -11,9 +9,7 @@ class LiteLLM {
   constructor(embedder = null, modelPreference = null) {
     const { OpenAI: OpenAIApi } = require("openai");
     if (!process.env.LITE_LLM_BASE_PATH)
-      throw new Error(
-        "LiteLLM must have a valid base path to use for the api."
-      );
+      throw new Error("LiteLLM must have a valid base path to use for the api.");
 
     this.basePath = process.env.LITE_LLM_BASE_PATH;
     this.openai = new OpenAIApi({
@@ -56,8 +52,7 @@ class LiteLLM {
 
   static promptWindowLimit(_modelName) {
     const limit = process.env.LITE_LLM_MODEL_TOKEN_LIMIT || 4096;
-    if (!limit || isNaN(Number(limit)))
-      throw new Error("No token context limit was set.");
+    if (!limit || isNaN(Number(limit))) throw new Error("No token context limit was set.");
     return Number(limit);
   }
 
@@ -65,8 +60,7 @@ class LiteLLM {
   // and if undefined - assume 4096 window.
   promptWindowLimit() {
     const limit = process.env.LITE_LLM_MODEL_TOKEN_LIMIT || 4096;
-    if (!limit || isNaN(Number(limit)))
-      throw new Error("No token context limit was set.");
+    if (!limit || isNaN(Number(limit))) throw new Error("No token context limit was set.");
     return Number(limit);
   }
 
@@ -87,7 +81,7 @@ class LiteLLM {
     }
 
     const content = [{ type: "text", text: userPrompt }];
-    for (let attachment of attachments) {
+    for (const attachment of attachments) {
       content.push({
         type: "image_url",
         image_url: {
@@ -131,18 +125,14 @@ class LiteLLM {
           model: this.model,
           messages,
           temperature,
-          max_tokens: parseInt(this.maxTokens), // LiteLLM requires int
+          max_tokens: Number.parseInt(this.maxTokens), // LiteLLM requires int
         })
         .catch((e) => {
           throw new Error(e.message);
         })
     );
 
-    if (
-      !result.output.hasOwnProperty("choices") ||
-      result.output.choices.length === 0
-    )
-      return null;
+    if (!result.output.hasOwnProperty("choices") || result.output.choices.length === 0) return null;
 
     return {
       textResponse: result.output.choices[0].message.content,
@@ -150,8 +140,7 @@ class LiteLLM {
         prompt_tokens: result.output.usage?.prompt_tokens || 0,
         completion_tokens: result.output.usage?.completion_tokens || 0,
         total_tokens: result.output.usage?.total_tokens || 0,
-        outputTps:
-          (result.output.usage?.completion_tokens || 0) / result.duration,
+        outputTps: (result.output.usage?.completion_tokens || 0) / result.duration,
         duration: result.duration,
       },
     };
@@ -164,7 +153,7 @@ class LiteLLM {
         stream: true,
         messages,
         temperature,
-        max_tokens: parseInt(this.maxTokens), // LiteLLM requires int
+        max_tokens: Number.parseInt(this.maxTokens), // LiteLLM requires int
       }),
       messages
       // runPromptTokenCalculation: true - We manually count the tokens because they may or may not be provided in the stream

@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from "react";
-import { Tooltip } from "react-tooltip";
-import { At } from "@phosphor-icons/react";
 import { useIsAgentSessionActive } from "@/utils/chat/agent";
+import { At } from "@phosphor-icons/react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router-dom";
+import { Tooltip } from "react-tooltip";
 
 export default function AvailableAgentsButton({ showing, setShowAgents }) {
   const { t } = useTranslation();
@@ -16,9 +16,7 @@ export default function AvailableAgentsButton({ showing, setShowAgents }) {
       data-tooltip-content={t("chat_window.agents")}
       aria-label={t("chat_window.agents")}
       onClick={() => setShowAgents(!showing)}
-      className={`flex justify-center items-center cursor-pointer ${
-        showing ? "!opacity-100" : ""
-      }`}
+      className={`flex justify-center items-center cursor-pointer ${showing ? "!opacity-100" : ""}`}
     >
       <At
         color="var(--theme-sidebar-footer-icon-fill)"
@@ -42,12 +40,7 @@ function AbilityTag({ text }) {
   );
 }
 
-export function AvailableAgents({
-  showing,
-  setShowing,
-  sendCommand,
-  promptRef,
-}) {
+export function AvailableAgents({ showing, setShowing, sendCommand, promptRef }) {
   const formRef = useRef(null);
   const agentSessionActive = useIsAgentSessionActive();
   const [searchParams] = useSearchParams();
@@ -59,8 +52,7 @@ export function AvailableAgents({
    * automatically when the component mounts.
    */
   useEffect(() => {
-    if (searchParams.get("action") === "set-agent-chat" && !showing)
-      handleAgentClick();
+    if (searchParams.get("action") === "set-agent-chat" && !showing) handleAgentClick();
   }, [promptRef.current]);
 
   useEffect(() => {

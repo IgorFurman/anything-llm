@@ -35,10 +35,7 @@ class OpenAiWhisper {
         return { content: response.text, error: null };
       })
       .catch((error) => {
-        this.#log(
-          `Could not get any response from openai whisper`,
-          error.message
-        );
+        this.#log(`Could not get any response from openai whisper`, error.message);
         return { content: "", error: error.message };
       });
   }

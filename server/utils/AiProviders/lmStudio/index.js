@@ -3,15 +3,12 @@ const {
   handleDefaultStreamResponseV2,
   formatChatHistory,
 } = require("../../helpers/chat/responses");
-const {
-  LLMPerformanceMonitor,
-} = require("../../helpers/chat/LLMPerformanceMonitor");
+const { LLMPerformanceMonitor } = require("../../helpers/chat/LLMPerformanceMonitor");
 
 //  hybrid of openAi LLM chat completion for LMStudio
 class LMStudioLLM {
   constructor(embedder = null, modelPreference = null) {
-    if (!process.env.LMSTUDIO_BASE_PATH)
-      throw new Error("No LMStudio API Base Path was set.");
+    if (!process.env.LMSTUDIO_BASE_PATH) throw new Error("No LMStudio API Base Path was set.");
 
     const { OpenAI: OpenAIApi } = require("openai");
     this.lmstudio = new OpenAIApi({
@@ -25,10 +22,7 @@ class LMStudioLLM {
     // and any other value will crash inferencing. So until this is patched we will
     // try to fetch the `/models` and have the user set it, or just fallback to "Loaded from Chat UI"
     // which will not impact users with <v0.2.17 and should work as well once the bug is fixed.
-    this.model =
-      modelPreference ||
-      process.env.LMSTUDIO_MODEL_PREF ||
-      "Loaded from Chat UI";
+    this.model = modelPreference || process.env.LMSTUDIO_MODEL_PREF || "Loaded from Chat UI";
     this.limits = {
       history: this.promptWindowLimit() * 0.15,
       system: this.promptWindowLimit() * 0.15,
@@ -57,8 +51,7 @@ class LMStudioLLM {
 
   static promptWindowLimit(_modelName) {
     const limit = process.env.LMSTUDIO_MODEL_TOKEN_LIMIT || 4096;
-    if (!limit || isNaN(Number(limit)))
-      throw new Error("No LMStudio token context limit was set.");
+    if (!limit || isNaN(Number(limit))) throw new Error("No LMStudio token context limit was set.");
     return Number(limit);
   }
 
@@ -66,8 +59,7 @@ class LMStudioLLM {
   // and if undefined - assume 4096 window.
   promptWindowLimit() {
     const limit = process.env.LMSTUDIO_MODEL_TOKEN_LIMIT || 4096;
-    if (!limit || isNaN(Number(limit)))
-      throw new Error("No LMStudio token context limit was set.");
+    if (!limit || isNaN(Number(limit))) throw new Error("No LMStudio token context limit was set.");
     return Number(limit);
   }
 
@@ -88,7 +80,7 @@ class LMStudioLLM {
     }
 
     const content = [{ type: "text", text: userPrompt }];
-    for (let attachment of attachments) {
+    for (const attachment of attachments) {
       content.push({
         type: "image_url",
         image_url: {
@@ -140,11 +132,7 @@ class LMStudioLLM {
       })
     );
 
-    if (
-      !result.output.hasOwnProperty("choices") ||
-      result.output.choices.length === 0
-    )
-      return null;
+    if (!result.output.hasOwnProperty("choices") || result.output.choices.length === 0) return null;
 
     return {
       textResponse: result.output.choices[0].message.content,

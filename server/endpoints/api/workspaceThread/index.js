@@ -18,11 +18,8 @@ const { getModelTag } = require("../../utils");
 function apiWorkspaceThreadEndpoints(app) {
   if (!app) return;
 
-  app.post(
-    "/v1/workspace/:slug/thread/new",
-    [validApiKey],
-    async (request, response) => {
-      /*
+  app.post("/v1/workspace/:slug/thread/new", [validApiKey], async (request, response) => {
+    /*
       #swagger.tags = ['Workspace Threads']
       #swagger.description = 'Create a new workspace thread'
       #swagger.parameters['slug'] = {
@@ -69,44 +66,43 @@ function apiWorkspaceThreadEndpoints(app) {
         }
       }
       */
-      try {
-        const wslug = request.params.slug;
-        let { userId = null, name = null, slug = null } = reqBody(request);
-        const workspace = await Workspace.get({ slug: wslug });
+    try {
+      const wslug = request.params.slug;
+      let { userId = null, name = null, slug = null } = reqBody(request);
+      const workspace = await Workspace.get({ slug: wslug });
 
-        if (!workspace) {
-          response.sendStatus(400).end();
-          return;
-        }
-
-        // If the system is not multi-user and you pass in a userId
-        // it needs to be nullified as no users exist. This can still fail validation
-        // as we don't check if the userID is valid.
-        if (!response.locals.multiUserMode && !!userId) userId = null;
-
-        const { thread, message } = await WorkspaceThread.new(
-          workspace,
-          userId ? Number(userId) : null,
-          { name, slug }
-        );
-
-        await Telemetry.sendTelemetry("workspace_thread_created", {
-          multiUserMode: multiUserMode(response),
-          LLMSelection: process.env.LLM_PROVIDER || "openai",
-          Embedder: process.env.EMBEDDING_ENGINE || "inherit",
-          VectorDbSelection: process.env.VECTOR_DB || "lancedb",
-          TTSSelection: process.env.TTS_PROVIDER || "native",
-        });
-        await EventLogs.logEvent("api_workspace_thread_created", {
-          workspaceName: workspace?.name || "Unknown Workspace",
-        });
-        response.status(200).json({ thread, message });
-      } catch (e) {
-        console.error(e.message, e);
-        response.sendStatus(500).end();
+      if (!workspace) {
+        response.sendStatus(400).end();
+        return;
       }
+
+      // If the system is not multi-user and you pass in a userId
+      // it needs to be nullified as no users exist. This can still fail validation
+      // as we don't check if the userID is valid.
+      if (!response.locals.multiUserMode && !!userId) userId = null;
+
+      const { thread, message } = await WorkspaceThread.new(
+        workspace,
+        userId ? Number(userId) : null,
+        { name, slug }
+      );
+
+      await Telemetry.sendTelemetry("workspace_thread_created", {
+        multiUserMode: multiUserMode(response),
+        LLMSelection: process.env.LLM_PROVIDER || "openai",
+        Embedder: process.env.EMBEDDING_ENGINE || "inherit",
+        VectorDbSelection: process.env.VECTOR_DB || "lancedb",
+        TTSSelection: process.env.TTS_PROVIDER || "native",
+      });
+      await EventLogs.logEvent("api_workspace_thread_created", {
+        workspaceName: workspace?.name || "Unknown Workspace",
+      });
+      response.status(200).json({ thread, message });
+    } catch (e) {
+      console.error(e.message, e);
+      response.sendStatus(500).end();
     }
-  );
+  });
 
   app.post(
     "/v1/workspace/:slug/thread/:threadSlug/update",
@@ -177,10 +173,7 @@ function apiWorkspaceThreadEndpoints(app) {
           return;
         }
 
-        const { thread: updatedThread, message } = await WorkspaceThread.update(
-          thread,
-          { name }
-        );
+        const { thread: updatedThread, message } = await WorkspaceThread.update(thread, { name });
         response.status(200).json({ thread: updatedThread, message });
       } catch (e) {
         console.error(e.message, e);
@@ -189,11 +182,8 @@ function apiWorkspaceThreadEndpoints(app) {
     }
   );
 
-  app.delete(
-    "/v1/workspace/:slug/thread/:threadSlug",
-    [validApiKey],
-    async (request, response) => {
-      /*
+  app.delete("/v1/workspace/:slug/thread/:threadSlug", [validApiKey], async (request, response) => {
+    /*
     #swagger.tags = ['Workspace Threads']
     #swagger.description = 'Delete a workspace thread'
     #swagger.parameters['slug'] = {
@@ -217,26 +207,25 @@ function apiWorkspaceThreadEndpoints(app) {
       }
     }
     */
-      try {
-        const { slug, threadSlug } = request.params;
-        const workspace = await Workspace.get({ slug });
+    try {
+      const { slug, threadSlug } = request.params;
+      const workspace = await Workspace.get({ slug });
 
-        if (!workspace) {
-          response.sendStatus(400).end();
-          return;
-        }
-
-        await WorkspaceThread.delete({
-          slug: threadSlug,
-          workspace_id: workspace.id,
-        });
-        response.sendStatus(200).end();
-      } catch (e) {
-        console.error(e.message, e);
-        response.sendStatus(500).end();
+      if (!workspace) {
+        response.sendStatus(400).end();
+        return;
       }
+
+      await WorkspaceThread.delete({
+        slug: threadSlug,
+        workspace_id: workspace.id,
+      });
+      response.sendStatus(200).end();
+    } catch (e) {
+      console.error(e.message, e);
+      response.sendStatus(500).end();
     }
-  );
+  });
 
   app.get(
     "/v1/workspace/:slug/thread/:threadSlug/chats",
@@ -415,9 +404,7 @@ function apiWorkspaceThreadEndpoints(app) {
             textResponse: null,
             sources: [],
             close: true,
-            error: !message?.length
-              ? "Message is empty"
-              : `${mode} is not a valid mode.`,
+            error: !message?.length ? "Message is empty" : `${mode} is not a valid mode.`,
           });
           return;
         }
@@ -578,9 +565,7 @@ function apiWorkspaceThreadEndpoints(app) {
             textResponse: null,
             sources: [],
             close: true,
-            error: !message?.length
-              ? "Message is empty"
-              : `${mode} is not a valid mode.`,
+            error: !message?.length ? "Message is empty" : `${mode} is not a valid mode.`,
           });
           return;
         }

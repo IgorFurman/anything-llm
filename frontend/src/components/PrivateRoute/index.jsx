@@ -1,20 +1,19 @@
+import System from "@/models/system";
+import { AUTH_TIMESTAMP, AUTH_TOKEN, AUTH_USER } from "@/utils/constants";
+import { KeyboardShortcutWrapper } from "@/utils/keyboardShortcuts";
+import paths from "@/utils/paths";
+import { userFromStorage } from "@/utils/request";
+import validateSessionTokenForUser from "@/utils/session";
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { FullScreenLoader } from "../Preloader";
-import validateSessionTokenForUser from "@/utils/session";
-import paths from "@/utils/paths";
-import { AUTH_TIMESTAMP, AUTH_TOKEN, AUTH_USER } from "@/utils/constants";
-import { userFromStorage } from "@/utils/request";
-import System from "@/models/system";
 import UserMenu from "../UserMenu";
-import { KeyboardShortcutWrapper } from "@/utils/keyboardShortcuts";
 
 // Used only for Multi-user mode only as we permission specific pages based on auth role.
 // When in single user mode we just bypass any authchecks.
 function useIsAuthenticated() {
   const [isAuthd, setIsAuthed] = useState(null);
-  const [shouldRedirectToOnboarding, setShouldRedirectToOnboarding] =
-    useState(false);
+  const [shouldRedirectToOnboarding, setShouldRedirectToOnboarding] = useState(false);
   const [multiUserMode, setMultiUserMode] = useState(false);
 
   useEffect(() => {
@@ -85,8 +84,7 @@ function useIsAuthenticated() {
 // Allows only admin to access the route and if in single user mode,
 // allows all users to access the route
 export function AdminRoute({ Component, hideUserMenu = false }) {
-  const { isAuthd, shouldRedirectToOnboarding, multiUserMode } =
-    useIsAuthenticated();
+  const { isAuthd, shouldRedirectToOnboarding, multiUserMode } = useIsAuthenticated();
   if (isAuthd === null) return <FullScreenLoader />;
 
   if (shouldRedirectToOnboarding) {
@@ -114,8 +112,7 @@ export function AdminRoute({ Component, hideUserMenu = false }) {
 // Allows manager and admin to access the route and if in single user mode,
 // allows all users to access the route
 export function ManagerRoute({ Component }) {
-  const { isAuthd, shouldRedirectToOnboarding, multiUserMode } =
-    useIsAuthenticated();
+  const { isAuthd, shouldRedirectToOnboarding, multiUserMode } = useIsAuthenticated();
   if (isAuthd === null) return <FullScreenLoader />;
 
   if (shouldRedirectToOnboarding) {

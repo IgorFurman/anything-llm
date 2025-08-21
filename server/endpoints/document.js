@@ -1,10 +1,7 @@
 const { Document } = require("../models/documents");
 const { normalizePath, documentsPath, isWithin } = require("../utils/files");
 const { reqBody } = require("../utils/http");
-const {
-  flexUserRoleValid,
-  ROLES,
-} = require("../utils/middleware/multiUserProtected");
+const { flexUserRoleValid, ROLES } = require("../utils/middleware/multiUserProtected");
 const { validatedRequest } = require("../utils/middleware/validatedRequest");
 const fs = require("fs");
 const path = require("path");
@@ -51,19 +48,14 @@ function documentEndpoints(app) {
         const documents = await Document.where({ docpath: { in: docpaths } });
 
         const embeddedFiles = documents.map((doc) => doc.docpath);
-        const moveableFiles = files.filter(
-          ({ from }) => !embeddedFiles.includes(from)
-        );
+        const moveableFiles = files.filter(({ from }) => !embeddedFiles.includes(from));
 
         const movePromises = moveableFiles.map(({ from, to }) => {
           const sourcePath = path.join(documentsPath, normalizePath(from));
           const destinationPath = path.join(documentsPath, normalizePath(to));
 
           return new Promise((resolve, reject) => {
-            if (
-              !isWithin(documentsPath, sourcePath) ||
-              !isWithin(documentsPath, destinationPath)
-            )
+            if (!isWithin(documentsPath, sourcePath) || !isWithin(documentsPath, destinationPath))
               return reject("Invalid file location");
 
             fs.rename(sourcePath, destinationPath, (err) => {
@@ -94,15 +86,11 @@ function documentEndpoints(app) {
           })
           .catch((err) => {
             console.error("Error moving files:", err);
-            response
-              .status(500)
-              .json({ success: false, message: "Failed to move some files." });
+            response.status(500).json({ success: false, message: "Failed to move some files." });
           });
       } catch (e) {
         console.error(e);
-        response
-          .status(500)
-          .json({ success: false, message: "Failed to move files." });
+        response.status(500).json({ success: false, message: "Failed to move files." });
       }
     }
   );

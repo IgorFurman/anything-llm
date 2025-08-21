@@ -1,9 +1,9 @@
-import truncate from "truncate";
-import { X, Trash, LinkSimple } from "@phosphor-icons/react";
 import ModalWrapper from "@/components/ModalWrapper";
 import { useModal } from "@/hooks/useModal";
-import paths from "@/utils/paths";
 import Embed from "@/models/embed";
+import paths from "@/utils/paths";
+import { LinkSimple, Trash, X } from "@phosphor-icons/react";
+import truncate from "truncate";
 
 export default function ChatRow({ chat, onDelete }) {
   const {
@@ -24,9 +24,7 @@ export default function ChatRow({ chat, onDelete }) {
 
   const handleDelete = async () => {
     if (
-      !window.confirm(
-        `Are you sure you want to delete this chat?\n\nThis action is irreversible.`
-      )
+      !window.confirm(`Are you sure you want to delete this chat?\n\nThis action is irreversible.`)
     )
       return false;
     await Embed.deleteChat(chat.id);
@@ -46,10 +44,7 @@ export default function ChatRow({ chat, onDelete }) {
             {chat.embed_config.workspace.name}
           </a>
         </td>
-        <td
-          onClick={openConnectionDetailsModal}
-          className="px-6 cursor-pointer hover:shadow-lg"
-        >
+        <td onClick={openConnectionDetailsModal} className="px-6 cursor-pointer hover:shadow-lg">
           <div className="flex flex-col">
             <p>{truncate(chat.session_id, 20)}</p>
           </div>
@@ -60,10 +55,7 @@ export default function ChatRow({ chat, onDelete }) {
         >
           {truncate(chat.prompt, 40)}
         </td>
-        <td
-          onClick={openResponseModal}
-          className="px-6 cursor-pointer hover:shadow-lg"
-        >
+        <td onClick={openResponseModal} className="px-6 cursor-pointer hover:shadow-lg">
           {truncate(JSON.parse(chat.response)?.text, 40)}
         </td>
         <td className="px-6">{chat.createdAt}</td>
@@ -72,9 +64,7 @@ export default function ChatRow({ chat, onDelete }) {
             onClick={handleDelete}
             className="group text-xs font-medium text-theme-text-secondary px-2 py-1 rounded-lg hover:bg-theme-button-delete-hover-bg"
           >
-            <span className="group-hover:text-theme-button-delete-hover-text">
-              Delete
-            </span>
+            <span className="group-hover:text-theme-button-delete-hover-text">Delete</span>
           </button>
         </td>
       </tr>
@@ -82,10 +72,7 @@ export default function ChatRow({ chat, onDelete }) {
         <TextPreview text={chat.prompt} closeModal={closePromptModal} />
       </ModalWrapper>
       <ModalWrapper isOpen={isResponseOpen}>
-        <TextPreview
-          text={JSON.parse(chat.response)?.text}
-          closeModal={closeResponseModal}
-        />
+        <TextPreview text={JSON.parse(chat.response)?.text} closeModal={closeResponseModal} />
       </ModalWrapper>
       <ModalWrapper isOpen={isConnectionDetailsModalOpen}>
         <TextPreview
@@ -127,11 +114,7 @@ const TextPreview = ({ text, closeModal }) => {
   );
 };
 
-const ConnectionDetails = ({
-  sessionId,
-  verbose = false,
-  connection_information,
-}) => {
+const ConnectionDetails = ({ sessionId, verbose = false, connection_information }) => {
   let details = {};
   try {
     details = JSON.parse(connection_information);
@@ -142,23 +125,15 @@ const ConnectionDetails = ({
   if (verbose) {
     return (
       <>
-        <p className="text-xs text-theme-text-secondary">
-          sessionID: {sessionId}
-        </p>
+        <p className="text-xs text-theme-text-secondary">sessionID: {sessionId}</p>
         {details.username && (
-          <p className="text-xs text-theme-text-secondary">
-            username: {details.username}
-          </p>
+          <p className="text-xs text-theme-text-secondary">username: {details.username}</p>
         )}
         {details.ip && (
-          <p className="text-xs text-theme-text-secondary">
-            client ip address: {details.ip}
-          </p>
+          <p className="text-xs text-theme-text-secondary">client ip address: {details.ip}</p>
         )}
         {details.host && (
-          <p className="text-xs text-theme-text-secondary">
-            client host URL: {details.host}
-          </p>
+          <p className="text-xs text-theme-text-secondary">client host URL: {details.host}</p>
         )}
       </>
     );
@@ -166,15 +141,9 @@ const ConnectionDetails = ({
 
   return (
     <>
-      {details.username && (
-        <p className="text-xs text-theme-text-secondary">{details.username}</p>
-      )}
-      {details.ip && (
-        <p className="text-xs text-theme-text-secondary">{details.ip}</p>
-      )}
-      {details.host && (
-        <p className="text-xs text-theme-text-secondary">{details.host}</p>
-      )}
+      {details.username && <p className="text-xs text-theme-text-secondary">{details.username}</p>}
+      {details.ip && <p className="text-xs text-theme-text-secondary">{details.ip}</p>}
+      {details.host && <p className="text-xs text-theme-text-secondary">{details.host}</p>}
     </>
   );
 };

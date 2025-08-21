@@ -5,8 +5,7 @@ const keyPath =
   process.env.NODE_ENV === "development"
     ? path.resolve(__dirname, `../../../server/storage/comkey`)
     : path.resolve(
-        process.env.STORAGE_DIR ??
-          path.resolve(__dirname, `../../../server/storage`),
+        process.env.STORAGE_DIR ?? path.resolve(__dirname, `../../../server/storage`),
         `comkey`
       );
 

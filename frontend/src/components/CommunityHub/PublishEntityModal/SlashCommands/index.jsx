@@ -1,9 +1,9 @@
-import { useState, useRef } from "react";
-import { useTranslation } from "react-i18next";
 import CommunityHub from "@/models/communityHub";
-import showToast from "@/utils/toast";
 import paths from "@/utils/paths";
+import showToast from "@/utils/toast";
 import { X } from "@phosphor-icons/react";
+import { useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 export default function SlashCommands({ entity }) {
@@ -31,8 +31,7 @@ export default function SlashCommands({ entity }) {
         visibility: visibility,
       };
 
-      const { success, error, itemId } =
-        await CommunityHub.createSlashCommand(data);
+      const { success, error, itemId } = await CommunityHub.createSlashCommand(data);
       if (!success) throw new Error(error);
       setItemId(itemId);
       setIsSuccess(true);
@@ -114,9 +113,7 @@ export default function SlashCommands({ entity }) {
               minLength={3}
               maxLength={300}
               defaultValue={entity.name}
-              placeholder={t(
-                "community_hub.publish.slash_command.name_placeholder"
-              )}
+              placeholder={t("community_hub.publish.slash_command.name_placeholder")}
               className="border-none w-full bg-theme-bg-secondary rounded-lg p-2 text-theme-text-primary text-sm focus:outline-primary-button active:outline-primary-button outline-none placeholder:text-theme-text-placeholder"
             />
           </div>
@@ -134,9 +131,7 @@ export default function SlashCommands({ entity }) {
               minLength={10}
               maxLength={1000}
               defaultValue={entity.description}
-              placeholder={t(
-                "community_hub.publish.slash_command.description_description"
-              )}
+              placeholder={t("community_hub.publish.slash_command.description_description")}
               className="border-none w-full bg-theme-bg-secondary rounded-lg p-2 text-white text-sm focus:outline-primary-button active:outline-primary-button outline-none min-h-[80px] placeholder:text-theme-text-placeholder"
             />
           </div>
@@ -168,9 +163,7 @@ export default function SlashCommands({ entity }) {
                 value={tagInput}
                 onChange={(e) => setTagInput(e.target.value)}
                 onKeyDown={handleKeyDown}
-                placeholder={t(
-                  "community_hub.publish.slash_command.tags_placeholder"
-                )}
+                placeholder={t("community_hub.publish.slash_command.tags_placeholder")}
                 className="flex-1 min-w-[200px] border-none text-sm bg-transparent text-theme-text-primary placeholder:text-theme-text-placeholder p-0 h-[24px] focus:outline-none"
               />
             </div>
@@ -234,9 +227,7 @@ export default function SlashCommands({ entity }) {
               required
               minLength={10}
               defaultValue={entity.prompt}
-              placeholder={t(
-                "community_hub.publish.slash_command.prompt_placeholder"
-              )}
+              placeholder={t("community_hub.publish.slash_command.prompt_placeholder")}
               className="border-none w-full bg-theme-bg-secondary rounded-lg p-2 text-white text-sm focus:outline-primary-button active:outline-primary-button outline-none min-h-[300px] placeholder:text-theme-text-placeholder"
             />
           </div>

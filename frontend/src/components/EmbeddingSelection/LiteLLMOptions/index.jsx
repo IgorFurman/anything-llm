@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
 import System from "@/models/system";
 import { Warning } from "@phosphor-icons/react";
+import { useEffect, useState } from "react";
 import { Tooltip } from "react-tooltip";
 
 export default function LiteLLMOptions({ settings }) {
@@ -13,9 +13,7 @@ export default function LiteLLMOptions({ settings }) {
     <div className="w-full flex flex-col gap-y-7">
       <div className="w-full flex items-center gap-[36px] mt-1.5">
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
-            Base URL
-          </label>
+          <label className="text-white text-sm font-semibold block mb-3">Base URL</label>
           <input
             type="url"
             name="LiteLLMBasePath"
@@ -29,11 +27,7 @@ export default function LiteLLMOptions({ settings }) {
             onBlur={() => setBasePath(basePathValue)}
           />
         </div>
-        <LiteLLMModelSelection
-          settings={settings}
-          basePath={basePath}
-          apiKey={apiKey}
-        />
+        <LiteLLMModelSelection settings={settings} basePath={basePath} apiKey={apiKey} />
         <div className="flex flex-col w-60">
           <label className="text-white text-sm font-semibold block mb-3">
             Max embedding chunk length
@@ -110,9 +104,7 @@ function LiteLLMModelSelection({ settings, basePath = null, apiKey = null }) {
           className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
         >
           <option disabled={true} selected={true}>
-            {basePath?.includes("/v1")
-              ? "-- loading available models --"
-              : "-- waiting for URL --"}
+            {basePath?.includes("/v1") ? "-- loading available models --" : "-- waiting for URL --"}
           </option>
         </select>
       </div>
@@ -161,15 +153,9 @@ function EmbeddingModelTooltip() {
         data-tooltip-id="model-tooltip"
         data-tooltip-place="right"
       />
-      <Tooltip
-        delayHide={300}
-        id="model-tooltip"
-        className="max-w-xs"
-        clickable={true}
-      >
+      <Tooltip delayHide={300} id="model-tooltip" className="max-w-xs" clickable={true}>
         <p className="text-sm">
-          Be sure to select a valid embedding model. Chat models are not
-          embedding models. See{" "}
+          Be sure to select a valid embedding model. Chat models are not embedding models. See{" "}
           <a
             href="https://litellm.vercel.app/docs/embedding/supported_embedding"
             target="_blank"

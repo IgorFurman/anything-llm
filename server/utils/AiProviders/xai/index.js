@@ -1,7 +1,5 @@
 const { NativeEmbedder } = require("../../EmbeddingEngines/native");
-const {
-  LLMPerformanceMonitor,
-} = require("../../helpers/chat/LLMPerformanceMonitor");
+const { LLMPerformanceMonitor } = require("../../helpers/chat/LLMPerformanceMonitor");
 const {
   handleDefaultStreamResponseV2,
   formatChatHistory,
@@ -10,16 +8,14 @@ const { MODEL_MAP } = require("../modelMap");
 
 class XAiLLM {
   constructor(embedder = null, modelPreference = null) {
-    if (!process.env.XAI_LLM_API_KEY)
-      throw new Error("No xAI API key was set.");
+    if (!process.env.XAI_LLM_API_KEY) throw new Error("No xAI API key was set.");
     const { OpenAI: OpenAIApi } = require("openai");
 
     this.openai = new OpenAIApi({
       baseURL: "https://api.x.ai/v1",
       apiKey: process.env.XAI_LLM_API_KEY,
     });
-    this.model =
-      modelPreference || process.env.XAI_LLM_MODEL_PREF || "grok-beta";
+    this.model = modelPreference || process.env.XAI_LLM_MODEL_PREF || "grok-beta";
     this.limits = {
       history: this.promptWindowLimit() * 0.15,
       system: this.promptWindowLimit() * 0.15,
@@ -28,9 +24,7 @@ class XAiLLM {
 
     this.embedder = embedder ?? new NativeEmbedder();
     this.defaultTemp = 0.7;
-    this.log(
-      `Initialized ${this.model} with context window ${this.promptWindowLimit()}`
-    );
+    this.log(`Initialized ${this.model} with context window ${this.promptWindowLimit()}`);
   }
 
   log(text, ...args) {
@@ -76,7 +70,7 @@ class XAiLLM {
     }
 
     const content = [{ type: "text", text: userPrompt }];
-    for (let attachment of attachments) {
+    for (const attachment of attachments) {
       content.push({
         type: "image_url",
         image_url: {
@@ -116,9 +110,7 @@ class XAiLLM {
 
   async getChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!this.isValidChatCompletionModel(this.model))
-      throw new Error(
-        `xAI chat: ${this.model} is not valid for chat completion!`
-      );
+      throw new Error(`xAI chat: ${this.model} is not valid for chat completion!`);
 
     const result = await LLMPerformanceMonitor.measureAsyncFunction(
       this.openai.chat.completions
@@ -132,11 +124,7 @@ class XAiLLM {
         })
     );
 
-    if (
-      !result.output.hasOwnProperty("choices") ||
-      result.output.choices.length === 0
-    )
-      return null;
+    if (!result.output.hasOwnProperty("choices") || result.output.choices.length === 0) return null;
 
     return {
       textResponse: result.output.choices[0].message.content,
@@ -152,9 +140,7 @@ class XAiLLM {
 
   async streamGetChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!this.isValidChatCompletionModel(this.model))
-      throw new Error(
-        `xAI chat: ${this.model} is not valid for chat completion!`
-      );
+      throw new Error(`xAI chat: ${this.model} is not valid for chat completion!`);
 
     const measuredStreamRequest = await LLMPerformanceMonitor.measureStream(
       this.openai.chat.completions.create({

@@ -5,13 +5,7 @@ const { viewLocalFiles, normalizePath, isWithin } = require("../utils/files");
 const { purgeDocument, purgeFolder } = require("../utils/files/purgeDocument");
 const { getVectorDbClass } = require("../utils/helpers");
 const { updateENV, dumpENV } = require("../utils/helpers/updateENV");
-const {
-  reqBody,
-  makeJWT,
-  userFromSession,
-  multiUserMode,
-  queryParams,
-} = require("../utils/http");
+const { reqBody, makeJWT, userFromSession, multiUserMode, queryParams } = require("../utils/http");
 const { handleAssetUpload, handlePfpUpload } = require("../utils/files/multer");
 const { v4 } = require("uuid");
 const { SystemSettings } = require("../models/systemSettings");
@@ -51,9 +45,7 @@ const {
 const { SlashCommandPresets } = require("../models/slashCommandsPresets");
 const { EncryptionManager } = require("../utils/EncryptionManager");
 const { BrowserExtensionApiKey } = require("../models/browserExtensionApiKey");
-const {
-  chatHistoryViewable,
-} = require("../utils/middleware/chatHistoryViewable");
+const { chatHistoryViewable } = require("../utils/middleware/chatHistoryViewable");
 const {
   simpleSSOEnabled,
   simpleSSOLoginDisabled,
@@ -74,8 +66,7 @@ function systemEndpoints(app) {
   });
 
   app.get("/env-dump", async (_, response) => {
-    if (process.env.NODE_ENV !== "production")
-      return response.sendStatus(200).end();
+    if (process.env.NODE_ENV !== "production") return response.sendStatus(200).end();
     dumpENV();
     response.sendStatus(200).end();
   });
@@ -90,29 +81,25 @@ function systemEndpoints(app) {
     }
   });
 
-  app.get(
-    "/system/check-token",
-    [validatedRequest],
-    async (request, response) => {
-      try {
-        if (multiUserMode(response)) {
-          const user = await userFromSession(request, response);
-          if (!user || user.suspended) {
-            response.sendStatus(403).end();
-            return;
-          }
-
-          response.sendStatus(200).end();
+  app.get("/system/check-token", [validatedRequest], async (request, response) => {
+    try {
+      if (multiUserMode(response)) {
+        const user = await userFromSession(request, response);
+        if (!user || user.suspended) {
+          response.sendStatus(403).end();
           return;
         }
 
         response.sendStatus(200).end();
-      } catch (e) {
-        console.error(e.message, e);
-        response.sendStatus(500).end();
+        return;
       }
+
+      response.sendStatus(200).end();
+    } catch (e) {
+      console.error(e.message, e);
+      response.sendStatus(500).end();
     }
-  );
+  });
 
   app.post("/request-token", async (request, response) => {
     try {
@@ -124,8 +111,7 @@ function systemEndpoints(app) {
             user: null,
             valid: false,
             token: null,
-            message:
-              "[005] Login via credentials has been disabled by the administrator.",
+            message: "[005] Login via credentials has been disabled by the administrator.",
           });
           return;
         }
@@ -187,11 +173,7 @@ function systemEndpoints(app) {
           return;
         }
 
-        await Telemetry.sendTelemetry(
-          "login_event",
-          { multiUserMode: false },
-          existingUser?.id
-        );
+        await Telemetry.sendTelemetry("login_event", { multiUserMode: false }, existingUser?.id);
 
         await EventLogs.logEvent(
           "login_event",
@@ -229,12 +211,7 @@ function systemEndpoints(app) {
         return;
       } else {
         const { password } = reqBody(request);
-        if (
-          !bcrypt.compareSync(
-            password,
-            bcrypt.hashSync(process.env.AUTH_TOKEN, 10)
-          )
-        ) {
+        if (!bcrypt.compareSync(password, bcrypt.hashSync(process.env.AUTH_TOKEN, 10))) {
           await EventLogs.logEvent("failed_login_invalid_password", {
             ip: request.ip || "Unknown IP",
             multiUserMode: false,
@@ -254,10 +231,7 @@ function systemEndpoints(app) {
         });
         response.status(200).json({
           valid: true,
-          token: makeJWT(
-            { p: new EncryptionManager().encrypt(password) },
-            process.env.JWT_EXPIRY
-          ),
+          token: makeJWT({ p: new EncryptionManager().encrypt(password) }, process.env.JWT_EXPIRY),
           message: null,
         });
       }
@@ -267,97 +241,71 @@ function systemEndpoints(app) {
     }
   });
 
-  app.get(
-    "/request-token/sso/simple",
-    [simpleSSOEnabled],
-    async (request, response) => {
-      const { token: tempAuthToken } = request.query;
-      const { sessionToken, token, error } =
-        await TemporaryAuthToken.validate(tempAuthToken);
+  app.get("/request-token/sso/simple", [simpleSSOEnabled], async (request, response) => {
+    const { token: tempAuthToken } = request.query;
+    const { sessionToken, token, error } = await TemporaryAuthToken.validate(tempAuthToken);
 
-      if (error) {
-        await EventLogs.logEvent("failed_login_invalid_temporary_auth_token", {
-          ip: request.ip || "Unknown IP",
-          multiUserMode: true,
-        });
-        return response.status(401).json({
-          valid: false,
-          token: null,
-          message: `[001] An error occurred while validating the token: ${error}`,
-        });
-      }
-
-      await Telemetry.sendTelemetry(
-        "login_event",
-        { multiUserMode: true },
-        token.user.id
-      );
-      await EventLogs.logEvent(
-        "login_event",
-        {
-          ip: request.ip || "Unknown IP",
-          username: token.user.username || "Unknown user",
-        },
-        token.user.id
-      );
-
-      response.status(200).json({
-        valid: true,
-        user: User.filterFields(token.user),
-        token: sessionToken,
-        message: null,
+    if (error) {
+      await EventLogs.logEvent("failed_login_invalid_temporary_auth_token", {
+        ip: request.ip || "Unknown IP",
+        multiUserMode: true,
+      });
+      return response.status(401).json({
+        valid: false,
+        token: null,
+        message: `[001] An error occurred while validating the token: ${error}`,
       });
     }
-  );
 
-  app.post(
-    "/system/recover-account",
-    [isMultiUserSetup],
-    async (request, response) => {
-      try {
-        const { username, recoveryCodes } = reqBody(request);
-        const { success, resetToken, error } = await recoverAccount(
-          username,
-          recoveryCodes
-        );
+    await Telemetry.sendTelemetry("login_event", { multiUserMode: true }, token.user.id);
+    await EventLogs.logEvent(
+      "login_event",
+      {
+        ip: request.ip || "Unknown IP",
+        username: token.user.username || "Unknown user",
+      },
+      token.user.id
+    );
 
-        if (success) {
-          response.status(200).json({ success, resetToken });
-        } else {
-          response.status(400).json({ success, message: error });
-        }
-      } catch (error) {
-        console.error("Error recovering account:", error);
-        response
-          .status(500)
-          .json({ success: false, message: "Internal server error" });
+    response.status(200).json({
+      valid: true,
+      user: User.filterFields(token.user),
+      token: sessionToken,
+      message: null,
+    });
+  });
+
+  app.post("/system/recover-account", [isMultiUserSetup], async (request, response) => {
+    try {
+      const { username, recoveryCodes } = reqBody(request);
+      const { success, resetToken, error } = await recoverAccount(username, recoveryCodes);
+
+      if (success) {
+        response.status(200).json({ success, resetToken });
+      } else {
+        response.status(400).json({ success, message: error });
       }
+    } catch (error) {
+      console.error("Error recovering account:", error);
+      response.status(500).json({ success: false, message: "Internal server error" });
     }
-  );
+  });
 
-  app.post(
-    "/system/reset-password",
-    [isMultiUserSetup],
-    async (request, response) => {
-      try {
-        const { token, newPassword, confirmPassword } = reqBody(request);
-        const { success, message, error } = await resetPassword(
-          token,
-          newPassword,
-          confirmPassword
-        );
+  app.post("/system/reset-password", [isMultiUserSetup], async (request, response) => {
+    try {
+      const { token, newPassword, confirmPassword } = reqBody(request);
+      const { success, message, error } = await resetPassword(token, newPassword, confirmPassword);
 
-        if (success) {
-          response.status(200).json({ success, message });
-        } else {
-          response.status(400).json({ success, error });
-        }
-      } catch (error) {
-        console.error("Error resetting password:", error);
-        response.status(500).json({ success: false, message: error.message });
+      if (success) {
+        response.status(200).json({ success, message });
+      } else {
+        response.status(400).json({ success, error });
       }
+    } catch (error) {
+      console.error("Error resetting password:", error);
+      response.status(500).json({ success: false, message: error.message });
     }
-  );
+  });
 
   app.get(
     "/system/system-vectors",
@@ -436,38 +384,30 @@ function systemEndpoints(app) {
     }
   );
 
-  app.get(
-    "/system/document-processing-status",
-    [validatedRequest],
-    async (_, response) => {
-      try {
-        const online = await new CollectorApi().online();
-        response.sendStatus(online ? 200 : 503);
-      } catch (e) {
-        console.error(e.message, e);
-        response.sendStatus(500).end();
-      }
+  app.get("/system/document-processing-status", [validatedRequest], async (_, response) => {
+    try {
+      const online = await new CollectorApi().online();
+      response.sendStatus(online ? 200 : 503);
+    } catch (e) {
+      console.error(e.message, e);
+      response.sendStatus(500).end();
     }
-  );
+  });
 
-  app.get(
-    "/system/accepted-document-types",
-    [validatedRequest],
-    async (_, response) => {
-      try {
-        const types = await new CollectorApi().acceptedFileTypes();
-        if (!types) {
-          response.sendStatus(404).end();
-          return;
-        }
-
-        response.status(200).json({ types });
-      } catch (e) {
-        console.error(e.message, e);
-        response.sendStatus(500).end();
+  app.get("/system/accepted-document-types", [validatedRequest], async (_, response) => {
+    try {
+      const types = await new CollectorApi().acceptedFileTypes();
+      if (!types) {
+        response.sendStatus(404).end();
+        return;
       }
+
+      response.status(200).json({ types });
+    } catch (e) {
+      console.error(e.message, e);
+      response.sendStatus(500).end();
     }
-  );
+  });
 
   app.post(
     "/system/update-env",
@@ -475,11 +415,7 @@ function systemEndpoints(app) {
     async (request, response) => {
       try {
         const body = reqBody(request);
-        const { newValues, error } = await updateENV(
-          body,
-          false,
-          response?.locals?.user?.id
-        );
+        const { newValues, error } = await updateENV(body, false, response?.locals?.user?.id);
         response.status(200).json({ newValues, error });
       } catch (e) {
         console.error(e.message, e);
@@ -488,95 +424,87 @@ function systemEndpoints(app) {
     }
   );
 
-  app.post(
-    "/system/update-password",
-    [validatedRequest],
-    async (request, response) => {
-      try {
-        // Cannot update password in multi - user mode.
-        if (multiUserMode(response)) {
-          response.sendStatus(401).end();
-          return;
-        }
-
-        let error = null;
-        const { usePassword, newPassword } = reqBody(request);
-        if (!usePassword) {
-          // Password is being disabled so directly unset everything to bypass validation.
-          process.env.AUTH_TOKEN = "";
-          process.env.JWT_SECRET = "";
-        } else {
-          error = await updateENV(
-            {
-              AuthToken: newPassword,
-              JWTSecret: v4(),
-            },
-            true
-          )?.error;
-        }
-        response.status(200).json({ success: !error, error });
-      } catch (e) {
-        console.error(e.message, e);
-        response.sendStatus(500).end();
+  app.post("/system/update-password", [validatedRequest], async (request, response) => {
+    try {
+      // Cannot update password in multi - user mode.
+      if (multiUserMode(response)) {
+        response.sendStatus(401).end();
+        return;
       }
-    }
-  );
 
-  app.post(
-    "/system/enable-multi-user",
-    [validatedRequest],
-    async (request, response) => {
-      try {
-        if (response.locals.multiUserMode) {
-          response.status(200).json({
-            success: false,
-            error: "Multi-user mode is already enabled.",
-          });
-          return;
-        }
-
-        const { username, password } = reqBody(request);
-        const { user, error } = await User.create({
-          username,
-          password,
-          role: ROLES.admin,
-        });
-
-        if (error || !user) {
-          response.status(400).json({
-            success: false,
-            error: error || "Failed to enable multi-user mode.",
-          });
-          return;
-        }
-
-        await SystemSettings._updateSettings({
-          multi_user_mode: true,
-        });
-        await BrowserExtensionApiKey.migrateApiKeysToMultiUser(user.id);
-
-        await updateENV(
+      let error = null;
+      const { usePassword, newPassword } = reqBody(request);
+      if (!usePassword) {
+        // Password is being disabled so directly unset everything to bypass validation.
+        process.env.AUTH_TOKEN = "";
+        process.env.JWT_SECRET = "";
+      } else {
+        error = await updateENV(
           {
-            JWTSecret: process.env.JWT_SECRET || v4(),
+            AuthToken: newPassword,
+            JWTSecret: v4(),
           },
           true
-        );
-        await Telemetry.sendTelemetry("enabled_multi_user_mode", {
-          multiUserMode: true,
-        });
-        await EventLogs.logEvent("multi_user_mode_enabled", {}, user?.id);
-        response.status(200).json({ success: !!user, error });
-      } catch (e) {
-        await User.delete({});
-        await SystemSettings._updateSettings({
-          multi_user_mode: false,
-        });
-
-        console.error(e.message, e);
-        response.sendStatus(500).end();
+        )?.error;
       }
+      response.status(200).json({ success: !error, error });
+    } catch (e) {
+      console.error(e.message, e);
+      response.sendStatus(500).end();
     }
-  );
+  });
+
+  app.post("/system/enable-multi-user", [validatedRequest], async (request, response) => {
+    try {
+      if (response.locals.multiUserMode) {
+        response.status(200).json({
+          success: false,
+          error: "Multi-user mode is already enabled.",
+        });
+        return;
+      }
+
+      const { username, password } = reqBody(request);
+      const { user, error } = await User.create({
+        username,
+        password,
+        role: ROLES.admin,
+      });
+
+      if (error || !user) {
+        response.status(400).json({
+          success: false,
+          error: error || "Failed to enable multi-user mode.",
+        });
+        return;
+      }
+
+      await SystemSettings._updateSettings({
+        multi_user_mode: true,
+      });
+      await BrowserExtensionApiKey.migrateApiKeysToMultiUser(user.id);
+
+      await updateENV(
+        {
+          JWTSecret: process.env.JWT_SECRET || v4(),
+        },
+        true
+      );
+      await Telemetry.sendTelemetry("enabled_multi_user_mode", {
+        multiUserMode: true,
+      });
+      await EventLogs.logEvent("multi_user_mode_enabled", {}, user?.id);
+      response.status(200).json({ success: !!user, error });
+    } catch (e) {
+      await User.delete({});
+      await SystemSettings._updateSettings({
+        multi_user_mode: false,
+      });
+
+      console.error(e.message, e);
+      response.sendStatus(500).end();
+    }
+  });
 
   app.get("/system/multi-user-mode", async (_, response) => {
     try {
@@ -588,10 +516,9 @@ function systemEndpoints(app) {
     }
   });
 
-  app.get("/system/logo", async function (request, response) {
+  app.get("/system/logo", async (request, response) => {
     try {
-      const darkMode =
-        !request?.query?.theme || request?.query?.theme === "default";
+      const darkMode = !request?.query?.theme || request?.query?.theme === "default";
       const defaultFilename = getDefaultFilename(darkMode);
       const logoPath = await determineLogoFilepath(defaultFilename);
       const { found, buffer, size, mime } = fetchLogo(logoPath);
@@ -606,9 +533,7 @@ function systemEndpoints(app) {
         "Access-Control-Expose-Headers":
           "Content-Disposition,X-Is-Custom-Logo,Content-Type,Content-Length",
         "Content-Type": mime || "image/png",
-        "Content-Disposition": `attachment; filename=${path.basename(
-          logoPath
-        )}`,
+        "Content-Disposition": `attachment; filename=${path.basename(logoPath)}`,
         "Content-Length": size,
         "X-Is-Custom-Logo":
           currentLogoFilename !== null &&
@@ -626,8 +551,7 @@ function systemEndpoints(app) {
   app.get("/system/footer-data", [validatedRequest], async (_, response) => {
     try {
       const footerData =
-        (await SystemSettings.get({ label: "footer_data" }))?.value ??
-        JSON.stringify([]);
+        (await SystemSettings.get({ label: "footer_data" }))?.value ?? JSON.stringify([]);
       response.status(200).json({ footerData: footerData });
     } catch (error) {
       console.error("Error fetching footer data:", error);
@@ -669,11 +593,10 @@ function systemEndpoints(app) {
   app.get(
     "/system/pfp/:id",
     [validatedRequest, flexUserRoleValid([ROLES.all])],
-    async function (request, response) {
+    async (request, response) => {
       try {
         const { id } = request.params;
-        if (response.locals?.user?.id !== Number(id))
-          return response.sendStatus(204).end();
+        if (response.locals?.user?.id !== Number(id)) return response.sendStatus(204).end();
 
         const pfpPath = await determinePfpFilepath(id);
         if (!pfpPath) return response.sendStatus(204).end();
@@ -698,7 +621,7 @@ function systemEndpoints(app) {
   app.post(
     "/system/upload-pfp",
     [validatedRequest, flexUserRoleValid([ROLES.all]), handlePfpUpload],
-    async function (request, response) {
+    async (request, response) => {
       try {
         const user = await userFromSession(request, response);
         const uploadedFileName = request.randomFileName;
@@ -710,10 +633,7 @@ function systemEndpoints(app) {
         const oldPfpFilename = userRecord.pfpFilename;
         if (oldPfpFilename) {
           const storagePath = path.join(__dirname, "../storage/assets/pfp");
-          const oldPfpPath = path.join(
-            storagePath,
-            normalizePath(userRecord.pfpFilename)
-          );
+          const oldPfpPath = path.join(storagePath, normalizePath(userRecord.pfpFilename));
           if (!isWithin(path.resolve(storagePath), path.resolve(oldPfpPath)))
             throw new Error("Invalid path name");
           if (fs.existsSync(oldPfpPath)) fs.unlinkSync(oldPfpPath);
@@ -738,7 +658,7 @@ function systemEndpoints(app) {
   app.delete(
     "/system/remove-pfp",
     [validatedRequest, flexUserRoleValid([ROLES.all])],
-    async function (request, response) {
+    async (request, response) => {
       try {
         const user = await userFromSession(request, response);
         const userRecord = await User.get({ id: user.id });
@@ -746,10 +666,7 @@ function systemEndpoints(app) {
 
         if (oldPfpFilename) {
           const storagePath = path.join(__dirname, "../storage/assets/pfp");
-          const oldPfpPath = path.join(
-            storagePath,
-            normalizePath(oldPfpFilename)
-          );
+          const oldPfpPath = path.join(storagePath, normalizePath(oldPfpFilename));
           if (!isWithin(path.resolve(storagePath), path.resolve(oldPfpPath)))
             throw new Error("Invalid path name");
           if (fs.existsSync(oldPfpPath)) fs.unlinkSync(oldPfpPath);
@@ -773,11 +690,7 @@ function systemEndpoints(app) {
 
   app.post(
     "/system/upload-logo",
-    [
-      validatedRequest,
-      flexUserRoleValid([ROLES.admin, ROLES.manager]),
-      handleAssetUpload,
-    ],
+    [validatedRequest, flexUserRoleValid([ROLES.admin, ROLES.manager]), handleAssetUpload],
     async (request, response) => {
       if (!request?.file || !request?.file.originalname) {
         return response.status(400).json({ message: "No logo file provided." });
@@ -813,8 +726,7 @@ function systemEndpoints(app) {
   app.get("/system/is-default-logo", async (_, response) => {
     try {
       const currentLogoFilename = await SystemSettings.currentLogoFilename();
-      const isDefaultLogo =
-        !currentLogoFilename || currentLogoFilename === LOGO_FILENAME;
+      const isDefaultLogo = !currentLogoFilename || currentLogoFilename === LOGO_FILENAME;
       response.status(200).json({ isDefaultLogo });
     } catch (error) {
       console.error("Error processing the logo request:", error);
@@ -848,15 +760,13 @@ function systemEndpoints(app) {
   app.get(
     "/system/welcome-messages",
     [validatedRequest, flexUserRoleValid([ROLES.all])],
-    async function (_, response) {
+    async (_, response) => {
       try {
         const welcomeMessages = await WelcomeMessages.getMessages();
         response.status(200).json({ success: true, welcomeMessages });
       } catch (error) {
         console.error("Error fetching welcome messages:", error);
-        response
-          .status(500)
-          .json({ success: false, message: "Internal server error" });
+        response.status(500).json({ success: false, message: "Internal server error" });
       }
     }
   );
@@ -909,60 +819,47 @@ function systemEndpoints(app) {
     }
   });
 
-  app.post(
-    "/system/generate-api-key",
-    [validatedRequest],
-    async (_, response) => {
-      try {
-        if (response.locals.multiUserMode) {
-          return response.sendStatus(401).end();
-        }
-
-        const { apiKey, error } = await ApiKey.create();
-        await EventLogs.logEvent(
-          "api_key_created",
-          {},
-          response?.locals?.user?.id
-        );
-        return response.status(200).json({
-          apiKey,
-          error,
-        });
-      } catch (error) {
-        console.error(error);
-        response.status(500).json({
-          apiKey: null,
-          error: "Error generating api key.",
-        });
+  app.post("/system/generate-api-key", [validatedRequest], async (_, response) => {
+    try {
+      if (response.locals.multiUserMode) {
+        return response.sendStatus(401).end();
       }
+
+      const { apiKey, error } = await ApiKey.create();
+      await EventLogs.logEvent("api_key_created", {}, response?.locals?.user?.id);
+      return response.status(200).json({
+        apiKey,
+        error,
+      });
+    } catch (error) {
+      console.error(error);
+      response.status(500).json({
+        apiKey: null,
+        error: "Error generating api key.",
+      });
     }
-  );
+  });
 
   // TODO: This endpoint is replicated in the admin endpoints file.
   // and should be consolidated to be a single endpoint with flexible role protection.
-  app.delete(
-    "/system/api-key/:id",
-    [validatedRequest],
-    async (request, response) => {
-      try {
-        if (response.locals.multiUserMode)
-          return response.sendStatus(401).end();
-        const { id } = request.params;
-        if (!id || isNaN(Number(id))) return response.sendStatus(400).end();
+  app.delete("/system/api-key/:id", [validatedRequest], async (request, response) => {
+    try {
+      if (response.locals.multiUserMode) return response.sendStatus(401).end();
+      const { id } = request.params;
+      if (!id || isNaN(Number(id))) return response.sendStatus(400).end();
 
-        await ApiKey.delete({ id: Number(id) });
-        await EventLogs.logEvent(
-          "api_key_deleted",
-          { deletedBy: response.locals?.user?.username },
-          response?.locals?.user?.id
-        );
-        return response.status(200).end();
-      } catch (error) {
-        console.error(error);
-        response.status(500).end();
-      }
+      await ApiKey.delete({ id: Number(id) });
+      await EventLogs.logEvent(
+        "api_key_deleted",
+        { deletedBy: response.locals?.user?.username },
+        response?.locals?.user?.id
+      );
+      return response.status(200).end();
+    } catch (error) {
+      console.error(error);
+      response.status(500).end();
     }
-  );
+  });
 
   app.post(
     "/system/custom-models",
@@ -970,11 +867,7 @@ function systemEndpoints(app) {
     async (request, response) => {
       try {
         const { provider, apiKey = null, basePath = null } = reqBody(request);
-        const { models, error } = await getCustomModels(
-          provider,
-          apiKey,
-          basePath
-        );
+        const { models, error } = await getCustomModels(provider, apiKey, basePath);
         return response.status(200).json({
           models,
           error,
@@ -1012,11 +905,7 @@ function systemEndpoints(app) {
     async (_, response) => {
       try {
         await EventLogs.delete();
-        await EventLogs.logEvent(
-          "event_logs_cleared",
-          {},
-          response?.locals?.user?.id
-        );
+        await EventLogs.logEvent("event_logs_cleared", {}, response?.locals?.user?.id);
         response.json({ success: true });
       } catch (e) {
         console.error(e);
@@ -1027,20 +916,11 @@ function systemEndpoints(app) {
 
   app.post(
     "/system/workspace-chats",
-    [
-      chatHistoryViewable,
-      validatedRequest,
-      flexUserRoleValid([ROLES.admin, ROLES.manager]),
-    ],
+    [chatHistoryViewable, validatedRequest, flexUserRoleValid([ROLES.admin, ROLES.manager])],
     async (request, response) => {
       try {
         const { offset = 0, limit = 20 } = reqBody(request);
-        const chats = await WorkspaceChats.whereWithData(
-          {},
-          limit,
-          offset * limit,
-          { id: "desc" }
-        );
+        const chats = await WorkspaceChats.whereWithData({}, limit, offset * limit, { id: "desc" });
         const totalChats = await WorkspaceChats.count();
         const hasPages = totalChats > (offset + 1) * limit;
 
@@ -1071,11 +951,7 @@ function systemEndpoints(app) {
 
   app.get(
     "/system/export-chats",
-    [
-      chatHistoryViewable,
-      validatedRequest,
-      flexUserRoleValid([ROLES.manager, ROLES.admin]),
-    ],
+    [chatHistoryViewable, validatedRequest, flexUserRoleValid([ROLES.manager, ROLES.admin])],
     async (request, response) => {
       try {
         const { type = "jsonl", chatType = "workspace" } = request.query;
@@ -1111,15 +987,12 @@ function systemEndpoints(app) {
       }
 
       const updates = {};
-      if (username)
-        updates.username = User.validations.username(String(username));
+      if (username) updates.username = User.validations.username(String(username));
       if (password) updates.password = String(password);
       if (bio) updates.bio = String(bio);
 
       if (Object.keys(updates).length === 0) {
-        response
-          .status(400)
-          .json({ success: false, error: "No updates provided" });
+        response.status(400).json({ success: false, error: "No updates provided" });
         return;
       }
 
@@ -1153,14 +1026,11 @@ function systemEndpoints(app) {
       try {
         const user = await userFromSession(request, response);
         const { command, prompt, description } = reqBody(request);
-        const formattedCommand = SlashCommandPresets.formatCommand(
-          String(command)
-        );
+        const formattedCommand = SlashCommandPresets.formatCommand(String(command));
 
         if (Object.keys(VALID_COMMANDS).includes(formattedCommand)) {
           return response.status(400).json({
-            message:
-              "Cannot create a preset with a command that matches a system command",
+            message: "Cannot create a preset with a command that matches a system command",
           });
         }
 
@@ -1172,9 +1042,7 @@ function systemEndpoints(app) {
 
         const preset = await SlashCommandPresets.create(user?.id, presetData);
         if (!preset) {
-          return response
-            .status(500)
-            .json({ message: "Failed to create preset" });
+          return response.status(500).json({ message: "Failed to create preset" });
         }
         response.status(201).json({ preset });
       } catch (error) {
@@ -1192,14 +1060,11 @@ function systemEndpoints(app) {
         const user = await userFromSession(request, response);
         const { slashCommandId } = request.params;
         const { command, prompt, description } = reqBody(request);
-        const formattedCommand = SlashCommandPresets.formatCommand(
-          String(command)
-        );
+        const formattedCommand = SlashCommandPresets.formatCommand(String(command));
 
         if (Object.keys(VALID_COMMANDS).includes(formattedCommand)) {
           return response.status(400).json({
-            message:
-              "Cannot update a preset to use a command that matches a system command",
+            message: "Cannot update a preset to use a command that matches a system command",
           });
         }
 
@@ -1208,8 +1073,7 @@ function systemEndpoints(app) {
           userId: user?.id ?? null,
           id: Number(slashCommandId),
         });
-        if (!ownsPreset)
-          return response.status(404).json({ message: "Preset not found" });
+        if (!ownsPreset) return response.status(404).json({ message: "Preset not found" });
 
         const updates = {
           command: formattedCommand,
@@ -1217,10 +1081,7 @@ function systemEndpoints(app) {
           description: String(description),
         };
 
-        const preset = await SlashCommandPresets.update(
-          Number(slashCommandId),
-          updates
-        );
+        const preset = await SlashCommandPresets.update(Number(slashCommandId), updates);
         if (!preset) return response.sendStatus(422);
         response.status(200).json({ preset: { ...ownsPreset, ...updates } });
       } catch (error) {
@@ -1243,10 +1104,7 @@ function systemEndpoints(app) {
           userId: user?.id ?? null,
           id: Number(slashCommandId),
         });
-        if (!ownsPreset)
-          return response
-            .status(403)
-            .json({ message: "Failed to delete preset" });
+        if (!ownsPreset) return response.status(403).json({ message: "Failed to delete preset" });
 
         await SlashCommandPresets.delete(Number(slashCommandId));
         response.sendStatus(204);

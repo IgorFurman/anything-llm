@@ -1,7 +1,5 @@
 const { NativeEmbedder } = require("../../EmbeddingEngines/native");
-const {
-  LLMPerformanceMonitor,
-} = require("../../helpers/chat/LLMPerformanceMonitor");
+const { LLMPerformanceMonitor } = require("../../helpers/chat/LLMPerformanceMonitor");
 const {
   handleDefaultStreamResponseV2,
   formatChatHistory,
@@ -9,8 +7,7 @@ const {
 
 class LocalAiLLM {
   constructor(embedder = null, modelPreference = null) {
-    if (!process.env.LOCAL_AI_BASE_PATH)
-      throw new Error("No LocalAI Base Path was set.");
+    if (!process.env.LOCAL_AI_BASE_PATH) throw new Error("No LocalAI Base Path was set.");
 
     const { OpenAI: OpenAIApi } = require("openai");
     this.openai = new OpenAIApi({
@@ -46,8 +43,7 @@ class LocalAiLLM {
 
   static promptWindowLimit(_modelName) {
     const limit = process.env.LOCAL_AI_MODEL_TOKEN_LIMIT || 4096;
-    if (!limit || isNaN(Number(limit)))
-      throw new Error("No LocalAi token context limit was set.");
+    if (!limit || isNaN(Number(limit))) throw new Error("No LocalAi token context limit was set.");
     return Number(limit);
   }
 
@@ -55,8 +51,7 @@ class LocalAiLLM {
   // and if undefined - assume 4096 window.
   promptWindowLimit() {
     const limit = process.env.LOCAL_AI_MODEL_TOKEN_LIMIT || 4096;
-    if (!limit || isNaN(Number(limit)))
-      throw new Error("No LocalAi token context limit was set.");
+    if (!limit || isNaN(Number(limit))) throw new Error("No LocalAi token context limit was set.");
     return Number(limit);
   }
 
@@ -75,7 +70,7 @@ class LocalAiLLM {
     }
 
     const content = [{ type: "text", text: userPrompt }];
-    for (let attachment of attachments) {
+    for (const attachment of attachments) {
       content.push({
         type: "image_url",
         image_url: {
@@ -114,9 +109,7 @@ class LocalAiLLM {
 
   async getChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!(await this.isValidChatCompletionModel(this.model)))
-      throw new Error(
-        `LocalAI chat: ${this.model} is not valid for chat completion!`
-      );
+      throw new Error(`LocalAI chat: ${this.model} is not valid for chat completion!`);
 
     const result = await LLMPerformanceMonitor.measureAsyncFunction(
       this.openai.chat.completions.create({
@@ -126,11 +119,7 @@ class LocalAiLLM {
       })
     );
 
-    if (
-      !result.output.hasOwnProperty("choices") ||
-      result.output.choices.length === 0
-    )
-      return null;
+    if (!result.output.hasOwnProperty("choices") || result.output.choices.length === 0) return null;
 
     const promptTokens = LLMPerformanceMonitor.countTokens(messages);
     const completionTokens = LLMPerformanceMonitor.countTokens(
@@ -151,9 +140,7 @@ class LocalAiLLM {
 
   async streamGetChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!(await this.isValidChatCompletionModel(this.model)))
-      throw new Error(
-        `LocalAi chat: ${this.model} is not valid for chat completion!`
-      );
+      throw new Error(`LocalAi chat: ${this.model} is not valid for chat completion!`);
 
     const measuredStreamRequest = await LLMPerformanceMonitor.measureStream(
       this.openai.chat.completions.create({

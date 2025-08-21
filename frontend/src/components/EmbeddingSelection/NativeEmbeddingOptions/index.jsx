@@ -1,13 +1,11 @@
+import System from "@/models/system";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import System from "@/models/system";
 
 export default function NativeEmbeddingOptions({ settings }) {
   const [loading, setLoading] = useState(true);
   const [availableModels, setAvailableModels] = useState([]);
-  const [selectedModel, setSelectedModel] = useState(
-    settings?.EmbeddingModelPref
-  );
+  const [selectedModel, setSelectedModel] = useState(settings?.EmbeddingModelPref);
   const [selectedModelInfo, setSelectedModelInfo] = useState();
 
   useEffect(() => {
@@ -16,8 +14,7 @@ export default function NativeEmbeddingOptions({ settings }) {
         if (models?.length > 0) {
           setAvailableModels(models);
           const _selectedModel =
-            models.find((model) => model.id === settings?.EmbeddingModelPref) ??
-            models[0];
+            models.find((model) => model.id === settings?.EmbeddingModelPref) ?? models[0];
           setSelectedModel(_selectedModel.id);
           setSelectedModelInfo(_selectedModel);
         }
@@ -29,18 +26,14 @@ export default function NativeEmbeddingOptions({ settings }) {
 
   useEffect(() => {
     if (!availableModels?.length || !selectedModel) return;
-    setSelectedModelInfo(
-      availableModels.find((model) => model.id === selectedModel)
-    );
+    setSelectedModelInfo(availableModels.find((model) => model.id === selectedModel));
   }, [selectedModel, availableModels]);
 
   return (
     <div className="w-full flex flex-col gap-y-4">
       <div className="w-full flex flex-col mt-1.5">
         <div className="flex flex-col w-96">
-          <label className="text-white text-sm font-semibold block mb-3">
-            Model Preference
-          </label>
+          <label className="text-white text-sm font-semibold block mb-3">Model Preference</label>
           <select
             name="EmbeddingModelPref"
             required={true}
@@ -49,22 +42,14 @@ export default function NativeEmbeddingOptions({ settings }) {
             onChange={(e) => setSelectedModel(e.target.value)}
           >
             {loading ? (
-              <option
-                value="--loading-available-models--"
-                disabled={true}
-                selected={true}
-              >
+              <option value="--loading-available-models--" disabled={true} selected={true}>
                 --loading available models--
               </option>
             ) : (
               <optgroup label="Available embedding models">
                 {availableModels.map((model) => {
                   return (
-                    <option
-                      key={model.id}
-                      value={model.id}
-                      selected={selectedModel === model.id}
-                    >
+                    <option key={model.id} value={model.id} selected={selectedModel === model.id}>
                       {model.name}
                     </option>
                   );

@@ -1,10 +1,6 @@
 const { NativeEmbedder } = require("../../EmbeddingEngines/native");
-const {
-  LLMPerformanceMonitor,
-} = require("../../helpers/chat/LLMPerformanceMonitor");
-const {
-  handleDefaultStreamResponseV2,
-} = require("../../helpers/chat/responses");
+const { LLMPerformanceMonitor } = require("../../helpers/chat/LLMPerformanceMonitor");
+const { handleDefaultStreamResponseV2 } = require("../../helpers/chat/responses");
 
 function fireworksAiModels() {
   const { MODELS } = require("./models.js");
@@ -13,8 +9,7 @@ function fireworksAiModels() {
 
 class FireworksAiLLM {
   constructor(embedder = null, modelPreference = null) {
-    if (!process.env.FIREWORKS_AI_LLM_API_KEY)
-      throw new Error("No FireworksAI API key was set.");
+    if (!process.env.FIREWORKS_AI_LLM_API_KEY) throw new Error("No FireworksAI API key was set.");
     const { OpenAI: OpenAIApi } = require("openai");
     this.openai = new OpenAIApi({
       baseURL: "https://api.fireworks.ai/inference/v1",
@@ -68,12 +63,7 @@ class FireworksAiLLM {
     return availableModels.hasOwnProperty(model);
   }
 
-  constructPrompt({
-    systemPrompt = "",
-    contextTexts = [],
-    chatHistory = [],
-    userPrompt = "",
-  }) {
+  constructPrompt({ systemPrompt = "", contextTexts = [], chatHistory = [], userPrompt = "" }) {
     const prompt = {
       role: "system",
       content: `${systemPrompt}${this.#appendContext(contextTexts)}`,
@@ -83,9 +73,7 @@ class FireworksAiLLM {
 
   async getChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!(await this.isValidChatCompletionModel(this.model)))
-      throw new Error(
-        `FireworksAI chat: ${this.model} is not valid for chat completion!`
-      );
+      throw new Error(`FireworksAI chat: ${this.model} is not valid for chat completion!`);
 
     const result = await LLMPerformanceMonitor.measureAsyncFunction(
       this.openai.chat.completions.create({
@@ -95,11 +83,7 @@ class FireworksAiLLM {
       })
     );
 
-    if (
-      !result.output.hasOwnProperty("choices") ||
-      result.output.choices.length === 0
-    )
-      return null;
+    if (!result.output.hasOwnProperty("choices") || result.output.choices.length === 0) return null;
 
     return {
       textResponse: result.output.choices[0].message.content,
@@ -115,9 +99,7 @@ class FireworksAiLLM {
 
   async streamGetChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!(await this.isValidChatCompletionModel(this.model)))
-      throw new Error(
-        `FireworksAI chat: ${this.model} is not valid for chat completion!`
-      );
+      throw new Error(`FireworksAI chat: ${this.model} is not valid for chat completion!`);
 
     const measuredStreamRequest = await LLMPerformanceMonitor.measureStream(
       this.openai.chat.completions.create({

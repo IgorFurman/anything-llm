@@ -2,12 +2,8 @@ const { safeJsonParse } = require("../../http");
 const path = require("path");
 const fs = require("fs");
 const { Client } = require("@modelcontextprotocol/sdk/client/index.js");
-const {
-  StdioClientTransport,
-} = require("@modelcontextprotocol/sdk/client/stdio.js");
-const {
-  SSEClientTransport,
-} = require("@modelcontextprotocol/sdk/client/sse.js");
+const { StdioClientTransport } = require("@modelcontextprotocol/sdk/client/stdio.js");
+const { SSEClientTransport } = require("@modelcontextprotocol/sdk/client/sse.js");
 const {
   StreamableHTTPClientTransport,
 } = require("@modelcontextprotocol/sdk/client/streamableHttp.js");
@@ -65,23 +61,17 @@ class MCPHypervisor {
   #setupConfigFile() {
     this.mcpServerJSONPath =
       process.env.NODE_ENV === "development"
-        ? path.resolve(
-            __dirname,
-            `../../../storage/plugins/anythingllm_mcp_servers.json`
-          )
+        ? path.resolve(__dirname, `../../../storage/plugins/anythingllm_mcp_servers.json`)
         : path.resolve(
-            process.env.STORAGE_DIR ??
-              path.resolve(__dirname, `../../../storage`),
+            process.env.STORAGE_DIR ?? path.resolve(__dirname, `../../../storage`),
             `plugins/anythingllm_mcp_servers.json`
           );
 
     if (!fs.existsSync(this.mcpServerJSONPath)) {
       fs.mkdirSync(path.dirname(this.mcpServerJSONPath), { recursive: true });
-      fs.writeFileSync(
-        this.mcpServerJSONPath,
-        JSON.stringify({ mcpServers: {} }, null, 2),
-        { encoding: "utf8" }
-      );
+      fs.writeFileSync(this.mcpServerJSONPath, JSON.stringify({ mcpServers: {} }, null, 2), {
+        encoding: "utf8",
+      });
     }
 
     this.log(`MCP Config File: ${this.mcpServerJSONPath}`);
@@ -96,10 +86,9 @@ class MCPHypervisor {
    * @returns { { name: string, server: { command: string, args: string[], env: { [key: string]: string } } }[] } The MCP servers.
    */
   get mcpServerConfigs() {
-    const servers = safeJsonParse(
-      fs.readFileSync(this.mcpServerJSONPath, "utf8"),
-      { mcpServers: {} }
-    );
+    const servers = safeJsonParse(fs.readFileSync(this.mcpServerJSONPath, "utf8"), {
+      mcpServers: {},
+    });
     return Object.entries(servers.mcpServers).map(([name, server]) => ({
       name,
       server,
@@ -112,18 +101,13 @@ class MCPHypervisor {
    * @returns {boolean} - True if the MCP server was removed, false otherwise
    */
   removeMCPServerFromConfig(name) {
-    const servers = safeJsonParse(
-      fs.readFileSync(this.mcpServerJSONPath, "utf8"),
-      { mcpServers: {} }
-    );
+    const servers = safeJsonParse(fs.readFileSync(this.mcpServerJSONPath, "utf8"), {
+      mcpServers: {},
+    });
     if (!servers.mcpServers[name]) return false;
 
     delete servers.mcpServers[name];
-    fs.writeFileSync(
-      this.mcpServerJSONPath,
-      JSON.stringify(servers, null, 2),
-      "utf8"
-    );
+    fs.writeFileSync(this.mcpServerJSONPath, JSON.stringify(servers, null, 2), "utf8");
     this.log(`MCP server ${name} removed from config file`);
     return true;
   }
@@ -143,8 +127,7 @@ class MCPHypervisor {
    * @returns {Promise<{success: boolean, error: string | null}>}
    */
   async startMCPServer(name) {
-    if (this.mcps[name])
-      return { success: false, error: `MCP server ${name} already running` };
+    if (this.mcps[name]) return { success: false, error: `MCP server ${name} already running` };
     const config = this.mcpServerConfigs.find((s) => s.name === name);
     if (!config)
       return {
@@ -360,10 +343,8 @@ class MCPHypervisor {
 
     // Add connection event listeners
     transport.onclose = () => this.log(`${name} - Transport closed`);
-    transport.onerror = (error) =>
-      this.log(`${name} - Transport error:`, error);
-    transport.onmessage = (message) =>
-      this.log(`${name} - Transport message:`, message);
+    transport.onerror = (error) => this.log(`${name} - Transport error:`, error);
+    transport.onmessage = (message) => this.log(`${name} - Transport message:`, message);
 
     // Connect and await the connection with a timeout
     this.mcps[name] = mcp;
@@ -432,10 +413,7 @@ class MCPHypervisor {
     }
 
     const runningServers = Object.keys(this.mcps);
-    this.log(
-      `Successfully started ${runningServers.length} MCP servers:`,
-      runningServers
-    );
+    this.log(`Successfully started ${runningServers.length} MCP servers:`, runningServers);
     return this.mcpLoadingResults;
   }
 }

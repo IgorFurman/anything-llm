@@ -1,6 +1,4 @@
-const {
-  BrowserExtensionApiKey,
-} = require("../../models/browserExtensionApiKey");
+const { BrowserExtensionApiKey } = require("../../models/browserExtensionApiKey");
 const { SystemSettings } = require("../../models/systemSettings");
 const { User } = require("../../models/user");
 

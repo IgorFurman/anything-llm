@@ -14,9 +14,7 @@ export function GoogleSearchOptions({ settings }) {
       </p>
       <div className="flex gap-x-4">
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
-            Search engine ID
-          </label>
+          <label className="text-white text-sm font-semibold block mb-3">Search engine ID</label>
           <input
             type="text"
             name="env::AgentGoogleSearchEngineId"
@@ -37,9 +35,7 @@ export function GoogleSearchOptions({ settings }) {
             name="env::AgentGoogleSearchEngineKey"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             placeholder="Google Search Engine API Key"
-            defaultValue={
-              settings?.AgentGoogleSearchEngineKey ? "*".repeat(20) : ""
-            }
+            defaultValue={settings?.AgentGoogleSearchEngineKey ? "*".repeat(20) : ""}
             required={true}
             autoComplete="off"
             spellCheck={false}
@@ -81,9 +77,7 @@ export function SearchApiOptions({ settings }) {
       </p>
       <div className="flex gap-x-4">
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
-            API Key
-          </label>
+          <label className="text-white text-sm font-semibold block mb-3">API Key</label>
           <input
             type="password"
             name="env::AgentSearchApiKey"
@@ -96,9 +90,7 @@ export function SearchApiOptions({ settings }) {
           />
         </div>
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
-            Engine
-          </label>
+          <label className="text-white text-sm font-semibold block mb-3">Engine</label>
           <select
             name="env::AgentSearchApiEngine"
             required={true}
@@ -143,9 +135,7 @@ export function SerperDotDevOptions({ settings }) {
       </p>
       <div className="flex gap-x-4">
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
-            API Key
-          </label>
+          <label className="text-white text-sm font-semibold block mb-3">API Key</label>
           <input
             type="password"
             name="env::AgentSerperApiKey"
@@ -178,9 +168,7 @@ export function BingSearchOptions({ settings }) {
       </p>
       <div className="flex gap-x-4">
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
-            API Key
-          </label>
+          <label className="text-white text-sm font-semibold block mb-3">API Key</label>
           <input
             type="password"
             name="env::AgentBingSearchApiKey"
@@ -193,9 +181,7 @@ export function BingSearchOptions({ settings }) {
           />
         </div>
       </div>
-      <p className="text-sm text-white/60 my-2">
-        To set up a Bing Web Search API subscription:
-      </p>
+      <p className="text-sm text-white/60 my-2">To set up a Bing Web Search API subscription:</p>
       <ol className="list-decimal text-sm text-white/60 ml-6">
         <li>
           Go to the Azure portal:{" "}
@@ -210,17 +196,11 @@ export function BingSearchOptions({ settings }) {
         </li>
         <li>Create a new Azure account or sign in with an existing one.</li>
         <li>
-          Navigate to the "Create a resource" section and search for "Grounding
-          with Bing Search".
+          Navigate to the "Create a resource" section and search for "Grounding with Bing Search".
         </li>
-        <li>
-          Select the "Grounding with Bing Search" resource and create a new
-          subscription.
-        </li>
+        <li>Select the "Grounding with Bing Search" resource and create a new subscription.</li>
         <li>Choose the pricing tier that suits your needs.</li>
-        <li>
-          Obtain the API key for your Grounding with Bing Search subscription.
-        </li>
+        <li>Obtain the API key for your Grounding with Bing Search subscription.</li>
       </ol>
     </>
   );
@@ -242,9 +222,7 @@ export function SerplySearchOptions({ settings }) {
       </p>
       <div className="flex gap-x-4">
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
-            API Key
-          </label>
+          <label className="text-white text-sm font-semibold block mb-3">API Key</label>
           <input
             type="password"
             name="env::AgentSerplyApiKey"
@@ -265,9 +243,7 @@ export function SearXNGOptions({ settings }) {
   return (
     <div className="flex gap-x-4">
       <div className="flex flex-col w-60">
-        <label className="text-white text-sm font-semibold block mb-3">
-          SearXNG API Base URL
-        </label>
+        <label className="text-white text-sm font-semibold block mb-3">SearXNG API Base URL</label>
         <input
           type="url"
           name="env::AgentSearXNGApiUrl"
@@ -299,9 +275,7 @@ export function TavilySearchOptions({ settings }) {
       </p>
       <div className="flex gap-x-4">
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
-            API Key
-          </label>
+          <label className="text-white text-sm font-semibold block mb-3">API Key</label>
           <input
             type="password"
             name="env::AgentTavilyApiKey"

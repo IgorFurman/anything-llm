@@ -1,13 +1,11 @@
-import { useEffect, useCallback, useRef } from "react";
+import Appearance from "@/models/appearance";
 import { Microphone } from "@phosphor-icons/react";
+import { useCallback, useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
+import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
 import { Tooltip } from "react-tooltip";
 import _regeneratorRuntime from "regenerator-runtime";
-import SpeechRecognition, {
-  useSpeechRecognition,
-} from "react-speech-recognition";
 import { PROMPT_INPUT_EVENT } from "../../PromptInput";
-import { useTranslation } from "react-i18next";
-import Appearance from "@/models/appearance";
 
 let timeout;
 const SILENCE_INTERVAL = 3_200; // wait in seconds of silence before closing.
@@ -94,10 +92,8 @@ export default function SpeechToText({ sendCommand }) {
   }, [handleKeyPress]);
 
   useEffect(() => {
-    if (!!window)
-      window.addEventListener(PROMPT_INPUT_EVENT, handlePromptUpdate);
-    return () =>
-      window?.removeEventListener(PROMPT_INPUT_EVENT, handlePromptUpdate);
+    if (!!window) window.addEventListener(PROMPT_INPUT_EVENT, handlePromptUpdate);
+    return () => window?.removeEventListener(PROMPT_INPUT_EVENT, handlePromptUpdate);
   }, []);
 
   useEffect(() => {
@@ -107,8 +103,7 @@ export default function SpeechToText({ sendCommand }) {
 
       // Stream just the diff of the new content since transcript is an accumulating string.
       // and not just the new content transcribed.
-      if (newContent.length > 0)
-        sendCommand({ text: newContent, writeMode: "append" });
+      if (newContent.length > 0) sendCommand({ text: newContent, writeMode: "append" });
 
       previousTranscriptRef.current = transcript;
       clearTimeout(timeout);

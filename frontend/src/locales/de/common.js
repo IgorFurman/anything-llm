@@ -33,13 +33,11 @@ const TRANSLATIONS = {
       title: "Datenverarbeitung & Datenschutz",
       description:
         "Wir setzen uns für Transparenz und Kontrolle im Umgang mit Ihren persönlichen Daten ein.",
-      settingsHint:
-        "Diese Einstellungen können jederzeit in den Einstellungen angepasst werden.",
+      settingsHint: "Diese Einstellungen können jederzeit in den Einstellungen angepasst werden.",
     },
     survey: {
       title: "Willkommen bei AnythingLLM",
-      description:
-        "Helfen Sie uns, AnythingLLM an Ihre Bedürfnisse anzupassen. (Optional)",
+      description: "Helfen Sie uns, AnythingLLM an Ihre Bedürfnisse anzupassen. (Optional)",
       email: "Wie lautet Ihre E-Mail-Adresse?",
       useCase: "Wofür möchten Sie AnythingLLM verwenden?",
       useCaseWork: "Beruflich",
@@ -53,8 +51,7 @@ const TRANSLATIONS = {
     },
     workspace: {
       title: "Ersten Workspace erstellen",
-      description:
-        "Erstellen Sie Ihren ersten Workspace und starten Sie AnythingLLM.",
+      description: "Erstellen Sie Ihren ersten Workspace und starten Sie AnythingLLM.",
     },
   },
   common: {
@@ -149,8 +146,7 @@ const TRANSLATIONS = {
     contact: "Kontaktieren Sie Mintplex Labs",
   },
   "main-page": {
-    noWorkspaceError:
-      "Bitte erstellen Sie einen Workspace, bevor Sie einen Chat beginnen.",
+    noWorkspaceError: "Bitte erstellen Sie einen Workspace, bevor Sie einen Chat beginnen.",
     checklist: {
       title: "Erste Schritte",
       tasksLeft: "Aufgaben übrig",
@@ -179,8 +175,7 @@ const TRANSLATIONS = {
         },
         define_slash_command: {
           title: "Einen Slash-Befehl definieren",
-          description:
-            "Erstellen Sie benutzerdefinierte Befehle für Ihren Assistenten",
+          description: "Erstellen Sie benutzerdefinierte Befehle für Ihren Assistenten",
           action: "Definieren",
         },
         visit_community: {
@@ -201,8 +196,7 @@ const TRANSLATIONS = {
       features: {
         customAgents: {
           title: "Benutzerdefinierte KI-Agenten",
-          description:
-            "Erstellen Sie leistungsstarke KI-Agenten und Automatisierungen ohne Code.",
+          description: "Erstellen Sie leistungsstarke KI-Agenten und Automatisierungen ohne Code.",
           primaryAction: "Chatten mit @agent",
           secondaryAction: "Einen Agenten-Flow erstellen",
         },
@@ -264,8 +258,7 @@ const TRANSLATIONS = {
     },
     pfp: {
       title: "Assistent-Profilbild",
-      description:
-        "Passen Sie das Profilbild des Assistenten für diesen Workspace an.",
+      description: "Passen Sie das Profilbild des Assistenten für diesen Workspace an.",
       image: "Workspace-Bild",
       remove: "Workspace-Bild entfernen",
     },
@@ -344,8 +337,7 @@ const TRANSLATIONS = {
     },
     temperature: {
       title: "LLM-Temperatur",
-      "desc-start":
-        'Diese Einstellung steuert, wie "kreativ" Ihre LLM-Antworten sein werden.',
+      "desc-start": 'Diese Einstellung steuert, wie "kreativ" Ihre LLM-Antworten sein werden.',
       "desc-end":
         "Je höher die Zahl, desto kreativer. Bei einigen Modellen kann dies zu unverständlichen Antworten führen, wenn sie zu hoch eingestellt ist.",
       hint: "Die meisten LLMs haben verschiedene akzeptable Bereiche gültiger Werte. Konsultieren Sie Ihren LLM-Anbieter für diese Informationen.",
@@ -454,16 +446,14 @@ const TRANSLATIONS = {
     },
     branding: {
       title: "Branding & Whitelabeling",
-      description:
-        "Individualisieren Sie Ihre AnythingLLM-Instanz durch eigenes Branding.",
+      description: "Individualisieren Sie Ihre AnythingLLM-Instanz durch eigenes Branding.",
     },
     chat: {
       title: "Chat",
       description: "Passen Sie Ihre Chat-Einstellungen für AnythingLLM an.",
       auto_submit: {
         title: "Spracheingaben automatisch senden",
-        description:
-          "Automatische Übermittlung der Spracheingabe nach einer Sprechpause.",
+        description: "Automatische Übermittlung der Spracheingabe nach einer Sprechpause.",
       },
       auto_speak: {
         title: "Antworten automatisch vorlesen",
@@ -482,8 +472,7 @@ const TRANSLATIONS = {
       },
       "show-scrollbar": {
         title: "Scrollbar anzeigen",
-        description:
-          "Aktivieren oder deaktivieren Sie die Scrollbar im Chat-Fenster.",
+        description: "Aktivieren oder deaktivieren Sie die Scrollbar im Chat-Fenster.",
       },
       "support-email": {
         title: "Support-E-Mail",
@@ -491,23 +480,19 @@ const TRANSLATIONS = {
       },
       "app-name": {
         title: "Name",
-        description:
-          "Geben Sie einen Anwendungsnamen ein, der auf der Login-Seite erscheint.",
+        description: "Geben Sie einen Anwendungsnamen ein, der auf der Login-Seite erscheint.",
       },
       "chat-message-alignment": {
         title: "Nachrichtenanordnung im Chat",
-        description:
-          "Bestimmen Sie den Ausrichtungsmodus der Chat-Nachrichten.",
+        description: "Bestimmen Sie den Ausrichtungsmodus der Chat-Nachrichten.",
       },
       "display-language": {
         title: "Sprache",
-        description:
-          "Wählen Sie die bevorzugte Sprache für die Benutzeroberfläche.",
+        description: "Wählen Sie die bevorzugte Sprache für die Benutzeroberfläche.",
       },
       logo: {
         title: "Eigenes Logo",
-        description:
-          "Laden Sie Ihr eigenes Logo hoch, das auf allen Seiten angezeigt wird.",
+        description: "Laden Sie Ihr eigenes Logo hoch, das auf allen Seiten angezeigt wird.",
         add: "Eigenes Logo hinzufügen",
         recommended: "Empfohlene Größe: 800 x 200",
         remove: "Löschen",
@@ -584,10 +569,8 @@ const TRANSLATIONS = {
     provider: "Transkriptionsanbieter",
     "warn-start":
       "Die Verwendung des lokalen Whisper-Modells auf Maschinen mit begrenztem RAM oder CPU kann AnythingLLM bei der Verarbeitung von Mediendateien zum Stillstand bringen.",
-    "warn-recommend":
-      "Wir empfehlen mindestens 2 GB RAM und das Hochladen von Dateien <10 MB.",
-    "warn-end":
-      "Das eingebaute Modell wird bei der ersten Verwendung automatisch heruntergeladen.",
+    "warn-recommend": "Wir empfehlen mindestens 2 GB RAM und das Hochladen von Dateien <10 MB.",
+    "warn-end": "Das eingebaute Modell wird bei der ersten Verwendung automatisch heruntergeladen.",
   },
   embedding: {
     title: "Einbettungspräferenz",
@@ -703,8 +686,7 @@ const TRANSLATIONS = {
       importing: "Vault wird importiert...",
       import_vault: "Vault importieren",
       processing_time: "Dies kann je nach Größe Ihres Vaults etwas dauern",
-      vault_warning:
-        "Bitte schließen Sie Ihr Obsidian-Vault, um mögliche Konflikte zu vermeiden.",
+      vault_warning: "Bitte schließen Sie Ihr Obsidian-Vault, um mögliche Konflikte zu vermeiden.",
     },
     github: {
       name: "GitHub Repository",
@@ -767,8 +749,7 @@ const TRANSLATIONS = {
     },
     youtube: {
       name: "YouTube Transkript",
-      description:
-        "Importieren Sie die Transkription eines YouTube-Videos über einen Link.",
+      description: "Importieren Sie die Transkription eines YouTube-Videos über einen Link.",
       URL: "YouTube Video URL",
       URL_explained_start:
         "Geben Sie die URL eines beliebigen YouTube-Videos ein, um dessen Transkript abzurufen. Das Video muss über ",
@@ -777,8 +758,7 @@ const TRANSLATIONS = {
       task_explained:
         "Sobald der Vorgang abgeschlossen ist, ist das Transkript im Dokumenten-Picker zur Einbettung in Workspaces verfügbar.",
       language: "Transkriptsprache",
-      language_explained:
-        "Wählen Sie die Sprache des Transkripts aus, das Sie sammeln möchten.",
+      language_explained: "Wählen Sie die Sprache des Transkripts aus, das Sie sammeln möchten.",
       loading_languages: "-- lade verfügbare Sprachen --",
     },
     "website-depth": {
@@ -786,8 +766,7 @@ const TRANSLATIONS = {
       description:
         "Durchsuchen Sie eine Website und ihre Unterlinks bis zu einer bestimmten Tiefe.",
       URL: "Website URL",
-      URL_explained:
-        "Geben Sie die Start-URL der Website ein, die Sie durchsuchen möchten.",
+      URL_explained: "Geben Sie die Start-URL der Website ein, die Sie durchsuchen möchten.",
       depth: "Durchsuchungstiefe",
       depth_explained:
         "Das ist die Menge an Unterseiten, die abhängig der originalen URL durchsucht werden sollen.",
@@ -798,8 +777,7 @@ const TRANSLATIONS = {
     },
     confluence: {
       name: "Confluence",
-      description:
-        "Importieren Sie eine komplette Confluence-Seite mit einem einzigen Klick.",
+      description: "Importieren Sie eine komplette Confluence-Seite mit einem einzigen Klick.",
       deployment_type: "Confluence Bereitstellungstyp",
       deployment_type_explained:
         "Bestimmen Sie, ob Ihre Confluence-Instanz in der Atlassian Cloud oder selbst gehostet ist.",
@@ -842,8 +820,7 @@ const TRANSLATIONS = {
       name: "Name",
       "delete-confirmation":
         "Sind Sie sicher, dass Sie diese Dateien und Ordner löschen möchten?\nDies wird die Dateien vom System entfernen und sie automatisch aus allen vorhandenen Workspaces entfernen.\nDiese Aktion kann nicht rückgängig gemacht werden.",
-      "removing-message":
-        "Entferne {{count}} Dokumente und {{folderCount}} Ordner. Bitte warten.",
+      "removing-message": "Entferne {{count}} Dokumente und {{folderCount}} Ordner. Bitte warten.",
       "move-success": "{{count}} Dokumente erfolgreich verschoben.",
       date: "Datum",
       type: "Typ",
@@ -858,10 +835,8 @@ const TRANSLATIONS = {
       "processor-offline": "Dokumentenprozessor nicht verfügbar",
       "processor-offline-desc":
         "Wir können Ihre Dateien momentan nicht hochladen, da der Dokumentenprozessor offline ist. Bitte versuchen Sie es später erneut.",
-      "click-upload":
-        "Klicken Sie zum Hochladen oder ziehen Sie Dateien per Drag & Drop",
-      "file-types":
-        "unterstützt Textdateien, CSVs, Tabellenkalkulationen, Audiodateien und mehr!",
+      "click-upload": "Klicken Sie zum Hochladen oder ziehen Sie Dateien per Drag & Drop",
+      "file-types": "unterstützt Textdateien, CSVs, Tabellenkalkulationen, Audiodateien und mehr!",
       "or-submit-link": "oder einen Link einreichen",
       "placeholder-link": "https://beispiel.de",
       fetching: "Wird abgerufen...",
@@ -887,8 +862,7 @@ const TRANSLATIONS = {
         "Diese Funktion unterstützt aktuell nur Online-Quellen und ist somit nicht verfügbar für selbst hochgeladene Dokumente",
       watch_explained_block3_start: "Du kannst im ",
       watch_explained_block3_link: "Dateimanager",
-      watch_explained_block3_end:
-        " entscheiden, welche Dokumente du beobachten möchtest.",
+      watch_explained_block3_end: " entscheiden, welche Dokumente du beobachten möchtest.",
       accept: "Alles klar, ich habe es verstanden.",
     },
   },
@@ -941,8 +915,7 @@ const TRANSLATIONS = {
       search: "LLM-Provider durchsuchen",
       loading_workspace_settings: "Workspace-Einstellungen werden geladen",
       available_models: "Verfügbare Modelle von {{provider}}",
-      available_models_description:
-        "Wählen Sie ein Modell für diesen Workspace",
+      available_models_description: "Wählen Sie ein Modell für diesen Workspace",
       save: "Modell verwenden",
       saving: "Standardmodell für Workspace wird eingestellt...",
       missing_credentials: "Für diesen Anbieter fehlen Anmeldedaten!",

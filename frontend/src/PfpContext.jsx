@@ -22,9 +22,5 @@ export function PfpProvider({ children }) {
     fetchPfp();
   }, [user?.id]);
 
-  return (
-    <PfpContext.Provider value={{ pfp, setPfp }}>
-      {children}
-    </PfpContext.Provider>
-  );
+  return <PfpContext.Provider value={{ pfp, setPfp }}>{children}</PfpContext.Provider>;
 }

@@ -38,15 +38,12 @@ function bootSSL(app, port = 3001) {
     require("@mintplex-labs/express-ws").default(app, server);
     return { app, server };
   } catch (e) {
-    console.error(
-      `\x1b[31m[SSL BOOT FAILED]\x1b[0m ${e.message} - falling back to HTTP boot.`,
-      {
-        ENABLE_HTTPS: process.env.ENABLE_HTTPS,
-        HTTPS_KEY_PATH: process.env.HTTPS_KEY_PATH,
-        HTTPS_CERT_PATH: process.env.HTTPS_CERT_PATH,
-        stacktrace: e.stack,
-      }
-    );
+    console.error(`\x1b[31m[SSL BOOT FAILED]\x1b[0m ${e.message} - falling back to HTTP boot.`, {
+      ENABLE_HTTPS: process.env.ENABLE_HTTPS,
+      HTTPS_KEY_PATH: process.env.HTTPS_KEY_PATH,
+      HTTPS_CERT_PATH: process.env.HTTPS_CERT_PATH,
+      stacktrace: e.stack,
+    });
     return bootHTTP(app, port);
   }
 }
@@ -68,11 +65,11 @@ function bootHTTP(app, port = 3001) {
 }
 
 function catchSigTerms() {
-  process.once("SIGUSR2", function () {
+  process.once("SIGUSR2", () => {
     Telemetry.flush();
     process.kill(process.pid, "SIGUSR2");
   });
-  process.on("SIGINT", function () {
+  process.on("SIGINT", () => {
     Telemetry.flush();
     process.kill(process.pid, "SIGINT");
   });

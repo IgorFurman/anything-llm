@@ -48,23 +48,16 @@ async function agentSkillsFromSystemSettings() {
 
   // Load non-imported built-in skills that are configurable, but are default enabled.
   const _disabledDefaultSkills = safeJsonParse(
-    await SystemSettings.getValueOrFallback(
-      { label: "disabled_agent_skills" },
-      "[]"
-    ),
+    await SystemSettings.getValueOrFallback({ label: "disabled_agent_skills" }, "[]"),
     []
   );
   DEFAULT_SKILLS.forEach((skill) => {
-    if (!_disabledDefaultSkills.includes(skill))
-      systemFunctions.push(AgentPlugins[skill].name);
+    if (!_disabledDefaultSkills.includes(skill)) systemFunctions.push(AgentPlugins[skill].name);
   });
 
   // Load non-imported built-in skills that are configurable.
   const _setting = safeJsonParse(
-    await SystemSettings.getValueOrFallback(
-      { label: "default_agent_skills" },
-      "[]"
-    ),
+    await SystemSettings.getValueOrFallback({ label: "default_agent_skills" }, "[]"),
     []
   );
   _setting.forEach((skillName) => {
@@ -74,9 +67,7 @@ async function agentSkillsFromSystemSettings() {
     // need to be named via `${parent}#${child}` naming convention
     if (Array.isArray(AgentPlugins[skillName].plugin)) {
       for (const subPlugin of AgentPlugins[skillName].plugin) {
-        systemFunctions.push(
-          `${AgentPlugins[skillName].name}#${subPlugin.name}`
-        );
+        systemFunctions.push(`${AgentPlugins[skillName].name}#${subPlugin.name}`);
       }
       return;
     }

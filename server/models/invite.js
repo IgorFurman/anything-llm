@@ -23,7 +23,7 @@ const Invite = {
     }
   },
 
-  deactivate: async function (inviteId = null) {
+  deactivate: async (inviteId = null) => {
     try {
       await prisma.invites.update({
         where: { id: Number(inviteId) },
@@ -36,7 +36,7 @@ const Invite = {
     }
   },
 
-  markClaimed: async function (inviteId = null, user) {
+  markClaimed: async (inviteId = null, user) => {
     try {
       const invite = await prisma.invites.update({
         where: { id: Number(inviteId) },
@@ -47,19 +47,14 @@ const Invite = {
         if (!!invite?.workspaceIds) {
           const { Workspace } = require("./workspace");
           const { WorkspaceUser } = require("./workspaceUsers");
-          const workspaceIds = (await Workspace.where({})).map(
-            (workspace) => workspace.id
-          );
+          const workspaceIds = (await Workspace.where({})).map((workspace) => workspace.id);
           const ids = safeJsonParse(invite.workspaceIds)
             .map((id) => Number(id))
             .filter((id) => workspaceIds.includes(id));
           if (ids.length !== 0) await WorkspaceUser.createMany(user.id, ids);
         }
       } catch (e) {
-        console.error(
-          "Could not add user to workspaces automatically",
-          e.message
-        );
+        console.error("Could not add user to workspaces automatically", e.message);
       }
 
       return { success: true, error: null };
@@ -69,7 +64,7 @@ const Invite = {
     }
   },
 
-  get: async function (clause = {}) {
+  get: async (clause = {}) => {
     try {
       const invite = await prisma.invites.findFirst({ where: clause });
       return invite || null;
@@ -79,7 +74,7 @@ const Invite = {
     }
   },
 
-  count: async function (clause = {}) {
+  count: async (clause = {}) => {
     try {
       const count = await prisma.invites.count({ where: clause });
       return count;
@@ -89,7 +84,7 @@ const Invite = {
     }
   },
 
-  delete: async function (clause = {}) {
+  delete: async (clause = {}) => {
     try {
       await prisma.invites.deleteMany({ where: clause });
       return true;
@@ -99,7 +94,7 @@ const Invite = {
     }
   },
 
-  where: async function (clause = {}, limit) {
+  where: async (clause = {}, limit) => {
     try {
       const invites = await prisma.invites.findMany({
         where: clause,

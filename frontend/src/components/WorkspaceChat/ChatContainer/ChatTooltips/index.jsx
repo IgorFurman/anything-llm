@@ -1,5 +1,5 @@
-import { Tooltip } from "react-tooltip";
 import { createPortal } from "react-dom";
+import { Tooltip } from "react-tooltip";
 
 /**
  * Set the tooltips for the chat container in bulk.
@@ -18,12 +18,7 @@ import { createPortal } from "react-dom";
 export function ChatTooltips() {
   return (
     <>
-      <Tooltip
-        id="message-to-speech"
-        place="bottom"
-        delayShow={300}
-        className="tooltip !text-xs"
-      />
+      <Tooltip id="message-to-speech" place="bottom" delayShow={300} className="tooltip !text-xs" />
       <Tooltip
         id="regenerate-assistant-text"
         place="bottom"
@@ -36,42 +31,17 @@ export function ChatTooltips() {
         delayShow={300}
         className="tooltip !text-xs"
       />
-      <Tooltip
-        id="feedback-button"
-        place="bottom"
-        delayShow={300}
-        className="tooltip !text-xs"
-      />
-      <Tooltip
-        id="action-menu"
-        place="top"
-        delayShow={300}
-        className="tooltip !text-xs"
-      />
-      <Tooltip
-        id="edit-input-text"
-        place="bottom"
-        delayShow={300}
-        className="tooltip !text-xs"
-      />
+      <Tooltip id="feedback-button" place="bottom" delayShow={300} className="tooltip !text-xs" />
+      <Tooltip id="action-menu" place="top" delayShow={300} className="tooltip !text-xs" />
+      <Tooltip id="edit-input-text" place="bottom" delayShow={300} className="tooltip !text-xs" />
       <Tooltip
         id="metrics-visibility"
         place="bottom"
         delayShow={300}
         className="tooltip !text-xs"
       />
-      <Tooltip
-        id="expand-cot"
-        place="bottom"
-        delayShow={300}
-        className="tooltip !text-xs"
-      />
-      <Tooltip
-        id="cot-thinking"
-        place="bottom"
-        delayShow={500}
-        className="tooltip !text-xs"
-      />
+      <Tooltip id="expand-cot" place="bottom" delayShow={300} className="tooltip !text-xs" />
+      <Tooltip id="cot-thinking" place="bottom" delayShow={500} className="tooltip !text-xs" />
       <Tooltip
         id="query-refusal-info"
         place="top"

@@ -1,6 +1,6 @@
 import System from "@/models/system";
 import { CaretDown, CaretUp } from "@phosphor-icons/react";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function NovitaLLMOptions({ settings }) {
   return (
@@ -21,9 +21,7 @@ export default function NovitaLLMOptions({ settings }) {
             spellCheck={false}
           />
         </div>
-        {!settings?.credentialsOnly && (
-          <NovitaModelSelection settings={settings} />
-        )}
+        {!settings?.credentialsOnly && <NovitaModelSelection settings={settings} />}
       </div>
       <AdvancedControls settings={settings} />
     </div>

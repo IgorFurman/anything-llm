@@ -58,8 +58,7 @@ class NativeEmbedder {
    * @returns {string}
    */
   static _getEmbeddingModel() {
-    const envModel =
-      process.env.EMBEDDING_MODEL_PREF ?? NativeEmbedder.defaultModel;
+    const envModel = process.env.EMBEDDING_MODEL_PREF ?? NativeEmbedder.defaultModel;
     if (NativeEmbedder.supportedModels?.[envModel]) return envModel;
     return NativeEmbedder.defaultModel;
   }
@@ -78,9 +77,7 @@ class NativeEmbedder {
    * @returns {{id: string, name: string, description: string, lang: string, size: string, modelCard: string}[]}
    */
   static availableModels() {
-    return Object.values(NativeEmbedder.supportedModels).map(
-      (model) => model.apiInfo
-    );
+    return Object.values(NativeEmbedder.supportedModels).map((model) => model.apiInfo);
   }
 
   /**
@@ -93,8 +90,7 @@ class NativeEmbedder {
    * @returns {string}
    */
   getEmbeddingModel() {
-    const envModel =
-      process.env.EMBEDDING_MODEL_PREF ?? NativeEmbedder.defaultModel;
+    const envModel = process.env.EMBEDDING_MODEL_PREF ?? NativeEmbedder.defaultModel;
     if (NativeEmbedder.supportedModels?.[envModel]) return envModel;
     return NativeEmbedder.defaultModel;
   }
@@ -188,11 +184,8 @@ class NativeEmbedder {
       return fetchResponse.pipeline;
     }
 
-    this.log(
-      `Failed to download model from primary URL. Using fallback ${fetchResponse.retry}`
-    );
-    if (!!fetchResponse.retry)
-      fetchResponse = await this.#fetchWithHost(fetchResponse.retry);
+    this.log(`Failed to download model from primary URL. Using fallback ${fetchResponse.retry}`);
+    if (!!fetchResponse.retry) fetchResponse = await this.#fetchWithHost(fetchResponse.retry);
     if (fetchResponse.pipeline !== null) {
       this.modelDownloaded = true;
       return fetchResponse.pipeline;
@@ -209,8 +202,7 @@ class NativeEmbedder {
    */
   #applyQueryPrefix(textInput) {
     if (!this.queryPrefix) return textInput;
-    if (Array.isArray(textInput))
-      textInput = textInput.map((text) => `${this.queryPrefix}${text}`);
+    if (Array.isArray(textInput)) textInput = textInput.map((text) => `${this.queryPrefix}${text}`);
     else textInput = `${this.queryPrefix}${textInput}`;
     return textInput;
   }
@@ -222,9 +214,7 @@ class NativeEmbedder {
    */
   async embedTextInput(textInput) {
     textInput = this.#applyQueryPrefix(textInput);
-    const result = await this.embedChunks(
-      Array.isArray(textInput) ? textInput : [textInput]
-    );
+    const result = await this.embedChunks(Array.isArray(textInput) ? textInput : [textInput]);
     return result?.[0] || [];
   }
 
@@ -244,7 +234,7 @@ class NativeEmbedder {
     const chunks = toChunks(textChunks, this.maxConcurrentChunks);
     const chunkLen = chunks.length;
 
-    for (let [idx, chunk] of chunks.entries()) {
+    for (const [idx, chunk] of chunks.entries()) {
       if (idx === 0) await this.#writeToTempfile(tmpFilePath, "[");
       let data;
       let pipeline = await this.embedderClient();
@@ -270,9 +260,7 @@ class NativeEmbedder {
       data = null;
     }
 
-    const embeddingResults = JSON.parse(
-      fs.readFileSync(tmpFilePath, { encoding: "utf-8" })
-    );
+    const embeddingResults = JSON.parse(fs.readFileSync(tmpFilePath, { encoding: "utf-8" }));
     fs.rmSync(tmpFilePath, { force: true });
     return embeddingResults.length > 0 ? embeddingResults.flat() : null;
   }

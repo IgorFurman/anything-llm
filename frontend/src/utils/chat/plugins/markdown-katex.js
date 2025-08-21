@@ -159,9 +159,9 @@ function math_block(state, start, end, silent) {
     return false;
   }
 
-  let openDelim = state.src.slice(pos, pos + 2);
-  let isDoubleDollar = openDelim === "$$";
-  let isLatexBracket = openDelim === "\\[";
+  const openDelim = state.src.slice(pos, pos + 2);
+  const isDoubleDollar = openDelim === "$$";
+  const isLatexBracket = openDelim === "\\[";
 
   if (!isDoubleDollar && !isLatexBracket) {
     return false;
@@ -204,9 +204,7 @@ function math_block(state, start, end, silent) {
       break;
     }
 
-    if (
-      state.src.slice(pos, max).trim().slice(-delimiter.length) === delimiter
-    ) {
+    if (state.src.slice(pos, max).trim().slice(-delimiter.length) === delimiter) {
       lastPos = state.src.slice(0, max).lastIndexOf(delimiter);
       lastLine = state.src.slice(pos, lastPos);
       found = true;
@@ -230,7 +228,7 @@ export default function math_plugin(md, options) {
   // Default options
   options = options || {};
 
-  var katexInline = function (latex) {
+  var katexInline = (latex) => {
     options.displayMode = false;
     try {
       latex = latex
@@ -246,11 +244,9 @@ export default function math_plugin(md, options) {
     }
   };
 
-  var inlineRenderer = function (tokens, idx) {
-    return katexInline(tokens[idx].content);
-  };
+  var inlineRenderer = (tokens, idx) => katexInline(tokens[idx].content);
 
-  var katexBlock = function (latex) {
+  var katexBlock = (latex) => {
     options.displayMode = true;
     try {
       // Remove surrounding delimiters if present
@@ -264,9 +260,7 @@ export default function math_plugin(md, options) {
     }
   };
 
-  var blockRenderer = function (tokens, idx) {
-    return katexBlock(tokens[idx].content) + "\n";
-  };
+  var blockRenderer = (tokens, idx) => katexBlock(tokens[idx].content) + "\n";
 
   md.inline.ruler.after("escape", "math_inline", math_inline);
   md.block.ruler.after("blockquote", "math_block", math_block, {

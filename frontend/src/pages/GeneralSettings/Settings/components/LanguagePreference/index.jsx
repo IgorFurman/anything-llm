@@ -3,12 +3,8 @@ import { useTranslation } from "react-i18next";
 
 export default function LanguagePreference() {
   const { t } = useTranslation();
-  const {
-    currentLanguage,
-    supportedLanguages,
-    getLanguageName,
-    changeLanguage,
-  } = useLanguageOptions();
+  const { currentLanguage, supportedLanguages, getLanguageName, changeLanguage } =
+    useLanguageOptions();
 
   return (
     <div className="flex flex-col gap-y-0.5 my-4">

@@ -1,15 +1,15 @@
 import ConnectorImages from "@/components/DataConnectorOption/media";
 import { MagnifyingGlass } from "@phosphor-icons/react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import GithubOptions from "./Connectors/Github";
-import GitlabOptions from "./Connectors/Gitlab";
-import YoutubeOptions from "./Connectors/Youtube";
+import ConnectorOption from "./ConnectorOption";
 import ConfluenceOptions from "./Connectors/Confluence";
 import DrupalWikiOptions from "./Connectors/DrupalWiki";
-import { useState } from "react";
-import ConnectorOption from "./ConnectorOption";
-import WebsiteDepthOptions from "./Connectors/WebsiteDepth";
+import GithubOptions from "./Connectors/Github";
+import GitlabOptions from "./Connectors/Gitlab";
 import ObsidianOptions from "./Connectors/Obsidian";
+import WebsiteDepthOptions from "./Connectors/WebsiteDepth";
+import YoutubeOptions from "./Connectors/Youtube";
 
 export const getDataConnectors = (t) => ({
   github: {
@@ -70,11 +70,7 @@ export default function DataConnectors() {
     <div className="flex upload-modal -mt-10 relative min-h-[80vh] w-[70vw]">
       <div className="w-full p-4 top-0 z-20">
         <div className="w-full flex items-center sticky top-0 z-50">
-          <MagnifyingGlass
-            size={16}
-            weight="bold"
-            className="absolute left-4 z-30 text-white"
-          />
+          <MagnifyingGlass size={16} weight="bold" className="absolute left-4 z-30 text-white" />
           <input
             type="text"
             placeholder={t("connectors.search-placeholder")}
@@ -98,9 +94,7 @@ export default function DataConnectors() {
               />
             ))
           ) : (
-            <div className="text-white text-center mt-4">
-              {t("connectors.no-connectors")}
-            </div>
+            <div className="text-white text-center mt-4">{t("connectors.no-connectors")}</div>
           )}
         </div>
       </div>

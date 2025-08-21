@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
 import Sidebar from "@/components/SettingsSidebar";
+import { useEffect, useState } from "react";
 import { isMobile } from "react-device-detect";
 import * as Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { UserPlus } from "@phosphor-icons/react";
-import Admin from "@/models/admin";
-import UserRow from "./UserRow";
-import useUser from "@/hooks/useUser";
-import NewUserModal from "./NewUserModal";
-import { useModal } from "@/hooks/useModal";
 import ModalWrapper from "@/components/ModalWrapper";
 import CTAButton from "@/components/lib/CTAButton";
+import { useModal } from "@/hooks/useModal";
+import useUser from "@/hooks/useUser";
+import Admin from "@/models/admin";
+import { UserPlus } from "@phosphor-icons/react";
+import NewUserModal from "./NewUserModal";
+import UserRow from "./UserRow";
 
 export default function AdminUsers() {
   const { isOpen, openModal, closeModal } = useModal();
@@ -25,21 +25,15 @@ export default function AdminUsers() {
         <div className="flex flex-col w-full px-1 md:pl-6 md:pr-[50px] md:py-6 py-16">
           <div className="w-full flex flex-col gap-y-1 pb-6 border-white/10 border-b-2">
             <div className="items-center flex gap-x-4">
-              <p className="text-lg leading-6 font-bold text-theme-text-primary">
-                Users
-              </p>
+              <p className="text-lg leading-6 font-bold text-theme-text-primary">Users</p>
             </div>
             <p className="text-xs leading-[18px] font-base text-theme-text-secondary">
-              These are all the accounts which have an account on this instance.
-              Removing an account will instantly remove their access to this
-              instance.
+              These are all the accounts which have an account on this instance. Removing an account
+              will instantly remove their access to this instance.
             </p>
           </div>
           <div className="w-full justify-end flex">
-            <CTAButton
-              onClick={openModal}
-              className="mt-3 mr-0 mb-4 md:-mb-6 z-10"
-            >
+            <CTAButton onClick={openModal} className="mt-3 mr-0 mb-4 md:-mb-6 z-10">
               <UserPlus className="h-4 w-4" weight="bold" /> Add user
             </CTAButton>
           </div>
@@ -120,10 +114,7 @@ const ROLE_HINT = {
     "Can create, update and invite new users to the instance.",
     "Cannot modify LLM, vectorDB, embedding, or other connections.",
   ],
-  admin: [
-    "Highest user level privilege.",
-    "Can see and do everything across the system.",
-  ],
+  admin: ["Highest user level privilege.", "Can see and do everything across the system."],
 };
 
 export function RoleHintDisplay({ role }) {
@@ -149,9 +140,7 @@ export function MessageLimitInput({ enabled, limit, updateState, role }) {
     <div className="mt-4 mb-8">
       <div className="flex flex-col gap-y-1">
         <div className="flex items-center gap-x-2">
-          <h2 className="text-base leading-6 font-bold text-white">
-            Limit messages per day
-          </h2>
+          <h2 className="text-base leading-6 font-bold text-white">Limit messages per day</h2>
           <label className="relative inline-flex cursor-pointer items-center">
             <input
               type="checkbox"
@@ -168,8 +157,7 @@ export function MessageLimitInput({ enabled, limit, updateState, role }) {
           </label>
         </div>
         <p className="text-xs leading-[18px] font-base text-white/60">
-          Restrict this user to a number of successful queries or chats within a
-          24 hour window.
+          Restrict this user to a number of successful queries or chats within a 24 hour window.
         </p>
       </div>
       {enabled && (

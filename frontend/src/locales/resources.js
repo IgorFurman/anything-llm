@@ -14,27 +14,27 @@
 // please do not submit PR's without first verifying this test passes as it will tell you about missing keys or values
 // from the primary dictionary.
 
-import English from "./en/common.js";
-import Korean from "./ko/common.js";
-import Spanish from "./es/common.js";
-import French from "./fr/common.js";
-import Mandarin from "./zh/common.js";
-import German from "./de/common.js";
-import Estonian from "./et/common.js";
-import Russian from "./ru/common.js";
-import Italian from "./it/common.js";
-import Portuguese from "./pt_BR/common.js";
-import Hebrew from "./he/common.js";
-import Dutch from "./nl/common.js";
-import Vietnamese from "./vn/common.js";
-import TraditionalChinese from "./zh_TW/common.js";
-import Farsi from "./fa/common.js";
-import Turkish from "./tr/common.js";
 import Arabic from "./ar/common.js";
 import Danish from "./da/common.js";
+import German from "./de/common.js";
+import English from "./en/common.js";
+import Spanish from "./es/common.js";
+import Estonian from "./et/common.js";
+import Farsi from "./fa/common.js";
+import French from "./fr/common.js";
+import Hebrew from "./he/common.js";
+import Italian from "./it/common.js";
 import Japanese from "./ja/common.js";
+import Korean from "./ko/common.js";
 import Lativian from "./lv/common.js";
+import Dutch from "./nl/common.js";
 import Polish from "./pl/common.js";
+import Portuguese from "./pt_BR/common.js";
+import Russian from "./ru/common.js";
+import Turkish from "./tr/common.js";
+import Vietnamese from "./vn/common.js";
+import Mandarin from "./zh/common.js";
+import TraditionalChinese from "./zh_TW/common.js";
 
 export const defaultNS = "common";
 export const resources = {

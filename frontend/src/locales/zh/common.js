@@ -7,8 +7,7 @@ const TRANSLATIONS = {
     },
     llm: {
       title: "LLM 偏好",
-      description:
-        "AnythingLLM 可以与多家 LLM 提供商合作。这将是处理聊天的服务。",
+      description: "AnythingLLM 可以与多家 LLM 提供商合作。这将是处理聊天的服务。",
     },
     userSetup: {
       title: "用户设置",
@@ -42,8 +41,7 @@ const TRANSLATIONS = {
       useCasePersonal: "用于个人使用",
       useCaseOther: "其他",
       comment: "你是如何听说 AnythingLLM 的？",
-      commentPlaceholder:
-        "Reddit，Twitter，GitHub，YouTube 等 - 让我们知道你是如何找到我们的！",
+      commentPlaceholder: "Reddit，Twitter，GitHub，YouTube 等 - 让我们知道你是如何找到我们的！",
       skip: "跳过调查",
       thankYou: "感谢你的反馈！",
     },
@@ -274,8 +272,7 @@ const TRANSLATIONS = {
     },
     model: {
       title: "工作区聊天模型",
-      description:
-        "将用于此工作区的特定聊天模型。如果为空，将使用系统 LLM 首选项。",
+      description: "将用于此工作区的特定聊天模型。如果为空，将使用系统 LLM 首选项。",
       wait: "-- 等待模型 --",
     },
     mode: {
@@ -297,8 +294,7 @@ const TRANSLATIONS = {
       title: "聊天历史记录",
       "desc-start": "将包含在响应的短期记忆中的先前聊天的数量。",
       recommend: "推荐 20。",
-      "desc-end":
-        "任何超过 45 的值都可能导致连续聊天失败，具体取决于消息大小。",
+      "desc-end": "任何超过 45 的值都可能导致连续聊天失败，具体取决于消息大小。",
     },
     prompt: {
       title: "系统提示词",
@@ -328,8 +324,7 @@ const TRANSLATIONS = {
     temperature: {
       title: "LLM 温度",
       "desc-start": "此设置控制你的 LLM 回答的“创意”程度",
-      "desc-end":
-        "数字越高越有创意。对于某些模型，如果设置得太高，可能会导致响应不一致。",
+      "desc-end": "数字越高越有创意。对于某些模型，如果设置得太高，可能会导致响应不一致。",
       hint: "大多数 LLM 都有各种可接受的有效值范围。请咨询你的LLM提供商以获取该信息。",
     },
   },
@@ -337,14 +332,12 @@ const TRANSLATIONS = {
     identifier: "向量数据库标识符",
     snippets: {
       title: "最大上下文片段",
-      description:
-        "此设置控制每次聊天或查询将发送到 LLM 的上下文片段的最大数量。",
+      description: "此设置控制每次聊天或查询将发送到 LLM 的上下文片段的最大数量。",
       recommend: "推荐: 4",
     },
     doc: {
       title: "文档相似性阈值",
-      description:
-        "源被视为与聊天相关所需的最低相似度分数。数字越高，来源与聊天就越相似。",
+      description: "源被视为与聊天相关所需的最低相似度分数。数字越高，来源与聊天就越相似。",
       zero: "无限制",
       low: "低（相似度分数 ≥ .25）",
       medium: "中（相似度分数 ≥ .50）",
@@ -377,12 +370,10 @@ const TRANSLATIONS = {
     },
     skill: {
       title: "默认代理技能",
-      description:
-        "使用这些预构建的技能提高默认代理的自然能力。此设置适用于所有工作区。",
+      description: "使用这些预构建的技能提高默认代理的自然能力。此设置适用于所有工作区。",
       rag: {
         title: "检索增强生成和长期记忆",
-        description:
-          '允许代理利用你的本地文档来回答查询，或要求代理"记住"长期记忆检索的内容片段。',
+        description: '允许代理利用你的本地文档来回答查询，或要求代理"记住"长期记忆检索的内容片段。',
       },
       view: {
         title: "查看和总结文档",
@@ -398,8 +389,7 @@ const TRANSLATIONS = {
       },
       save: {
         title: "生成并保存文件到浏览器",
-        description:
-          "使默认代理能够生成并写入文件，这些文件可以保存并在你的浏览器中下载。",
+        description: "使默认代理能够生成并写入文件，这些文件可以保存并在你的浏览器中下载。",
       },
       web: {
         title: "实时网络搜索和浏览",
@@ -551,8 +541,7 @@ const TRANSLATIONS = {
   },
   embedding: {
     title: "嵌入首选项",
-    "desc-start":
-      "当使用本身不支持嵌入引擎的 LLM 时，你可能需要额外指定用于嵌入文本的凭据。",
+    "desc-start": "当使用本身不支持嵌入引擎的 LLM 时，你可能需要额外指定用于嵌入文本的凭据。",
     "desc-end":
       "嵌入是将文本转换为矢量的过程。需要这些凭据才能将你的文件和提示转换为 AnythingLLM 可以用来处理的格式。",
     provider: {
@@ -561,8 +550,7 @@ const TRANSLATIONS = {
   },
   text: {
     title: "文本拆分和分块首选项",
-    "desc-start":
-      "有时，你可能希望更改新文档在插入到矢量数据库之前拆分和分块的默认方式。",
+    "desc-start": "有时，你可能希望更改新文档在插入到矢量数据库之前拆分和分块的默认方式。",
     "desc-end": "只有在了解文本拆分的工作原理及其副作用时，才应修改此设置。",
     size: {
       title: "文本块大小",
@@ -637,8 +625,7 @@ const TRANSLATIONS = {
   },
   privacy: {
     title: "隐私和数据处理",
-    description:
-      "这是你对如何处理连接的第三方提供商和AnythingLLM的数据的配置。",
+    description: "这是你对如何处理连接的第三方提供商和AnythingLLM的数据的配置。",
     llm: "LLM 选择",
     embedding: "嵌入首选项",
     vector: "向量数据库",
@@ -657,13 +644,11 @@ const TRANSLATIONS = {
       token_explained: "用于避免速率限制的访问令牌。",
       token_explained_start: "如果没有 ",
       token_explained_link1: "个人访问令牌",
-      token_explained_middle:
-        "，由于 GitHub API 的速率限制，可能无法收集所有文件。您可以 ",
+      token_explained_middle: "，由于 GitHub API 的速率限制，可能无法收集所有文件。您可以 ",
       token_explained_link2: "创建临时访问令牌",
       token_explained_end: " 来避免此问题。",
       ignores: "文件忽略列表",
-      git_ignore:
-        ".gitignore 格式的列表，用于在收集过程中忽略特定文件。输入后按回车保存每一项。",
+      git_ignore: ".gitignore 格式的列表，用于在收集过程中忽略特定文件。输入后按回车保存每一项。",
       task_explained: "完成后，所有文件将可用于在文档选择器中嵌入至工作区。",
       branch: "您希望收集文件的分支。",
       branch_loading: "-- 正在加载可用分支 --",
@@ -683,14 +668,12 @@ const TRANSLATIONS = {
       token_description: "选择要从 GitLab API 获取的额外实体。",
       token_explained_start: "如果没有 ",
       token_explained_link1: "个人访问令牌",
-      token_explained_middle:
-        "，由于 GitLab API 的速率限制，可能无法收集所有文件。您可以 ",
+      token_explained_middle: "，由于 GitLab API 的速率限制，可能无法收集所有文件。您可以 ",
       token_explained_link2: "创建临时访问令牌",
       token_explained_end: " 来避免此问题。",
       fetch_issues: "将问题作为文档获取",
       ignores: "文件忽略列表",
-      git_ignore:
-        ".gitignore 格式的列表，用于在收集过程中忽略特定文件。输入后按回车保存每一项。",
+      git_ignore: ".gitignore 格式的列表，用于在收集过程中忽略特定文件。输入后按回车保存每一项。",
       task_explained: "完成后，所有文件将可用于在文档选择器中嵌入至工作区。",
       branch: "您希望收集文件的分支",
       branch_loading: "-- 正在加载可用分支 --",
@@ -703,8 +686,7 @@ const TRANSLATIONS = {
       name: "YouTube 字幕",
       description: "通过链接导入整个 YouTube 视频的转录内容。",
       URL: "YouTube 视频链接",
-      URL_explained_start:
-        "输入任何 YouTube 视频的链接以获取其转录内容。视频必须启用 ",
+      URL_explained_start: "输入任何 YouTube 视频的链接以获取其转录内容。视频必须启用 ",
       URL_explained_link: "隐藏字幕",
       URL_explained_end: " 功能。",
       task_explained: "完成后，转录内容将可用于在文档选择器中嵌入至工作区。",
@@ -721,20 +703,17 @@ const TRANSLATIONS = {
       depth_explained: "这是爬虫从起始链接向下跟踪的子链接层级数量。",
       max_pages: "最大页面数",
       max_pages_explained: "要爬取的最大链接数。",
-      task_explained:
-        "完成后，所有抓取的内容将可用于在文档选择器中嵌入至工作区。",
+      task_explained: "完成后，所有抓取的内容将可用于在文档选择器中嵌入至工作区。",
     },
     confluence: {
       name: "Confluence",
       description: "一键导入整个 Confluence 页面。",
       deployment_type: "Confluence 部署类型",
-      deployment_type_explained:
-        "判断您的 Confluence 实例是部署在 Atlassian 云端还是自托管。",
+      deployment_type_explained: "判断您的 Confluence 实例是部署在 Atlassian 云端还是自托管。",
       base_url: "Confluence 基础链接",
       base_url_explained: "这是您 Confluence 空间的基础链接。",
       space_key: "Confluence 空间标识",
-      space_key_explained:
-        "您将使用的 Confluence 实例空间标识，通常以 ~ 开头。",
+      space_key_explained: "您将使用的 Confluence 实例空间标识，通常以 ~ 开头。",
       username: "Confluence 用户名",
       username_explained: "您的 Confluence 用户名",
       auth_type: "Confluence 认证方式",
@@ -742,8 +721,7 @@ const TRANSLATIONS = {
       auth_type_username: "用户名和访问令牌",
       auth_type_personal: "个人访问令牌",
       token: "Confluence 访问令牌",
-      token_explained_start:
-        "您需要提供访问令牌用于认证。您可以在此生成访问令牌",
+      token_explained_start: "您需要提供访问令牌用于认证。您可以在此生成访问令牌",
       token_explained_link: "此处",
       token_desc: "用于认证的访问令牌",
       pat_token: "Confluence 个人访问令牌",
@@ -753,8 +731,7 @@ const TRANSLATIONS = {
     manage: {
       documents: "文档",
       "data-connectors": "数据连接器",
-      "desktop-only":
-        "这些设置只能在桌面设备上编辑。请使用桌面访问此页面以继续操作。",
+      "desktop-only": "这些设置只能在桌面设备上编辑。请使用桌面访问此页面以继续操作。",
       dismiss: "关闭",
       editing: "正在编辑",
     },
@@ -767,8 +744,7 @@ const TRANSLATIONS = {
       name: "名称",
       "delete-confirmation":
         "您确定要删除这些文件和文件夹吗？\n这将从系统中移除这些文件，并自动将其从所有关联工作区中移除。\n此操作无法撤销。",
-      "removing-message":
-        "正在删除 {{count}} 个文档和 {{folderCount}} 个文件夹，请稍候。",
+      "removing-message": "正在删除 {{count}} 个文档和 {{folderCount}} 个文件夹，请稍候。",
       "move-success": "成功移动了 {{count}} 个文档。",
       date: "日期",
       type: "类型",
@@ -781,8 +757,7 @@ const TRANSLATIONS = {
     },
     upload: {
       "processor-offline": "文档处理器不可用",
-      "processor-offline-desc":
-        "当前文档处理器离线，无法上传文件。请稍后再试。",
+      "processor-offline-desc": "当前文档处理器离线，无法上传文件。请稍后再试。",
       "click-upload": "点击上传或拖放文件",
       "file-types": "支持文本文件、CSV、电子表格、音频文件等！",
       "or-submit-link": "或提交链接",
@@ -796,8 +771,7 @@ const TRANSLATIONS = {
       what_pinning: "什么是文档固定？",
       pin_explained_block1:
         "当您在 AnythingLLM 中<b>固定</b>一个文档时，我们会将整个文档内容注入到您的提示窗口中，让 LLM 能够完全理解它。",
-      pin_explained_block2:
-        "这在 <b>大上下文模型</b> 或关键的小文件中效果最佳。",
+      pin_explained_block2: "这在 <b>大上下文模型</b> 或关键的小文件中效果最佳。",
       pin_explained_block3:
         "如果默认情况下无法从 AnythingLLM 获取满意的答案，固定文档是提高答案质量的好方法。",
       accept: "好的，知道了",
@@ -806,8 +780,7 @@ const TRANSLATIONS = {
       what_watching: "什么是监控文档？",
       watch_explained_block1:
         "当您在 AnythingLLM 中<b>监控</b>一个文档时，我们会<i>自动</i>按定期间隔从其原始来源同步文档内容。系统会自动更新在所有使用该文档的工作区中的内容。",
-      watch_explained_block2:
-        "此功能当前仅支持在线内容，不适用于手动上传的文档。",
+      watch_explained_block2: "此功能当前仅支持在线内容，不适用于手动上传的文档。",
       watch_explained_block3_start: "您可以在 ",
       watch_explained_block3_link: "文件管理器",
       watch_explained_block3_end: " 管理视图中管理被监控的文档。",
@@ -817,8 +790,7 @@ const TRANSLATIONS = {
       name: "Obsidian",
       description: "一键导入 Obsidian 仓库。",
       vault_location: "仓库位置",
-      vault_description:
-        "选择你的 Obsidian 仓库文件夹，以导入所有笔记及其关联。",
+      vault_description: "选择你的 Obsidian 仓库文件夹，以导入所有笔记及其关联。",
       selected_files: "找到 {{count}} 个 Markdown 文件",
       importing: "正在导入保险库…",
       import_vault: "导入保险库",
@@ -887,8 +859,7 @@ const TRANSLATIONS = {
     profile_picture: "头像",
     remove_profile_picture: "移除头像",
     username: "用户名",
-    username_description:
-      "用户名必须仅包含小写字母、数字、下划线和连字符，且不能包含空格",
+    username_description: "用户名必须仅包含小写字母、数字、下划线和连字符，且不能包含空格",
     new_password: "新密码",
     password_description: "密码长度必须至少为 8 个字符",
     cancel: "取消",
@@ -930,8 +901,7 @@ const TRANSLATIONS = {
         name_description: "这是您系统提示的显示名称。",
         name_placeholder: "我的系统提示",
         description_label: "描述",
-        description_description:
-          "这是您系统提示的描述。用它来描述您系统提示的目的。",
+        description_description: "这是您系统提示的描述。用它来描述您系统提示的目的。",
         tags_label: "标签",
         tags_description:
           "标签用于标记您的系统提示，以便于搜索。您可以添加多个标签。最多 5 个标签。每个标签最多 20 个字符。",
@@ -958,8 +928,7 @@ const TRANSLATIONS = {
         name_description: "这是您代理流程的显示名称。",
         name_placeholder: "我的代理流程",
         description_label: "描述",
-        description_description:
-          "这是您代理流程的描述。用它来描述您代理流程的目的。",
+        description_description: "这是您代理流程的描述。用它来描述您代理流程的目的。",
         tags_label: "标签",
         tags_description:
           "标签用于标记您的代理流程，以便于搜索。您可以添加多个标签。最多 5 个标签。每个标签最多 20 个字符。",
@@ -974,8 +943,7 @@ const TRANSLATIONS = {
       generic: {
         unauthenticated: {
           title: "需要验证",
-          description:
-            "在发布项目之前，您需要通过 AnythingLLM 社区中心进行验证。",
+          description: "在发布项目之前，您需要通过 AnythingLLM 社区中心进行验证。",
           button: "连接到社区中心",
         },
       },
@@ -989,8 +957,7 @@ const TRANSLATIONS = {
         name_description: "这是您斜线指令的显示名称。",
         name_placeholder: "我的斜线指令",
         description_label: "描述",
-        description_description:
-          "这是您斜线指令的描述。用它来描述您斜线指令的目的。",
+        description_description: "这是您斜线指令的描述。用它来描述您斜线指令的目的。",
         command_label: "指令",
         command_description: "这是使用者将输入以触发此预设的斜线指令。",
         command_placeholder: "我的命令",

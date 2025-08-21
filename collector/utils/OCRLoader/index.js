@@ -29,8 +29,7 @@ class OCRLoader {
     );
 
     // Ensure the cache directory exists or else Tesseract will persist the cache in the default location.
-    if (!fs.existsSync(this.cacheDir))
-      fs.mkdirSync(this.cacheDir, { recursive: true });
+    if (!fs.existsSync(this.cacheDir)) fs.mkdirSync(this.cacheDir, { recursive: true });
     this.log(
       `OCRLoader initialized with language support for:`,
       this.language.map((lang) => VALID_LANGUAGE_CODES[lang]).join(", ")
@@ -67,15 +66,8 @@ class OCRLoader {
    * This function is reserved to parsing for SCANNED documents - digital documents are not supported in this function
    * @returns {Promise<{pageContent: string, metadata: object}[]>} An array of documents with page content and metadata.
    */
-  async ocrPDF(
-    filePath,
-    { maxExecutionTime = 300_000, batchSize = 10, maxWorkers = null } = {}
-  ) {
-    if (
-      !filePath ||
-      !fs.existsSync(filePath) ||
-      !fs.statSync(filePath).isFile()
-    ) {
+  async ocrPDF(filePath, { maxExecutionTime = 300_000, batchSize = 10, maxWorkers = null } = {}) {
+    if (!filePath || !fs.existsSync(filePath) || !fs.statSync(filePath).isFile()) {
       this.log(`File ${filePath} does not exist. Skipping OCR.`);
       return [];
     }
@@ -83,7 +75,7 @@ class OCRLoader {
     const documentTitle = path.basename(filePath);
     this.log(`Starting OCR of ${documentTitle}`);
     const pdfjs = await import("pdf-parse/lib/pdf.js/v2.0.550/build/pdf.js");
-    let buffer = fs.readFileSync(filePath);
+    const buffer = fs.readFileSync(filePath);
 
     const pdfDocument = await pdfjs.getDocument({ data: buffer });
 
@@ -134,21 +126,13 @@ class OCRLoader {
       const timeoutPromise = new Promise((_, reject) => {
         setTimeout(() => {
           reject(
-            new Error(
-              `OCR job took too long to complete (${
-                MAX_EXECUTION_TIME / 1000
-              } seconds)`
-            )
+            new Error(`OCR job took too long to complete (${MAX_EXECUTION_TIME / 1000} seconds)`)
           );
         }, MAX_EXECUTION_TIME);
       });
 
       const processPages = async () => {
-        for (
-          let startPage = 1;
-          startPage <= totalPages;
-          startPage += BATCH_SIZE
-        ) {
+        for (let startPage = 1; startPage <= totalPages; startPage += BATCH_SIZE) {
           const endPage = Math.min(startPage + BATCH_SIZE - 1, totalPages);
           const pageNumbers = Array.from(
             { length: endPage - startPage + 1 },
@@ -161,20 +145,12 @@ class OCRLoader {
           const workerPromises = workerPool.map(async (worker, workerIndex) => {
             while (pageQueue.length > 0) {
               const pageNum = pageQueue.shift();
-              this.log(
-                `\x1b[34m[Worker ${
-                  workerIndex + 1
-                }]\x1b[0m assigned pg${pageNum}`
-              );
+              this.log(`\x1b[34m[Worker ${workerIndex + 1}]\x1b[0m assigned pg${pageNum}`);
               const page = await pdfDocument.getPage(pageNum);
               const imageBuffer = await pdfSharp.pageToBuffer({ page });
               if (!imageBuffer) continue;
               const { data } = await worker.recognize(imageBuffer, {}, "text");
-              this.log(
-                `✅ \x1b[34m[Worker ${
-                  workerIndex + 1
-                }]\x1b[0m completed pg${pageNum}`
-              );
+              this.log(`✅ \x1b[34m[Worker ${workerIndex + 1}]\x1b[0m completed pg${pageNum}`);
               results.push({
                 pageContent: data.text,
                 metadata: {
@@ -187,9 +163,7 @@ class OCRLoader {
 
           await Promise.all(workerPromises);
           documents.push(
-            ...results.sort(
-              (a, b) => a.metadata.loc.pageNumber - b.metadata.loc.pageNumber
-            )
+            ...results.sort((a, b) => a.metadata.loc.pageNumber - b.metadata.loc.pageNumber)
           );
         }
         return documents;
@@ -221,11 +195,7 @@ class OCRLoader {
   async ocrImage(filePath, { maxExecutionTime = 300_000 } = {}) {
     let content = "";
     let worker = null;
-    if (
-      !filePath ||
-      !fs.existsSync(filePath) ||
-      !fs.statSync(filePath).isFile()
-    ) {
+    if (!filePath || !fs.existsSync(filePath) || !fs.statSync(filePath).isFile()) {
       this.log(`File ${filePath} does not exist. Skipping OCR.`);
       return null;
     }
@@ -243,11 +213,7 @@ class OCRLoader {
       const timeoutPromise = new Promise((_, reject) => {
         setTimeout(() => {
           reject(
-            new Error(
-              `OCR job took too long to complete (${
-                maxExecutionTime / 1000
-              } seconds)`
-            )
+            new Error(`OCR job took too long to complete (${maxExecutionTime / 1000} seconds)`)
           );
         }, maxExecutionTime);
       });

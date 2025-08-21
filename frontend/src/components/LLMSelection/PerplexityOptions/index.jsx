@@ -1,13 +1,11 @@
 import System from "@/models/system";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function PerplexityOptions({ settings }) {
   return (
     <div className="flex gap-[36px] mt-1.5">
       <div className="flex flex-col w-60">
-        <label className="text-white text-sm font-semibold block mb-3">
-          Perplexity API Key
-        </label>
+        <label className="text-white text-sm font-semibold block mb-3">Perplexity API Key</label>
         <input
           type="password"
           name="PerplexityApiKey"
@@ -19,9 +17,7 @@ export default function PerplexityOptions({ settings }) {
           spellCheck={false}
         />
       </div>
-      {!settings?.credentialsOnly && (
-        <PerplexityModelSelection settings={settings} />
-      )}
+      {!settings?.credentialsOnly && <PerplexityModelSelection settings={settings} />}
     </div>
   );
 }
@@ -43,9 +39,7 @@ function PerplexityModelSelection({ settings }) {
   if (loading || customModels.length == 0) {
     return (
       <div className="flex flex-col w-60">
-        <label className="text-white text-sm font-semibold block mb-3">
-          Chat Model Selection
-        </label>
+        <label className="text-white text-sm font-semibold block mb-3">Chat Model Selection</label>
         <select
           name="PerplexityModelPref"
           disabled={true}
@@ -61,9 +55,7 @@ function PerplexityModelSelection({ settings }) {
 
   return (
     <div className="flex flex-col w-60">
-      <label className="text-white text-sm font-semibold block mb-3">
-        Chat Model Selection
-      </label>
+      <label className="text-white text-sm font-semibold block mb-3">Chat Model Selection</label>
       <select
         name="PerplexityModelPref"
         required={true}

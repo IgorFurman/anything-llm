@@ -3,9 +3,7 @@ export default function WeaviateDBOptions({ settings }) {
     <div className="w-full flex flex-col gap-y-7">
       <div className="w-full flex items-center gap-[36px] mt-1.5">
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
-            Weaviate Endpoint
-          </label>
+          <label className="text-white text-sm font-semibold block mb-3">Weaviate Endpoint</label>
           <input
             type="url"
             name="WeaviateEndpoint"
@@ -19,9 +17,7 @@ export default function WeaviateDBOptions({ settings }) {
         </div>
 
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
-            API Key
-          </label>
+          <label className="text-white text-sm font-semibold block mb-3">API Key</label>
           <input
             type="password"
             name="WeaviateApiKey"

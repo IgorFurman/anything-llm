@@ -1,11 +1,11 @@
 import ModalWrapper from "@/components/ModalWrapper";
+import CTAButton from "@/components/lib/CTAButton";
 import { useModal } from "@/hooks/useModal";
 import Admin from "@/models/admin";
 import { useEffect, useState } from "react";
 import * as Skeleton from "react-loading-skeleton";
 import AddMemberModal from "./AddMemberModal";
 import WorkspaceMemberRow from "./WorkspaceMemberRow";
-import CTAButton from "@/components/lib/CTAButton";
 
 export default function Members({ workspace }) {
   const [loading, setLoading] = useState(true);
@@ -20,9 +20,7 @@ export default function Members({ workspace }) {
       const workspaceUsers = await Admin.workspaceUsers(workspace.id);
       const adminWorkspaces = await Admin.workspaces();
       setAdminWorkspace(
-        adminWorkspaces.find(
-          (adminWorkspace) => adminWorkspace.id === workspace.id
-        )
+        adminWorkspaces.find((adminWorkspace) => adminWorkspace.id === workspace.id)
       );
       setWorkspaceUsers(workspaceUsers);
       setUsers(_users);
@@ -66,9 +64,7 @@ export default function Members({ workspace }) {
         </thead>
         <tbody>
           {workspaceUsers.length > 0 ? (
-            workspaceUsers.map((user, index) => (
-              <WorkspaceMemberRow key={index} user={user} />
-            ))
+            workspaceUsers.map((user, index) => <WorkspaceMemberRow key={index} user={user} />)
           ) : (
             <tr>
               <td className="text-center py-4 text-white/80" colSpan="4">
@@ -80,11 +76,7 @@ export default function Members({ workspace }) {
       </table>
       <CTAButton onClick={openModal}>Manage Users</CTAButton>
       <ModalWrapper isOpen={isOpen}>
-        <AddMemberModal
-          closeModal={closeModal}
-          users={users}
-          workspace={adminWorkspace}
-        />
+        <AddMemberModal closeModal={closeModal} users={users} workspace={adminWorkspace} />
       </ModalWrapper>
     </div>
   );

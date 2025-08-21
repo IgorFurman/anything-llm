@@ -81,7 +81,7 @@ const SystemPromptVariables = {
    * @param {string} key
    * @returns {Promise<SystemPromptVariable>}
    */
-  get: async function (key = null) {
+  get: async (key = null) => {
     if (!key) return null;
     const variable = await prisma.system_prompt_variables.findUnique({
       where: { key: String(key) },
@@ -97,8 +97,7 @@ const SystemPromptVariables = {
    */
   getAll: async function (userId = null) {
     // All user-defined system variables are available to everyone globally since only admins can create them.
-    const userDefinedSystemVariables =
-      await prisma.system_prompt_variables.findMany();
+    const userDefinedSystemVariables = await prisma.system_prompt_variables.findMany();
     const formattedDbVars = userDefinedSystemVariables.map((v) => ({
       id: v.id,
       key: v.key,
@@ -122,13 +121,7 @@ const SystemPromptVariables = {
    * @param {{ key: string, value: string, description: string, type: string, userId: number }} data
    * @returns {Promise<SystemPromptVariable>}
    */
-  create: async function ({
-    key,
-    value,
-    description = null,
-    type = "static",
-    userId = null,
-  }) {
+  create: async function ({ key, value, description = null, type = "static", userId = null }) {
     await this._checkVariableKey(key, true);
     return await prisma.system_prompt_variables.create({
       data: {
@@ -170,7 +163,7 @@ const SystemPromptVariables = {
    * @param {number} id
    * @returns {Promise<boolean>}
    */
-  delete: async function (id = null) {
+  delete: async (id = null) => {
     try {
       await prisma.system_prompt_variables.delete({
         where: { id: Number(id) },
@@ -231,10 +224,7 @@ const SystemPromptVariables = {
         if (!variable) continue;
 
         // For dynamic and system variables, call the function to get the current value
-        if (
-          ["system"].includes(variable.type) &&
-          typeof variable.value === "function"
-        ) {
+        if (["system"].includes(variable.type) && typeof variable.value === "function") {
           try {
             if (variable.value.constructor.name === "AsyncFunction") {
               const value = await variable.value(userId);
@@ -269,13 +259,10 @@ const SystemPromptVariables = {
     if (typeof key !== "string") throw new Error("Key must be a string");
     if (!/^[a-zA-Z0-9_]+$/.test(key))
       throw new Error("Key must contain only letters, numbers and underscores");
-    if (key.length > 255)
-      throw new Error("Key must be less than 255 characters");
+    if (key.length > 255) throw new Error("Key must be less than 255 characters");
     if (key.length < 3) throw new Error("Key must be at least 3 characters");
-    if (key.startsWith("user."))
-      throw new Error("Key cannot start with 'user.'");
-    if (key.startsWith("system."))
-      throw new Error("Key cannot start with 'system.'");
+    if (key.startsWith("user.")) throw new Error("Key cannot start with 'user.'");
+    if (key.startsWith("system.")) throw new Error("Key cannot start with 'system.'");
     if (checkExisting && (await this.get(key)) !== null)
       throw new Error("System prompt variable with this key already exists");
 

@@ -1,13 +1,9 @@
-import { memo, useState } from "react";
-import {
-  formatDate,
-  getFileExtension,
-  middleTruncate,
-} from "@/utils/directories";
-import { ArrowUUpLeft, Eye, File, PushPin } from "@phosphor-icons/react";
-import Workspace from "@/models/workspace";
-import showToast from "@/utils/toast";
 import System from "@/models/system";
+import Workspace from "@/models/workspace";
+import { formatDate, getFileExtension, middleTruncate } from "@/utils/directories";
+import showToast from "@/utils/toast";
+import { ArrowUUpLeft, Eye, File, PushPin } from "@phosphor-icons/react";
+import { memo, useState } from "react";
 
 export default function WorkspaceFileRow({
   item,
@@ -57,9 +53,7 @@ export default function WorkspaceFileRow({
   return (
     <div
       className={`text-theme-text-primary text-xs grid grid-cols-12 py-2 pl-3.5 pr-8 h-[34px] items-center file-row ${
-        !disableSelection
-          ? "hover:bg-theme-file-picker-hover cursor-pointer"
-          : ""
+        !disableSelection ? "hover:bg-theme-file-picker-hover cursor-pointer" : ""
       } ${isMovedItem ? "selected light:text-white" : ""} ${
         selected ? "selected light:text-white" : ""
       }`}
@@ -89,10 +83,7 @@ export default function WorkspaceFileRow({
             </div>
           ) : null}
         </div>
-        <File
-          className="shrink-0 text-base font-bold w-4 h-4 mr-[3px] ml-1"
-          weight="fill"
-        />
+        <File className="shrink-0 text-base font-bold w-4 h-4 mr-[3px] ml-1" weight="fill" />
         <p className="whitespace-nowrap overflow-hidden text-ellipsis max-w-[400px]">
           {middleTruncate(item.title, 50)}
         </p>
@@ -121,9 +112,7 @@ export default function WorkspaceFileRow({
 }
 
 const PinItemToWorkspace = memo(({ workspace, docPath, item }) => {
-  const [pinned, setPinned] = useState(
-    item?.pinnedWorkspaces?.includes(workspace.id) || false
-  );
+  const [pinned, setPinned] = useState(item?.pinnedWorkspaces?.includes(workspace.id) || false);
   const [hover, setHover] = useState(false);
   const pinEvent = new CustomEvent("pinned_document");
 
@@ -131,11 +120,7 @@ const PinItemToWorkspace = memo(({ workspace, docPath, item }) => {
     try {
       e.stopPropagation();
       if (!pinned) window.dispatchEvent(pinEvent);
-      const success = await Workspace.setPinForDocument(
-        workspace.slug,
-        docPath,
-        !pinned
-      );
+      const success = await Workspace.setPinForDocument(workspace.slug, docPath, !pinned);
 
       if (!success) {
         showToast(`Failed to ${!pinned ? "pin" : "unpin"} document.`, "error", {
@@ -144,11 +129,9 @@ const PinItemToWorkspace = memo(({ workspace, docPath, item }) => {
         return;
       }
 
-      showToast(
-        `Document ${!pinned ? "pinned to" : "unpinned from"} workspace`,
-        "success",
-        { clear: true }
-      );
+      showToast(`Document ${!pinned ? "pinned to" : "unpinned from"} workspace`, "success", {
+        clear: true,
+      });
       setPinned(!pinned);
     } catch (error) {
       showToast(`Failed to pin document. ${error.message}`, "error", {
@@ -167,9 +150,7 @@ const PinItemToWorkspace = memo(({ workspace, docPath, item }) => {
       onClick={updatePinStatus}
       className="flex items-center ml-2 cursor-pointer"
       data-tooltip-id="pin-document"
-      data-tooltip-content={
-        pinned ? "Un-pin from workspace" : "Pin to workspace"
-      }
+      data-tooltip-content={pinned ? "Un-pin from workspace" : "Pin to workspace"}
     >
       {pinned ? (
         <div
@@ -198,29 +179,22 @@ const WatchForChanges = memo(({ workspace, docPath, item }) => {
   const updateWatchStatus = async () => {
     try {
       if (!watched) window.dispatchEvent(watchEvent);
-      const success =
-        await System.experimentalFeatures.liveSync.setWatchStatusForDocument(
-          workspace.slug,
-          docPath,
-          !watched
-        );
+      const success = await System.experimentalFeatures.liveSync.setWatchStatusForDocument(
+        workspace.slug,
+        docPath,
+        !watched
+      );
 
       if (!success) {
-        showToast(
-          `Failed to ${!watched ? "watch" : "unwatch"} document.`,
-          "error",
-          {
-            clear: true,
-          }
-        );
+        showToast(`Failed to ${!watched ? "watch" : "unwatch"} document.`, "error", {
+          clear: true,
+        });
         return;
       }
 
       showToast(
         `Document ${
-          !watched
-            ? "will be watched for changes"
-            : "will no longer be watched for changes"
+          !watched ? "will be watched for changes" : "will no longer be watched for changes"
         }.`,
         "success",
         { clear: true }
@@ -244,9 +218,7 @@ const WatchForChanges = memo(({ workspace, docPath, item }) => {
     >
       <Eye
         data-tooltip-id="watch-changes"
-        data-tooltip-content={
-          watched ? "Stop watching for changes" : "Watch document for changes"
-        }
+        data-tooltip-content={watched ? "Stop watching for changes" : "Watch document for changes"}
         size={16}
         onClick={updateWatchStatus}
         weight={hover || watched ? "fill" : "regular"}

@@ -1,7 +1,7 @@
-import PostgreSQLLogo from "./icons/postgresql.png";
-import MySQLLogo from "./icons/mysql.png";
-import MSSQLLogo from "./icons/mssql.png";
 import { X } from "@phosphor-icons/react";
+import MSSQLLogo from "./icons/mssql.png";
+import MySQLLogo from "./icons/mysql.png";
+import PostgreSQLLogo from "./icons/postgresql.png";
 
 export const DB_LOGOS = {
   postgresql: PostgreSQLLogo,

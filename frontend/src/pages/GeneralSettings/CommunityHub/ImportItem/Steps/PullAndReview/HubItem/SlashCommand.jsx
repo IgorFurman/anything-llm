@@ -1,18 +1,15 @@
 import CTAButton from "@/components/lib/CTAButton";
-import CommunityHubImportItemSteps from "../..";
-import showToast from "@/utils/toast";
-import paths from "@/utils/paths";
 import CommunityHub from "@/models/communityHub";
+import paths from "@/utils/paths";
+import showToast from "@/utils/toast";
+import CommunityHubImportItemSteps from "../..";
 
 export default function SlashCommand({ item, setStep }) {
   async function handleSubmit() {
     try {
       const { error } = await CommunityHub.applyItem(item.importId);
       if (error) throw new Error(error);
-      showToast(
-        `Slash command ${item.command} imported successfully!`,
-        "success"
-      );
+      showToast(`Slash command ${item.command} imported successfully!`, "success");
       setStep(CommunityHubImportItemSteps.completed.key);
     } catch (e) {
       console.error(e);
@@ -44,12 +41,11 @@ export default function SlashCommand({ item, setStep }) {
       </div>
       <div className="flex flex-col gap-y-[25px] text-white/80 light:text-theme-text-secondary text-sm">
         <p>
-          Slash commands are used to prefill information into a prompt while
-          chatting with a AnythingLLM workspace.
+          Slash commands are used to prefill information into a prompt while chatting with a
+          AnythingLLM workspace.
           <br />
           <br />
-          The slash command will be available during chatting by simply invoking
-          it with{" "}
+          The slash command will be available during chatting by simply invoking it with{" "}
           <code className="font-mono bg-zinc-900 light:bg-slate-200 px-1 py-0.5 rounded-md text-sm">
             {item.command}
           </code>{" "}

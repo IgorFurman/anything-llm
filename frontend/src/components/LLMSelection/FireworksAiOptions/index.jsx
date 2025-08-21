@@ -1,13 +1,11 @@
 import System from "@/models/system";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function FireworksAiOptions({ settings }) {
   return (
     <div className="flex gap-[36px] mt-1.5">
       <div className="flex flex-col w-60">
-        <label className="text-white text-sm font-semibold block mb-3">
-          Fireworks AI API Key
-        </label>
+        <label className="text-white text-sm font-semibold block mb-3">Fireworks AI API Key</label>
         <input
           type="password"
           name="FireworksAiLLMApiKey"
@@ -19,9 +17,7 @@ export default function FireworksAiOptions({ settings }) {
           spellCheck={false}
         />
       </div>
-      {!settings?.credentialsOnly && (
-        <FireworksAiModelSelection settings={settings} />
-      )}
+      {!settings?.credentialsOnly && <FireworksAiModelSelection settings={settings} />}
     </div>
   );
 }
@@ -52,9 +48,7 @@ function FireworksAiModelSelection({ settings }) {
   if (loading || Object.keys(groupedModels).length === 0) {
     return (
       <div className="flex flex-col w-60">
-        <label className="text-white text-sm font-semibold block mb-3">
-          Chat Model Selection
-        </label>
+        <label className="text-white text-sm font-semibold block mb-3">Chat Model Selection</label>
         <select
           name="FireworksAiLLMModelPref"
           disabled={true}
@@ -70,9 +64,7 @@ function FireworksAiModelSelection({ settings }) {
 
   return (
     <div className="flex flex-col w-60">
-      <label className="text-white text-sm font-semibold block mb-3">
-        Chat Model Selection
-      </label>
+      <label className="text-white text-sm font-semibold block mb-3">Chat Model Selection</label>
       <select
         name="FireworksAiLLMModelPref"
         required={true}

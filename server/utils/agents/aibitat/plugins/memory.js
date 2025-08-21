@@ -89,14 +89,13 @@ const memory = {
                 model: workspace?.chatModel,
               });
               const vectorDB = getVectorDbClass();
-              const { contextTexts = [] } =
-                await vectorDB.performSimilaritySearch({
-                  namespace: workspace.slug,
-                  input: query,
-                  LLMConnector,
-                  topN: workspace?.topN ?? 4,
-                  rerank: workspace?.vectorSearchMode === "rerank",
-                });
+              const { contextTexts = [] } = await vectorDB.performSimilaritySearch({
+                namespace: workspace.slug,
+                input: query,
+                LLMConnector,
+                topN: workspace?.topN ?? 4,
+                rerank: workspace?.vectorSearchMode === "rerank",
+              });
 
               if (contextTexts.length === 0) {
                 this.super.introspect(
@@ -113,9 +112,7 @@ const memory = {
               for (const text of contextTexts) combinedText += text + "\n\n";
               return combinedText;
             } catch (error) {
-              this.super.handlerProps.log(
-                `memory.search raised an error. ${error.message}`
-              );
+              this.super.handlerProps.log(`memory.search raised an error. ${error.message}`);
               return `An error was raised while searching the vector database. ${error.message}`;
             }
           },
@@ -142,16 +139,13 @@ const memory = {
                 null
               );
 
-              if (!!error)
-                return "The content was failed to be embedded properly.";
+              if (!!error) return "The content was failed to be embedded properly.";
               this.super.introspect(
                 `${this.caller}: I saved the content to long-term memory in this workspaces vector database.`
               );
               return "The content given was successfully embedded. There is nothing else to do.";
             } catch (error) {
-              this.super.handlerProps.log(
-                `memory.store raised an error. ${error.message}`
-              );
+              this.super.handlerProps.log(`memory.store raised an error. ${error.message}`);
               return `Let the user know this action was not successful. An error was raised while storing data in the vector database. ${error.message}`;
             }
           },

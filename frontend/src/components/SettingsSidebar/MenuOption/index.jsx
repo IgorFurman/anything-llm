@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
 import { CaretRight } from "@phosphor-icons/react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 export default function MenuOption({
@@ -43,8 +43,7 @@ export default function MenuOption({
   }
 
   const isActive = hasChildren
-    ? (!isExpanded &&
-        childOptions.some((child) => child.href === location.pathname)) ||
+    ? (!isExpanded && childOptions.some((child) => child.href === location.pathname)) ||
       location.pathname === href
     : location.pathname === href;
 
@@ -83,9 +82,7 @@ export default function MenuOption({
             className={`${
               isChild ? "text-xs" : "text-sm"
             } leading-loose whitespace-nowrap overflow-hidden ml-2 ${
-              isActive
-                ? "text-white font-semibold"
-                : "text-white light:text-black"
+              isActive ? "text-white font-semibold" : "text-white light:text-black"
             } ${!icon && "pl-5"}`}
           >
             {btnText}
@@ -139,9 +136,7 @@ function useIsExpanded({
 
   useEffect(() => {
     if (hasVisibleChildren) {
-      const shouldExpand = childOptions.some(
-        (child) => child.href === location
-      );
+      const shouldExpand = childOptions.some((child) => child.href === location);
       if (shouldExpand && !isExpanded) {
         setIsExpanded(true);
         localStorage.setItem(storageKey, JSON.stringify(true));
@@ -164,12 +159,7 @@ function useIsExpanded({
 function hasVisibleOptions(user = null, childOptions = []) {
   if (!Array.isArray(childOptions) || childOptions?.length === 0) return false;
 
-  function isVisible({
-    roles = [],
-    user = null,
-    flex = false,
-    hidden = false,
-  }) {
+  function isVisible({ roles = [], user = null, flex = false, hidden = false }) {
     if (hidden) return false;
     if (!flex && !roles.includes(user?.role)) return false;
     if (flex && !!user && !roles.includes(user?.role)) return false;

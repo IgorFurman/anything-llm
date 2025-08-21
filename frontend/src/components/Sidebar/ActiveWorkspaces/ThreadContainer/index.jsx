@@ -1,10 +1,10 @@
 import Workspace from "@/models/workspace";
 import paths from "@/utils/paths";
 import showToast from "@/utils/toast";
-import { Plus, CircleNotch, Trash } from "@phosphor-icons/react";
+import { CircleNotch, Plus, Trash } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
-import ThreadItem from "./ThreadItem";
 import { useParams } from "react-router-dom";
+import ThreadItem from "./ThreadItem";
 export const THREAD_RENAME_EVENT = "renameThread";
 
 export default function ThreadContainer({ workspace }) {
@@ -117,9 +117,7 @@ export default function ThreadContainer({ workspace }) {
     );
   }
 
-  const activeThreadIdx = !!threads.find(
-    (thread) => thread?.slug === threadSlug
-  )
+  const activeThreadIdx = !!threads.find((thread) => thread?.slug === threadSlug)
     ? threads.findIndex((thread) => thread?.slug === threadSlug) + 1
     : 0;
 
@@ -166,9 +164,7 @@ function NewThreadButton({ workspace }) {
       setLoading(false);
       return;
     }
-    window.location.replace(
-      paths.workspace.thread(workspace.slug, thread.slug)
-    );
+    window.location.replace(paths.workspace.thread(workspace.slug, thread.slug));
   };
 
   return (
@@ -198,9 +194,7 @@ function NewThreadButton({ workspace }) {
             Starting Thread...
           </p>
         ) : (
-          <p className="text-left text-white light:text-theme-text-primary text-sm">
-            New Thread
-          </p>
+          <p className="text-left text-white light:text-theme-text-primary text-sm">New Thread</p>
         )}
       </div>
     </button>
@@ -208,8 +202,7 @@ function NewThreadButton({ workspace }) {
 }
 
 function DeleteAllThreadButton({ ctrlPressed, threads, onDelete }) {
-  if (!ctrlPressed || threads.filter((t) => t.deleted).length === 0)
-    return null;
+  if (!ctrlPressed || threads.filter((t) => t.deleted).length === 0) return null;
   return (
     <button
       type="button"

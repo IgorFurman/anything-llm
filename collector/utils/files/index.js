@@ -35,12 +35,10 @@ function isKnownTextMime(filepath) {
   try {
     const mimeLib = new MimeDetector();
     const mime = mimeLib.getType(filepath);
-    if (mimeLib.badMimes.includes(mime))
-      return { valid: false, reason: "bad_mime" };
+    if (mimeLib.badMimes.includes(mime)) return { valid: false, reason: "bad_mime" };
 
     const type = mime.split("/")[0];
-    if (mimeLib.nonTextTypes.includes(type))
-      return { valid: false, reason: "non_text_mime" };
+    if (mimeLib.nonTextTypes.includes(type)) return { valid: false, reason: "non_text_mime" };
     return { valid: true, reason: "valid_mime" };
   } catch (e) {
     return { valid: false, reason: "generic" };
@@ -62,8 +60,7 @@ function parseableAsText(filepath) {
 
     const content = buffer.subarray(0, bytesRead).toString("utf8");
     const nullCount = (content.match(/\0/g) || []).length;
-    const controlCount = (content.match(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g) || [])
-      .length;
+    const controlCount = (content.match(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g) || []).length;
 
     const threshold = bytesRead * 0.1;
     return nullCount + controlCount < threshold;
@@ -104,19 +101,14 @@ function createdDate(filepath) {
  * @param {string|null} params.destinationOverride - A forced destination to write to - will be honored if provided.
  * @returns {Object} - The data with the location added.
  */
-function writeToServerDocuments({
-  data = {},
-  filename = null,
-  destinationOverride = null,
-}) {
+function writeToServerDocuments({ data = {}, filename = null, destinationOverride = null }) {
   if (!filename) throw new Error("Filename is required!");
 
   let destination = null;
   if (destinationOverride) destination = path.resolve(destinationOverride);
   else destination = path.resolve(documentsFolder, "custom-documents");
 
-  if (!fs.existsSync(destination))
-    fs.mkdirSync(destination, { recursive: true });
+  if (!fs.existsSync(destination)) fs.mkdirSync(destination, { recursive: true });
   const destinationFilePath = path.resolve(destination, filename) + ".json";
 
   fs.writeFileSync(destinationFilePath, JSON.stringify(data, null, 4), {

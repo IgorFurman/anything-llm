@@ -15,7 +15,7 @@ const sanitizeNamespace = (namespace) => {
 };
 
 // Add this helper method to check if collection exists more reliably
-const collectionExists = async function (client, namespace) {
+const collectionExists = async (client, namespace) => {
   try {
     const collections = await AstraDB.allNamespaces(client);
     if (collections) {
@@ -29,9 +29,8 @@ const collectionExists = async function (client, namespace) {
 
 const AstraDB = {
   name: "AstraDB",
-  connect: async function () {
-    if (process.env.VECTOR_DB !== "astra")
-      throw new Error("AstraDB::Invalid ENV settings");
+  connect: async () => {
+    if (process.env.VECTOR_DB !== "astra") throw new Error("AstraDB::Invalid ENV settings");
 
     const client = new AstraClient(
       process?.env?.ASTRA_DB_APPLICATION_TOKEN,
@@ -39,13 +38,11 @@ const AstraDB = {
     );
     return { client };
   },
-  heartbeat: async function () {
-    return { heartbeat: Number(new Date()) };
-  },
+  heartbeat: async () => ({ heartbeat: Number(new Date()) }),
   // Astra interface will return a valid collection object even if the collection
   // does not actually exist. So we run a simple check which will always throw
   // when the table truly does not exist. Faster than iterating all collections.
-  isRealCollection: async function (astraCollection = null) {
+  isRealCollection: async (astraCollection = null) => {
     if (!astraCollection) return false;
     return await astraCollection
       .countDocuments()
@@ -71,9 +68,7 @@ const AstraDB = {
   namespace: async function (client, namespace = null) {
     if (!namespace) throw new Error("No namespace value provided.");
     const sanitizedNamespace = sanitizeNamespace(namespace);
-    const collection = await client
-      .collection(sanitizedNamespace)
-      .catch(() => null);
+    const collection = await client.collection(sanitizedNamespace).catch(() => null);
     if (!(await this.isRealCollection(collection))) return null;
 
     const count = await collection.countDocuments().catch((e) => {
@@ -98,7 +93,7 @@ const AstraDB = {
     const collection = await client.collection(sanitizedNamespace);
     return await this.isRealCollection(collection);
   },
-  deleteVectorsInNamespace: async function (client, namespace = null) {
+  deleteVectorsInNamespace: async (client, namespace = null) => {
     const sanitizedNamespace = sanitizeNamespace(namespace);
     await client.dropCollection(sanitizedNamespace);
     return true;
@@ -106,7 +101,7 @@ const AstraDB = {
   // AstraDB requires a dimension aspect for collection creation
   // we pass this in from the first chunk to infer the dimensions like other
   // providers do.
-  getOrCreateCollection: async function (client, namespace, dimensions = null) {
+  getOrCreateCollection: async (client, namespace, dimensions = null) => {
     const sanitizedNamespace = sanitizeNamespace(namespace);
     try {
       const exists = await collectionExists(client, sanitizedNamespace);
@@ -132,10 +127,7 @@ const AstraDB = {
 
       return await client.collection(sanitizedNamespace);
     } catch (error) {
-      console.error(
-        "Astra::getOrCreateCollection error",
-        error?.message || error
-      );
+      console.error("Astra::getOrCreateCollection error", error?.message || error);
       throw error;
     }
   },
@@ -160,11 +152,7 @@ const AstraDB = {
           const documentVectors = [];
           vectorDimension = chunks[0][0].values.length || null;
 
-          const collection = await this.getOrCreateCollection(
-            client,
-            namespace,
-            vectorDimension
-          );
+          const collection = await this.getOrCreateCollection(client, namespace, vectorDimension);
           if (!(await this.isRealCollection(collection)))
             throw new Error("Failed to create new AstraDB collection!", {
               namespace,
@@ -228,16 +216,10 @@ const AstraDB = {
           documentVectors.push({ docId, vectorId: vectorRecord._id });
         }
       } else {
-        throw new Error(
-          "Could not embed document chunks! This document will not be recorded."
-        );
+        throw new Error("Could not embed document chunks! This document will not be recorded.");
       }
       const { client } = await this.connect();
-      const collection = await this.getOrCreateCollection(
-        client,
-        namespace,
-        vectorDimension
-      );
+      const collection = await this.getOrCreateCollection(client, namespace, vectorDimension);
       if (!(await this.isRealCollection(collection)))
         throw new Error("Failed to create new AstraDB collection!", {
           namespace,
@@ -275,9 +257,7 @@ const AstraDB = {
     const { client } = await this.connect();
     namespace = sanitizeNamespace(namespace);
     if (!(await this.namespaceExists(client, namespace)))
-      throw new Error(
-        "Invalid namespace - has it been collected and populated yet?"
-      );
+      throw new Error("Invalid namespace - has it been collected and populated yet?");
     const collection = await client.collection(namespace);
 
     const knownDocuments = await DocumentVectors.where({ docId });
@@ -313,8 +293,7 @@ const AstraDB = {
       return {
         contextTexts: [],
         sources: [],
-        message:
-          "Invalid query - no namespace found for workspace in vector db!",
+        message: "Invalid query - no namespace found for workspace in vector db!",
       };
     }
 
@@ -337,14 +316,14 @@ const AstraDB = {
       message: false,
     };
   },
-  similarityResponse: async function ({
+  similarityResponse: async ({
     client,
     namespace,
     queryVector,
     similarityThreshold = 0.25,
     topN = 4,
     filterIdentifiers = [],
-  }) {
+  }) => {
     const result = {
       contextTexts: [],
       sourceDocuments: [],
@@ -378,17 +357,17 @@ const AstraDB = {
     });
     return result;
   },
-  allNamespaces: async function (client) {
+  allNamespaces: async (client) => {
     try {
-      let header = new Headers();
+      const header = new Headers();
       header.append("Token", client?.httpClient?.applicationToken);
       header.append("Content-Type", "application/json");
 
-      let raw = JSON.stringify({
+      const raw = JSON.stringify({
         findCollections: {},
       });
 
-      let requestOptions = {
+      const requestOptions = {
         method: "POST",
         headers: header,
         body: raw,
@@ -411,9 +390,7 @@ const AstraDB = {
     if (!(await this.namespaceExists(client, namespace)))
       throw new Error("Namespace by that name does not exist.");
     const stats = await this.namespace(client, namespace);
-    return stats
-      ? stats
-      : { message: "No stats were able to be fetched from DB for namespace" };
+    return stats ? stats : { message: "No stats were able to be fetched from DB for namespace" };
   },
   "delete-namespace": async function (reqBody = {}) {
     const { namespace = null } = reqBody;
@@ -429,13 +406,11 @@ const AstraDB = {
       } vectors.`,
     };
   },
-  curateSources: function (sources = []) {
+  curateSources: (sources = []) => {
     const documents = [];
     for (const source of sources) {
       if (Object.keys(source).length > 0) {
-        const metadata = source.hasOwnProperty("metadata")
-          ? source.metadata
-          : source;
+        const metadata = source.hasOwnProperty("metadata") ? source.metadata : source;
         documents.push({
           ...metadata,
         });

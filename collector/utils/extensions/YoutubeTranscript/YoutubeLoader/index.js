@@ -23,9 +23,7 @@ class YoutubeLoader {
    * @returns The videoId of the YouTube video.
    */
   static getVideoID(url) {
-    const match = url.match(
-      /.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#&?]*).*/
-    );
+    const match = url.match(/.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#&?]*).*/);
     if (match !== null && match[1].length === 11) {
       return match[1];
     } else {
@@ -74,9 +72,7 @@ class YoutubeLoader {
         metadata.author = info.author;
       }
     } catch (e) {
-      throw new Error(
-        `Failed to get YouTube video transcription: ${e?.message}`
-      );
+      throw new Error(`Failed to get YouTube video transcription: ${e?.message}`);
     }
     return [
       {

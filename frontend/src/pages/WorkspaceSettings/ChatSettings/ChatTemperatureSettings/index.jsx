@@ -8,11 +8,7 @@ function recommendedSettings(provider = null) {
   }
 }
 
-export default function ChatTemperatureSettings({
-  settings,
-  workspace,
-  setHasChanges,
-}) {
+export default function ChatTemperatureSettings({ settings, workspace, setHasChanges }) {
   const defaults = recommendedSettings(settings?.LLMProvider);
   const { t } = useTranslation();
   return (

@@ -59,7 +59,7 @@ const MobileDevice = {
    * @returns {string} The temporary token
    */
   registerTempToken: function (user = null) {
-    let tokenData = {};
+    const tokenData = {};
     if (user) tokenData.userId = user.id;
     else tokenData.userId = null;
 
@@ -81,7 +81,7 @@ const MobileDevice = {
    * Should run quick since this mapping is wiped often
    * and does not live past restarts.
    */
-  cleanupExpiredTokens: function () {
+  cleanupExpiredTokens: () => {
     const now = Date.now();
     for (const [token, data] of TemporaryMobileDeviceRequests.entries()) {
       if (data.expiresAt < now) TemporaryMobileDeviceRequests.delete(token);
@@ -99,8 +99,7 @@ const MobileDevice = {
   connectionURL: function (user = null) {
     let baseUrl = "/api/mobile";
     if (process.env.NODE_ENV === "production") baseUrl = "/api/mobile";
-    else
-      baseUrl = `http://${ip.address()}:${process.env.SERVER_PORT || 3001}/api/mobile`;
+    else baseUrl = `http://${ip.address()}:${process.env.SERVER_PORT || 3001}/api/mobile`;
 
     const tempToken = this.registerTempToken(user);
     baseUrl = `${baseUrl}?t=${tempToken}`;
@@ -144,7 +143,7 @@ const MobileDevice = {
    * @returns {Promise<{device: import("@prisma/client").desktop_mobile_devices|null, error:string|null}>}
    */
   update: async function (id, updates = {}) {
-    const device = await this.get({ id: parseInt(id) });
+    const device = await this.get({ id: Number.parseInt(id) });
     if (!device) return { device: null, error: "Device not found" };
 
     const validUpdates = {};
@@ -169,7 +168,7 @@ const MobileDevice = {
    * @param {object} clause - Prisma props for search
    * @returns {Promise<import("@prisma/client").desktop_mobile_devices[]>}
    */
-  get: async function (clause = {}, include = null) {
+  get: async (clause = {}, include = null) => {
     try {
       const device = await prisma.desktop_mobile_devices.findFirst({
         where: clause,
@@ -187,10 +186,10 @@ const MobileDevice = {
    * @param {number} id - database id of mobile device
    * @returns {Promise<{success: boolean, error:string|null}>}
    */
-  delete: async function (id) {
+  delete: async (id) => {
     try {
       await prisma.desktop_mobile_devices.delete({
-        where: { id: parseInt(id) },
+        where: { id: Number.parseInt(id) },
       });
       return { success: true, error: null };
     } catch (error) {
@@ -206,12 +205,7 @@ const MobileDevice = {
    * @param {object|null} orderBy
    * @returns {Promise<import("@prisma/client").desktop_mobile_devices[]>}
    */
-  where: async function (
-    clause = {},
-    limit = null,
-    orderBy = null,
-    include = null
-  ) {
+  where: async (clause = {}, limit = null, orderBy = null, include = null) => {
     try {
       const devices = await prisma.desktop_mobile_devices.findMany({
         where: clause,

@@ -1,15 +1,9 @@
-const {
-  SUPPORTED_CONNECTION_METHODS,
-} = require("../../../AiProviders/bedrock/utils.js");
+const { SUPPORTED_CONNECTION_METHODS } = require("../../../AiProviders/bedrock/utils.js");
 const Provider = require("./ai-provider.js");
 const InheritMultiple = require("./helpers/classes.js");
 const UnTooled = require("./helpers/untooled.js");
 const { ChatBedrockConverse } = require("@langchain/aws");
-const {
-  HumanMessage,
-  SystemMessage,
-  AIMessage,
-} = require("@langchain/core/messages");
+const { HumanMessage, SystemMessage, AIMessage } = require("@langchain/core/messages");
 
 /**
  * The agent provider for the AWS Bedrock provider.
@@ -135,9 +129,7 @@ class AWSBedrockProvider extends InheritMultiple([Provider, UnTooled]) {
       }
 
       if (!completion?.content) {
-        this.providerLog(
-          "Will assume chat completion without tool call inputs."
-        );
+        this.providerLog("Will assume chat completion without tool call inputs.");
         const response = await this.client.invoke(
           this.#convertToLangchainPrototypes(this.cleanMsgs(messages))
         );

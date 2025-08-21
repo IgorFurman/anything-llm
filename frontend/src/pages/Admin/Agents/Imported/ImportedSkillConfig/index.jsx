@@ -1,7 +1,7 @@
 import System from "@/models/system";
 import showToast from "@/utils/toast";
 import { Gear, Plug } from "@phosphor-icons/react";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { sentenceCase } from "text-case";
 
 /**
@@ -10,18 +10,13 @@ import { sentenceCase } from "text-case";
  * @returns {object} - The inputs object
  */
 function inputsFromArgs(setupArgs) {
-  if (
-    !setupArgs ||
-    setupArgs.constructor?.call?.().toString() !== "[object Object]"
-  ) {
+  if (!setupArgs || setupArgs.constructor?.call?.().toString() !== "[object Object]") {
     return {};
   }
   return Object.entries(setupArgs).reduce(
     (acc, [key, props]) => ({
       ...acc,
-      [key]: props.hasOwnProperty("value")
-        ? props.value
-        : props?.input?.default || "",
+      [key]: props.hasOwnProperty("value") ? props.value : props?.input?.default || "",
     }),
     {}
   );
@@ -37,29 +32,21 @@ export default function ImportedSkillConfig({
 }) {
   const [config, setConfig] = useState(selectedSkill);
   const [hasChanges, setHasChanges] = useState(false);
-  const [inputs, setInputs] = useState(
-    inputsFromArgs(selectedSkill?.setup_args)
-  );
+  const [inputs, setInputs] = useState(inputsFromArgs(selectedSkill?.setup_args));
 
   const hasSetupArgs =
-    selectedSkill?.setup_args &&
-    Object.keys(selectedSkill.setup_args).length > 0;
+    selectedSkill?.setup_args && Object.keys(selectedSkill.setup_args).length > 0;
 
   async function toggleSkill() {
     const updatedConfig = { ...selectedSkill, active: !config.active };
-    await System.experimentalFeatures.agentPlugins.updatePluginConfig(
-      config.hubId,
-      { active: !config.active }
-    );
-    setImportedSkills((prev) =>
-      prev.map((s) => (s.hubId === config.hubId ? updatedConfig : s))
-    );
+    await System.experimentalFeatures.agentPlugins.updatePluginConfig(config.hubId, {
+      active: !config.active,
+    });
+    setImportedSkills((prev) => prev.map((s) => (s.hubId === config.hubId ? updatedConfig : s)));
     setConfig(updatedConfig);
-    showToast(
-      `Skill ${updatedConfig.active ? "activated" : "deactivated"}.`,
-      "success",
-      { clear: true }
-    );
+    showToast(`Skill ${updatedConfig.active ? "activated" : "deactivated"}.`, "success", {
+      clear: true,
+    });
   }
 
   async function handleSubmit(e) {
@@ -85,15 +72,10 @@ export default function ImportedSkillConfig({
       return;
     }
 
-    await System.experimentalFeatures.agentPlugins.updatePluginConfig(
-      config.hubId,
-      updatedConfig
-    );
+    await System.experimentalFeatures.agentPlugins.updatePluginConfig(config.hubId, updatedConfig);
     setConfig(updatedConfig);
     setImportedSkills((prev) =>
-      prev.map((skill) =>
-        skill.hubId === config.hubId ? updatedConfig : skill
-      )
+      prev.map((skill) => (skill.hubId === config.hubId ? updatedConfig : skill))
     );
     showToast("Skill config updated successfully.", "success");
     setHasChanges(false);
@@ -101,8 +83,7 @@ export default function ImportedSkillConfig({
 
   useEffect(() => {
     setHasChanges(
-      JSON.stringify(inputs) !==
-        JSON.stringify(inputsFromArgs(selectedSkill.setup_args))
+      JSON.stringify(inputs) !== JSON.stringify(inputsFromArgs(selectedSkill.setup_args))
     );
   }, [inputs]);
 
@@ -125,10 +106,7 @@ export default function ImportedSkillConfig({
               <div className="peer-disabled:opacity-50 pointer-events-none peer h-6 w-11 rounded-full bg-[#CFCFD0] after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:shadow-xl after:border-none after:bg-white after:box-shadow-md after:transition-all after:content-[''] peer-checked:bg-[#32D583] peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-transparent"></div>
               <span className="ml-3 text-sm font-medium"></span>
             </label>
-            <ManageSkillMenu
-              config={config}
-              setImportedSkills={setImportedSkills}
-            />
+            <ManageSkillMenu config={config} setImportedSkills={setImportedSkills} />
           </div>
           <p className="text-white text-opacity-60 text-xs font-medium py-1.5">
             {config.description} by{" "}
@@ -153,13 +131,9 @@ export default function ImportedSkillConfig({
                     type={props?.input?.type || "text"}
                     required={props?.input?.required}
                     defaultValue={
-                      props.hasOwnProperty("value")
-                        ? props.value
-                        : props?.input?.default || ""
+                      props.hasOwnProperty("value") ? props.value : props?.input?.default || ""
                     }
-                    onChange={(e) =>
-                      setInputs({ ...inputs, [key]: e.target.value })
-                    }
+                    onChange={(e) => setInputs({ ...inputs, [key]: e.target.value })}
                     placeholder={props?.input?.placeholder || ""}
                     className="border-solid bg-transparent border border-white light:border-black rounded-md p-2 text-white text-sm"
                   />
@@ -195,14 +169,10 @@ function ManageSkillMenu({ config, setImportedSkills }) {
 
   async function deleteSkill() {
     if (
-      !window.confirm(
-        "Are you sure you want to delete this skill? This action cannot be undone."
-      )
+      !window.confirm("Are you sure you want to delete this skill? This action cannot be undone.")
     )
       return;
-    const success = await System.experimentalFeatures.agentPlugins.deletePlugin(
-      config.hubId
-    );
+    const success = await System.experimentalFeatures.agentPlugins.deletePlugin(config.hubId);
     if (success) {
       setImportedSkills((prev) => prev.filter((s) => s.hubId !== config.hubId));
       showToast("Skill deleted successfully.", "success");

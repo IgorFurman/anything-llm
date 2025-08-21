@@ -55,18 +55,14 @@ async function purgeFolder(folderName = null) {
 
   const filenames = fs
     .readdirSync(subFolderPath)
-    .map((file) =>
-      path.join(subFolderPath, file).replace(documentsPath + "/", "")
-    );
+    .map((file) => path.join(subFolderPath, file).replace(documentsPath + "/", ""));
   const workspaces = await Workspace.where();
 
   const purgePromises = [];
   // Remove associated Vector-cache files
   for (const filename of filenames) {
     const rmVectorCache = () =>
-      new Promise((resolve) =>
-        purgeVectorCache(filename).then(() => resolve(true))
-      );
+      new Promise((resolve) => purgeVectorCache(filename).then(() => resolve(true)));
     purgePromises.push(rmVectorCache);
   }
 

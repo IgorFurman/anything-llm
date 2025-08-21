@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
 import Appearance from "@/models/appearance";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 export default function ShowScrollbar() {
@@ -33,9 +33,7 @@ export default function ShowScrollbar() {
       <p className="text-sm leading-6 font-semibold text-white">
         {t("customization.items.show-scrollbar.title")}
       </p>
-      <p className="text-xs text-white/60">
-        {t("customization.items.show-scrollbar.description")}
-      </p>
+      <p className="text-xs text-white/60">{t("customization.items.show-scrollbar.description")}</p>
       <div className="flex items-center gap-x-4">
         <label className="relative inline-flex cursor-pointer items-center">
           <input

@@ -29,14 +29,14 @@ const Document = {
     return { metadata, type, source: this._stripSource(source, type) };
   },
 
-  forWorkspace: async function (workspaceId = null) {
+  forWorkspace: async (workspaceId = null) => {
     if (!workspaceId) return [];
     return await prisma.workspace_documents.findMany({
       where: { workspaceId },
     });
   },
 
-  delete: async function (clause = {}) {
+  delete: async (clause = {}) => {
     try {
       await prisma.workspace_documents.deleteMany({ where: clause });
       return true;
@@ -46,7 +46,7 @@ const Document = {
     }
   },
 
-  get: async function (clause = {}) {
+  get: async (clause = {}) => {
     try {
       const document = await prisma.workspace_documents.findFirst({
         where: clause,
@@ -58,13 +58,7 @@ const Document = {
     }
   },
 
-  where: async function (
-    clause = {},
-    limit = null,
-    orderBy = null,
-    include = null,
-    select = null
-  ) {
+  where: async (clause = {}, limit = null, orderBy = null, include = null, select = null) => {
     try {
       const results = await prisma.workspace_documents.findMany({
         where: clause,
@@ -80,7 +74,7 @@ const Document = {
     }
   },
 
-  addDocuments: async function (workspace, additions = [], userId = null) {
+  addDocuments: async (workspace, additions = [], userId = null) => {
     const VectorDb = getVectorDbClass();
     if (additions.length === 0) return { failed: [], embedded: [] };
     const { fileData } = require("../utils/files");
@@ -109,10 +103,7 @@ const Document = {
       );
 
       if (!vectorized) {
-        console.error(
-          "Failed to vectorize",
-          metadata?.title || newDoc.filename
-        );
+        console.error("Failed to vectorize", metadata?.title || newDoc.filename);
         failedToEmbed.push(metadata?.title || newDoc.filename);
         errors.add(error);
         continue;
@@ -154,10 +145,7 @@ const Document = {
         workspaceId: workspace.id,
       });
       if (!document) continue;
-      await VectorDb.deleteDocumentFromNamespace(
-        workspace.slug,
-        document.docId
-      );
+      await VectorDb.deleteDocumentFromNamespace(workspace.slug, document.docId);
 
       try {
         await prisma.workspace_documents.delete({
@@ -182,7 +170,7 @@ const Document = {
     return true;
   },
 
-  count: async function (clause = {}, limit = null) {
+  count: async (clause = {}, limit = null) => {
     try {
       const count = await prisma.workspace_documents.count({
         where: clause,
@@ -197,11 +185,8 @@ const Document = {
   update: async function (id = null, data = {}) {
     if (!id) throw new Error("No workspace document id provided for update");
 
-    const validKeys = Object.keys(data).filter((key) =>
-      this.writable.includes(key)
-    );
-    if (validKeys.length === 0)
-      return { document: { id }, message: "No valid fields to update!" };
+    const validKeys = Object.keys(data).filter((key) => this.writable.includes(key));
+    if (validKeys.length === 0) return { document: { id }, message: "No valid fields to update!" };
 
     try {
       const document = await prisma.workspace_documents.update({
@@ -214,7 +199,7 @@ const Document = {
       return { document: null, message: error.message };
     }
   },
-  _updateAll: async function (clause = {}, data = {}) {
+  _updateAll: async (clause = {}, data = {}) => {
     try {
       await prisma.workspace_documents.updateMany({
         where: clause,
@@ -235,14 +220,14 @@ const Document = {
     const data = await fileData(document.docpath);
     return { title: data.title, content: data.pageContent };
   },
-  contentByDocPath: async function (docPath) {
+  contentByDocPath: async (docPath) => {
     const { fileData } = require("../utils/files");
     const data = await fileData(docPath);
     return { title: data.title, content: data.pageContent };
   },
 
   // Some data sources have encoded params in them we don't want to log - so strip those details.
-  _stripSource: function (sourceString, type) {
+  _stripSource: (sourceString, type) => {
     if (["confluence", "github"].includes(type)) {
       const _src = new URL(sourceString);
       _src.search = ""; // remove all search params that are encoded for resync.
@@ -264,18 +249,12 @@ const Document = {
      * @param {string} docLocation - The location/path of the document that was uploaded
      * @returns {Promise<boolean>} - True if the document was uploaded successfully, false otherwise
      */
-    uploadToWorkspace: async function (wsSlugs = "", docLocation = null) {
+    uploadToWorkspace: async (wsSlugs = "", docLocation = null) => {
       if (!docLocation)
-        return console.log(
-          "No document location provided for embedding",
-          docLocation
-        );
+        return console.log("No document location provided for embedding", docLocation);
 
-      const slugs = wsSlugs
-        .split(",")
-        .map((slug) => String(slug)?.trim()?.toLowerCase());
-      if (slugs.length === 0)
-        return console.log(`No workspaces provided got: ${wsSlugs}`);
+      const slugs = wsSlugs.split(",").map((slug) => String(slug)?.trim()?.toLowerCase());
+      if (slugs.length === 0) return console.log(`No workspaces provided got: ${wsSlugs}`);
 
       const { Workspace } = require("./workspace");
       const workspaces = await Workspace.where({ slug: { in: slugs } });
@@ -287,15 +266,11 @@ const Document = {
       // upsert we will then have the cache of the document - making n+1 embeds faster. If we parallelize this
       // we will have to do a lot of extra work to ensure that the document is not embedded more than once.
       for (const workspace of workspaces) {
-        const { failedToEmbed = [], errors = [] } = await Document.addDocuments(
-          workspace,
-          [docLocation]
-        );
+        const { failedToEmbed = [], errors = [] } = await Document.addDocuments(workspace, [
+          docLocation,
+        ]);
         if (failedToEmbed.length > 0)
-          return console.log(
-            `Failed to embed document into workspace ${workspace.slug}`,
-            errors
-          );
+          return console.log(`Failed to embed document into workspace ${workspace.slug}`, errors);
         console.log(`Document embedded into workspace ${workspace.slug}...`);
       }
 

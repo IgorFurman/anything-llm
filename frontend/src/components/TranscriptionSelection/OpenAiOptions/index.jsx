@@ -7,9 +7,7 @@ export default function OpenAiWhisperOptions({ settings }) {
   return (
     <div className="flex gap-x-7 gap-[36px] mt-1.5">
       <div className="flex flex-col w-60">
-        <label className="text-white text-sm font-semibold block mb-3">
-          API Key
-        </label>
+        <label className="text-white text-sm font-semibold block mb-3">API Key</label>
         <input
           type="password"
           name="OpenAiKey"
@@ -24,9 +22,7 @@ export default function OpenAiWhisperOptions({ settings }) {
         />
       </div>
       <div className="flex flex-col w-60">
-        <label className="text-white text-sm font-semibold block mb-3">
-          Whisper Model
-        </label>
+        <label className="text-white text-sm font-semibold block mb-3">Whisper Model</label>
         <select
           disabled={true}
           className="border-none flex-shrink-0 bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"

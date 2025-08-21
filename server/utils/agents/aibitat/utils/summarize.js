@@ -15,12 +15,7 @@ const Provider = require("../providers/ai-provider");
  * @param {LCSummarizationConfig} The LLM to use for summarization (inherited)
  * @returns {Promise<string>} The summarized content.
  */
-async function summarizeContent({
-  provider = "openai",
-  model = null,
-  controllerSignal,
-  content,
-}) {
+async function summarizeContent({ provider = "openai", model = null, controllerSignal, content }) {
   const llm = Provider.LangChainChatModel(provider, {
     temperature: 0,
     model: model,

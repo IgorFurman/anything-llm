@@ -45,9 +45,7 @@ class TextSplitter {
    * sometimes user defined.
    */
   static determineMaxChunkSize(preferred = null, embedderLimit = 1000) {
-    const prefValue = isNullOrNaN(preferred)
-      ? Number(embedderLimit)
-      : Number(preferred);
+    const prefValue = isNullOrNaN(preferred) ? Number(embedderLimit) : Number(preferred);
     const limit = Number(embedderLimit);
     if (prefValue > limit)
       console.log(
@@ -141,9 +139,7 @@ class TextSplitter {
     });
 
     if (!content) return this.#applyPrefix(content);
-    return this.#applyPrefix(
-      `<document_metadata>\n${content}</document_metadata>\n\n`
-    );
+    return this.#applyPrefix(`<document_metadata>\n${content}</document_metadata>\n\n`);
   }
 
   /**
@@ -157,9 +153,7 @@ class TextSplitter {
     // if (!config?.splitByFilename) {// TODO do something when specific extension is present? }
     return new RecursiveSplitter({
       chunkSize: isNaN(config?.chunkSize) ? 1_000 : Number(config?.chunkSize),
-      chunkOverlap: isNaN(config?.chunkOverlap)
-        ? 20
-        : Number(config?.chunkOverlap),
+      chunkOverlap: isNaN(config?.chunkOverlap) ? 20 : Number(config?.chunkOverlap),
       chunkHeader: this.stringifyHeader(),
     });
   }
@@ -172,9 +166,7 @@ class TextSplitter {
 // Wrapper for Langchain default RecursiveCharacterTextSplitter class.
 class RecursiveSplitter {
   constructor({ chunkSize, chunkOverlap, chunkHeader = null }) {
-    const {
-      RecursiveCharacterTextSplitter,
-    } = require("@langchain/textsplitters");
+    const { RecursiveCharacterTextSplitter } = require("@langchain/textsplitters");
     this.log(`Will split with`, {
       chunkSize,
       chunkOverlap,
@@ -197,9 +189,7 @@ class RecursiveSplitter {
     const documents = await this.engine.createDocuments(strings, [], {
       chunkHeader: this.chunkHeader,
     });
-    return documents
-      .filter((doc) => !!doc.pageContent)
-      .map((doc) => doc.pageContent);
+    return documents.filter((doc) => !!doc.pageContent).map((doc) => doc.pageContent);
   }
 }
 

@@ -1,7 +1,7 @@
-import React, { useState } from "react";
 import System from "@/models/system";
 import showToast from "@/utils/toast";
 import pluralize from "pluralize";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 export default function WebsiteDepthOptions() {
@@ -21,8 +21,8 @@ export default function WebsiteDepthOptions() {
 
       const { data, error } = await System.dataConnectors.websiteDepth.scrape({
         url: form.get("url"),
-        depth: parseInt(form.get("depth")),
-        maxLinks: parseInt(form.get("maxLinks")),
+        depth: Number.parseInt(form.get("depth")),
+        maxLinks: Number.parseInt(form.get("maxLinks")),
       });
 
       if (!!error) {
@@ -32,10 +32,7 @@ export default function WebsiteDepthOptions() {
       }
 
       showToast(
-        `Successfully scraped ${data.length} ${pluralize(
-          "page",
-          data.length
-        )}!`,
+        `Successfully scraped ${data.length} ${pluralize("page", data.length)}!`,
         "success",
         { clear: true }
       );

@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
 import AgentFlows from "@/models/agentFlows";
+import paths from "@/utils/paths";
 import showToast from "@/utils/toast";
 import { FlowArrow, Gear } from "@phosphor-icons/react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import paths from "@/utils/paths";
 
 function ManageFlowMenu({ flow, onDelete }) {
   const [open, setOpen] = useState(false);
@@ -11,11 +11,7 @@ function ManageFlowMenu({ flow, onDelete }) {
   const navigate = useNavigate();
 
   async function deleteFlow() {
-    if (
-      !window.confirm(
-        "Are you sure you want to delete this flow? This action cannot be undone."
-      )
-    )
+    if (!window.confirm("Are you sure you want to delete this flow? This action cannot be undone."))
       return;
     const { success, error } = await AgentFlows.deleteFlow(flow.uuid);
     if (success) {
@@ -79,10 +75,7 @@ export default function FlowPanel({ flow, toggleFlow, onDelete }) {
 
   const handleToggle = async () => {
     try {
-      const { success, error } = await AgentFlows.toggleFlow(
-        flow.uuid,
-        !isActive
-      );
+      const { success, error } = await AgentFlows.toggleFlow(flow.uuid, !isActive);
       if (!success) throw new Error(error);
       setIsActive(!isActive);
       toggleFlow(flow.uuid);

@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { MagnifyingGlass, X } from "@phosphor-icons/react";
 import Admin from "@/models/admin";
 import showToast from "@/utils/toast";
+import { MagnifyingGlass, X } from "@phosphor-icons/react";
+import React, { useState } from "react";
 
 export default function AddMemberModal({ closeModal, workspace, users }) {
   const [searchTerm, setSearchTerm] = useState("");
@@ -9,10 +9,7 @@ export default function AddMemberModal({ closeModal, workspace, users }) {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
-    const { success, error } = await Admin.updateUsersInWorkspace(
-      workspace.id,
-      selectedUsers
-    );
+    const { success, error } = await Admin.updateUsersInWorkspace(workspace.id, selectedUsers);
     if (success) {
       showToast("Users updated successfully.", "success");
       setTimeout(() => {
@@ -53,9 +50,7 @@ export default function AddMemberModal({ closeModal, workspace, users }) {
   };
 
   const filteredUsers = users
-    .filter((user) =>
-      user.username.toLowerCase().includes(searchTerm.toLowerCase())
-    )
+    .filter((user) => user.username.toLowerCase().includes(searchTerm.toLowerCase()))
     .filter((user) => user.role !== "admin")
     .filter((user) => user.role !== "manager");
 
@@ -106,15 +101,11 @@ export default function AddMemberModal({ closeModal, workspace, users }) {
                         <div className="w-2 h-2 bg-white light:bg-black rounded-[2px]" />
                       )}
                     </div>
-                    <p className="text-theme-text-primary text-sm font-medium">
-                      {user.username}
-                    </p>
+                    <p className="text-theme-text-primary text-sm font-medium">{user.username}</p>
                   </tr>
                 ))
               ) : (
-                <p className="text-theme-text-secondary text-sm font-medium ">
-                  No users found
-                </p>
+                <p className="text-theme-text-secondary text-sm font-medium ">No users found</p>
               )}
             </table>
           </div>

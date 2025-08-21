@@ -9,7 +9,7 @@ export default function LogRow({ log }) {
   useEffect(() => {
     function parseAndSetMetadata() {
       try {
-        let data = JSON.parse(log.metadata);
+        const data = JSON.parse(log.metadata);
         setHasMetadata(Object.keys(data)?.length > 0);
         setMetadata(data);
       } catch {}
@@ -67,17 +67,12 @@ const EventMetadata = ({ metadata, expanded = false }) => {
   if (!metadata || !expanded) return null;
   return (
     <tr className="bg-theme-bg-primary">
-      <td
-        colSpan="2"
-        className="px-6 py-4 font-medium text-theme-text-primary rounded-l-2xl"
-      >
+      <td colSpan="2" className="px-6 py-4 font-medium text-theme-text-primary rounded-l-2xl">
         Event Metadata
       </td>
       <td colSpan="4" className="px-6 py-4 rounded-r-2xl">
         <div className="w-full rounded-lg bg-theme-bg-secondary p-2 text-white shadow-sm border-white/10 border bg-opacity-10">
-          <pre className="overflow-scroll">
-            {JSON.stringify(metadata, null, 2)}
-          </pre>
+          <pre className="overflow-scroll">{JSON.stringify(metadata, null, 2)}</pre>
         </div>
       </td>
     </tr>

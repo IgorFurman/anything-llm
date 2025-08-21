@@ -1,16 +1,10 @@
 import React from "react";
 
-export default function CodeNode({
-  config,
-  onConfigChange,
-  renderVariableSelect,
-}) {
+export default function CodeNode({ config, onConfigChange, renderVariableSelect }) {
   return (
     <div className="space-y-4">
       <div>
-        <label className="block text-sm font-medium text-white mb-2">
-          Language
-        </label>
+        <label className="block text-sm font-medium text-white mb-2">Language</label>
         <select
           value={config.language}
           onChange={(e) => onConfigChange({ language: e.target.value })}
@@ -28,9 +22,7 @@ export default function CodeNode({
         </select>
       </div>
       <div>
-        <label className="block text-sm font-medium text-white mb-2">
-          Code
-        </label>
+        <label className="block text-sm font-medium text-white mb-2">Code</label>
         <textarea
           placeholder="Enter code..."
           value={config.code}
@@ -42,9 +34,7 @@ export default function CodeNode({
         />
       </div>
       <div>
-        <label className="block text-sm font-medium text-white mb-2">
-          Store Result In
-        </label>
+        <label className="block text-sm font-medium text-white mb-2">Store Result In</label>
         {renderVariableSelect(
           config.resultVariable,
           (value) => onConfigChange({ resultVariable: value }),

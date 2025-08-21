@@ -2,7 +2,7 @@ const prisma = require("../utils/prisma");
 const { Document } = require("./documents");
 
 const DocumentVectors = {
-  bulkInsert: async function (vectorRecords = []) {
+  bulkInsert: async (vectorRecords = []) => {
     if (vectorRecords.length === 0) return;
 
     try {
@@ -25,7 +25,7 @@ const DocumentVectors = {
     }
   },
 
-  where: async function (clause = {}, limit) {
+  where: async (clause = {}, limit) => {
     try {
       const results = await prisma.document_vectors.findMany({
         where: clause,
@@ -38,7 +38,7 @@ const DocumentVectors = {
     }
   },
 
-  deleteForWorkspace: async function (workspaceId) {
+  deleteForWorkspace: async (workspaceId) => {
     const documents = await Document.forWorkspace(workspaceId);
     const docIds = [...new Set(documents.map((doc) => doc.docId))];
 
@@ -53,7 +53,7 @@ const DocumentVectors = {
     }
   },
 
-  deleteIds: async function (ids = []) {
+  deleteIds: async (ids = []) => {
     try {
       await prisma.document_vectors.deleteMany({
         where: { id: { in: ids } },
@@ -65,7 +65,7 @@ const DocumentVectors = {
     }
   },
 
-  delete: async function (clause = {}) {
+  delete: async (clause = {}) => {
     try {
       await prisma.document_vectors.deleteMany({ where: clause });
       return true;

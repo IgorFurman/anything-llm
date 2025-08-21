@@ -10,9 +10,7 @@ const SHOW_METRICS_EVENT = "anythingllm_show_metrics_change";
  */
 function formatDuration(duration) {
   try {
-    return duration < 1
-      ? `${(duration * 1000).toFixed(0)}ms`
-      : `${duration.toFixed(3)}s`;
+    return duration < 1 ? `${(duration * 1000).toFixed(0)}ms` : `${duration.toFixed(3)}s`;
   } catch {
     return "";
   }
@@ -25,9 +23,7 @@ function formatDuration(duration) {
  */
 function formatTps(outputTps) {
   try {
-    return outputTps < 1000
-      ? outputTps.toFixed(2)
-      : numberWithCommas(outputTps.toFixed(0));
+    return outputTps < 1000 ? outputTps.toFixed(2) : numberWithCommas(outputTps.toFixed(0));
   } catch {
     return "";
   }
@@ -63,8 +59,7 @@ function toggleAutoShowMetrics() {
  * @returns {React.ReactNode}
  */
 export function MetricsProvider({ children }) {
-  const [showMetricsAutomatically, setShowMetricsAutomatically] =
-    useState(getAutoShowMetrics());
+  const [showMetricsAutomatically, setShowMetricsAutomatically] = useState(getAutoShowMetrics());
 
   useEffect(() => {
     function handleShowingMetricsEvent(e) {
@@ -73,14 +68,11 @@ export function MetricsProvider({ children }) {
     }
     console.log("Adding event listener for metrics visibility");
     window.addEventListener(SHOW_METRICS_EVENT, handleShowingMetricsEvent);
-    return () =>
-      window.removeEventListener(SHOW_METRICS_EVENT, handleShowingMetricsEvent);
+    return () => window.removeEventListener(SHOW_METRICS_EVENT, handleShowingMetricsEvent);
   }, []);
 
   return (
-    <MetricsContext.Provider
-      value={{ showMetricsAutomatically, setShowMetricsAutomatically }}
-    >
+    <MetricsContext.Provider value={{ showMetricsAutomatically, setShowMetricsAutomatically }}>
       {children}
     </MetricsContext.Provider>
   );
@@ -93,8 +85,7 @@ export function MetricsProvider({ children }) {
  */
 export default function RenderMetrics({ metrics = {} }) {
   // Inherit the showMetricsAutomatically state from the MetricsProvider so the state is shared across all chats
-  const { showMetricsAutomatically, setShowMetricsAutomatically } =
-    useContext(MetricsContext);
+  const { showMetricsAutomatically, setShowMetricsAutomatically } = useContext(MetricsContext);
   if (!metrics?.duration || !metrics?.outputTps) return null;
 
   return (
@@ -110,8 +101,7 @@ export default function RenderMetrics({ metrics = {} }) {
       className={`border-none flex justify-end items-center gap-x-[8px] ${showMetricsAutomatically ? "opacity-100" : "opacity-0"} md:group-hover:opacity-100 transition-all duration-300`}
     >
       <p className="cursor-pointer text-xs font-mono text-theme-text-secondary opacity-50">
-        {formatDuration(metrics.duration)} ({formatTps(metrics.outputTps)}{" "}
-        tok/s)
+        {formatDuration(metrics.duration)} ({formatTps(metrics.outputTps)} tok/s)
       </p>
     </button>
   );

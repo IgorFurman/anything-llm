@@ -1,6 +1,6 @@
 import { ICON_COMPONENTS } from "@/components/Footer";
-import React, { useEffect, useRef, useState } from "react";
 import { Plus, X } from "@phosphor-icons/react";
+import React, { useEffect, useRef, useState } from "react";
 
 export default function NewIconForm({ icon, url, onSave, onRemove }) {
   const [selectedIcon, setSelectedIcon] = useState(icon || "Plus");

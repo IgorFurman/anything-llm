@@ -1,8 +1,8 @@
-import { DotsThreeVertical } from "@phosphor-icons/react";
-import { useRef, useState, useEffect } from "react";
 import PromptHistory from "@/models/promptHistory";
-import { useTranslation } from "react-i18next";
+import { DotsThreeVertical } from "@phosphor-icons/react";
 import moment from "moment";
+import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import truncate from "truncate";
 
 const MAX_PROMPT_LENGTH = 200; // chars
@@ -26,9 +26,7 @@ export default function PromptHistoryItem({
     if (window.confirm(t("chat.prompt.history.deleteConfirm"))) {
       const { success } = await PromptHistory.delete(id);
       if (success) {
-        setHistory((prevHistory) =>
-          prevHistory.filter((item) => item.id !== id)
-        );
+        setHistory((prevHistory) => prevHistory.filter((item) => item.id !== id));
       }
     }
   };

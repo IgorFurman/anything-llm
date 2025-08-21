@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { useTranslation } from "react-i18next";
 import System from "@/models/system";
 import showToast from "@/utils/toast";
 import { Warning } from "@phosphor-icons/react";
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Tooltip } from "react-tooltip";
 
 export default function ConfluenceOptions() {
@@ -16,14 +16,10 @@ export default function ConfluenceOptions() {
 
     try {
       setLoading(true);
-      showToast(
-        "Fetching all pages for Confluence space - this may take a while.",
-        "info",
-        {
-          clear: true,
-          autoClose: false,
-        }
-      );
+      showToast("Fetching all pages for Confluence space - this may take a while.", "info", {
+        clear: true,
+        autoClose: false,
+      });
       const { data, error } = await System.dataConnectors.confluence.collect({
         baseUrl: form.get("baseUrl"),
         spaceKey: form.get("spaceKey"),
@@ -86,9 +82,7 @@ export default function ConfluenceOptions() {
               <div className="flex flex-col pr-10">
                 <div className="flex flex-col gap-y-1 mb-4">
                   <label className="text-white text-sm font-bold flex gap-x-2 items-center">
-                    <p className="font-bold text-white">
-                      {t("connectors.confluence.base_url")}
-                    </p>
+                    <p className="font-bold text-white">{t("connectors.confluence.base_url")}</p>
                   </label>
                   <p className="text-xs font-normal text-theme-text-secondary">
                     {t("connectors.confluence.base_url_explained")}
@@ -180,9 +174,7 @@ export default function ConfluenceOptions() {
                   <div className="flex flex-col pr-10">
                     <div className="flex flex-col gap-y-1 mb-4">
                       <label className="text-white text-sm font-bold flex gap-x-2 items-center">
-                        <p className="font-bold text-white">
-                          {t("connectors.confluence.token")}
-                        </p>
+                        <p className="font-bold text-white">{t("connectors.confluence.token")}</p>
                         <Warning
                           size={14}
                           className="ml-1 text-orange-500 cursor-pointer"

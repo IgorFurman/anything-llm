@@ -1,7 +1,5 @@
 const { NativeEmbedder } = require("../../EmbeddingEngines/native");
-const {
-  LLMPerformanceMonitor,
-} = require("../../helpers/chat/LLMPerformanceMonitor");
+const { LLMPerformanceMonitor } = require("../../helpers/chat/LLMPerformanceMonitor");
 const {
   formatChatHistory,
   writeResponseChunk,
@@ -13,22 +11,18 @@ class GenericOpenAiLLM {
   constructor(embedder = null, modelPreference = null) {
     const { OpenAI: OpenAIApi } = require("openai");
     if (!process.env.GENERIC_OPEN_AI_BASE_PATH)
-      throw new Error(
-        "GenericOpenAI must have a valid base path to use for the api."
-      );
+      throw new Error("GenericOpenAI must have a valid base path to use for the api.");
 
     this.basePath = process.env.GENERIC_OPEN_AI_BASE_PATH;
     this.openai = new OpenAIApi({
       baseURL: this.basePath,
       apiKey: process.env.GENERIC_OPEN_AI_API_KEY ?? null,
     });
-    this.model =
-      modelPreference ?? process.env.GENERIC_OPEN_AI_MODEL_PREF ?? null;
+    this.model = modelPreference ?? process.env.GENERIC_OPEN_AI_MODEL_PREF ?? null;
     this.maxTokens = process.env.GENERIC_OPEN_AI_MAX_TOKENS
       ? toValidNumber(process.env.GENERIC_OPEN_AI_MAX_TOKENS, 1024)
       : 1024;
-    if (!this.model)
-      throw new Error("GenericOpenAI must have a valid model set.");
+    if (!this.model) throw new Error("GenericOpenAI must have a valid model set.");
     this.limits = {
       history: this.promptWindowLimit() * 0.15,
       system: this.promptWindowLimit() * 0.15,
@@ -63,8 +57,7 @@ class GenericOpenAiLLM {
 
   static promptWindowLimit(_modelName) {
     const limit = process.env.GENERIC_OPEN_AI_MODEL_TOKEN_LIMIT || 4096;
-    if (!limit || isNaN(Number(limit)))
-      throw new Error("No token context limit was set.");
+    if (!limit || isNaN(Number(limit))) throw new Error("No token context limit was set.");
     return Number(limit);
   }
 
@@ -72,8 +65,7 @@ class GenericOpenAiLLM {
   // and if undefined - assume 4096 window.
   promptWindowLimit() {
     const limit = process.env.GENERIC_OPEN_AI_MODEL_TOKEN_LIMIT || 4096;
-    if (!limit || isNaN(Number(limit)))
-      throw new Error("No token context limit was set.");
+    if (!limit || isNaN(Number(limit))) throw new Error("No token context limit was set.");
     return Number(limit);
   }
 
@@ -106,7 +98,7 @@ class GenericOpenAiLLM {
     }
 
     const content = [{ type: "text", text: userPrompt }];
-    for (let attachment of attachments) {
+    for (const attachment of attachments) {
       content.push({
         type: "image_url",
         image_url: {
@@ -151,10 +143,7 @@ class GenericOpenAiLLM {
    */
   #parseReasoningFromResponse({ message }) {
     let textResponse = message?.content;
-    if (
-      !!message?.reasoning_content &&
-      message.reasoning_content.trim().length > 0
-    )
+    if (!!message?.reasoning_content && message.reasoning_content.trim().length > 0)
       textResponse = `<think>${message.reasoning_content}</think>${textResponse}`;
     return textResponse;
   }
@@ -173,11 +162,7 @@ class GenericOpenAiLLM {
         })
     );
 
-    if (
-      !result.output.hasOwnProperty("choices") ||
-      result.output.choices.length === 0
-    )
-      return null;
+    if (!result.output.hasOwnProperty("choices") || result.output.choices.length === 0) return null;
 
     return {
       textResponse: this.#parseReasoningFromResponse(result.output.choices[0]),
@@ -185,8 +170,7 @@ class GenericOpenAiLLM {
         prompt_tokens: result.output?.usage?.prompt_tokens || 0,
         completion_tokens: result.output?.usage?.completion_tokens || 0,
         total_tokens: result.output?.usage?.total_tokens || 0,
-        outputTps:
-          (result.output?.usage?.completion_tokens || 0) / result.duration,
+        outputTps: (result.output?.usage?.completion_tokens || 0) / result.duration,
         duration: result.duration,
       },
     };
@@ -214,7 +198,7 @@ class GenericOpenAiLLM {
   handleStream(response, stream, responseProps) {
     const { uuid = uuidv4(), sources = [] } = responseProps;
     let hasUsageMetrics = false;
-    let usage = {
+    const usage = {
       completion_tokens: 0,
     };
 

@@ -55,9 +55,8 @@ const Chroma = {
 
     return normalized;
   },
-  connect: async function () {
-    if (process.env.VECTOR_DB !== "chroma")
-      throw new Error("Chroma::Invalid ENV settings");
+  connect: async () => {
+    if (process.env.VECTOR_DB !== "chroma") throw new Error("Chroma::Invalid ENV settings");
 
     const client = new ChromaClient({
       path: process.env.CHROMA_ENDPOINT, // if not set will fallback to localhost:8000
@@ -74,10 +73,7 @@ const Chroma = {
     });
 
     const isAlive = await client.heartbeat();
-    if (!isAlive)
-      throw new Error(
-        "ChromaDB::Invalid Heartbeat received - is the instance online?"
-      );
+    if (!isAlive) throw new Error("ChromaDB::Invalid Heartbeat received - is the instance online?");
     return { client };
   },
   heartbeat: async function () {
@@ -89,15 +85,13 @@ const Chroma = {
     const collections = await client.listCollections();
     var totalVectors = 0;
     for (const collectionObj of collections) {
-      const collection = await client
-        .getCollection({ name: collectionObj.name })
-        .catch(() => null);
+      const collection = await client.getCollection({ name: collectionObj.name }).catch(() => null);
       if (!collection) continue;
       totalVectors += await collection.count();
     }
     return totalVectors;
   },
-  distanceToSimilarity: function (distance = null) {
+  distanceToSimilarity: (distance = null) => {
     if (distance === null || typeof distance !== "number") return 0.0;
     if (distance >= 1.0) return 1;
     if (distance < 0) return 1 - Math.abs(distance);
@@ -134,9 +128,7 @@ const Chroma = {
       const similarity = this.distanceToSimilarity(response.distances[0][i]);
       if (similarity < similarityThreshold) return;
 
-      if (
-        filterIdentifiers.includes(sourceIdentifier(response.metadatas[0][i]))
-      ) {
+      if (filterIdentifiers.includes(sourceIdentifier(response.metadatas[0][i]))) {
         console.log(
           "Chroma: A source was filtered from context as it's parent document is pinned."
         );
@@ -226,8 +218,7 @@ const Chroma = {
             });
 
             const additionResult = await collection.add(submission);
-            if (!additionResult)
-              throw new Error("Error embedding into ChromaDB", additionResult);
+            if (!additionResult) throw new Error("Error embedding into ChromaDB", additionResult);
           }
 
           await DocumentVectors.bulkInsert(documentVectors);
@@ -287,9 +278,7 @@ const Chroma = {
           documentVectors.push({ docId, vectorId: vectorRecord.id });
         }
       } else {
-        throw new Error(
-          "Could not embed document chunks! This document will not be recorded."
-        );
+        throw new Error("Could not embed document chunks! This document will not be recorded.");
       }
 
       const { client } = await this.connect();
@@ -362,15 +351,14 @@ const Chroma = {
     }
 
     const queryVector = await LLMConnector.embedTextInput(input);
-    const { contextTexts, sourceDocuments, scores } =
-      await this.similarityResponse({
-        client,
-        namespace,
-        queryVector,
-        similarityThreshold,
-        topN,
-        filterIdentifiers,
-      });
+    const { contextTexts, sourceDocuments, scores } = await this.similarityResponse({
+      client,
+      namespace,
+      queryVector,
+      similarityThreshold,
+      topN,
+      filterIdentifiers,
+    });
 
     const sources = sourceDocuments.map((metadata, i) => ({
       metadata: {
@@ -393,9 +381,7 @@ const Chroma = {
     if (!(await this.namespaceExists(client, this.normalize(namespace))))
       throw new Error("Namespace by that name does not exist.");
     const stats = await this.namespace(client, this.normalize(namespace));
-    return stats
-      ? stats
-      : { message: "No stats were able to be fetched from DB for namespace" };
+    return stats ? stats : { message: "No stats were able to be fetched from DB for namespace" };
   },
   "delete-namespace": async function (reqBody = {}) {
     const { namespace = null } = reqBody;
@@ -414,16 +400,14 @@ const Chroma = {
     await client.reset();
     return { reset: true };
   },
-  curateSources: function (sources = []) {
+  curateSources: (sources = []) => {
     const documents = [];
     for (const source of sources) {
       const { metadata = {} } = source;
       if (Object.keys(metadata).length > 0) {
         documents.push({
           ...metadata,
-          ...(source.hasOwnProperty("pageContent")
-            ? { text: source.pageContent }
-            : {}),
+          ...(source.hasOwnProperty("pageContent") ? { text: source.pageContent } : {}),
         });
       }
     }

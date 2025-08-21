@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
 import Admin from "@/models/admin";
+import System from "@/models/system";
+import { userFromStorage } from "@/utils/request";
 import showToast from "@/utils/toast";
 import { Trash } from "@phosphor-icons/react";
-import { userFromStorage } from "@/utils/request";
-import System from "@/models/system";
+import { useEffect, useState } from "react";
 
 export default function ApiKeyRow({ apiKey, removeApiKey }) {
   const [copied, setCopied] = useState(false);

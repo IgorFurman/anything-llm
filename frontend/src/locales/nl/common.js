@@ -111,8 +111,7 @@ const TRANSLATIONS = {
     },
     "password-reset": {
       title: "Wachtwoord Resetten",
-      description:
-        "Geef de benodigde informatie hieronder om je wachtwoord te resetten.",
+      description: "Geef de benodigde informatie hieronder om je wachtwoord te resetten.",
       "recovery-codes": "Herstelcodes",
       "recovery-code": "Herstelcode {{index}}",
       "back-to-login": "Terug naar Inloggen",
@@ -130,8 +129,7 @@ const TRANSLATIONS = {
     part4:
       "Het is simpel. Alle verzamelingen zijn georganiseerd in buckets die we \"Werkruimten\" noemen. Werkruimten zijn buckets van bestanden, documenten, afbeeldingen, PDF's en andere bestanden die worden omgezet in iets wat LLM's kunnen begrijpen en gebruiken in gesprekken.\n\nJe kunt op elk moment bestanden toevoegen en verwijderen.",
     createWorkspace: "Maak je eerste werkruimte",
-    user2:
-      "Is dit als een AI-dropbox of zoiets? Hoe zit het met chatten? Het is toch een chatbot?",
+    user2: "Is dit als een AI-dropbox of zoiets? Hoe zit het met chatten? Het is toch een chatbot?",
     part5:
       "AnythingLLM is meer dan een slimmere Dropbox.\n\nAnythingLLM biedt twee manieren om met je gegevens te praten:\n\n<i>Query:</i> Je chats zullen gegevens of inferenties retourneren die zijn gevonden met de documenten in je werkruimte waar het toegang toe heeft. Meer documenten toevoegen aan de Werkruimte maakt het slimmer! \n\n<i>Conversational:</i> Je documenten + je lopende chatgeschiedenis dragen beide tegelijkertijd bij aan de LLM-kennis. Geweldig voor het toevoegen van realtime tekstgebaseerde informatie of correcties en misverstanden die de LLM kan hebben. \n\nJe kunt tijdens het chatten tussen beide modi schakelen \n<i>in het midden van de chat!</i>",
     user3: "Wauw, dit klinkt geweldig, laat me het al proberen!",
@@ -160,8 +158,7 @@ const TRANSLATIONS = {
     },
     message: {
       title: "Voorgestelde Chatberichten",
-      description:
-        "Pas de berichten aan die aan je werkruimtegebruikers worden voorgesteld.",
+      description: "Pas de berichten aan die aan je werkruimtegebruikers worden voorgesteld.",
       add: "Nieuw bericht toevoegen",
       save: "Berichten opslaan",
       heading: "Leg me uit",
@@ -169,8 +166,7 @@ const TRANSLATIONS = {
     },
     pfp: {
       title: "Assistent Profielfoto",
-      description:
-        "Pas de profielfoto van de assistent voor deze werkruimte aan.",
+      description: "Pas de profielfoto van de assistent voor deze werkruimte aan.",
       image: "Werkruimte Afbeelding",
       remove: "Werkruimte Afbeelding Verwijderen",
     },
@@ -248,8 +244,7 @@ const TRANSLATIONS = {
     },
     temperature: {
       title: "LLM Temperatuur",
-      "desc-start":
-        'Deze instelling bepaalt hoe "creatief" je LLM-antwoorden zullen zijn.',
+      "desc-start": 'Deze instelling bepaalt hoe "creatief" je LLM-antwoorden zullen zijn.',
       "desc-end":
         "Hoe hoger het getal, hoe creatiever. Voor sommige modellen kan dit leiden tot onsamenhangende antwoorden als het te hoog wordt ingesteld.",
       hint: "De meeste LLM's hebben verschillende acceptabele reeksen van geldige waarden. Raadpleeg je LLM-provider voor die informatie.",
@@ -316,8 +311,7 @@ const TRANSLATIONS = {
       },
       scrape: {
         title: "Websites schrapen",
-        description:
-          "Sta de agent toe om de inhoud van websites te bezoeken en te schrapen.",
+        description: "Sta de agent toe om de inhoud van websites te bezoeken en te schrapen.",
       },
       generate: {
         title: "Grafieken genereren",
@@ -333,8 +327,7 @@ const TRANSLATIONS = {
         title: "Live web zoeken en browsen",
         "desc-start":
           "Sta je agent toe om het web te doorzoeken om je vragen te beantwoorden door verbinding te maken met een web-zoek (SERP) provider.",
-        "desc-end":
-          "Webzoeken tijdens agentensessies zal niet werken totdat dit is ingesteld.",
+        "desc-end": "Webzoeken tijdens agentensessies zal niet werken totdat dit is ingesteld.",
       },
     },
   },
@@ -388,10 +381,8 @@ const TRANSLATIONS = {
     provider: "Transcriptieprovider",
     "warn-start":
       "Het gebruik van het lokale fluistermodel op machines met beperkte RAM of CPU kan AnythingLLM vertragen bij het verwerken van mediabestanden.",
-    "warn-recommend":
-      "We raden minstens 2GB RAM aan en upload bestanden <10Mb.",
-    "warn-end":
-      "Het ingebouwde model wordt automatisch gedownload bij het eerste gebruik.",
+    "warn-recommend": "We raden minstens 2GB RAM aan en upload bestanden <10Mb.",
+    "warn-end": "Het ingebouwde model wordt automatisch gedownload bij het eerste gebruik.",
   },
   embedding: {
     title: "Inbedding Voorkeur",

@@ -83,10 +83,7 @@ export default function handleChat(
       metrics,
     });
     emitAssistantMessageCompleteEvent(chatId);
-  } else if (
-    type === "textResponseChunk" ||
-    type === "finalizeResponseStream"
-  ) {
+  } else if (type === "textResponseChunk" || type === "finalizeResponseStream") {
     const chatIdx = _chatHistory.findIndex((chat) => chat.uuid === uuid);
     if (chatIdx !== -1) {
       const existingHistory = { ..._chatHistory[chatIdx] };

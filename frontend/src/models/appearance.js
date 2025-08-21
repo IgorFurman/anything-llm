@@ -36,9 +36,7 @@ const Appearance = {
    */
   get: (key) => {
     const settings = Appearance.getSettings();
-    return settings.hasOwnProperty(key)
-      ? settings[key]
-      : Appearance.defaultSettings[key];
+    return settings.hasOwnProperty(key) ? settings[key] : Appearance.defaultSettings[key];
   },
 
   /**

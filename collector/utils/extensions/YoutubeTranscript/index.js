@@ -2,11 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const { default: slugify } = require("slugify");
 const { v4 } = require("uuid");
-const {
-  writeToServerDocuments,
-  sanitizeFileName,
-  documentsFolder,
-} = require("../../files");
+const { writeToServerDocuments, sanitizeFileName, documentsFolder } = require("../../files");
 const { tokenizeString } = require("../../tokenizer");
 const { YoutubeLoader } = require("./YoutubeLoader");
 
@@ -17,14 +13,11 @@ function validYoutubeVideoUrl(link) {
     opts.searchParams.has("v") ? `?v=${opts.searchParams.get("v")}` : ""
   }`;
 
-  const shortPatternMatch = new UrlPattern(
-    "https\\://(www.)youtu.be/(:videoId)"
-  ).match(url);
-  const fullPatternMatch = new UrlPattern(
-    "https\\://(www.)youtube.com/watch?v=(:videoId)"
-  ).match(url);
-  const videoId =
-    shortPatternMatch?.videoId || fullPatternMatch?.videoId || null;
+  const shortPatternMatch = new UrlPattern("https\\://(www.)youtu.be/(:videoId)").match(url);
+  const fullPatternMatch = new UrlPattern("https\\://(www.)youtube.com/watch?v=(:videoId)").match(
+    url
+  );
+  const videoId = shortPatternMatch?.videoId || fullPatternMatch?.videoId || null;
   if (!!videoId) return true;
 
   return false;
@@ -88,8 +81,7 @@ async function loadYouTubeTranscript({ url }) {
     return {
       success: false,
       reason:
-        transcriptResults.reason ||
-        "An unknown error occurred during transcription retrieval",
+        transcriptResults.reason || "An unknown error occurred during transcription retrieval",
     };
   }
   const { content, metadata } = transcriptResults;
@@ -98,8 +90,7 @@ async function loadYouTubeTranscript({ url }) {
   );
   const outFolderPath = path.resolve(documentsFolder, outFolder);
 
-  if (!fs.existsSync(outFolderPath))
-    fs.mkdirSync(outFolderPath, { recursive: true });
+  if (!fs.existsSync(outFolderPath)) fs.mkdirSync(outFolderPath, { recursive: true });
 
   const data = {
     id: v4(),

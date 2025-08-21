@@ -1,8 +1,8 @@
-import { CaretDown, CaretUp, Plus, CaretLeft } from "@phosphor-icons/react";
 import AnythingInfinityLogo from "@/media/logo/anything-llm-infinity.png";
-import { useState, useRef, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 import paths from "@/utils/paths";
+import { CaretDown, CaretLeft, CaretUp, Plus } from "@phosphor-icons/react";
+import { useEffect, useRef, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 export default function HeaderMenu({
@@ -16,8 +16,7 @@ export default function HeaderMenu({
   const [showDropdown, setShowDropdown] = useState(false);
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
-  const hasOtherFlows =
-    availableFlows.filter((flow) => flow.uuid !== flowId).length > 0;
+  const hasOtherFlows = availableFlows.filter((flow) => flow.uuid !== flowId).length > 0;
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -40,10 +39,7 @@ export default function HeaderMenu({
             onClick={() => navigate(paths.settings.agentSkills())}
             className="w-8 h-8 flex items-center justify-center rounded-full bg-theme-settings-input-bg border border-white/10 hover:bg-theme-action-menu-bg transition-colors duration-300"
           >
-            <CaretLeft
-              weight="bold"
-              className="w-5 h-5 text-theme-text-primary"
-            />
+            <CaretLeft weight="bold" className="w-5 h-5 text-theme-text-primary" />
           </button>
           <div
             className="flex items-center bg-theme-settings-input-bg rounded-md border border-white/10 pointer-events-auto"
@@ -53,11 +49,7 @@ export default function HeaderMenu({
               onClick={() => navigate(paths.settings.agentSkills())}
               className="!border-t-transparent !border-l-transparent !border-b-transparent flex items-center gap-x-2 px-4 py-2 border-r border-white/10 hover:bg-theme-action-menu-bg transition-colors duration-300"
             >
-              <img
-                src={AnythingInfinityLogo}
-                alt="logo"
-                className="w-[20px] light:invert"
-              />
+              <img src={AnythingInfinityLogo} alt="logo" className="w-[20px] light:invert" />
               <span className="text-theme-text-primary text-sm uppercase tracking-widest">
                 Builder
               </span>
@@ -68,9 +60,7 @@ export default function HeaderMenu({
                 className="border-none flex items-center justify-between gap-x-1 text-theme-text-primary text-sm px-4 py-2 enabled:hover:bg-theme-action-menu-bg transition-colors duration-300 min-w-[200px] max-w-[300px]"
                 onClick={() => {
                   if (!agentName && !hasOtherFlows) {
-                    const agentNameInput = document.getElementById(
-                      "agent-flow-name-input"
-                    );
+                    const agentNameInput = document.getElementById("agent-flow-name-input");
                     if (agentNameInput) agentNameInput.focus();
                     return;
                   }
@@ -102,9 +92,7 @@ export default function HeaderMenu({
                         }}
                         className="border-none w-full text-left px-2 py-1 text-sm text-theme-text-primary hover:bg-theme-action-menu-bg transition-colors duration-300"
                       >
-                        <span className="block truncate">
-                          {flow?.name || "Untitled Flow"}
-                        </span>
+                        <span className="block truncate">{flow?.name || "Untitled Flow"}</span>
                       </button>
                     ))}
                 </div>

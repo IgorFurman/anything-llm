@@ -9,9 +9,7 @@ const fileHistory = {
   startupConfig: {
     params: {},
   },
-  plugin: function ({
-    filename = `history/chat-history-${new Date().toISOString()}.json`,
-  } = {}) {
+  plugin: function ({ filename = `history/chat-history-${new Date().toISOString()}.json` } = {}) {
     return {
       name: this.name,
       setup(aibitat) {

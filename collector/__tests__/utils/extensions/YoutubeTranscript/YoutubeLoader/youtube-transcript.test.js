@@ -1,4 +1,6 @@
-const { YoutubeTranscript } = require("../../../../../utils/extensions/YoutubeTranscript/YoutubeLoader/youtube-transcript.js");
+const {
+  YoutubeTranscript,
+} = require("../../../../../utils/extensions/YoutubeTranscript/YoutubeLoader/youtube-transcript.js");
 
 describe("YoutubeTranscript", () => {
   it("should fetch transcript from YouTube video", async () => {

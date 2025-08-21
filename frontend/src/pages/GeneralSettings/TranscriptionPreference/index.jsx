@@ -1,16 +1,16 @@
-import React, { useEffect, useState, useRef } from "react";
-import { isMobile } from "react-device-detect";
-import Sidebar from "@/components/SettingsSidebar";
-import System from "@/models/system";
-import showToast from "@/utils/toast";
+import LLMItem from "@/components/LLMSelection/LLMItem";
 import PreLoader from "@/components/Preloader";
+import Sidebar from "@/components/SettingsSidebar";
+import NativeTranscriptionOptions from "@/components/TranscriptionSelection/NativeTranscriptionOptions";
+import OpenAiWhisperOptions from "@/components/TranscriptionSelection/OpenAiOptions";
+import CTAButton from "@/components/lib/CTAButton";
 import OpenAiLogo from "@/media/llmprovider/openai.png";
 import AnythingLLMIcon from "@/media/logo/anything-llm-icon.png";
-import OpenAiWhisperOptions from "@/components/TranscriptionSelection/OpenAiOptions";
-import NativeTranscriptionOptions from "@/components/TranscriptionSelection/NativeTranscriptionOptions";
-import LLMItem from "@/components/LLMSelection/LLMItem";
+import System from "@/models/system";
+import showToast from "@/utils/toast";
 import { CaretUpDown, MagnifyingGlass, X } from "@phosphor-icons/react";
-import CTAButton from "@/components/lib/CTAButton";
+import React, { useEffect, useState, useRef } from "react";
+import { isMobile } from "react-device-detect";
 import { useTranslation } from "react-i18next";
 
 const PROVIDERS = [
@@ -94,9 +94,7 @@ export default function TranscriptionModelPreference() {
     setFilteredProviders(filtered);
   }, [searchQuery, selectedProvider]);
 
-  const selectedProviderObject = PROVIDERS.find(
-    (provider) => provider.value === selectedProvider
-  );
+  const selectedProviderObject = PROVIDERS.find((provider) => provider.value === selectedProvider);
 
   return (
     <div className="w-screen h-screen overflow-hidden bg-theme-bg-container flex">
@@ -129,10 +127,7 @@ export default function TranscriptionModelPreference() {
               </div>
               <div className="w-full justify-end flex">
                 {hasChanges && (
-                  <CTAButton
-                    onClick={() => handleSubmit()}
-                    className="mt-3 mr-0 -mb-14 z-10"
-                  >
+                  <CTAButton onClick={() => handleSubmit()} className="mt-3 mr-0 -mb-14 z-10">
                     {saving ? "Saving..." : "Save changes"}
                   </CTAButton>
                 )}
@@ -211,22 +206,15 @@ export default function TranscriptionModelPreference() {
                         </div>
                       </div>
                     </div>
-                    <CaretUpDown
-                      size={24}
-                      weight="bold"
-                      className="text-white"
-                    />
+                    <CaretUpDown size={24} weight="bold" className="text-white" />
                   </button>
                 )}
               </div>
-              <div
-                onChange={() => setHasChanges(true)}
-                className="mt-4 flex flex-col gap-y-1"
-              >
+              <div onChange={() => setHasChanges(true)} className="mt-4 flex flex-col gap-y-1">
                 {selectedProvider &&
-                  PROVIDERS.find(
-                    (provider) => provider.value === selectedProvider
-                  )?.options(settings)}
+                  PROVIDERS.find((provider) => provider.value === selectedProvider)?.options(
+                    settings
+                  )}
               </div>
             </div>
           </form>

@@ -1,27 +1,22 @@
-import { useState, useEffect, useContext } from "react";
-import ChatHistory from "./ChatHistory";
-import { CLEAR_ATTACHMENTS_EVENT, DndUploaderContext } from "./DnDWrapper";
-import PromptInput, {
-  PROMPT_INPUT_EVENT,
-  PROMPT_INPUT_ID,
-} from "./PromptInput";
 import Workspace from "@/models/workspace";
 import handleChat, { ABORT_STREAM_EVENT } from "@/utils/chat";
-import { isMobile } from "react-device-detect";
-import { SidebarMobileHeader } from "../../Sidebar";
-import { useParams } from "react-router-dom";
-import { v4 } from "uuid";
 import handleSocketResponse, {
   websocketURI,
   AGENT_SESSION_END,
   AGENT_SESSION_START,
 } from "@/utils/chat/agent";
-import DnDFileUploaderWrapper from "./DnDWrapper";
-import SpeechRecognition, {
-  useSpeechRecognition,
-} from "react-speech-recognition";
-import { ChatTooltips } from "./ChatTooltips";
+import { useContext, useEffect, useState } from "react";
+import { isMobile } from "react-device-detect";
+import { useParams } from "react-router-dom";
+import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
+import { v4 } from "uuid";
+import { SidebarMobileHeader } from "../../Sidebar";
+import ChatHistory from "./ChatHistory";
 import { MetricsProvider } from "./ChatHistory/HistoricalMessage/Actions/RenderMetrics";
+import { ChatTooltips } from "./ChatTooltips";
+import { CLEAR_ATTACHMENTS_EVENT, DndUploaderContext } from "./DnDWrapper";
+import DnDFileUploaderWrapper from "./DnDWrapper";
+import PromptInput, { PROMPT_INPUT_EVENT, PROMPT_INPUT_ID } from "./PromptInput";
 
 export default function ChatContainer({ workspace, knownHistory = [] }) {
   const { threadSlug = null } = useParams();
@@ -181,8 +176,7 @@ export default function ChatContainer({ workspace, knownHistory = [] }) {
 
   useEffect(() => {
     async function fetchReply() {
-      const promptMessage =
-        chatHistory.length > 0 ? chatHistory[chatHistory.length - 1] : null;
+      const promptMessage = chatHistory.length > 0 ? chatHistory[chatHistory.length - 1] : null;
       const remHistory = chatHistory.length > 0 ? chatHistory.slice(0, -1) : [];
       var _chatHistory = [...remHistory];
 
@@ -231,9 +225,7 @@ export default function ChatContainer({ workspace, knownHistory = [] }) {
     function handleWSS() {
       try {
         if (!socketId || !!websocket) return;
-        const socket = new WebSocket(
-          `${websocketURI()}/api/agent-invocation/${socketId}`
-        );
+        const socket = new WebSocket(`${websocketURI()}/api/agent-invocation/${socketId}`);
 
         window.addEventListener(ABORT_STREAM_EVENT, () => {
           window.dispatchEvent(new CustomEvent(AGENT_SESSION_END));

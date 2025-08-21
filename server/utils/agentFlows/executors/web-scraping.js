@@ -12,9 +12,7 @@ async function executeWebScraping(config, context) {
 
   const { url, captureAs = "text", enableSummarization = true } = config;
   const { introspect, logger, aibitat } = context;
-  logger(
-    `\x1b[43m[AgentFlowToolExecutor]\x1b[0m - executing Web Scraping block`
-  );
+  logger(`\x1b[43m[AgentFlowToolExecutor]\x1b[0m - executing Web Scraping block`);
 
   if (!url) {
     throw new Error("URL is required for web scraping");
@@ -45,18 +43,14 @@ async function executeWebScraping(config, context) {
     return content;
   }
 
-  const tokenCount = new TokenManager(
-    aibitat.defaultProvider.model
-  ).countFromString(content);
+  const tokenCount = new TokenManager(aibitat.defaultProvider.model).countFromString(content);
   const contextLimit = Provider.contextLimit(
     aibitat.defaultProvider.provider,
     aibitat.defaultProvider.model
   );
 
   if (tokenCount < contextLimit) {
-    logger(
-      `Content within token limit (${tokenCount}/${contextLimit}). Returning raw content.`
-    );
+    logger(`Content within token limit (${tokenCount}/${contextLimit}). Returning raw content.`);
     return content;
   }
 
@@ -96,9 +90,7 @@ function parseHTMLwithSelector(html, selector = null, context) {
   } else if (selectedElements.length === 1) {
     content = selectedElements.html();
   } else {
-    context.introspect(
-      `Found ${selectedElements.length} elements matching selector: ${selector}`
-    );
+    context.introspect(`Found ${selectedElements.length} elements matching selector: ${selector}`);
     content = selectedElements
       .map((_, element) => $(element).html())
       .get()

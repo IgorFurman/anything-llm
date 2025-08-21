@@ -1,13 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { X } from "@phosphor-icons/react";
 import BrowserExtensionApiKey from "@/models/browserExtensionApiKey";
-import { fullApiUrl, POPUP_BROWSER_EXTENSION_EVENT } from "@/utils/constants";
+import { POPUP_BROWSER_EXTENSION_EVENT, fullApiUrl } from "@/utils/constants";
+import { X } from "@phosphor-icons/react";
+import React, { useEffect, useState } from "react";
 
-export default function NewBrowserExtensionApiKeyModal({
-  closeModal,
-  onSuccess,
-  isMultiUser,
-}) {
+export default function NewBrowserExtensionApiKeyModal({ closeModal, onSuccess, isMultiUser }) {
   const [apiKey, setApiKey] = useState(null);
   const [error, setError] = useState(null);
   const [copied, setCopied] = useState(false);
@@ -16,17 +12,13 @@ export default function NewBrowserExtensionApiKeyModal({
     setError(null);
     e.preventDefault();
 
-    const { apiKey: newApiKey, error } =
-      await BrowserExtensionApiKey.generateKey();
+    const { apiKey: newApiKey, error } = await BrowserExtensionApiKey.generateKey();
     if (!!newApiKey) {
       const fullApiKey = `${fullApiUrl()}|${newApiKey}`;
       setApiKey(fullApiKey);
       onSuccess();
 
-      window.postMessage(
-        { type: POPUP_BROWSER_EXTENSION_EVENT, apiKey: fullApiKey },
-        "*"
-      );
+      window.postMessage({ type: POPUP_BROWSER_EXTENSION_EVENT, apiKey: fullApiKey }, "*");
     }
     setError(error);
   };
@@ -78,19 +70,18 @@ export default function NewBrowserExtensionApiKeyModal({
               )}
               {isMultiUser && (
                 <p className="text-yellow-300 light:text-orange-500 text-xs md:text-sm font-semibold">
-                  Warning: You are in multi-user mode, this API key will allow
-                  access to all workspaces associated with your account. Please
-                  share it cautiously.
+                  Warning: You are in multi-user mode, this API key will allow access to all
+                  workspaces associated with your account. Please share it cautiously.
                 </p>
               )}
               <p className="text-white text-opacity-60 text-xs md:text-sm">
-                After clicking "Create API Key", AnythingLLM will attempt to
-                connect to your browser extension automatically.
+                After clicking "Create API Key", AnythingLLM will attempt to connect to your browser
+                extension automatically.
               </p>
               <p className="text-white text-opacity-60 text-xs md:text-sm">
-                If you see "Connected to AnythingLLM" in the extension, the
-                connection was successful. If not, please copy the connection
-                string and paste it into the extension manually.
+                If you see "Connected to AnythingLLM" in the extension, the connection was
+                successful. If not, please copy the connection string and paste it into the
+                extension manually.
               </p>
             </div>
             <div className="flex justify-between items-center mt-6 pt-6 border-t border-theme-modal-border">

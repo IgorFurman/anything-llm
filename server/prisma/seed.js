@@ -7,7 +7,7 @@ async function main() {
     { label: "logo_filename", value: "anything-llm.png" },
   ];
 
-  for (let setting of settings) {
+  for (const setting of settings) {
     const existing = await prisma.system_settings.findUnique({
       where: { label: setting.label },
     });

@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { useTranslation } from "react-i18next";
-import { FolderOpen, Info } from "@phosphor-icons/react";
 import System from "@/models/system";
 import showToast from "@/utils/toast";
+import { FolderOpen, Info } from "@phosphor-icons/react";
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function ObsidianOptions() {
   const { t } = useTranslation();
@@ -66,17 +66,13 @@ export default function ObsidianOptions() {
       const totalCount = data.total;
 
       if (successCount === totalCount) {
-        showToast(
-          `Successfully imported ${successCount} files from your vault!`,
-          "success",
-          { clear: true }
-        );
+        showToast(`Successfully imported ${successCount} files from your vault!`, "success", {
+          clear: true,
+        });
       } else {
-        showToast(
-          `Imported ${successCount} files, ${failCount} failed`,
-          "warning",
-          { clear: true }
-        );
+        showToast(`Imported ${successCount} files, ${failCount} failed`, "warning", {
+          clear: true,
+        });
       }
 
       setLoading(false);
@@ -96,9 +92,7 @@ export default function ObsidianOptions() {
               <div className="flex flex-col md:flex-row md:items-center gap-x-2 text-white mb-4 bg-blue-800/30 w-fit rounded-lg px-4 py-2">
                 <div className="gap-x-2 flex items-center">
                   <Info className="shrink-0" size={25} />
-                  <p className="text-sm">
-                    {t("connectors.obsidian.vault_warning")}
-                  </p>
+                  <p className="text-sm">{t("connectors.obsidian.vault_warning")}</p>
                 </div>
               </div>
 
@@ -158,14 +152,10 @@ export default function ObsidianOptions() {
               disabled={loading || selectedFiles.length === 0}
               className="border-none mt-2 w-full justify-center px-4 py-2 rounded-lg text-dark-text light:text-white text-sm font-bold items-center flex gap-x-2 bg-theme-home-button-primary hover:bg-theme-home-button-primary-hover disabled:bg-theme-home-button-primary-hover disabled:cursor-not-allowed"
             >
-              {loading
-                ? t("connectors.obsidian.importing")
-                : t("connectors.obsidian.import_vault")}
+              {loading ? t("connectors.obsidian.importing") : t("connectors.obsidian.import_vault")}
             </button>
             {loading && (
-              <p className="text-xs text-white/50">
-                {t("connectors.obsidian.processing_time")}
-              </p>
+              <p className="text-xs text-white/50">{t("connectors.obsidian.processing_time")}</p>
             )}
           </div>
         </form>

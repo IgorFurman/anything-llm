@@ -1,5 +1,5 @@
-import RemoteNvidiaNimOptions from "./remote";
 import ManagedNvidiaNimOptions from "./managed";
+import RemoteNvidiaNimOptions from "./remote";
 
 export default function NvidiaNimOptions({ settings }) {
   const version = "remote"; // static to "remote" when in docker version.

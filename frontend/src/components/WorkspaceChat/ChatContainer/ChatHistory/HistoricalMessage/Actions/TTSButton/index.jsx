@@ -1,6 +1,6 @@
 import { useTTSProvider } from "@/components/contexts/TTSProvider";
-import NativeTTSMessage from "./native";
 import AsyncTTSMessage from "./asyncTts";
+import NativeTTSMessage from "./native";
 import PiperTTSMessage from "./piperTTS";
 
 export default function TTSMessage({ slug, chatId, message }) {

@@ -7,9 +7,7 @@
 async function executeLLMInstruction(config, context) {
   const { instruction, resultVariable } = config;
   const { introspect, logger, aibitat } = context;
-  logger(
-    `\x1b[43m[AgentFlowToolExecutor]\x1b[0m - executing LLM Instruction block`
-  );
+  logger(`\x1b[43m[AgentFlowToolExecutor]\x1b[0m - executing LLM Instruction block`);
   introspect(`Processing data with LLM instruction...`);
 
   try {

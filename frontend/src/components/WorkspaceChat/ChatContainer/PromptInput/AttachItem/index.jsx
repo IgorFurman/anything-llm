@@ -1,7 +1,7 @@
 import useUser from "@/hooks/useUser";
 import { PaperclipHorizontal } from "@phosphor-icons/react";
-import { Tooltip } from "react-tooltip";
 import { useTranslation } from "react-i18next";
+import { Tooltip } from "react-tooltip";
 
 /**
  * This is a simple proxy component that clicks on the DnD file uploader for the user.

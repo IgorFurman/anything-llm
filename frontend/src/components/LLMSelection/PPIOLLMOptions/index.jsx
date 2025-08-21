@@ -1,5 +1,5 @@
 import System from "@/models/system";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function PPIOLLMOptions({ settings }) {
   return (
@@ -20,9 +20,7 @@ export default function PPIOLLMOptions({ settings }) {
             spellCheck={false}
           />
         </div>
-        {!settings?.credentialsOnly && (
-          <PPIOModelSelection settings={settings} />
-        )}
+        {!settings?.credentialsOnly && <PPIOModelSelection settings={settings} />}
       </div>
     </div>
   );

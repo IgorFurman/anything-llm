@@ -39,10 +39,8 @@ class MistralProvider extends InheritMultiple([Provider, UnTooled]) {
         messages,
       })
       .then((result) => {
-        if (!result.hasOwnProperty("choices"))
-          throw new Error("LMStudio chat: No results!");
-        if (result.choices.length === 0)
-          throw new Error("LMStudio chat: No results length!");
+        if (!result.hasOwnProperty("choices")) throw new Error("LMStudio chat: No results!");
+        if (result.choices.length === 0) throw new Error("LMStudio chat: No results length!");
         return result.choices[0].message.content;
       })
       .catch((_) => {
@@ -83,9 +81,7 @@ class MistralProvider extends InheritMultiple([Provider, UnTooled]) {
       }
 
       if (!completion?.content) {
-        this.providerLog(
-          "Will assume chat completion without tool call inputs."
-        );
+        this.providerLog("Will assume chat completion without tool call inputs.");
         const response = await this.client.chat.completions.create({
           model: this.model,
           messages: this.cleanMsgs(messages),

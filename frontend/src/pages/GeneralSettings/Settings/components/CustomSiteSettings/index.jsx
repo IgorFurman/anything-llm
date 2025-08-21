@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
 import Admin from "@/models/admin";
 import showToast from "@/utils/toast";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 export default function CustomSiteSettings() {
@@ -26,11 +26,9 @@ export default function CustomSiteSettings() {
       meta_page_title: settings.title ?? null,
       meta_page_favicon: settings.faviconUrl ?? null,
     });
-    showToast(
-      "Site preferences updated! They will reflect on page reload.",
-      "success",
-      { clear: true }
-    );
+    showToast("Site preferences updated! They will reflect on page reload.", "success", {
+      clear: true,
+    });
     setHasChanges(false);
     return;
   }
@@ -67,10 +65,7 @@ export default function CustomSiteSettings() {
                 return { ...prev, title: e.target.value };
               });
             }}
-            value={
-              settings.title ??
-              "AnythingLLM | Your personal LLM trained on anything"
-            }
+            value={settings.title ?? "AnythingLLM | Your personal LLM trained on anything"}
           />
         </div>
       </div>

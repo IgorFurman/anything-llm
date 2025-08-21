@@ -17,8 +17,7 @@ const vectorCachePath =
 async function fileData(filePath = null) {
   if (!filePath) throw new Error("No docPath provided in request");
   const fullFilePath = path.resolve(documentsPath, normalizePath(filePath));
-  if (!fs.existsSync(fullFilePath) || !isWithin(documentsPath, fullFilePath))
-    return null;
+  if (!fs.existsSync(fullFilePath) || !isWithin(documentsPath, fullFilePath)) return null;
 
   const data = fs.readFileSync(fullFilePath, "utf8");
   return JSON.parse(data);
@@ -68,14 +67,11 @@ async function viewLocalFiles() {
 
       // Grab the pinned workspaces and watched documents for this folder's documents
       // at the time of the query so we don't have to re-query the database for each file
-      const pinnedWorkspacesByDocument =
-        await getPinnedWorkspacesByDocument(filenames);
-      const watchedDocumentsFilenames =
-        await getWatchedDocumentFilenames(filenames);
+      const pinnedWorkspacesByDocument = await getPinnedWorkspacesByDocument(filenames);
+      const watchedDocumentsFilenames = await getWatchedDocumentFilenames(filenames);
       for (const item of subdocs.items) {
         item.pinnedWorkspaces = pinnedWorkspacesByDocument[item.name] || [];
-        item.watched =
-          watchedDocumentsFilenames.hasOwnProperty(item.name) || false;
+        item.watched = watchedDocumentsFilenames.hasOwnProperty(item.name) || false;
       }
 
       directory.items.push(subdocs);
@@ -120,16 +116,11 @@ async function getDocumentsByFolder(folderName = "") {
   }
 
   // Get pinned and watched information for each document in the folder
-  const pinnedWorkspacesByDocument =
-    await getPinnedWorkspacesByDocument(filenames);
-  const watchedDocumentsFilenames =
-    await getWatchedDocumentFilenames(filenames);
-  for (let doc of documents) {
+  const pinnedWorkspacesByDocument = await getPinnedWorkspacesByDocument(filenames);
+  const watchedDocumentsFilenames = await getWatchedDocumentFilenames(filenames);
+  for (const doc of documents) {
     doc.pinnedWorkspaces = pinnedWorkspacesByDocument[doc.name] || [];
-    doc.watched = Object.prototype.hasOwnProperty.call(
-      watchedDocumentsFilenames,
-      doc.name
-    );
+    doc.watched = Object.prototype.hasOwnProperty.call(watchedDocumentsFilenames, doc.name);
   }
 
   return { folder: folderName, documents };
@@ -163,9 +154,7 @@ async function cachedVectorInformation(filename = null, checkOnly = false) {
 // filename is the fullpath to the doc so we can compare by filename to find cached matches.
 async function storeVectorResult(vectorData = [], filename = null) {
   if (!filename) return;
-  console.log(
-    `Caching vectorized results of ${filename} to prevent duplicated embedding.`
-  );
+  console.log(`Caching vectorized results of ${filename} to prevent duplicated embedding.`);
   if (!fs.existsSync(vectorCachePath)) fs.mkdirSync(vectorCachePath);
 
   const digest = uuidv5(filename, uuidv5.URL);
@@ -208,18 +197,13 @@ async function purgeVectorCache(filename = null) {
 async function findDocumentInDocuments(documentName = null) {
   if (!documentName) return null;
   for (const folder of fs.readdirSync(documentsPath)) {
-    const isFolder = fs
-      .lstatSync(path.join(documentsPath, folder))
-      .isDirectory();
+    const isFolder = fs.lstatSync(path.join(documentsPath, folder)).isDirectory();
     if (!isFolder) continue;
 
     const targetFilename = normalizePath(documentName);
     const targetFileLocation = path.join(documentsPath, folder, targetFilename);
 
-    if (
-      !fs.existsSync(targetFileLocation) ||
-      !isWithin(documentsPath, targetFileLocation)
-    )
+    if (!fs.existsSync(targetFileLocation) || !isWithin(documentsPath, targetFileLocation))
       continue;
 
     const fileData = fs.readFileSync(targetFileLocation, "utf8");
@@ -262,10 +246,7 @@ function normalizePath(filepath = "") {
 // break the previous cache.
 function hasVectorCachedFiles() {
   try {
-    return (
-      fs.readdirSync(vectorCachePath)?.filter((name) => name.endsWith(".json"))
-        .length !== 0
-    );
+    return fs.readdirSync(vectorCachePath)?.filter((name) => name.endsWith(".json")).length !== 0;
   } catch {}
   return false;
 }
@@ -294,8 +275,7 @@ async function getPinnedWorkspacesByDocument(filenames = []) {
   ).reduce((result, { workspaceId, docpath }) => {
     const filename = filenames[docpath];
     if (!result[filename]) result[filename] = [];
-    if (!result[filename].includes(workspaceId))
-      result[filename].push(workspaceId);
+    if (!result[filename].includes(workspaceId)) result[filename].push(workspaceId);
     return result;
   }, {});
 }
@@ -352,11 +332,7 @@ const FILE_READ_SIZE_THRESHOLD = 150 * (1024 * 1024);
  * @param {boolean} liveSyncAvailable - Whether live sync is available
  * @returns {Promise<{name: string, type: string, [string]: any, cached: boolean, canWatch: boolean}>} - The picker data
  */
-async function fileToPickerData({
-  pathToFile,
-  liveSyncAvailable = false,
-  cachefilename = null,
-}) {
+async function fileToPickerData({ pathToFile, liveSyncAvailable = false, cachefilename = null }) {
   let metadata = {};
   const filename = path.basename(pathToFile);
   const fileStats = fs.statSync(pathToFile);
@@ -378,9 +354,7 @@ async function fileToPickerData({
       type: "file",
       ...metadata,
       cached: cachedStatus,
-      canWatch: liveSyncAvailable
-        ? DocumentSyncQueue.canWatch(metadata)
-        : false,
+      canWatch: liveSyncAvailable ? DocumentSyncQueue.canWatch(metadata) : false,
       // pinnedWorkspaces: [], // This is the list of workspaceIds that have pinned this document
       // watched: false, // boolean to indicate if this document is watched in ANY workspace
     };
@@ -452,9 +426,7 @@ const REQUIRED_FILE_OBJECT_FIELDS = [
  * @returns {boolean} - Returns true if the metadata object has all the required fields, false otherwise
  */
 function hasRequiredMetadata(metadata = {}) {
-  return REQUIRED_FILE_OBJECT_FIELDS.every((field) =>
-    metadata.hasOwnProperty(field)
-  );
+  return REQUIRED_FILE_OBJECT_FIELDS.every((field) => metadata.hasOwnProperty(field));
 }
 
 module.exports = {

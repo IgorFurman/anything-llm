@@ -13,13 +13,7 @@ const prisma = require("../utils/prisma");
  */
 
 const EmbedChats = {
-  new: async function ({
-    embedId,
-    prompt,
-    response = {},
-    connection_information = {},
-    sessionId,
-  }) {
+  new: async ({ embedId, prompt, response = {}, connection_information = {}, sessionId }) => {
     try {
       const chat = await prisma.embed_chats.create({
         data: {
@@ -44,13 +38,12 @@ const EmbedChats = {
    * @param {EmbedChat[]} chats
    * @returns {EmbedChat[]} Returns a new array of chats with the sources filtered out of responses
    */
-  filterSources: function (chats) {
-    return chats.map((chat) => {
+  filterSources: (chats) =>
+    chats.map((chat) => {
       const { response, ...rest } = chat;
       const { sources, ...responseRest } = safeJsonParse(response);
       return { ...rest, response: JSON.stringify(responseRest) };
-    });
-  },
+    }),
 
   /**
    * Fetches chats for a given embed and session id.
@@ -87,7 +80,7 @@ const EmbedChats = {
     }
   },
 
-  markHistoryInvalid: async function (embedId = null, sessionId = null) {
+  markHistoryInvalid: async (embedId = null, sessionId = null) => {
     if (!embedId || !sessionId) return [];
 
     try {
@@ -106,7 +99,7 @@ const EmbedChats = {
     }
   },
 
-  get: async function (clause = {}, limit = null, orderBy = null) {
+  get: async (clause = {}, limit = null, orderBy = null) => {
     try {
       const chat = await prisma.embed_chats.findFirst({
         where: clause,
@@ -120,7 +113,7 @@ const EmbedChats = {
     }
   },
 
-  delete: async function (clause = {}) {
+  delete: async (clause = {}) => {
     try {
       await prisma.embed_chats.deleteMany({
         where: clause,
@@ -132,12 +125,7 @@ const EmbedChats = {
     }
   },
 
-  where: async function (
-    clause = {},
-    limit = null,
-    orderBy = null,
-    offset = null
-  ) {
+  where: async (clause = {}, limit = null, orderBy = null, offset = null) => {
     try {
       const chats = await prisma.embed_chats.findMany({
         where: clause,
@@ -152,12 +140,7 @@ const EmbedChats = {
     }
   },
 
-  whereWithEmbedAndWorkspace: async function (
-    clause = {},
-    limit = null,
-    orderBy = null,
-    offset = null
-  ) {
+  whereWithEmbedAndWorkspace: async (clause = {}, limit = null, orderBy = null, offset = null) => {
     try {
       const chats = await prisma.embed_chats.findMany({
         where: clause,
@@ -183,7 +166,7 @@ const EmbedChats = {
     }
   },
 
-  count: async function (clause = {}) {
+  count: async (clause = {}) => {
     try {
       const count = await prisma.embed_chats.count({
         where: clause,

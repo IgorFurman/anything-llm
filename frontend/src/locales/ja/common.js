@@ -19,8 +19,7 @@ const TRANSLATIONS = {
       instancePassword: "インスタンスパスワード",
       setPassword: "パスワードを設定しますか？",
       passwordReq: "パスワードは8文字以上である必要があります。",
-      passwordWarn:
-        "このパスワードを保存することが重要です。回復方法はありません。",
+      passwordWarn: "このパスワードを保存することが重要です。回復方法はありません。",
       adminUsername: "管理者アカウントのユーザー名",
       adminUsernameReq:
         "ユーザー名は6文字以上で、小文字の英字、数字、アンダースコア、ハイフンのみを含む必要があります。スペースは使用できません。",
@@ -31,14 +30,12 @@ const TRANSLATIONS = {
     },
     data: {
       title: "データ処理とプライバシー",
-      description:
-        "個人データに関して透明性とコントロールを提供することをお約束します。",
+      description: "個人データに関して透明性とコントロールを提供することをお約束します。",
       settingsHint: "これらの設定は、設定画面でいつでも再構成できます。",
     },
     survey: {
       title: "AnythingLLMへようこそ",
-      description:
-        "AnythingLLMをあなたのニーズに合わせて構築するためにご協力ください。任意です。",
+      description: "AnythingLLMをあなたのニーズに合わせて構築するためにご協力ください。任意です。",
       email: "メールアドレスは何ですか？",
       useCase: "AnythingLLMを何に使用しますか？",
       useCaseWork: "仕事用",
@@ -52,8 +49,7 @@ const TRANSLATIONS = {
     },
     workspace: {
       title: "最初のワークスペースを作成する",
-      description:
-        "最初のワークスペースを作成して、AnythingLLMを始めましょう。",
+      description: "最初のワークスペースを作成して、AnythingLLMを始めましょう。",
     },
   },
   common: {
@@ -119,8 +115,7 @@ const TRANSLATIONS = {
     },
     "password-reset": {
       title: "パスワードリセット",
-      description:
-        "以下に必要な情報を入力してパスワードをリセットしてください。",
+      description: "以下に必要な情報を入力してパスワードをリセットしてください。",
       "recovery-codes": "回復コード",
       "recovery-code": "回復コード {{index}}",
       "back-to-login": "ログイン画面に戻る",
@@ -138,8 +133,7 @@ const TRANSLATIONS = {
     part4:
       "簡単です。すべてのコレクションは「ワークスペース」と呼ばれるバケットに整理されています。ワークスペースは、ファイル、ドキュメント、画像、PDFなどを含むバケットで、これらがLLMが理解し、会話で使用できるものに変換されます。\n\nいつでもファイルを追加および削除できます。",
     createWorkspace: "最初のワークスペースを作成",
-    user2:
-      "これはAI版のDropboxみたいなもの？チャットはどうなの？チャットボットなんでしょ？",
+    user2: "これはAI版のDropboxみたいなもの？チャットはどうなの？チャットボットなんでしょ？",
     part5:
       "AnythingLLMは単なるスマートなDropbox以上のものです。\n\nAnythingLLMはデータと対話する2つの方法を提供します：\n\n<i>クエリ：</i> チャットは、ワークスペース内のドキュメントで見つかったデータや推論を返します。ワークスペースにドキュメントを追加することで、より賢くなります！\n\n<i>会話：</i> ドキュメントと進行中のチャット履歴の両方が同時にLLMの知識に貢献します。リアルタイムのテキストベースの情報や修正を追加するのに最適です。\n\nチャット中にどちらのモードにも切り替えることができます。",
     user3: "すごい、試してみたい！",
@@ -168,8 +162,7 @@ const TRANSLATIONS = {
     },
     message: {
       title: "提案されたチャットメッセージ",
-      description:
-        "ワークスペースユーザーに提案されるメッセージをカスタマイズします。",
+      description: "ワークスペースユーザーに提案されるメッセージをカスタマイズします。",
       add: "新しいメッセージを追加",
       save: "メッセージを保存",
       heading: "説明してください",
@@ -177,8 +170,7 @@ const TRANSLATIONS = {
     },
     pfp: {
       title: "アシスタントのプロフィール画像",
-      description:
-        "このワークスペースのアシスタントのプロフィール画像をカスタマイズします。",
+      description: "このワークスペースのアシスタントのプロフィール画像をカスタマイズします。",
       image: "ワークスペース画像",
       remove: "ワークスペース画像を削除",
     },
@@ -248,8 +240,7 @@ const TRANSLATIONS = {
       title: "クエリモード拒否応答",
       "desc-start": "モードが",
       query: "クエリ",
-      "desc-end":
-        "の場合、コンテキストが見つからないときにカスタム拒否応答を返すことができます。",
+      "desc-end": "の場合、コンテキストが見つからないときにカスタム拒否応答を返すことができます。",
       "tooltip-title": null,
       "tooltip-description": null,
     },
@@ -292,18 +283,15 @@ const TRANSLATIONS = {
       "ツール呼び出しに対応していないLLMの性能は、モデルの能力や精度に大きく依存します。一部の機能が制限されたり、正しく動作しない場合があります。",
     provider: {
       title: "ワークスペースエージェントのLLMプロバイダー",
-      description:
-        "このワークスペースの@agentで使用するLLMプロバイダーとモデルを指定します。",
+      description: "このワークスペースの@agentで使用するLLMプロバイダーとモデルを指定します。",
     },
     mode: {
       chat: {
         title: "ワークスペースエージェントのチャットモデル",
-        description:
-          "このワークスペースの@agentで使用するチャットモデルを指定します。",
+        description: "このワークスペースの@agentで使用するチャットモデルを指定します。",
       },
       title: "ワークスペースエージェントのモデル",
-      description:
-        "このワークスペースの@agentで使用するLLMモデルを指定します。",
+      description: "このワークスペースの@agentで使用するLLMモデルを指定します。",
       wait: "-- モデルを読み込み中 --",
     },
     skill: {
@@ -322,8 +310,7 @@ const TRANSLATIONS = {
       },
       scrape: {
         title: "ウェブサイトの取得",
-        description:
-          "エージェントがウェブサイトを訪問し、内容を取得できるようにします。",
+        description: "エージェントがウェブサイトを訪問し、内容を取得できるようにします。",
       },
       generate: {
         title: "チャートの生成",
@@ -339,8 +326,7 @@ const TRANSLATIONS = {
         title: "ウェブ検索と閲覧",
         "desc-start":
           "エージェントがウェブ検索プロバイダーに接続し、質問に答えるためにウェブ検索できるようにします。",
-        "desc-end":
-          "この設定を行うまで、エージェントセッション中のウェブ検索は利用できません。",
+        "desc-end": "この設定を行うまで、エージェントセッション中のウェブ検索は利用できません。",
       },
     },
   },
@@ -502,8 +488,7 @@ const TRANSLATIONS = {
     "no-connectors": "データコネクタが見つかりません。",
     github: {
       name: "GitHubリポジトリ",
-      description:
-        "ワンクリックで公開・非公開のGitHubリポジトリ全体をインポートできます。",
+      description: "ワンクリックで公開・非公開のGitHubリポジトリ全体をインポートできます。",
       URL: "GitHubリポジトリURL",
       URL_explained: "収集したいGitHubリポジトリのURLです。",
       token: "GitHubアクセストークン",
@@ -525,13 +510,11 @@ const TRANSLATIONS = {
       branch_explained: "収集したいブランチを指定します。",
       token_information:
         "<b>GitHubアクセストークン</b>を入力しない場合、GitHubの公開APIのレート制限により<b>トップレベル</b>のファイルのみ収集可能です。",
-      token_personal:
-        "無料のパーソナルアクセストークンはこちらから取得できます。",
+      token_personal: "無料のパーソナルアクセストークンはこちらから取得できます。",
     },
     gitlab: {
       name: "GitLabリポジトリ",
-      description:
-        "ワンクリックで公開・非公開のGitLabリポジトリ全体をインポートできます。",
+      description: "ワンクリックで公開・非公開のGitLabリポジトリ全体をインポートできます。",
       URL: "GitLabリポジトリURL",
       URL_explained: "収集したいGitLabリポジトリのURLです。",
       token: "GitLabアクセストークン",
@@ -555,15 +538,13 @@ const TRANSLATIONS = {
       branch_explained: "収集したいブランチを指定します。",
       token_information:
         "<b>GitLabアクセストークン</b>を入力しない場合、GitLabの公開APIのレート制限により<b>トップレベル</b>のファイルのみ収集可能です。",
-      token_personal:
-        "無料のパーソナルアクセストークンはこちらから取得できます。",
+      token_personal: "無料のパーソナルアクセストークンはこちらから取得できます。",
     },
     youtube: {
       name: "YouTube文字起こし",
       description: "YouTube動画の文字起こしをリンクからインポートできます。",
       URL: "YouTube動画URL",
-      URL_explained_start:
-        "文字起こしを取得したいYouTube動画のURLを入力してください。動画には",
+      URL_explained_start: "文字起こしを取得したいYouTube動画のURLを入力してください。動画には",
       URL_explained_link: "クローズドキャプション",
       URL_explained_end: "が必要です。",
       task_explained:
@@ -598,13 +579,11 @@ const TRANSLATIONS = {
       username: "Confluenceユーザー名",
       username_explained: "Confluenceのユーザー名です。",
       auth_type: "Confluence認証タイプ",
-      auth_type_explained:
-        "Confluenceページへアクセスするための認証タイプを選択してください。",
+      auth_type_explained: "Confluenceページへアクセスするための認証タイプを選択してください。",
       auth_type_username: "ユーザー名とアクセストークン",
       auth_type_personal: "パーソナルアクセストークン",
       token: "Confluenceアクセストークン",
-      token_explained_start:
-        "認証用のアクセストークンを入力してください。アクセストークンは",
+      token_explained_start: "認証用のアクセストークンを入力してください。アクセストークンは",
       token_explained_link: "こちら",
       token_desc: "認証用アクセストークン",
       pat_token: "Confluenceパーソナルアクセストークン",
@@ -645,10 +624,8 @@ const TRANSLATIONS = {
       "processor-offline": "ドキュメント処理機能が利用できません",
       "processor-offline-desc":
         "ドキュメント処理機能がオフラインのため、ファイルをアップロードできません。後でもう一度お試しください。",
-      "click-upload":
-        "クリックしてアップロード、またはドラッグ＆ドロップしてください",
-      "file-types":
-        "テキストファイル、CSV、スプレッドシート、音声ファイルなどに対応しています！",
+      "click-upload": "クリックしてアップロード、またはドラッグ＆ドロップしてください",
+      "file-types": "テキストファイル、CSV、スプレッドシート、音声ファイルなどに対応しています！",
       "or-submit-link": "またはリンクを入力",
       "placeholder-link": "https://example.com",
       fetching: "取得中...",
@@ -857,8 +834,7 @@ const TRANSLATIONS = {
     },
   },
   "main-page": {
-    noWorkspaceError:
-      "チャットを開始する前にワークスペースを作成してください。",
+    noWorkspaceError: "チャットを開始する前にワークスペースを作成してください。",
     checklist: {
       title: "はじめに",
       tasksLeft: "残りのタスク",
@@ -914,15 +890,13 @@ const TRANSLATIONS = {
         },
         slashCommands: {
           title: "スラッシュコマンド",
-          description:
-            "カスタムスラッシュコマンドで時間を節約しプロンプトを挿入。",
+          description: "カスタムスラッシュコマンドで時間を節約しプロンプトを挿入。",
           primaryAction: "スラッシュコマンドを作成",
           secondaryAction: "ハブで探索",
         },
         systemPrompts: {
           title: "システムプロンプト",
-          description:
-            "システムプロンプトを変更してワークスペースのAI返答をカスタマイズ。",
+          description: "システムプロンプトを変更してワークスペースのAI返答をカスタマイズ。",
           primaryAction: "システムプロンプトを変更",
           secondaryAction: "プロンプト変数を管理",
         },

@@ -23,12 +23,10 @@ function strictMultiUserRoleValid(allowedRoles = DEFAULT_ROLES) {
     }
 
     const multiUserMode =
-      response.locals?.multiUserMode ??
-      (await SystemSettings.isMultiUserMode());
+      response.locals?.multiUserMode ?? (await SystemSettings.isMultiUserMode());
     if (!multiUserMode) return response.sendStatus(401).end();
 
-    const user =
-      response.locals?.user ?? (await userFromSession(request, response));
+    const user = response.locals?.user ?? (await userFromSession(request, response));
     if (allowedRoles.includes(user?.role)) {
       next();
       return;
@@ -54,15 +52,13 @@ function flexUserRoleValid(allowedRoles = DEFAULT_ROLES) {
 
     // Bypass if not in multi-user mode
     const multiUserMode =
-      response.locals?.multiUserMode ??
-      (await SystemSettings.isMultiUserMode());
+      response.locals?.multiUserMode ?? (await SystemSettings.isMultiUserMode());
     if (!multiUserMode) {
       next();
       return;
     }
 
-    const user =
-      response.locals?.user ?? (await userFromSession(request, response));
+    const user = response.locals?.user ?? (await userFromSession(request, response));
     if (allowedRoles.includes(user?.role)) {
       next();
       return;

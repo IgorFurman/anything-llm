@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
 import CommunityHub from "@/models/communityHub";
+import { useEffect, useState } from "react";
 
 const DEFAULT_USER_ITEMS = {
   createdByMe: {
@@ -21,8 +21,7 @@ export function useUserItems({ connectionKey }) {
       if (!connectionKey) return;
       setLoading(true);
       try {
-        const { success, createdByMe, teamItems } =
-          await CommunityHub.fetchUserItems();
+        const { success, createdByMe, teamItems } = await CommunityHub.fetchUserItems();
         if (success) {
           setUserItems({ createdByMe, teamItems });
         }

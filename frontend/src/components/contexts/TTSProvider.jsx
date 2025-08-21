@@ -1,6 +1,6 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import System from "@/models/system";
 import Appearance from "@/models/appearance";
+import System from "@/models/system";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const ASSISTANT_MESSAGE_COMPLETE_EVENT = "ASSISTANT_MESSAGE_COMPLETE_EVENT";
 const TTSProviderContext = createContext();
@@ -52,8 +52,7 @@ export function TTSProvider({ children }) {
  */
 export function useTTSProvider() {
   const context = useContext(TTSProviderContext);
-  if (!context)
-    throw new Error("useTTSProvider must be used within a TTSProvider");
+  if (!context) throw new Error("useTTSProvider must be used within a TTSProvider");
   return context;
 }
 
@@ -66,9 +65,7 @@ export function useTTSProvider() {
  * @param {string} chatId - The chatId of the message that has been fully generated.
  */
 export function emitAssistantMessageCompleteEvent(chatId) {
-  window.dispatchEvent(
-    new CustomEvent(ASSISTANT_MESSAGE_COMPLETE_EVENT, { detail: { chatId } })
-  );
+  window.dispatchEvent(new CustomEvent(ASSISTANT_MESSAGE_COMPLETE_EVENT, { detail: { chatId } }));
 }
 
 /**
@@ -80,9 +77,7 @@ export function emitAssistantMessageCompleteEvent(chatId) {
  * This is accomplished by looking for a button with the data-auto-play-chat-id attribute that matches the chatId.
  */
 export function useWatchForAutoPlayAssistantTTSResponse() {
-  const autoPlayAssistantTtsResponse = Appearance.get(
-    "autoPlayAssistantTtsResponse"
-  );
+  const autoPlayAssistantTtsResponse = Appearance.get("autoPlayAssistantTtsResponse");
 
   function handleAutoPlayTTSEvent(event) {
     let autoPlayAttempts = 0;
@@ -96,9 +91,7 @@ export function useWatchForAutoPlayAssistantTTSResponse() {
      * @returns {boolean} true if the TTS response was played, false otherwise.
      */
     function attemptToPlay() {
-      const playBtn = document.querySelector(
-        `[data-auto-play-chat-id="${chatId}"]`
-      );
+      const playBtn = document.querySelector(`[data-auto-play-chat-id="${chatId}"]`);
       if (!playBtn) {
         autoPlayAttempts++;
         if (autoPlayAttempts > 3) return false;
@@ -119,15 +112,9 @@ export function useWatchForAutoPlayAssistantTTSResponse() {
   // setting enabled.
   useEffect(() => {
     if (autoPlayAssistantTtsResponse) {
-      window.addEventListener(
-        ASSISTANT_MESSAGE_COMPLETE_EVENT,
-        handleAutoPlayTTSEvent
-      );
+      window.addEventListener(ASSISTANT_MESSAGE_COMPLETE_EVENT, handleAutoPlayTTSEvent);
       return () => {
-        window.removeEventListener(
-          ASSISTANT_MESSAGE_COMPLETE_EVENT,
-          handleAutoPlayTTSEvent
-        );
+        window.removeEventListener(ASSISTANT_MESSAGE_COMPLETE_EVENT, handleAutoPlayTTSEvent);
       };
     } else {
       console.log("Assistant TTS auto-play is disabled");

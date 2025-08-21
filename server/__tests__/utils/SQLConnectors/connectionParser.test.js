@@ -1,5 +1,7 @@
 /* eslint-env jest */
-const { ConnectionStringParser } = require("../../../utils/agents/aibitat/plugins/sql-agent/SQLConnectors/utils");
+const {
+  ConnectionStringParser,
+} = require("../../../utils/agents/aibitat/plugins/sql-agent/SQLConnectors/utils");
 
 describe("ConnectionStringParser", () => {
   describe("Basic Parsing", () => {
@@ -13,13 +15,15 @@ describe("ConnectionStringParser", () => {
         password: "pass",
         hosts: [{ host: "localhost", port: 1433 }],
         endpoint: "mydb",
-        options: undefined
+        options: undefined,
       });
     });
 
     test("should parse a connection string with options", () => {
       const parser = new ConnectionStringParser({ scheme: "mssql" });
-      const result = parser.parse("mssql://user:pass@localhost:1433/mydb?encrypt=true&trustServerCertificate=true");
+      const result = parser.parse(
+        "mssql://user:pass@localhost:1433/mydb?encrypt=true&trustServerCertificate=true"
+      );
 
       expect(result).toEqual({
         scheme: "mssql",
@@ -29,8 +33,8 @@ describe("ConnectionStringParser", () => {
         endpoint: "mydb",
         options: {
           encrypt: "true",
-          trustServerCertificate: "true"
-        }
+          trustServerCertificate: "true",
+        },
       });
     });
 
@@ -44,7 +48,7 @@ describe("ConnectionStringParser", () => {
         password: undefined,
         hosts: [{ host: "localhost", port: 1433 }],
         endpoint: "mydb",
-        options: undefined
+        options: undefined,
       });
     });
   });
@@ -52,14 +56,14 @@ describe("ConnectionStringParser", () => {
   describe("Error Handling", () => {
     test("should throw error for invalid scheme", () => {
       const parser = new ConnectionStringParser({ scheme: "mssql" });
-      expect(() => parser.parse("mysql://user:pass@localhost:3306/mydb"))
-        .toThrow("URI must start with 'mssql://'");
+      expect(() => parser.parse("mysql://user:pass@localhost:3306/mydb")).toThrow(
+        "URI must start with 'mssql://'"
+      );
     });
 
     test("should throw error for missing scheme", () => {
       const parser = new ConnectionStringParser({ scheme: "mssql" });
-      expect(() => parser.parse("user:pass@localhost:1433/mydb"))
-        .toThrow("No scheme found in URI");
+      expect(() => parser.parse("user:pass@localhost:1433/mydb")).toThrow("No scheme found in URI");
     });
   });
 
@@ -74,7 +78,7 @@ describe("ConnectionStringParser", () => {
         password: "p@ssw:rd",
         hosts: [{ host: "localhost", port: 1433 }],
         endpoint: "mydb",
-        options: undefined
+        options: undefined,
       });
     });
 
@@ -88,7 +92,7 @@ describe("ConnectionStringParser", () => {
         password: "pass",
         hosts: [{ host: "localhost", port: 1433 }],
         endpoint: "my db",
-        options: undefined
+        options: undefined,
       });
     });
   });
@@ -104,10 +108,10 @@ describe("ConnectionStringParser", () => {
         password: "pass",
         hosts: [
           { host: "host1", port: 1433 },
-          { host: "host2", port: 1434 }
+          { host: "host2", port: 1434 },
         ],
         endpoint: "mydb",
-        options: undefined
+        options: undefined,
       });
     });
 
@@ -119,12 +123,9 @@ describe("ConnectionStringParser", () => {
         scheme: "mssql",
         username: "user",
         password: "pass",
-        hosts: [
-          { host: "host1" },
-          { host: "host2" }
-        ],
+        hosts: [{ host: "host1" }, { host: "host2" }],
         endpoint: "mydb",
-        options: undefined
+        options: undefined,
       });
     });
   });
@@ -140,7 +141,7 @@ describe("ConnectionStringParser", () => {
         password: "pass",
         hosts: [{ host: "localhost", port: 3306 }],
         endpoint: "mydb",
-        options: { ssl: "true" }
+        options: { ssl: "true" },
       });
     });
 
@@ -154,13 +155,15 @@ describe("ConnectionStringParser", () => {
         password: "pass",
         hosts: [{ host: "localhost", port: 5432 }],
         endpoint: "mydb",
-        options: { sslmode: "require" }
+        options: { sslmode: "require" },
       });
     });
 
     test("should parse MSSQL connection string with encryption options", () => {
       const parser = new ConnectionStringParser({ scheme: "mssql" });
-      const result = parser.parse("mssql://user:pass@localhost:1433/mydb?encrypt=true&trustServerCertificate=true");
+      const result = parser.parse(
+        "mssql://user:pass@localhost:1433/mydb?encrypt=true&trustServerCertificate=true"
+      );
 
       expect(result).toEqual({
         scheme: "mssql",
@@ -170,8 +173,8 @@ describe("ConnectionStringParser", () => {
         endpoint: "mydb",
         options: {
           encrypt: "true",
-          trustServerCertificate: "true"
-        }
+          trustServerCertificate: "true",
+        },
       });
     });
   });

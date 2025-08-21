@@ -1,19 +1,17 @@
+import ModalWrapper from "@/components/ModalWrapper";
+import RecoveryCodeModal from "@/components/Modals/DisplayRecoveryCodeModal";
+import { useModal } from "@/hooks/useModal";
+import showToast from "@/utils/toast";
+import { t } from "i18next";
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import System from "../../../models/system";
 import { AUTH_TOKEN, AUTH_USER } from "../../../utils/constants";
 import paths from "../../../utils/paths";
-import showToast from "@/utils/toast";
-import ModalWrapper from "@/components/ModalWrapper";
-import { useModal } from "@/hooks/useModal";
-import RecoveryCodeModal from "@/components/Modals/DisplayRecoveryCodeModal";
-import { useTranslation } from "react-i18next";
-import { t } from "i18next";
 
 const RecoveryForm = ({ onSubmit, setShowRecoveryForm }) => {
   const [username, setUsername] = useState("");
-  const [recoveryCodeInputs, setRecoveryCodeInputs] = useState(
-    Array(2).fill("")
-  );
+  const [recoveryCodeInputs, setRecoveryCodeInputs] = useState(Array(2).fill(""));
 
   const handleRecoveryCodeChange = (index, value) => {
     const updatedCodes = [...recoveryCodeInputs];
@@ -23,9 +21,7 @@ const RecoveryForm = ({ onSubmit, setShowRecoveryForm }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const recoveryCodes = recoveryCodeInputs.filter(
-      (code) => code.trim() !== ""
-    );
+    const recoveryCodes = recoveryCodeInputs.filter((code) => code.trim() !== "");
     onSubmit(username, recoveryCodes);
   };
 
@@ -73,9 +69,7 @@ const RecoveryForm = ({ onSubmit, setShowRecoveryForm }) => {
                     index: index + 1,
                   })}
                   value={code}
-                  onChange={(e) =>
-                    handleRecoveryCodeChange(index, e.target.value)
-                  }
+                  onChange={(e) => handleRecoveryCodeChange(index, e.target.value)}
                   className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder focus:outline-primary-button active:outline-primary-button outline-none text-sm rounded-md p-2.5 w-full h-[48px] md:w-[300px] md:h-[34px]"
                   required
                 />
@@ -190,8 +184,7 @@ export default function MultiUserAuth() {
     const data = {};
     const form = new FormData(e.target);
     for (var [key, value] of form.entries()) data[key] = value;
-    const { valid, user, token, message, recoveryCodes } =
-      await System.requestToken(data);
+    const { valid, user, token, message, recoveryCodes } = await System.requestToken(data);
     if (valid && !!token && !!user) {
       setUser(user);
       setToken(token);
@@ -214,10 +207,7 @@ export default function MultiUserAuth() {
   const handleDownloadComplete = () => setDownloadComplete(true);
   const handleResetPassword = () => setShowRecoveryForm(true);
   const handleRecoverySubmit = async (username, recoveryCodes) => {
-    const { success, resetToken, error } = await System.recoverAccount(
-      username,
-      recoveryCodes
-    );
+    const { success, resetToken, error } = await System.recoverAccount(username, recoveryCodes);
 
     if (success && resetToken) {
       window.localStorage.setItem("resetToken", resetToken);
@@ -269,15 +259,11 @@ export default function MultiUserAuth() {
 
   if (showRecoveryForm) {
     return (
-      <RecoveryForm
-        onSubmit={handleRecoverySubmit}
-        setShowRecoveryForm={setShowRecoveryForm}
-      />
+      <RecoveryForm onSubmit={handleRecoverySubmit} setShowRecoveryForm={setShowRecoveryForm} />
     );
   }
 
-  if (showResetPasswordForm)
-    return <ResetPasswordForm onSubmit={handleResetSubmit} />;
+  if (showResetPasswordForm) return <ResetPasswordForm onSubmit={handleResetSubmit} />;
   return (
     <>
       <form onSubmit={handleLogin}>
@@ -293,8 +279,7 @@ export default function MultiUserAuth() {
                 </p>
               </div>
               <p className="text-sm text-theme-text-secondary text-center">
-                {t("login.sign-in.start")} {customAppName || "AnythingLLM"}{" "}
-                {t("login.sign-in.end")}
+                {t("login.sign-in.start")} {customAppName || "AnythingLLM"} {t("login.sign-in.end")}
               </p>
             </div>
           </div>
@@ -329,17 +314,14 @@ export default function MultiUserAuth() {
               type="submit"
               className="md:text-primary-button md:bg-transparent text-dark-text text-sm font-bold focus:ring-4 focus:outline-none rounded-md border-[1.5px] border-primary-button md:h-[34px] h-[48px] md:hover:text-white md:hover:bg-primary-button bg-primary-button focus:z-10 w-full"
             >
-              {loading
-                ? t("login.multi-user.validating")
-                : t("login.multi-user.login")}
+              {loading ? t("login.multi-user.validating") : t("login.multi-user.login")}
             </button>
             <button
               type="button"
               className="text-white text-sm flex gap-x-1 hover:text-primary-button hover:underline"
               onClick={handleResetPassword}
             >
-              {t("login.multi-user.forgot-pass")}?
-              <b>{t("login.multi-user.reset")}</b>
+              {t("login.multi-user.forgot-pass")}?<b>{t("login.multi-user.reset")}</b>
             </button>
           </div>
         </div>

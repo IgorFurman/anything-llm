@@ -22,9 +22,7 @@ async function loadGitlabRepo(args, response) {
       reason: "Could not prepare Gitlab repo for loading! Check URL",
     };
 
-  console.log(
-    `-- Working GitLab ${repo.author}/${repo.project}:${repo.branch} --`
-  );
+  console.log(`-- Working GitLab ${repo.author}/${repo.project}:${repo.branch} --`);
   const docs = await repo.recursiveLoader();
   if (!docs.length) {
     return {
@@ -40,29 +38,20 @@ async function loadGitlabRepo(args, response) {
 
   const outFolderPath =
     process.env.NODE_ENV === "development"
-      ? path.resolve(
-          __dirname,
-          `../../../../../server/storage/documents/${outFolder}`
-        )
+      ? path.resolve(__dirname, `../../../../../server/storage/documents/${outFolder}`)
       : path.resolve(process.env.STORAGE_DIR, `documents/${outFolder}`);
 
-  if (!fs.existsSync(outFolderPath))
-    fs.mkdirSync(outFolderPath, { recursive: true });
+  if (!fs.existsSync(outFolderPath)) fs.mkdirSync(outFolderPath, { recursive: true });
 
   for (const doc of docs) {
-    if (!doc.metadata || (!doc.pageContent && !doc.issue && !doc.wiki))
-      continue;
+    if (!doc.metadata || (!doc.pageContent && !doc.issue && !doc.wiki)) continue;
     let pageContent = null;
 
     const data = {
       id: v4(),
       url: "gitlab://" + doc.metadata.source,
       docSource: doc.metadata.source,
-      chunkSource: generateChunkSource(
-        repo,
-        doc,
-        response.locals.encryptionWorker
-      ),
+      chunkSource: generateChunkSource(repo, doc, response.locals.encryptionWorker),
       published: new Date().toLocaleString(),
     };
 
@@ -83,9 +72,7 @@ async function loadGitlabRepo(args, response) {
       data.title = doc.wiki.title;
       data.docAuthor = repo.author;
       data.description =
-        doc.wiki.format === "markdown"
-          ? "GitLab Wiki Page (Markdown)"
-          : "GitLab Wiki Page";
+        doc.wiki.format === "markdown" ? "GitLab Wiki Page (Markdown)" : "GitLab Wiki Page";
     } else {
       continue;
     }
@@ -94,9 +81,7 @@ async function loadGitlabRepo(args, response) {
     data.token_count_estimate = tokenizeString(pageContent);
     data.pageContent = pageContent;
 
-    console.log(
-      `[GitLab Loader]: Saving ${doc.metadata.source} to ${outFolder}`
-    );
+    console.log(`[GitLab Loader]: Saving ${doc.metadata.source} to ${outFolder}`);
 
     writeToServerDocuments({
       data,
@@ -119,12 +104,7 @@ async function loadGitlabRepo(args, response) {
   };
 }
 
-async function fetchGitlabFile({
-  repoUrl,
-  branch,
-  accessToken = null,
-  sourceFilePath,
-}) {
+async function fetchGitlabFile({ repoUrl, branch, accessToken = null, sourceFilePath }) {
   const repo = new RepoLoader({
     repo: repoUrl,
     branch,
@@ -164,9 +144,7 @@ function generateChunkSource(repo, doc, encryptionWorker) {
     path: doc.metadata.source,
     pat: !!repo.accessToken ? repo.accessToken : null,
   };
-  return `gitlab://${repo.repo}?payload=${encryptionWorker.encrypt(
-    JSON.stringify(payload)
-  )}`;
+  return `gitlab://${repo.repo}?payload=${encryptionWorker.encrypt(JSON.stringify(payload))}`;
 }
 
 function issueToMarkdown(issue) {

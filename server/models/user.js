@@ -29,8 +29,7 @@ const User = {
       try {
         if (String(newValue).length > 100)
           throw new Error("Username cannot be longer than 100 characters");
-        if (String(newValue).length < 2)
-          throw new Error("Username must be at least 2 characters");
+        if (String(newValue).length < 2) throw new Error("Username must be at least 2 characters");
         return String(newValue);
       } catch (e) {
         throw new Error(e.message);
@@ -39,9 +38,7 @@ const User = {
     role: (role = "default") => {
       const VALID_ROLES = ["default", "admin", "manager"];
       if (!VALID_ROLES.includes(role)) {
-        throw new Error(
-          `Invalid role. Allowed roles are: ${VALID_ROLES.join(", ")}`
-        );
+        throw new Error(`Invalid role. Allowed roles are: ${VALID_ROLES.join(", ")}`);
       }
       return String(role);
     },
@@ -49,21 +46,18 @@ const User = {
       if (dailyMessageLimit === null) return null;
       const limit = Number(dailyMessageLimit);
       if (isNaN(limit) || limit < 1) {
-        throw new Error(
-          "Daily message limit must be null or a number greater than or equal to 1"
-        );
+        throw new Error("Daily message limit must be null or a number greater than or equal to 1");
       }
       return limit;
     },
     bio: (bio = "") => {
       if (!bio || typeof bio !== "string") return "";
-      if (bio.length > 1000)
-        throw new Error("Bio cannot be longer than 1,000 characters");
+      if (bio.length > 1000) throw new Error("Bio cannot be longer than 1,000 characters");
       return String(bio);
     },
   },
   // validations for the above writable fields.
-  castColumnValue: function (key, value) {
+  castColumnValue: (key, value) => {
     switch (key) {
       case "suspended":
         return Number(Boolean(value));
@@ -74,7 +68,7 @@ const User = {
     }
   },
 
-  filterFields: function (user = {}) {
+  filterFields: (user = {}) => {
     const { password, ...rest } = user;
     return { ...rest };
   },
@@ -106,8 +100,7 @@ const User = {
           password: hashedPassword,
           role: this.validations.role(role),
           bio: this.validations.bio(bio),
-          dailyMessageLimit:
-            this.validations.dailyMessageLimit(dailyMessageLimit),
+          dailyMessageLimit: this.validations.dailyMessageLimit(dailyMessageLimit),
         },
       });
       return { user: this.filterFields(user), error: null };
@@ -118,7 +111,7 @@ const User = {
   },
   // Log the changes to a user object, but omit sensitive fields
   // that are not meant to be logged.
-  loggedChanges: function (updates, prev = {}) {
+  loggedChanges: (updates, prev = {}) => {
     const changes = {};
     const sensitiveFields = ["password"];
 
@@ -135,7 +128,7 @@ const User = {
     try {
       if (!userId) throw new Error("No user id provided for update");
       const currentUser = await prisma.users.findUnique({
-        where: { id: parseInt(userId) },
+        where: { id: Number.parseInt(userId) },
       });
       if (!currentUser) return { success: false, error: "User not found" };
       // Removes non-writable fields for generic updates
@@ -143,9 +136,7 @@ const User = {
       Object.entries(updates).forEach(([key, value]) => {
         if (this.writable.includes(key)) {
           if (this.validations.hasOwnProperty(key)) {
-            updates[key] = this.validations[key](
-              this.castColumnValue(key, value)
-            );
+            updates[key] = this.validations[key](this.castColumnValue(key, value));
           } else {
             updates[key] = this.castColumnValue(key, value);
           }
@@ -179,7 +170,7 @@ const User = {
         };
 
       const user = await prisma.users.update({
-        where: { id: parseInt(userId) },
+        where: { id: Number.parseInt(userId) },
         data: updates,
       });
 
@@ -201,7 +192,7 @@ const User = {
   // Explicit direct update of user object.
   // Only use this method when directly setting a key value
   // that takes no user input for the keys being modified.
-  _update: async function (id = null, data = {}) {
+  _update: async (id = null, data = {}) => {
     if (!id) throw new Error("No user id provided for update");
 
     try {
@@ -231,7 +222,7 @@ const User = {
     }
   },
   // Returns user object with all fields
-  _get: async function (clause = {}) {
+  _get: async (clause = {}) => {
     try {
       const user = await prisma.users.findFirst({ where: clause });
       return user ? { ...user } : null;
@@ -241,7 +232,7 @@ const User = {
     }
   },
 
-  count: async function (clause = {}) {
+  count: async (clause = {}) => {
     try {
       const count = await prisma.users.count({ where: clause });
       return count;
@@ -251,7 +242,7 @@ const User = {
     }
   },
 
-  delete: async function (clause = {}) {
+  delete: async (clause = {}) => {
     try {
       await prisma.users.deleteMany({ where: clause });
       return true;
@@ -274,7 +265,7 @@ const User = {
     }
   },
 
-  checkPasswordComplexity: function (passwordInput = "") {
+  checkPasswordComplexity: (passwordInput = "") => {
     const passwordComplexity = require("joi-password-complexity");
     // Can be set via ENV variable on boot. No frontend config at this time.
     // Docs: https://www.npmjs.com/package/joi-password-complexity
@@ -289,10 +280,9 @@ const User = {
       requirementCount: process.env.PASSWORDREQUIREMENTS || 0,
     };
 
-    const complexityCheck = passwordComplexity(
-      complexityOptions,
-      "password"
-    ).validate(passwordInput);
+    const complexityCheck = passwordComplexity(complexityOptions, "password").validate(
+      passwordInput
+    );
     if (complexityCheck.hasOwnProperty("error")) {
       let myError = "";
       let prepend = "";
@@ -313,10 +303,9 @@ const User = {
    * @param {User} user The user object record.
    * @returns {Promise<boolean>} True if the user can send a chat, false otherwise.
    */
-  canSendChat: async function (user) {
+  canSendChat: async (user) => {
     const { ROLES } = require("../utils/middleware/multiUserProtected");
-    if (!user || user.dailyMessageLimit === null || user.role === ROLES.admin)
-      return true;
+    if (!user || user.dailyMessageLimit === null || user.role === ROLES.admin) return true;
 
     const { WorkspaceChats } = require("./workspaceChats");
     const currentChatCount = await WorkspaceChats.count({

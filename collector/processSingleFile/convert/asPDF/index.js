@@ -1,9 +1,5 @@
 const { v4 } = require("uuid");
-const {
-  createdDate,
-  trashFile,
-  writeToServerDocuments,
-} = require("../../../utils/files");
+const { createdDate, trashFile, writeToServerDocuments } = require("../../../utils/files");
 const { tokenizeString } = require("../../../utils/tokenizer");
 const { default: slugify } = require("slugify");
 const PDFLoader = require("./PDFLoader");
@@ -19,20 +15,14 @@ async function asPdf({ fullFilePath = "", filename = "", options = {} }) {
   let docs = await pdfLoader.load();
 
   if (docs.length === 0) {
-    console.log(
-      `[asPDF] No text content found for ${filename}. Will attempt OCR parse.`
-    );
+    console.log(`[asPDF] No text content found for ${filename}. Will attempt OCR parse.`);
     docs = await new OCRLoader({
       targetLanguages: options?.ocr?.langList,
     }).ocrPDF(fullFilePath);
   }
 
   for (const doc of docs) {
-    console.log(
-      `-- Parsing content from pg ${
-        doc.metadata?.loc?.pageNumber || "unknown"
-      } --`
-    );
+    console.log(`-- Parsing content from pg ${doc.metadata?.loc?.pageNumber || "unknown"} --`);
     if (!doc.pageContent || !doc.pageContent.length) continue;
     pageContent.push(doc.pageContent);
   }

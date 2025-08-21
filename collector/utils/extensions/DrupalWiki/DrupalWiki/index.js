@@ -7,19 +7,12 @@
 
 const { htmlToText } = require("html-to-text");
 const { tokenizeString } = require("../../../tokenizer");
-const {
-  sanitizeFileName,
-  writeToServerDocuments,
-  documentsFolder,
-} = require("../../../files");
+const { sanitizeFileName, writeToServerDocuments, documentsFolder } = require("../../../files");
 const { default: slugify } = require("slugify");
 const path = require("path");
 const fs = require("fs");
 const { processSingleFile } = require("../../../../processSingleFile");
-const {
-  WATCH_DIRECTORY,
-  SUPPORTED_FILETYPE_CONVERTERS,
-} = require("../../../constants");
+const { WATCH_DIRECTORY, SUPPORTED_FILETYPE_CONVERTERS } = require("../../../constants");
 
 class Page {
   /**
@@ -78,9 +71,7 @@ class DrupalWiki {
           console.log(`Skipping page (${page.id}) since it has no content`);
         }
       } catch (e) {
-        console.error(
-          `Could not process DrupalWiki page ${pageId} (skipping and continuing): `
-        );
+        console.error(`Could not process DrupalWiki page ${pageId} (skipping and continuing): `);
         console.error(e);
       }
     }
@@ -105,10 +96,7 @@ class DrupalWiki {
     let pageIds = [];
     let pageNr = 0;
     do {
-      let { isLast, pageIdsForPage } = await this.#getPagesForSpacePaginated(
-        spaceId,
-        pageNr
-      );
+      const { isLast, pageIdsForPage } = await this.#getPagesForSpacePaginated(spaceId, pageNr);
       hasNext = !isLast;
       pageNr++;
       if (pageIdsForPage.length) {
@@ -154,9 +142,7 @@ class DrupalWiki {
    * @returns {Promise<Page>}
    */
   async #fetchPage(pageId) {
-    const data = await this._doFetch(
-      `${this.baseUrl}/api/rest/scope/api/page/${pageId}`
-    );
+    const data = await this._doFetch(`${this.baseUrl}/api/rest/scope/api/page/${pageId}`);
     const url = `${this.baseUrl}/node/${data.id}`;
     return new Page({
       id: data.id,
@@ -223,9 +209,7 @@ class DrupalWiki {
       pageId: pageId,
       accessToken: this.accessToken,
     };
-    return `drupalwiki://${
-      this.baseUrl
-    }/node/${pageId}?payload=${encryptionWorker.encrypt(
+    return `drupalwiki://${this.baseUrl}/node/${pageId}?payload=${encryptionWorker.encrypt(
       JSON.stringify(payload)
     )}`;
   }
@@ -278,7 +262,7 @@ class DrupalWiki {
             colSpacing: 3,
             rowSpacing: 1,
             uppercaseHeaderCells: true,
-            maxColumnWidth: Infinity,
+            maxColumnWidth: Number.POSITIVE_INFINITY,
           },
         },
       ],

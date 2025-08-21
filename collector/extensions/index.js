@@ -12,10 +12,11 @@ function extensions(app) {
   app.post(
     "/ext/resync-source-document",
     [verifyPayloadIntegrity, setDataSigner],
-    async function (request, response) {
+    async (request, response) => {
       try {
         const { type, options } = reqBody(request);
-        if (!RESYNC_METHODS.hasOwnProperty(type)) throw new Error(`Type "${type}" is not a valid type to sync.`);
+        if (!RESYNC_METHODS.hasOwnProperty(type))
+          throw new Error(`Type "${type}" is not a valid type to sync.`);
         return await RESYNC_METHODS[type](options, response);
       } catch (e) {
         console.error(e);
@@ -27,18 +28,15 @@ function extensions(app) {
       }
       return;
     }
-  )
+  );
 
   app.post(
     "/ext/:repo_platform-repo",
     [verifyPayloadIntegrity, setDataSigner],
-    async function (request, response) {
+    async (request, response) => {
       try {
         const loadRepo = resolveRepoLoaderFunction(request.params.repo_platform);
-        const { success, reason, data } = await loadRepo(
-          reqBody(request),
-          response,
-        );
+        const { success, reason, data } = await loadRepo(reqBody(request), response);
         response.status(200).json({
           success,
           reason,
@@ -60,12 +58,10 @@ function extensions(app) {
   app.post(
     "/ext/:repo_platform-repo/branches",
     [verifyPayloadIntegrity],
-    async function (request, response) {
+    async (request, response) => {
       try {
         const RepoLoader = resolveRepoLoader(request.params.repo_platform);
-        const allBranches = await new RepoLoader(
-          reqBody(request)
-        ).getRepoBranches();
+        const allBranches = await new RepoLoader(reqBody(request)).getRepoBranches();
         response.status(200).json({
           success: true,
           reason: null,
@@ -87,59 +83,46 @@ function extensions(app) {
     }
   );
 
-  app.post(
-    "/ext/youtube-transcript",
-    [verifyPayloadIntegrity],
-    async function (request, response) {
-      try {
-        const { loadYouTubeTranscript } = require("../utils/extensions/YoutubeTranscript");
-        const { success, reason, data } = await loadYouTubeTranscript(
-          reqBody(request)
-        );
-        response.status(200).json({ success, reason, data });
-      } catch (e) {
-        console.error(e);
-        response.status(400).json({
-          success: false,
-          reason: e.message,
-          data: {
-            title: null,
-            author: null,
-          },
-        });
-      }
-      return;
+  app.post("/ext/youtube-transcript", [verifyPayloadIntegrity], async (request, response) => {
+    try {
+      const { loadYouTubeTranscript } = require("../utils/extensions/YoutubeTranscript");
+      const { success, reason, data } = await loadYouTubeTranscript(reqBody(request));
+      response.status(200).json({ success, reason, data });
+    } catch (e) {
+      console.error(e);
+      response.status(400).json({
+        success: false,
+        reason: e.message,
+        data: {
+          title: null,
+          author: null,
+        },
+      });
     }
-  );
+    return;
+  });
 
-  app.post(
-    "/ext/website-depth",
-    [verifyPayloadIntegrity],
-    async function (request, response) {
-      try {
-        const websiteDepth = require("../utils/extensions/WebsiteDepth");
-        const { url, depth = 1, maxLinks = 20 } = reqBody(request);
-        if (!validURL(url)) throw new Error("Not a valid URL.");
-        const scrapedData = await websiteDepth(url, depth, maxLinks);
-        response.status(200).json({ success: true, data: scrapedData });
-      } catch (e) {
-        console.error(e);
-        response.status(400).json({ success: false, reason: e.message });
-      }
-      return;
+  app.post("/ext/website-depth", [verifyPayloadIntegrity], async (request, response) => {
+    try {
+      const websiteDepth = require("../utils/extensions/WebsiteDepth");
+      const { url, depth = 1, maxLinks = 20 } = reqBody(request);
+      if (!validURL(url)) throw new Error("Not a valid URL.");
+      const scrapedData = await websiteDepth(url, depth, maxLinks);
+      response.status(200).json({ success: true, data: scrapedData });
+    } catch (e) {
+      console.error(e);
+      response.status(400).json({ success: false, reason: e.message });
     }
-  );
+    return;
+  });
 
   app.post(
     "/ext/confluence",
     [verifyPayloadIntegrity, setDataSigner],
-    async function (request, response) {
+    async (request, response) => {
       try {
         const { loadConfluence } = require("../utils/extensions/Confluence");
-        const { success, reason, data } = await loadConfluence(
-          reqBody(request),
-          response
-        );
+        const { success, reason, data } = await loadConfluence(reqBody(request), response);
         response.status(200).json({ success, reason, data });
       } catch (e) {
         console.error(e);
@@ -159,13 +142,10 @@ function extensions(app) {
   app.post(
     "/ext/drupalwiki",
     [verifyPayloadIntegrity, setDataSigner],
-    async function (request, response) {
+    async (request, response) => {
       try {
         const { loadAndStoreSpaces } = require("../utils/extensions/DrupalWiki");
-        const { success, reason, data } = await loadAndStoreSpaces(
-          reqBody(request),
-          response
-        );
+        const { success, reason, data } = await loadAndStoreSpaces(reqBody(request), response);
         response.status(200).json({ success, reason, data });
       } catch (e) {
         console.error(e);
@@ -185,7 +165,7 @@ function extensions(app) {
   app.post(
     "/ext/obsidian/vault",
     [verifyPayloadIntegrity, setDataSigner],
-    async function (request, response) {
+    async (request, response) => {
       try {
         const { files } = reqBody(request);
         const result = await loadObsidianVault({ files });
@@ -202,6 +182,5 @@ function extensions(app) {
     }
   );
 }
-
 
 module.exports = extensions;

@@ -1,18 +1,16 @@
-import React, { useEffect, useRef, useState } from "react";
-import { List, Plus } from "@phosphor-icons/react";
-import NewWorkspaceModal, {
-  useNewWorkspaceModal,
-} from "../Modals/NewWorkspace";
-import ActiveWorkspaces from "./ActiveWorkspaces";
 import useLogo from "@/hooks/useLogo";
 import useUser from "@/hooks/useUser";
-import Footer from "../Footer";
-import SettingsButton from "../SettingsButton";
-import { Link } from "react-router-dom";
 import paths from "@/utils/paths";
+import { List, Plus } from "@phosphor-icons/react";
+import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useSidebarToggle, ToggleSidebarButton } from "./SidebarToggle";
+import { Link } from "react-router-dom";
+import Footer from "../Footer";
+import NewWorkspaceModal, { useNewWorkspaceModal } from "../Modals/NewWorkspace";
+import SettingsButton from "../SettingsButton";
+import ActiveWorkspaces from "./ActiveWorkspaces";
 import SearchBox from "./SearchBox";
+import { ToggleSidebarButton, useSidebarToggle } from "./SidebarToggle";
 
 export default function Sidebar() {
   const { user } = useUser();
@@ -45,10 +43,7 @@ export default function Sidebar() {
               />
             </Link>
             {canToggleSidebar && (
-              <ToggleSidebarButton
-                showSidebar={showSidebar}
-                setShowSidebar={setShowSidebar}
-              />
+              <ToggleSidebarButton showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
             )}
           </div>
         </div>
@@ -134,9 +129,7 @@ export function SidebarMobileHeader() {
       >
         <div
           className={`${
-            showBgOverlay
-              ? "transition-all opacity-1"
-              : "transition-none opacity-0"
+            showBgOverlay ? "transition-all opacity-1" : "transition-none opacity-0"
           }  duration-500 fixed top-0 left-0 bg-theme-bg-secondary bg-opacity-75 w-screen h-screen`}
           onClick={() => setShowSidebar(false)}
         />
@@ -166,10 +159,7 @@ export function SidebarMobileHeader() {
             <div className="h-full flex flex-col w-full justify-between pt-4 ">
               <div className="h-auto md:sidebar-items">
                 <div className=" flex flex-col gap-y-4 overflow-y-scroll no-scroll pb-[60px]">
-                  <NewWorkspaceButton
-                    user={user}
-                    showNewWsModal={showNewWsModal}
-                  />
+                  <NewWorkspaceButton user={user} showNewWsModal={showNewWsModal} />
                   <ActiveWorkspaces />
                 </div>
               </div>
@@ -196,9 +186,7 @@ function NewWorkspaceButton({ user, showNewWsModal }) {
         className="flex flex-grow w-[75%] h-[44px] gap-x-2 py-[5px] px-4 bg-white rounded-lg text-sidebar justify-center items-center hover:bg-opacity-80 transition-all duration-300"
       >
         <Plus className="h-5 w-5" />
-        <p className="text-sidebar text-sm font-semibold">
-          {t("new-workspace.title")}
-        </p>
+        <p className="text-sidebar text-sm font-semibold">{t("new-workspace.title")}</p>
       </button>
     </div>
   );

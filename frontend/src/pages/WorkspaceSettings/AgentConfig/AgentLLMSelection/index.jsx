@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
 import AnythingLLMIcon from "@/media/logo/anything-llm-icon.png";
-import AgentLLMItem from "./AgentLLMItem";
 import { AVAILABLE_LLM_PROVIDERS } from "@/pages/GeneralSettings/LLMPreference";
 import { CaretUpDown, Gauge, MagnifyingGlass, X } from "@phosphor-icons/react";
-import AgentModelSelection from "../AgentModelSelection";
+import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import AgentModelSelection from "../AgentModelSelection";
+import AgentLLMItem from "./AgentLLMItem";
 
 const ENABLED_PROVIDERS = [
   "openai",
@@ -54,27 +54,18 @@ const LLM_DEFAULT = {
   value: "none",
   logo: AnythingLLMIcon,
   options: () => <React.Fragment />,
-  description:
-    "Agents will use the workspace or system LLM unless otherwise specified.",
+  description: "Agents will use the workspace or system LLM unless otherwise specified.",
   requiredConfig: [],
 };
 
 const LLMS = [
   LLM_DEFAULT,
-  ...AVAILABLE_LLM_PROVIDERS.filter((llm) =>
-    ENABLED_PROVIDERS.includes(llm.value)
-  ),
+  ...AVAILABLE_LLM_PROVIDERS.filter((llm) => ENABLED_PROVIDERS.includes(llm.value)),
 ];
 
-export default function AgentLLMSelection({
-  settings,
-  workspace,
-  setHasChanges,
-}) {
+export default function AgentLLMSelection({ settings, workspace, setHasChanges }) {
   const [filteredLLMs, setFilteredLLMs] = useState([]);
-  const [selectedLLM, setSelectedLLM] = useState(
-    workspace?.agentProvider ?? "none"
-  );
+  const [selectedLLM, setSelectedLLM] = useState(workspace?.agentProvider ?? "none");
   const [searchQuery, setSearchQuery] = useState("");
   const [searchMenuOpen, setSearchMenuOpen] = useState(false);
   const searchInputRef = useRef(null);
@@ -188,12 +179,8 @@ export default function AgentLLMSelection({
                 className="w-10 h-10 rounded-md"
               />
               <div className="flex flex-col text-left">
-                <div className="text-sm font-semibold text-white">
-                  {selectedLLMObject.name}
-                </div>
-                <div className="mt-1 text-xs text-description">
-                  {selectedLLMObject.description}
-                </div>
+                <div className="text-sm font-semibold text-white">{selectedLLMObject.name}</div>
+                <div className="mt-1 text-xs text-description">{selectedLLMObject.description}</div>
               </div>
             </div>
             <CaretUpDown size={24} weight="bold" className="text-white" />

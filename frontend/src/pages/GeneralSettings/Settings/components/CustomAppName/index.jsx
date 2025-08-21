@@ -59,16 +59,11 @@ export default function CustomAppName() {
   if (!canCustomize || loading) return null;
 
   return (
-    <form
-      className="flex flex-col gap-y-0.5 mt-4"
-      onSubmit={updateCustomAppName}
-    >
+    <form className="flex flex-col gap-y-0.5 mt-4" onSubmit={updateCustomAppName}>
       <p className="text-sm leading-6 font-semibold text-white">
         {t("customization.items.app-name.title")}
       </p>
-      <p className="text-xs text-white/60">
-        {t("customization.items.app-name.description")}
-      </p>
+      <p className="text-xs text-white/60">{t("customization.items.app-name.description")}</p>
       <div className="flex items-center gap-x-4">
         <input
           name="customAppName"

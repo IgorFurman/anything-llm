@@ -1,12 +1,12 @@
-import { useRef } from "react";
+import ModalWrapper from "@/components/ModalWrapper";
+import { useModal } from "@/hooks/useModal";
 import System from "@/models/system";
 import showToast from "@/utils/toast";
-import { useModal } from "@/hooks/useModal";
-import ModalWrapper from "@/components/ModalWrapper";
-import EditVariableModal from "./EditVariableModal";
+import { Trash } from "@phosphor-icons/react";
+import { useRef } from "react";
 import { titleCase } from "text-case";
 import truncate from "truncate";
-import { Trash } from "@phosphor-icons/react";
+import EditVariableModal from "./EditVariableModal";
 
 /**
  * A row component for displaying a system prompt variable
@@ -70,13 +70,9 @@ export default function VariableRow({ variable, onRefresh }) {
           {variable.key}
         </th>
         <td className="px-4 py-2">
-          {typeof variable.value === "function"
-            ? variable.value()
-            : truncate(variable.value, 50)}
+          {typeof variable.value === "function" ? variable.value() : truncate(variable.value, 50)}
         </td>
-        <td className="px-4 py-2">
-          {truncate(variable.description || "-", 50)}
-        </td>
+        <td className="px-4 py-2">{truncate(variable.description || "-", 50)}</td>
         <td className="px-4 py-2">
           <span
             className={`rounded-full ${colorTheme.bg} px-2 py-0.5 text-xs leading-5 font-semibold ${colorTheme.text} shadow-sm`}
@@ -104,11 +100,7 @@ export default function VariableRow({ variable, onRefresh }) {
         </td>
       </tr>
       <ModalWrapper isOpen={isOpen}>
-        <EditVariableModal
-          variable={variable}
-          closeModal={closeModal}
-          onRefresh={onRefresh}
-        />
+        <EditVariableModal variable={variable} closeModal={closeModal} onRefresh={onRefresh} />
       </ModalWrapper>
     </>
   );

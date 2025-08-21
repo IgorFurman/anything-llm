@@ -19,11 +19,7 @@ class YoutubeTranscript {
     const tag = (fieldNumber << 3) | 2; // wire type 2 for string
     const lengthBytes = this.#encodeVarint(utf8Bytes.length);
 
-    return Buffer.concat([
-      Buffer.from([tag]),
-      Buffer.from(lengthBytes),
-      utf8Bytes,
-    ]);
+    return Buffer.concat([Buffer.from([tag]), Buffer.from(lengthBytes), utf8Bytes]);
   }
 
   /**
@@ -61,15 +57,14 @@ class YoutubeTranscript {
    */
   static #extractTranscriptFromResponse(responseData) {
     const transcriptRenderer =
-      responseData.actions?.[0]?.updateEngagementPanelAction?.content
-        ?.transcriptRenderer;
+      responseData.actions?.[0]?.updateEngagementPanelAction?.content?.transcriptRenderer;
     if (!transcriptRenderer) {
       throw new Error("No transcript data found in response");
     }
 
     const segments =
-      transcriptRenderer.content?.transcriptSearchPanelRenderer?.body
-        ?.transcriptSegmentListRenderer?.initialSegments;
+      transcriptRenderer.content?.transcriptSearchPanelRenderer?.body?.transcriptSegmentListRenderer
+        ?.initialSegments;
     if (!segments) {
       throw new Error("Transcript segments not found in response");
     }
@@ -106,26 +101,23 @@ class YoutubeTranscript {
         param2: innerProto,
       });
 
-      const response = await fetch(
-        "https://www.youtube.com/youtubei/v1/get_transcript",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "User-Agent":
-              "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36,gzip(gfe)",
-          },
-          body: JSON.stringify({
-            context: {
-              client: {
-                clientName: "WEB",
-                clientVersion: "2.20240826.01.00",
-              },
+      const response = await fetch("https://www.youtube.com/youtubei/v1/get_transcript", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "User-Agent":
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36,gzip(gfe)",
+        },
+        body: JSON.stringify({
+          context: {
+            client: {
+              clientName: "WEB",
+              clientVersion: "2.20240826.01.00",
             },
-            params,
-          }),
-        }
-      );
+          },
+          params,
+        }),
+      });
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -151,9 +143,7 @@ class YoutubeTranscript {
     const matchId = videoId.match(RE_YOUTUBE);
 
     if (matchId?.[1]) return matchId[1];
-    throw new YoutubeTranscriptError(
-      "Impossible to retrieve Youtube video ID."
-    );
+    throw new YoutubeTranscriptError("Impossible to retrieve Youtube video ID.");
   }
 }
 

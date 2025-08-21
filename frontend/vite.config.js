@@ -1,31 +1,31 @@
-import { defineConfig } from "vite"
-import { fileURLToPath, URL } from "url"
-import postcss from "./postcss.config.js"
-import react from "@vitejs/plugin-react"
-import dns from "dns"
-import { visualizer } from "rollup-plugin-visualizer"
+import dns from "dns";
+import { URL, fileURLToPath } from "url";
+import react from "@vitejs/plugin-react";
+import { visualizer } from "rollup-plugin-visualizer";
+import { defineConfig } from "vite";
+import postcss from "./postcss.config.js";
 
-dns.setDefaultResultOrder("verbatim")
+dns.setDefaultResultOrder("verbatim");
 
 // https://vitejs.dev/config/
 export default defineConfig({
   assetsInclude: [
-    './public/piper/ort-wasm-simd-threaded.wasm',
-    './public/piper/piper_phonemize.wasm',
-    './public/piper/piper_phonemize.data',
+    "./public/piper/ort-wasm-simd-threaded.wasm",
+    "./public/piper/piper_phonemize.wasm",
+    "./public/piper/piper_phonemize.data",
   ],
   worker: {
-    format: 'es'
+    format: "es",
   },
   server: {
     port: 3000,
-    host: "localhost"
+    host: "localhost",
   },
   define: {
-    "process.env": process.env
+    "process.env": process.env,
   },
   css: {
-    postcss
+    postcss,
   },
   plugins: [
     react(),
@@ -34,14 +34,14 @@ export default defineConfig({
       open: false,
       gzipSize: true,
       brotliSize: true,
-      filename: "bundleinspector.html" // will be saved in project's root
-    })
+      filename: "bundleinspector.html", // will be saved in project's root
+    }),
   ],
   resolve: {
     alias: [
       {
         find: "@",
-        replacement: fileURLToPath(new URL("./src", import.meta.url))
+        replacement: fileURLToPath(new URL("./src", import.meta.url)),
       },
       {
         process: "process/browser",
@@ -50,38 +50,38 @@ export default defineConfig({
         util: "util",
         find: /^~.+/,
         replacement: (val) => {
-          return val.replace(/^~/, "")
-        }
-      }
-    ]
+          return val.replace(/^~/, "");
+        },
+      },
+    ],
   },
   build: {
     rollupOptions: {
       output: {
         // These settings ensure the primary JS and CSS file references are always index.{js,css}
         // so we can SSR the index.html as text response from server/index.js without breaking references each build.
-        entryFileNames: 'index.js',
+        entryFileNames: "index.js",
         assetFileNames: (assetInfo) => {
-          if (assetInfo.name === 'index.css') return `index.css`;
+          if (assetInfo.name === "index.css") return `index.css`;
           return assetInfo.name;
         },
       },
       external: [
         // Reduces transformation time by 50% and we don't even use this variant, so we can ignore.
         /@phosphor-icons\/react\/dist\/ssr/,
-      ]
+      ],
     },
     commonjsOptions: {
-      transformMixedEsModules: true
-    }
+      transformMixedEsModules: true,
+    },
   },
   optimizeDeps: {
     include: ["@mintplex-labs/piper-tts-web"],
     esbuildOptions: {
       define: {
-        global: "globalThis"
+        global: "globalThis",
       },
-      plugins: []
-    }
-  }
-})
+      plugins: [],
+    },
+  },
+});

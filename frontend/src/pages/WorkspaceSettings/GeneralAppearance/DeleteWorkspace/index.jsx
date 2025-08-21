@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { useParams } from "react-router-dom";
 import Workspace from "@/models/workspace";
 import paths from "@/utils/paths";
-import { useTranslation } from "react-i18next";
 import showToast from "@/utils/toast";
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
 
 export default function DeleteWorkspace({ workspace }) {
   const { slug } = useParams();
@@ -13,9 +13,7 @@ export default function DeleteWorkspace({ workspace }) {
   const deleteWorkspace = async () => {
     if (
       !window.confirm(
-        `${t("general.delete.confirm-start")} ${workspace.name} ${t(
-          "general.delete.confirm-end"
-        )}`
+        `${t("general.delete.confirm-start")} ${workspace.name} ${t("general.delete.confirm-end")}`
       )
     )
       return false;
@@ -28,9 +26,7 @@ export default function DeleteWorkspace({ workspace }) {
       return;
     }
 
-    workspace.slug === slug
-      ? (window.location = paths.home())
-      : window.location.reload();
+    workspace.slug === slug ? (window.location = paths.home()) : window.location.reload();
   };
   return (
     <div className="flex flex-col mt-10">

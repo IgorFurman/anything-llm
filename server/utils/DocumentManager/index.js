@@ -36,14 +36,9 @@ class DocumentManager {
     for await (const docPath of docPaths) {
       try {
         const filePath = path.resolve(this.documentStoragePath, docPath);
-        const data = JSON.parse(
-          fs.readFileSync(filePath, { encoding: "utf-8" })
-        );
+        const data = JSON.parse(fs.readFileSync(filePath, { encoding: "utf-8" }));
 
-        if (
-          !data.hasOwnProperty("pageContent") ||
-          !data.hasOwnProperty("token_count_estimate")
-        ) {
+        if (!data.hasOwnProperty("pageContent") || !data.hasOwnProperty("token_count_estimate")) {
           this.log(
             `Skipping document - Could not find page content or token_count_estimate in pinned source.`
           );

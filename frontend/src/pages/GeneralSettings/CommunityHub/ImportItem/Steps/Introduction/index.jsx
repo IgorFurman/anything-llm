@@ -1,8 +1,8 @@
-import CommunityHubImportItemSteps from "..";
 import CTAButton from "@/components/lib/CTAButton";
 import paths from "@/utils/paths";
 import showToast from "@/utils/toast";
 import { useState } from "react";
+import CommunityHubImportItemSteps from "..";
 
 export default function Introduction({ settings, setSettings, setStep }) {
   const [itemId, setItemId] = useState(settings.itemId);
@@ -21,23 +21,22 @@ export default function Introduction({ settings, setSettings, setStep }) {
           </h2>
           <div className="flex flex-col gap-y-[25px] text-theme-text-secondary text-sm">
             <p>
-              The community hub is a place where you can find, share, and import
-              agent-skills, system prompts, slash commands, and more!
+              The community hub is a place where you can find, share, and import agent-skills,
+              system prompts, slash commands, and more!
             </p>
             <p>
-              These items are created by the AnythingLLM team and community, and
-              are a great way to get started with AnythingLLM as well as extend
-              AnythingLLM in a way that is customized to your needs.
+              These items are created by the AnythingLLM team and community, and are a great way to
+              get started with AnythingLLM as well as extend AnythingLLM in a way that is customized
+              to your needs.
             </p>
             <p>
-              There are both <b>private</b> and <b>public</b> items in the
-              community hub. Private items are only visible to you, while public
-              items are visible to everyone.
+              There are both <b>private</b> and <b>public</b> items in the community hub. Private
+              items are only visible to you, while public items are visible to everyone.
             </p>
 
             <p className="p-4 bg-yellow-800/30 light:bg-orange-100 light:text-orange-500 light:border-orange-500 rounded-lg border border-yellow-500 text-yellow-500">
-              If you are pulling in a private item, make sure it is{" "}
-              <b>shared with a team</b> you belong to, and you have added a{" "}
+              If you are pulling in a private item, make sure it is <b>shared with a team</b> you
+              belong to, and you have added a{" "}
               <a
                 href={paths.communityHub.authentication()}
                 className="underline text-yellow-100 light:text-orange-500 font-semibold"

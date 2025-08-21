@@ -15,8 +15,7 @@ async function loadAndStoreSpaces(
   if (!baseUrl) {
     return {
       success: false,
-      reason:
-        "Please provide your baseUrl like https://mywiki.drupal-wiki.net.",
+      reason: "Please provide your baseUrl like https://mywiki.drupal-wiki.net.",
     };
   } else if (!validBaseUrl(baseUrl)) {
     return {
@@ -28,8 +27,7 @@ async function loadAndStoreSpaces(
   if (!spaceIds) {
     return {
       success: false,
-      reason:
-        "Please provide a list of spaceIds like 21,56,67 you want to extract",
+      reason: "Please provide a list of spaceIds like 21,56,67 you want to extract",
     };
   }
 

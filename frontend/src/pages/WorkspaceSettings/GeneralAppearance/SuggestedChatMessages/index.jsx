@@ -1,8 +1,8 @@
 import PreLoader from "@/components/Preloader";
 import Workspace from "@/models/workspace";
 import showToast from "@/utils/toast";
-import { useEffect, useState } from "react";
 import { Plus, X } from "@phosphor-icons/react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 export default function SuggestedChatMessages({ slug }) {
@@ -24,13 +24,9 @@ export default function SuggestedChatMessages({ slug }) {
 
   const handleSaveSuggestedMessages = async () => {
     const validMessages = suggestedMessages.filter(
-      (msg) =>
-        msg?.heading?.trim()?.length > 0 || msg?.message?.trim()?.length > 0
+      (msg) => msg?.heading?.trim()?.length > 0 || msg?.message?.trim()?.length > 0
     );
-    const { success, error } = await Workspace.setSuggestedMessages(
-      slug,
-      validMessages
-    );
+    const { success, error } = await Workspace.setSuggestedMessages(slug, validMessages);
     if (!success) {
       showToast(`Failed to update welcome messages: ${error}`, "error");
       return;
@@ -92,9 +88,7 @@ export default function SuggestedChatMessages({ slug }) {
   if (loading)
     return (
       <div className="flex flex-col">
-        <label className="block input-label">
-          {t("general.message.title")}
-        </label>
+        <label className="block input-label">{t("general.message.title")}</label>
         <p className="text-white text-opacity-60 text-xs font-medium py-1.5">
           {t("general.message.description")}
         </p>
@@ -106,9 +100,7 @@ export default function SuggestedChatMessages({ slug }) {
   return (
     <div className="w-screen mt-6">
       <div className="flex flex-col">
-        <label className="block input-label">
-          {t("general.message.title")}
-        </label>
+        <label className="block input-label">{t("general.message.title")}</label>
         <p className="text-white text-opacity-60 text-xs font-medium py-1.5">
           {t("general.message.description")}
         </p>
@@ -143,9 +135,7 @@ export default function SuggestedChatMessages({ slug }) {
       {editingIndex >= 0 && (
         <div className="flex flex-col gap-y-4 mr-2 mt-8">
           <div className="w-1/2">
-            <label className="text-white text-sm font-semibold block mb-2">
-              Heading
-            </label>
+            <label className="text-white text-sm font-semibold block mb-2">Heading</label>
             <input
               placeholder="Message heading"
               className="border-none bg-theme-settings-input-bg text-white placeholder:text-white/20 text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block p-2.5 w-full"
@@ -155,9 +145,7 @@ export default function SuggestedChatMessages({ slug }) {
             />
           </div>
           <div className="w-1/2">
-            <label className="text-white text-sm font-semibold block mb-2">
-              Message
-            </label>
+            <label className="text-white text-sm font-semibold block mb-2">Message</label>
             <input
               placeholder="Message"
               className="border-none bg-theme-settings-input-bg text-white placeholder:text-white/20 text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block p-2.5 w-full"
@@ -174,8 +162,7 @@ export default function SuggestedChatMessages({ slug }) {
           onClick={addMessage}
           className="flex gap-x-2 items-center justify-center mt-6 text-white text-sm hover:text-sky-400 transition-all duration-300"
         >
-          {t("general.message.add")}{" "}
-          <Plus className="" size={24} weight="fill" />
+          {t("general.message.add")} <Plus className="" size={24} weight="fill" />
         </button>
       )}
 

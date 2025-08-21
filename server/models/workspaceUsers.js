@@ -1,7 +1,7 @@
 const prisma = require("../utils/prisma");
 
 const WorkspaceUser = {
-  createMany: async function (userId, workspaceIds = []) {
+  createMany: async (userId, workspaceIds = []) => {
     if (workspaceIds.length === 0) return;
     try {
       await prisma.$transaction(
@@ -23,7 +23,7 @@ const WorkspaceUser = {
    * @param {number} workspaceId - The ID of the workspace to create workspace users for.
    * @returns {Promise<void>} A promise that resolves when the workspace users are created.
    */
-  createManyUsers: async function (userIds = [], workspaceId) {
+  createManyUsers: async (userIds = [], workspaceId) => {
     if (userIds.length === 0) return;
     try {
       await prisma.$transaction(
@@ -42,22 +42,19 @@ const WorkspaceUser = {
     return;
   },
 
-  create: async function (userId = 0, workspaceId = 0) {
+  create: async (userId = 0, workspaceId = 0) => {
     try {
       await prisma.workspace_users.create({
         data: { user_id: Number(userId), workspace_id: Number(workspaceId) },
       });
       return true;
     } catch (error) {
-      console.error(
-        "FAILED TO CREATE WORKSPACE_USER RELATIONSHIP.",
-        error.message
-      );
+      console.error("FAILED TO CREATE WORKSPACE_USER RELATIONSHIP.", error.message);
       return false;
     }
   },
 
-  get: async function (clause = {}) {
+  get: async (clause = {}) => {
     try {
       const result = await prisma.workspace_users.findFirst({ where: clause });
       return result || null;
@@ -67,7 +64,7 @@ const WorkspaceUser = {
     }
   },
 
-  where: async function (clause = {}, limit = null) {
+  where: async (clause = {}, limit = null) => {
     try {
       const results = await prisma.workspace_users.findMany({
         where: clause,
@@ -80,7 +77,7 @@ const WorkspaceUser = {
     }
   },
 
-  count: async function (clause = {}) {
+  count: async (clause = {}) => {
     try {
       const count = await prisma.workspace_users.count({ where: clause });
       return count;
@@ -90,7 +87,7 @@ const WorkspaceUser = {
     }
   },
 
-  delete: async function (clause = {}) {
+  delete: async (clause = {}) => {
     try {
       await prisma.workspace_users.deleteMany({ where: clause });
     } catch (error) {

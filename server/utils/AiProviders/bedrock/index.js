@@ -3,14 +3,9 @@ const {
   ConverseCommand,
   ConverseStreamCommand,
 } = require("@aws-sdk/client-bedrock-runtime");
-const {
-  writeResponseChunk,
-  clientAbortedHandler,
-} = require("../../helpers/chat/responses");
+const { writeResponseChunk, clientAbortedHandler } = require("../../helpers/chat/responses");
 const { NativeEmbedder } = require("../../EmbeddingEngines/native");
-const {
-  LLMPerformanceMonitor,
-} = require("../../helpers/chat/LLMPerformanceMonitor");
+const { LLMPerformanceMonitor } = require("../../helpers/chat/LLMPerformanceMonitor");
 const { v4: uuidv4 } = require("uuid");
 const {
   DEFAULT_MAX_OUTPUT_TOKENS,
@@ -65,8 +60,7 @@ class AWSBedrockLLM {
         throw new Error(`Required environment variable ${envVar} is not set.`);
     }
 
-    this.model =
-      modelPreference || process.env.AWS_BEDROCK_LLM_MODEL_PREFERENCE;
+    this.model = modelPreference || process.env.AWS_BEDROCK_LLM_MODEL_PREFERENCE;
 
     const contextWindowLimit = this.promptWindowLimit();
     this.limits = {
@@ -134,9 +128,7 @@ class AWSBedrockLLM {
     if (!contextTexts?.length) return "";
     return (
       "\nContext:\n" +
-      contextTexts
-        .map((text, i) => `[CONTEXT ${i}]:\n${text}\n[END CONTEXT ${i}]\n\n`)
-        .join("")
+      contextTexts.map((text, i) => `[CONTEXT ${i}]:\n${text}\n[END CONTEXT ${i}]\n\n`).join("")
     );
   }
 
@@ -173,9 +165,7 @@ class AWSBedrockLLM {
    * @returns {number} The total context window token limit. Defaults to 8191.
    */
   static promptWindowLimit() {
-    const limit =
-      process.env.AWS_BEDROCK_LLM_MODEL_TOKEN_LIMIT ??
-      DEFAULT_CONTEXT_WINDOW_TOKENS;
+    const limit = process.env.AWS_BEDROCK_LLM_MODEL_TOKEN_LIMIT ?? DEFAULT_CONTEXT_WINDOW_TOKENS;
     const numericLimit = Number(limit);
     if (isNaN(numericLimit) || numericLimit <= 0) {
       this.#slog(
@@ -245,10 +235,7 @@ class AWSBedrockLLM {
       }
 
       // Strip data URI prefix (e.g., "data:image/png;base64,")
-      const base64Data = attachment.contentString.replace(
-        /^data:image\/\w+;base64,/,
-        ""
-      );
+      const base64Data = attachment.contentString.replace(/^data:image\/\w+;base64,/, "");
 
       const format = getImageFormatFromMime(attachment.mime);
       const attachmentInfo = {
@@ -258,9 +245,7 @@ class AWSBedrockLLM {
       };
 
       if (!attachmentInfo.valid) {
-        this.#log(
-          `Skipping attachment with unsupported/invalid MIME type: ${attachment.mime}`
-        );
+        this.#log(`Skipping attachment with unsupported/invalid MIME type: ${attachment.mime}`);
         continue;
       }
 
@@ -321,9 +306,7 @@ class AWSBedrockLLM {
     // Handle system prompt (either real or simulated)
     if (this.noSystemPromptModels.includes(this.model)) {
       if (systemMessageContent.trim().length > 0) {
-        this.#log(
-          `Model ${this.model} doesn't support system prompts; simulating.`
-        );
+        this.#log(`Model ${this.model} doesn't support system prompts; simulating.`);
         messages.push(
           {
             role: "user",
@@ -378,14 +361,10 @@ class AWSBedrockLLM {
     let textResponse = textBlock?.text || "";
 
     // Find the reasoning block and grab the reasoning text
-    const reasoningBlock = content.find(
-      (block) => block.reasoningContent?.reasoningText?.text
-    );
+    const reasoningBlock = content.find((block) => block.reasoningContent?.reasoningText?.text);
     if (reasoningBlock) {
-      const reasoningText =
-        reasoningBlock.reasoningContent.reasoningText.text.trim();
-      if (!!reasoningText?.length)
-        textResponse = `<think>${reasoningText}</think>${textResponse}`;
+      const reasoningText = reasoningBlock.reasoningContent.reasoningText.text.trim();
+      if (!!reasoningText?.length) textResponse = `<think>${reasoningText}</think>${textResponse}`;
     }
     return textResponse;
   }
@@ -400,9 +379,7 @@ class AWSBedrockLLM {
    */
   async getChatCompletion(messages = null, { temperature }) {
     if (!messages?.length)
-      throw new Error(
-        "AWSBedrock::getChatCompletion requires a non-empty messages array."
-      );
+      throw new Error("AWSBedrock::getChatCompletion requires a non-empty messages array.");
 
     const hasSystem = messages[0]?.role === "system";
     const systemBlock = hasSystem ? messages[0].content : undefined;
@@ -423,14 +400,8 @@ class AWSBedrockLLM {
           })
         )
         .catch((e) => {
-          this.#log(
-            `Bedrock Converse API Error (getChatCompletion): ${e.message}`,
-            e
-          );
-          if (
-            e.name === "ValidationException" &&
-            e.message.includes("maximum tokens")
-          ) {
+          this.#log(`Bedrock Converse API Error (getChatCompletion): ${e.message}`, e);
+          if (e.name === "ValidationException" && e.message.includes("maximum tokens")) {
             throw new Error(
               `AWSBedrock::getChatCompletion failed. Model ${this.model} rejected maxTokens value of ${maxTokensToSend}. Check model documentation for its maximum output token limit and set AWS_BEDROCK_LLM_MAX_OUTPUT_TOKENS if needed. Original error: ${e.message}`
             );
@@ -443,17 +414,13 @@ class AWSBedrockLLM {
 
     const response = result.output;
     if (!response?.output?.message) {
-      this.#log(
-        "Bedrock response missing expected output.message structure.",
-        response
-      );
+      this.#log("Bedrock response missing expected output.message structure.", response);
       return null;
     }
 
     const latencyMs = response?.metrics?.latencyMs;
     const outputTokens = response?.usage?.outputTokens;
-    const outputTps =
-      latencyMs > 0 && outputTokens ? outputTokens / (latencyMs / 1000) : 0;
+    const outputTps = latencyMs > 0 && outputTokens ? outputTokens / (latencyMs / 1000) : 0;
 
     return {
       textResponse: this.#parseReasoningFromResponse(response.output.message),
@@ -477,9 +444,7 @@ class AWSBedrockLLM {
    */
   async streamGetChatCompletion(messages = null, { temperature }) {
     if (!Array.isArray(messages) || messages.length === 0) {
-      throw new Error(
-        "AWSBedrock::streamGetChatCompletion requires a non-empty messages array."
-      );
+      throw new Error("AWSBedrock::streamGetChatCompletion requires a non-empty messages array.");
     }
 
     const hasSystem = messages[0]?.role === "system";
@@ -510,22 +475,14 @@ class AWSBedrockLLM {
       return measuredStreamRequest;
     } catch (e) {
       // Catch errors during the initial .send() call (e.g., validation errors)
-      this.#log(
-        `Bedrock Converse API Error (streamGetChatCompletion setup): ${e.message}`,
-        e
-      );
-      if (
-        e.name === "ValidationException" &&
-        e.message.includes("maximum tokens")
-      ) {
+      this.#log(`Bedrock Converse API Error (streamGetChatCompletion setup): ${e.message}`, e);
+      if (e.name === "ValidationException" && e.message.includes("maximum tokens")) {
         throw new Error(
           `AWSBedrock::streamGetChatCompletion failed during setup. Model ${this.model} rejected maxTokens value of ${maxTokensToSend}. Check model documentation for its maximum output token limit and set AWS_BEDROCK_LLM_MAX_OUTPUT_TOKENS if needed. Original error: ${e.message}`
         );
       }
 
-      throw new Error(
-        `AWSBedrock::streamGetChatCompletion failed during setup. ${e.message}`
-      );
+      throw new Error(`AWSBedrock::streamGetChatCompletion failed during setup. ${e.message}`);
     }
   }
 
@@ -645,13 +602,10 @@ class AWSBedrockLLM {
                 hasUsageMetrics = true;
                 usage = {
                   // Overwrite with final metrics if available
-                  prompt_tokens:
-                    chunk.messageStop.usage.inputTokens ?? usage.prompt_tokens,
+                  prompt_tokens: chunk.messageStop.usage.inputTokens ?? usage.prompt_tokens,
                   completion_tokens:
-                    chunk.messageStop.usage.outputTokens ??
-                    usage.completion_tokens,
-                  total_tokens:
-                    chunk.messageStop.usage.totalTokens ?? usage.total_tokens,
+                    chunk.messageStop.usage.outputTokens ?? usage.completion_tokens,
+                  total_tokens: chunk.messageStop.usage.totalTokens ?? usage.total_tokens,
                 };
               }
               // Ensure reasoning tag is closed if message stops mid-reasoning
@@ -708,10 +662,7 @@ class AWSBedrockLLM {
         }
       } catch (error) {
         // Handle errors during stream processing
-        this.#log(
-          `\x1b[43m\x1b[34m[STREAMING ERROR]\x1b[0m ${error.message}`,
-          error
-        );
+        this.#log(`\x1b[43m\x1b[34m[STREAMING ERROR]\x1b[0m ${error.message}`, error);
         if (response && !response.writableEnded) {
           writeResponseChunk(response, {
             uuid,
@@ -719,9 +670,7 @@ class AWSBedrockLLM {
             textResponse: null,
             sources,
             close: true,
-            error: `AWSBedrock:streaming - error. ${
-              error?.message ?? "Unknown error"
-            }`,
+            error: `AWSBedrock:streaming - error. ${error?.message ?? "Unknown error"}`,
           });
         }
       } finally {

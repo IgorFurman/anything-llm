@@ -1,5 +1,5 @@
+import { PauseCircle, SpeakerHigh } from "@phosphor-icons/react";
 import React, { useEffect, useState } from "react";
-import { SpeakerHigh, PauseCircle } from "@phosphor-icons/react";
 
 export default function NativeTTSMessage({ chatId, message }) {
   const [speaking, setSpeaking] = useState(false);
@@ -38,9 +38,7 @@ export default function NativeTTSMessage({ chatId, message }) {
         onClick={speakMessage}
         data-auto-play-chat-id={chatId}
         data-tooltip-id="message-to-speech"
-        data-tooltip-content={
-          speaking ? "Pause TTS speech of message" : "TTS Speak message"
-        }
+        data-tooltip-content={speaking ? "Pause TTS speech of message" : "TTS Speak message"}
         className="border-none text-[var(--theme-sidebar-footer-icon-fill)]"
         aria-label={speaking ? "Pause speech" : "Speak message"}
       >

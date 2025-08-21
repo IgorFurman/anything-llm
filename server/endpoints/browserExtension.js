@@ -1,45 +1,34 @@
 const { Workspace } = require("../models/workspace");
 const { BrowserExtensionApiKey } = require("../models/browserExtensionApiKey");
 const { Document } = require("../models/documents");
-const {
-  validBrowserExtensionApiKey,
-} = require("../utils/middleware/validBrowserExtensionApiKey");
+const { validBrowserExtensionApiKey } = require("../utils/middleware/validBrowserExtensionApiKey");
 const { CollectorApi } = require("../utils/collectorApi");
 const { reqBody, multiUserMode, userFromSession } = require("../utils/http");
 const { validatedRequest } = require("../utils/middleware/validatedRequest");
-const {
-  flexUserRoleValid,
-  ROLES,
-} = require("../utils/middleware/multiUserProtected");
+const { flexUserRoleValid, ROLES } = require("../utils/middleware/multiUserProtected");
 const { Telemetry } = require("../models/telemetry");
 
 function browserExtensionEndpoints(app) {
   if (!app) return;
 
-  app.get(
-    "/browser-extension/check",
-    [validBrowserExtensionApiKey],
-    async (request, response) => {
-      try {
-        const user = await userFromSession(request, response);
-        const workspaces = multiUserMode(response)
-          ? await Workspace.whereWithUser(user)
-          : await Workspace.where();
+  app.get("/browser-extension/check", [validBrowserExtensionApiKey], async (request, response) => {
+    try {
+      const user = await userFromSession(request, response);
+      const workspaces = multiUserMode(response)
+        ? await Workspace.whereWithUser(user)
+        : await Workspace.where();
 
-        const apiKeyId = response.locals.apiKey.id;
-        response.status(200).json({
-          connected: true,
-          workspaces,
-          apiKeyId,
-        });
-      } catch (error) {
-        console.error(error);
-        response
-          .status(500)
-          .json({ connected: false, error: "Failed to fetch workspaces" });
-      }
+      const apiKeyId = response.locals.apiKey.id;
+      response.status(200).json({
+        connected: true,
+        workspaces,
+        apiKeyId,
+      });
+    } catch (error) {
+      console.error(error);
+      response.status(500).json({ connected: false, error: "Failed to fetch workspaces" });
     }
-  );
+  });
 
   app.delete(
     "/browser-extension/disconnect",
@@ -47,15 +36,12 @@ function browserExtensionEndpoints(app) {
     async (_request, response) => {
       try {
         const apiKeyId = response.locals.apiKey.id;
-        const { success, error } =
-          await BrowserExtensionApiKey.delete(apiKeyId);
+        const { success, error } = await BrowserExtensionApiKey.delete(apiKeyId);
         if (!success) throw new Error(error);
         response.status(200).json({ success: true });
       } catch (error) {
         console.error(error);
-        response
-          .status(500)
-          .json({ error: "Failed to disconnect and revoke API key" });
+        response.status(500).json({ error: "Failed to disconnect and revoke API key" });
       }
     }
   );
@@ -86,8 +72,8 @@ function browserExtensionEndpoints(app) {
         const { workspaceId, textContent, metadata } = reqBody(request);
         const user = await userFromSession(request, response);
         const workspace = multiUserMode(response)
-          ? await Workspace.getWithUser(user, { id: parseInt(workspaceId) })
-          : await Workspace.get({ id: parseInt(workspaceId) });
+          ? await Workspace.getWithUser(user, { id: Number.parseInt(workspaceId) })
+          : await Workspace.get({ id: Number.parseInt(workspaceId) });
 
         if (!workspace) {
           response.status(404).json({ error: "Workspace not found" });
@@ -132,10 +118,7 @@ function browserExtensionEndpoints(app) {
       try {
         const { textContent, metadata } = reqBody(request);
         const Collector = new CollectorApi();
-        const { success, reason } = await Collector.processRawText(
-          textContent,
-          metadata
-        );
+        const { success, reason } = await Collector.processRawText(textContent, metadata);
 
         if (!success) {
           response.status(500).json({ success: false, error: reason });
@@ -165,9 +148,7 @@ function browserExtensionEndpoints(app) {
         response.status(200).json({ success: true, apiKeys });
       } catch (error) {
         console.error(error);
-        response
-          .status(500)
-          .json({ success: false, error: "Failed to fetch API keys" });
+        response.status(500).json({ success: false, error: "Failed to fetch API keys" });
       }
     }
   );
@@ -178,9 +159,7 @@ function browserExtensionEndpoints(app) {
     async (request, response) => {
       try {
         const user = await userFromSession(request, response);
-        const { apiKey, error } = await BrowserExtensionApiKey.create(
-          user?.id || null
-        );
+        const { apiKey, error } = await BrowserExtensionApiKey.create(user?.id || null);
         if (error) throw new Error(error);
         response.status(200).json({
           apiKey: apiKey.key,
@@ -202,7 +181,7 @@ function browserExtensionEndpoints(app) {
 
         if (multiUserMode(response) && user.role !== ROLES.admin) {
           const apiKey = await BrowserExtensionApiKey.get({
-            id: parseInt(id),
+            id: Number.parseInt(id),
             user_id: user?.id,
           });
           if (!apiKey) {

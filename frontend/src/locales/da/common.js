@@ -33,13 +33,11 @@ const TRANSLATIONS = {
       title: "Datahåndtering & Privatliv",
       description:
         "Vi er forpligtet til gennemsigtighed og kontrol, når det gælder dine persondata.",
-      settingsHint:
-        "Disse indstillinger kan ændres når som helst under indstillingerne.",
+      settingsHint: "Disse indstillinger kan ændres når som helst under indstillingerne.",
     },
     survey: {
       title: "Velkommen til AnythingLLM",
-      description:
-        "Hjælp os med at gøre AnythingLLM tilpasset dine behov. Valgfrit.",
+      description: "Hjælp os med at gøre AnythingLLM tilpasset dine behov. Valgfrit.",
       email: "Hvad er din e-mail?",
       useCase: "Hvad vil du bruge AnythingLLM til?",
       useCaseWork: "Til arbejde",
@@ -53,8 +51,7 @@ const TRANSLATIONS = {
     },
     workspace: {
       title: "Opret dit første arbejdsområde",
-      description:
-        "Opret dit første arbejdsområde og kom i gang med AnythingLLM.",
+      description: "Opret dit første arbejdsområde og kom i gang med AnythingLLM.",
     },
   },
   common: {
@@ -120,8 +117,7 @@ const TRANSLATIONS = {
     },
     "password-reset": {
       title: "Nulstilling af adgangskode",
-      description:
-        "Angiv de nødvendige oplysninger nedenfor for at nulstille din adgangskode.",
+      description: "Angiv de nødvendige oplysninger nedenfor for at nulstille din adgangskode.",
       "recovery-codes": "Gendannelseskoder",
       "recovery-code": "Gendannelseskode {{index}}",
       "back-to-login": "Tilbage til log ind",
@@ -169,8 +165,7 @@ const TRANSLATIONS = {
     },
     message: {
       title: "Foreslåede chatbeskeder",
-      description:
-        "Tilpas de beskeder, der vil blive foreslået til brugerne af dit arbejdsområde.",
+      description: "Tilpas de beskeder, der vil blive foreslået til brugerne af dit arbejdsområde.",
       add: "Tilføj ny besked",
       save: "Gem beskeder",
       heading: "Forklar mig",
@@ -256,8 +251,7 @@ const TRANSLATIONS = {
     },
     temperature: {
       title: "LLM-temperatur",
-      "desc-start":
-        'Denne indstilling styrer, hvor "kreative" dine LLM-svar vil være.',
+      "desc-start": 'Denne indstilling styrer, hvor "kreative" dine LLM-svar vil være.',
       "desc-end":
         "Jo højere tallet er, desto mere kreative bliver svarene. For nogle modeller kan for høje værdier føre til usammenhængende svar.",
       hint: "De fleste LLM'er har forskellige acceptable intervaller for gyldige værdier. Konsulter din LLM-udbyder for den information.",
@@ -324,8 +318,7 @@ const TRANSLATIONS = {
       },
       scrape: {
         title: "Scrape hjemmesider",
-        description:
-          "Giv agenten mulighed for at besøge og scrape indholdet fra hjemmesider.",
+        description: "Giv agenten mulighed for at besøge og scrape indholdet fra hjemmesider.",
       },
       generate: {
         title: "Generer diagrammer",
@@ -341,8 +334,7 @@ const TRANSLATIONS = {
         title: "Live web-søgning og browsing",
         "desc-start":
           "Gør det muligt for din agent at søge på internettet for at besvare dine spørgsmål ved at forbinde til en web-søgeudbyder (SERP).",
-        "desc-end":
-          "Web-søgning under agent-sessioner vil ikke fungere, før dette er opsat.",
+        "desc-end": "Web-søgning under agent-sessioner vil ikke fungere, før dette er opsat.",
       },
     },
   },
@@ -397,8 +389,7 @@ const TRANSLATIONS = {
     "warn-start":
       "Brug af den lokale whisper-model på maskiner med begrænset RAM eller CPU kan få AnythingLLM til at gå i stå under behandling af mediefiler.",
     "warn-recommend": "Vi anbefaler mindst 2GB RAM og upload af filer <10Mb.",
-    "warn-end":
-      "Den indbyggede model vil automatisk blive downloadet ved første brug.",
+    "warn-end": "Den indbyggede model vil automatisk blive downloadet ved første brug.",
   },
   embedding: {
     title: "Foretrukken indlejringsmetode",
@@ -418,8 +409,7 @@ const TRANSLATIONS = {
       "Du bør kun ændre denne indstilling, hvis du forstår, hvordan tekstopdeling fungerer og dens bivirkninger.",
     size: {
       title: "Størrelse på tekstbidder",
-      description:
-        "Dette er den maksimale længde af tegn, der kan være i en enkelt vektor.",
+      description: "Dette er den maksimale længde af tegn, der kan være i en enkelt vektor.",
       recommend: "Indlejringsmodellens maksimale længde er",
     },
     overlap: {
@@ -483,8 +473,7 @@ const TRANSLATIONS = {
   },
   event: {
     title: "Hændelseslog",
-    description:
-      "Se alle handlinger og hændelser, der sker på denne instans for overvågning.",
+    description: "Se alle handlinger og hændelser, der sker på denne instans for overvågning.",
     clear: "Ryd hændelseslog",
     table: {
       type: "Hændelsestype",
@@ -506,8 +495,7 @@ const TRANSLATIONS = {
     "no-connectors": "Ingen datakonnektorer fundet.",
     github: {
       name: "GitHub-repository",
-      description:
-        "Importer et helt offentligt eller privat GitHub-repository med et enkelt klik.",
+      description: "Importer et helt offentligt eller privat GitHub-repository med et enkelt klik.",
       URL: "GitHub-repository URL",
       URL_explained: "URL til det GitHub-repository, du ønsker at indsamle.",
       token: "GitHub-adgangstoken",
@@ -529,13 +517,11 @@ const TRANSLATIONS = {
       branch_explained: "Den gren, du ønsker at indsamle filer fra.",
       token_information:
         "Uden at udfylde <b>GitHub-adgangstoken</b> vil denne datakonnektor kun kunne indsamle <b>topniveau</b> filer fra repoet på grund af GitHubs offentlige API-ratebegrænsninger.",
-      token_personal:
-        "Få en gratis personlig adgangstoken med en GitHub-konto her.",
+      token_personal: "Få en gratis personlig adgangstoken med en GitHub-konto her.",
     },
     gitlab: {
       name: "GitLab-repository",
-      description:
-        "Importer et helt offentligt eller privat GitLab-repository med et enkelt klik.",
+      description: "Importer et helt offentligt eller privat GitLab-repository med et enkelt klik.",
       URL: "GitLab-repository URL",
       URL_explained: "URL til det GitLab-repository, du ønsker at indsamle.",
       token: "GitLab-adgangstoken",
@@ -559,13 +545,11 @@ const TRANSLATIONS = {
       branch_explained: "Den gren, du ønsker at indsamle filer fra.",
       token_information:
         "Uden at udfylde <b>GitLab-adgangstoken</b> vil denne datakonnektor kun kunne indsamle <b>topniveau</b> filer fra repoet på grund af GitLabs offentlige API-ratebegrænsninger.",
-      token_personal:
-        "Få en gratis personlig adgangstoken med en GitLab-konto her.",
+      token_personal: "Få en gratis personlig adgangstoken med en GitLab-konto her.",
     },
     youtube: {
       name: "YouTube-transskription",
-      description:
-        "Importer transskriptionen af en hel YouTube-video fra et link.",
+      description: "Importer transskriptionen af en hel YouTube-video fra et link.",
       URL: "YouTube-video URL",
       URL_explained_start:
         "Indtast URL'en til en hvilken som helst YouTube-video for at hente dens transskription. Videoen skal have ",
@@ -574,14 +558,12 @@ const TRANSLATIONS = {
       task_explained:
         "Når færdig, vil transskriptionen være tilgængelig for indlejring i arbejdsområder i dokumentvælgeren.",
       language: "Transskript-sprog",
-      language_explained:
-        "Vælg det sprog, for transskriptionen, du ønsker at indsamle.",
+      language_explained: "Vælg det sprog, for transskriptionen, du ønsker at indsamle.",
       loading_languages: "-- indlæser tilgængelige sprog --",
     },
     "website-depth": {
       name: "Bulk link-scraper",
-      description:
-        "Scrape en hjemmeside og dens under-links op til en vis dybde.",
+      description: "Scrape en hjemmeside og dens under-links op til en vis dybde.",
       URL: "Hjemmeside URL",
       URL_explained: "URL til den hjemmeside, du ønsker at scrape.",
       depth: "Gennemsøgningsdybde",
@@ -637,8 +619,7 @@ const TRANSLATIONS = {
       name: "Navn",
       "delete-confirmation":
         "Er du sikker på, at du vil slette disse filer og mapper?\nDette vil fjerne filerne fra systemet og automatisk fjerne dem fra alle eksisterende arbejdsområder.\nDenne handling kan ikke fortrydes.",
-      "removing-message":
-        "Fjerner {{count}} dokumenter og {{folderCount}} mapper. Vent venligst.",
+      "removing-message": "Fjerner {{count}} dokumenter og {{folderCount}} mapper. Vent venligst.",
       "move-success": "Flyttede {{count}} dokumenter med succes.",
       date: "Dato",
       type: "Type",
@@ -654,8 +635,7 @@ const TRANSLATIONS = {
       "processor-offline-desc":
         "Vi kan ikke uploade dine filer lige nu, fordi dokumentbehandleren er offline. Prøv igen senere.",
       "click-upload": "Klik for at uploade eller træk og slip",
-      "file-types":
-        "understøtter tekstfiler, CSV-filer, regneark, lydfiler og mere!",
+      "file-types": "understøtter tekstfiler, CSV-filer, regneark, lydfiler og mere!",
       "or-submit-link": "eller indsæt et link",
       "placeholder-link": "https://example.com",
       fetching: "Henter...",
@@ -679,8 +659,7 @@ const TRANSLATIONS = {
         "Når du <b>overvåger</b> et dokument i AnythingLLM, vil vi <i>automatisk</i> synkronisere dokumentets indhold fra dets oprindelige kilde med jævne mellemrum. Dette vil automatisk opdatere indholdet i alle arbejdsområder, hvor denne fil administreres.",
       watch_explained_block2:
         "Denne funktion understøtter i øjeblikket kun onlinebaseret indhold og vil ikke være tilgængelig for manuelt uploadede dokumenter.",
-      watch_explained_block3_start:
-        "Du kan administrere, hvilke dokumenter der overvåges fra ",
+      watch_explained_block3_start: "Du kan administrere, hvilke dokumenter der overvåges fra ",
       watch_explained_block3_link: "Filhåndtering",
       watch_explained_block3_end: " adminvisning.",
       accept: "Okay, jeg har forstået",

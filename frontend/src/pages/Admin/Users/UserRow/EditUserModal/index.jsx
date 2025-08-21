@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { X } from "@phosphor-icons/react";
 import Admin from "@/models/admin";
-import { MessageLimitInput, RoleHintDisplay } from "../..";
 import { AUTH_USER } from "@/utils/constants";
+import { X } from "@phosphor-icons/react";
+import React, { useState } from "react";
+import { MessageLimitInput, RoleHintDisplay } from "../..";
 
 export default function EditUserModal({ currentUser, user, closeModal }) {
   const [role, setRole] = useState(user.role);
@@ -63,10 +63,7 @@ export default function EditUserModal({ currentUser, user, closeModal }) {
           <form onSubmit={handleUpdate}>
             <div className="space-y-4">
               <div>
-                <label
-                  htmlFor="username"
-                  className="block mb-2 text-sm font-medium text-white"
-                >
+                <label htmlFor="username" className="block mb-2 text-sm font-medium text-white">
                   Username
                 </label>
                 <input
@@ -80,15 +77,12 @@ export default function EditUserModal({ currentUser, user, closeModal }) {
                   autoComplete="off"
                 />
                 <p className="mt-2 text-xs text-white/60">
-                  Username must only contain lowercase letters, periods,
-                  numbers, underscores, and hyphens with no spaces
+                  Username must only contain lowercase letters, periods, numbers, underscores, and
+                  hyphens with no spaces
                 </p>
               </div>
               <div>
-                <label
-                  htmlFor="password"
-                  className="block mb-2 text-sm font-medium text-white"
-                >
+                <label htmlFor="password" className="block mb-2 text-sm font-medium text-white">
                   New Password
                 </label>
                 <input
@@ -104,10 +98,7 @@ export default function EditUserModal({ currentUser, user, closeModal }) {
                 </p>
               </div>
               <div>
-                <label
-                  htmlFor="bio"
-                  className="block mb-2 text-sm font-medium text-white"
-                >
+                <label htmlFor="bio" className="block mb-2 text-sm font-medium text-white">
                   Bio
                 </label>
                 <textarea
@@ -120,10 +111,7 @@ export default function EditUserModal({ currentUser, user, closeModal }) {
                 />
               </div>
               <div>
-                <label
-                  htmlFor="role"
-                  className="block mb-2 text-sm font-medium text-white"
-                >
+                <label htmlFor="role" className="block mb-2 text-sm font-medium text-white">
                   Role
                 </label>
                 <select
@@ -135,9 +123,7 @@ export default function EditUserModal({ currentUser, user, closeModal }) {
                 >
                   <option value="default">Default</option>
                   <option value="manager">Manager</option>
-                  {currentUser?.role === "admin" && (
-                    <option value="admin">Administrator</option>
-                  )}
+                  {currentUser?.role === "admin" && <option value="admin">Administrator</option>}
                 </select>
                 <RoleHintDisplay role={role} />
               </div>

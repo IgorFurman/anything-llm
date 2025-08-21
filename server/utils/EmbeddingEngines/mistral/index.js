@@ -1,7 +1,6 @@
 class MistralEmbedder {
   constructor() {
-    if (!process.env.MISTRAL_API_KEY)
-      throw new Error("No Mistral API key was set.");
+    if (!process.env.MISTRAL_API_KEY) throw new Error("No Mistral API key was set.");
 
     const { OpenAI: OpenAIApi } = require("openai");
     this.openai = new OpenAIApi({

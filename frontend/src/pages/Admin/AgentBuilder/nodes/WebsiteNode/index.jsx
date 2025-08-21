@@ -1,10 +1,6 @@
 import React from "react";
 
-export default function WebsiteNode({
-  config,
-  onConfigChange,
-  renderVariableSelect,
-}) {
+export default function WebsiteNode({ config, onConfigChange, renderVariableSelect }) {
   return (
     <div className="space-y-4">
       <div>
@@ -20,9 +16,7 @@ export default function WebsiteNode({
         />
       </div>
       <div>
-        <label className="block text-sm font-medium text-white mb-2">
-          Action
-        </label>
+        <label className="block text-sm font-medium text-white mb-2">Action</label>
         <select
           value={config.action}
           onChange={(e) => onConfigChange({ action: e.target.value })}
@@ -40,9 +34,7 @@ export default function WebsiteNode({
         </select>
       </div>
       <div>
-        <label className="block text-sm font-medium text-white mb-2">
-          CSS Selector
-        </label>
+        <label className="block text-sm font-medium text-white mb-2">CSS Selector</label>
         <input
           type="text"
           placeholder="#element-id or .class-name"
@@ -54,9 +46,7 @@ export default function WebsiteNode({
         />
       </div>
       <div>
-        <label className="block text-sm font-medium text-white mb-2">
-          Store Result In
-        </label>
+        <label className="block text-sm font-medium text-white mb-2">Store Result In</label>
         {renderVariableSelect(
           config.resultVariable,
           (value) => onConfigChange({ resultVariable: value }),

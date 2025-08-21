@@ -1,6 +1,6 @@
-import { useEffect, useState, useRef } from "react";
-import { SpeakerHigh, PauseCircle, CircleNotch } from "@phosphor-icons/react";
 import PiperTTSClient from "@/utils/piperTTS";
+import { CircleNotch, PauseCircle, SpeakerHigh } from "@phosphor-icons/react";
+import { useEffect, useRef, useState } from "react";
 
 export default function PiperTTS({ chatId, voiceId = null, message }) {
   const playerRef = useRef(null);
@@ -55,9 +55,7 @@ export default function PiperTTS({ chatId, voiceId = null, message }) {
         disabled={loading}
         data-auto-play-chat-id={chatId}
         data-tooltip-id="message-to-speech"
-        data-tooltip-content={
-          speaking ? "Pause TTS speech of message" : "TTS Speak message"
-        }
+        data-tooltip-content={speaking ? "Pause TTS speech of message" : "TTS Speak message"}
         className="border-none text-[var(--theme-sidebar-footer-icon-fill)]"
         aria-label={speaking ? "Pause speech" : "Speak message"}
       >
@@ -72,13 +70,7 @@ export default function PiperTTS({ chatId, voiceId = null, message }) {
             )}
           </>
         )}
-        <audio
-          ref={playerRef}
-          hidden={true}
-          src={audioSrc}
-          autoPlay={true}
-          controls={false}
-        />
+        <audio ref={playerRef} hidden={true} src={audioSrc} autoPlay={true} controls={false} />
       </button>
     </div>
   );

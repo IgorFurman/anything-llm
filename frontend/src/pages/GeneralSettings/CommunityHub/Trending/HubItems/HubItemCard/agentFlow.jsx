@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
 import paths from "@/utils/paths";
+import { Link } from "react-router-dom";
 import { VisibilityIcon } from "./generic";
 
 export default function AgentFlowHubCard({ item }) {

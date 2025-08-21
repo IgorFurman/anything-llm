@@ -50,7 +50,7 @@ const Telemetry = {
     return new PostHog(this.pubkey);
   },
 
-  runtime: function () {
+  runtime: () => {
     if (process.env.ANYTHING_LLM_RUNTIME === "docker") return "docker";
     if (process.env.NODE_ENV === "production") return "production";
     return "other";
@@ -84,12 +84,7 @@ const Telemetry = {
     TelemetryCooldown.set(event, Date.now());
   },
 
-  sendTelemetry: async function (
-    event,
-    eventProperties = {},
-    subUserId = null,
-    silent = false
-  ) {
+  sendTelemetry: async function (event, eventProperties = {}, subUserId = null, silent = false) {
     try {
       const { client, distinctId: systemId } = await this.connect();
       if (!client) return;

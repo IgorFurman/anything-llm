@@ -1,6 +1,6 @@
+import { CaretDown, Plus } from "@phosphor-icons/react";
 import React, { useRef, useEffect } from "react";
-import { Plus, CaretDown } from "@phosphor-icons/react";
-import { BLOCK_TYPES, BLOCK_INFO } from "../BlockList";
+import { BLOCK_INFO, BLOCK_TYPES } from "../BlockList";
 
 /**
  * Check if the last configurable block has direct output disabled or undefined
@@ -17,12 +17,7 @@ function checkIfCanAddBlock(blocks) {
   );
 }
 
-export default function AddBlockMenu({
-  blocks,
-  showBlockMenu,
-  setShowBlockMenu,
-  addBlock,
-}) {
+export default function AddBlockMenu({ blocks, showBlockMenu, setShowBlockMenu, addBlock }) {
   const menuRef = useRef(null);
 
   useEffect(() => {
@@ -71,9 +66,7 @@ export default function AddBlockMenu({
                   </div>
                   <div className="text-left flex-1">
                     <div className="text-sm font-medium">{info.label}</div>
-                    <div className="text-xs text-white/60">
-                      {info.description}
-                    </div>
+                    <div className="text-xs text-white/60">{info.description}</div>
                   </div>
                 </button>
               )

@@ -1,7 +1,5 @@
 const { NativeEmbedder } = require("../../EmbeddingEngines/native");
-const {
-  LLMPerformanceMonitor,
-} = require("../../helpers/chat/LLMPerformanceMonitor");
+const { LLMPerformanceMonitor } = require("../../helpers/chat/LLMPerformanceMonitor");
 const {
   handleDefaultStreamResponseV2,
   formatChatHistory,
@@ -10,18 +8,14 @@ const { MODEL_MAP } = require("../modelMap");
 
 class MoonshotAiLLM {
   constructor(embedder = null, modelPreference = null) {
-    if (!process.env.MOONSHOT_AI_API_KEY)
-      throw new Error("No Moonshot AI API key was set.");
+    if (!process.env.MOONSHOT_AI_API_KEY) throw new Error("No Moonshot AI API key was set.");
     const { OpenAI: OpenAIApi } = require("openai");
 
     this.openai = new OpenAIApi({
       baseURL: "https://api.moonshot.ai/v1",
       apiKey: process.env.MOONSHOT_AI_API_KEY,
     });
-    this.model =
-      modelPreference ||
-      process.env.MOONSHOT_AI_MODEL_PREF ||
-      "moonshot-v1-32k";
+    this.model = modelPreference || process.env.MOONSHOT_AI_MODEL_PREF || "moonshot-v1-32k";
     this.limits = {
       history: this.promptWindowLimit() * 0.15,
       system: this.promptWindowLimit() * 0.15,
@@ -30,9 +24,7 @@ class MoonshotAiLLM {
 
     this.embedder = embedder ?? new NativeEmbedder();
     this.defaultTemp = 0.7;
-    this.log(
-      `Initialized ${this.model} with context window ${this.promptWindowLimit()}`
-    );
+    this.log(`Initialized ${this.model} with context window ${this.promptWindowLimit()}`);
   }
 
   log(text, ...args) {
@@ -62,7 +54,7 @@ class MoonshotAiLLM {
     }
 
     const content = [{ type: "text", text: userPrompt }];
-    for (let attachment of attachments) {
+    for (const attachment of attachments) {
       content.push({
         type: "image_url",
         image_url: {

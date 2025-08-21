@@ -1,24 +1,17 @@
-import React, { useEffect, useState } from "react";
-import {
-  GithubLogo,
-  GitMerge,
-  EnvelopeSimple,
-  Plus,
-} from "@phosphor-icons/react";
-import NewWorkspaceModal, {
-  useNewWorkspaceModal,
-} from "../Modals/NewWorkspace";
-import paths from "@/utils/paths";
-import { isMobile } from "react-device-detect";
-import { SidebarMobileHeader } from "../Sidebar";
-import ChatBubble from "../ChatBubble";
-import System from "@/models/system";
-import UserIcon from "../UserIcon";
-import { userFromStorage } from "@/utils/request";
-import useUser from "@/hooks/useUser";
-import { useTranslation, Trans } from "react-i18next";
-import Appearance from "@/models/appearance";
 import { useChatMessageAlignment } from "@/hooks/useChatMessageAlignment";
+import useUser from "@/hooks/useUser";
+import Appearance from "@/models/appearance";
+import System from "@/models/system";
+import paths from "@/utils/paths";
+import { userFromStorage } from "@/utils/request";
+import { EnvelopeSimple, GitMerge, GithubLogo, Plus } from "@phosphor-icons/react";
+import React, { useEffect, useState } from "react";
+import { isMobile } from "react-device-detect";
+import { Trans, useTranslation } from "react-i18next";
+import ChatBubble from "../ChatBubble";
+import NewWorkspaceModal, { useNewWorkspaceModal } from "../Modals/NewWorkspace";
+import { SidebarMobileHeader } from "../Sidebar";
+import UserIcon from "../UserIcon";
 
 export default function DefaultChatContainer() {
   const { getMessageAlignment } = useChatMessageAlignment();
@@ -219,9 +212,7 @@ export default function DefaultChatContainer() {
               <React.Fragment key={i}>
                 <ChatBubble
                   message={
-                    fetchedMessage.user === ""
-                      ? fetchedMessage.response
-                      : fetchedMessage.user
+                    fetchedMessage.user === "" ? fetchedMessage.response : fetchedMessage.user
                   }
                   type={fetchedMessage.user === "" ? "response" : "user"}
                   popMsg={popMsg}
@@ -237,9 +228,7 @@ export default function DefaultChatContainer() {
 function MessageContainer({ children }) {
   return (
     <div className="flex justify-center items-end w-full">
-      <div className="py-6 px-4 w-full flex gap-x-5 md:max-w-[80%] flex-col">
-        {children}
-      </div>
+      <div className="py-6 px-4 w-full flex gap-x-5 md:max-w-[80%] flex-col">{children}</div>
     </div>
   );
 }

@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import Sidebar from "@/components/Sidebar";
+import { useEffect, useState } from "react";
 import { isMobile } from "react-device-detect";
 import * as Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -22,9 +22,8 @@ export default function LiveDocumentSyncManager() {
               </p>
             </div>
             <p className="text-xs leading-[18px] font-base text-theme-text-secondary">
-              These are all the documents that are currently being watched in
-              your instance. The content of these documents will be periodically
-              synced.
+              These are all the documents that are currently being watched in your instance. The
+              content of these documents will be periodically synced.
             </p>
           </div>
           <div className="overflow-x-auto">

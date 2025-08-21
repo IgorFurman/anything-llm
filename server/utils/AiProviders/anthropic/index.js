@@ -6,14 +6,11 @@ const {
 } = require("../../helpers/chat/responses");
 const { NativeEmbedder } = require("../../EmbeddingEngines/native");
 const { MODEL_MAP } = require("../modelMap");
-const {
-  LLMPerformanceMonitor,
-} = require("../../helpers/chat/LLMPerformanceMonitor");
+const { LLMPerformanceMonitor } = require("../../helpers/chat/LLMPerformanceMonitor");
 
 class AnthropicLLM {
   constructor(embedder = null, modelPreference = null) {
-    if (!process.env.ANTHROPIC_API_KEY)
-      throw new Error("No Anthropic API key was set.");
+    if (!process.env.ANTHROPIC_API_KEY) throw new Error("No Anthropic API key was set.");
 
     // Docs: https://www.npmjs.com/package/@anthropic-ai/sdk
     const AnthropicAI = require("@anthropic-ai/sdk");
@@ -22,9 +19,7 @@ class AnthropicLLM {
     });
     this.anthropic = anthropic;
     this.model =
-      modelPreference ||
-      process.env.ANTHROPIC_MODEL_PREF ||
-      "claude-3-5-sonnet-20241022";
+      modelPreference || process.env.ANTHROPIC_MODEL_PREF || "claude-3-5-sonnet-20241022";
     this.limits = {
       history: this.promptWindowLimit() * 0.15,
       system: this.promptWindowLimit() * 0.15,
@@ -67,7 +62,7 @@ class AnthropicLLM {
     }
 
     const content = [{ type: "text", text: userPrompt }];
-    for (let attachment of attachments) {
+    for (const attachment of attachments) {
       content.push({
         type: "image",
         source: {
@@ -159,7 +154,7 @@ class AnthropicLLM {
     return new Promise((resolve) => {
       let fullText = "";
       const { uuid = v4(), sources = [] } = responseProps;
-      let usage = {
+      const usage = {
         prompt_tokens: 0,
         completion_tokens: 0,
       };
@@ -200,15 +195,10 @@ class AnthropicLLM {
       stream.on("streamEvent", (message) => {
         const data = message;
 
-        if (data.type === "message_start")
-          usage.prompt_tokens = data?.message?.usage?.input_tokens;
-        if (data.type === "message_delta")
-          usage.completion_tokens = data?.usage?.output_tokens;
+        if (data.type === "message_start") usage.prompt_tokens = data?.message?.usage?.input_tokens;
+        if (data.type === "message_delta") usage.completion_tokens = data?.usage?.output_tokens;
 
-        if (
-          data.type === "content_block_delta" &&
-          data.delta.type === "text_delta"
-        ) {
+        if (data.type === "content_block_delta" && data.delta.type === "text_delta") {
           const text = data.delta.text;
           fullText += text;
 
@@ -256,11 +246,7 @@ class AnthropicLLM {
 
   async compressMessages(promptArgs = {}, rawHistory = []) {
     const { messageStringCompressor } = require("../../helpers/chat");
-    const compressedPrompt = await messageStringCompressor(
-      this,
-      promptArgs,
-      rawHistory
-    );
+    const compressedPrompt = await messageStringCompressor(this, promptArgs, rawHistory);
     return compressedPrompt;
   }
 

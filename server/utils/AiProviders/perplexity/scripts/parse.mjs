@@ -38,11 +38,7 @@ function parseChatModels() {
     }
   });
 
-  fs.writeFileSync(
-    "chat_models.json",
-    JSON.stringify(models, null, 2),
-    "utf-8"
-  );
+  fs.writeFileSync("chat_models.json", JSON.stringify(models, null, 2), "utf-8");
   return models;
 }
 

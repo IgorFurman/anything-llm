@@ -1,29 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import Sidebar from "@/components/Sidebar";
-import Workspace from "@/models/workspace";
 import PasswordModal, { usePasswordModal } from "@/components/Modals/Password";
-import { isMobile } from "react-device-detect";
 import { FullScreenLoader } from "@/components/Preloader";
-import {
-  ArrowUUpLeft,
-  ChatText,
-  Database,
-  Robot,
-  User,
-  Wrench,
-} from "@phosphor-icons/react";
+import Sidebar from "@/components/Sidebar";
+import useUser from "@/hooks/useUser";
+import System from "@/models/system";
+import Workspace from "@/models/workspace";
 import paths from "@/utils/paths";
+import { ArrowUUpLeft, ChatText, Database, Robot, User, Wrench } from "@phosphor-icons/react";
+import React, { useEffect, useState } from "react";
+import { isMobile } from "react-device-detect";
+import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { NavLink } from "react-router-dom";
-import GeneralAppearance from "./GeneralAppearance";
-import ChatSettings from "./ChatSettings";
-import VectorDatabase from "./VectorDatabase";
-import Members from "./Members";
 import WorkspaceAgentConfiguration from "./AgentConfig";
-import useUser from "@/hooks/useUser";
-import { useTranslation } from "react-i18next";
-import System from "@/models/system";
+import ChatSettings from "./ChatSettings";
+import GeneralAppearance from "./GeneralAppearance";
+import Members from "./Members";
+import VectorDatabase from "./VectorDatabase";
 
 const TABS = {
   "general-appearance": GeneralAppearance,

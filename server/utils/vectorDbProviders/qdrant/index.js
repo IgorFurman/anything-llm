@@ -8,22 +8,16 @@ const { sourceIdentifier } = require("../../chats");
 
 const QDrant = {
   name: "QDrant",
-  connect: async function () {
-    if (process.env.VECTOR_DB !== "qdrant")
-      throw new Error("QDrant::Invalid ENV settings");
+  connect: async () => {
+    if (process.env.VECTOR_DB !== "qdrant") throw new Error("QDrant::Invalid ENV settings");
 
     const client = new QdrantClient({
       url: process.env.QDRANT_ENDPOINT,
-      ...(process.env.QDRANT_API_KEY
-        ? { apiKey: process.env.QDRANT_API_KEY }
-        : {}),
+      ...(process.env.QDRANT_API_KEY ? { apiKey: process.env.QDRANT_API_KEY } : {}),
     });
 
     const isAlive = (await client.api("cluster")?.clusterStatus())?.ok || false;
-    if (!isAlive)
-      throw new Error(
-        "QDrant::Invalid Heartbeat received - is the instance online?"
-      );
+    if (!isAlive) throw new Error("QDrant::Invalid Heartbeat received - is the instance online?");
 
     return { client };
   },
@@ -37,8 +31,7 @@ const QDrant = {
     var totalVectors = 0;
     for (const collection of collections) {
       if (!collection || !collection.name) continue;
-      totalVectors +=
-        (await this.namespace(client, collection.name))?.vectorCount || 0;
+      totalVectors += (await this.namespace(client, collection.name))?.vectorCount || 0;
     }
     return totalVectors;
   },
@@ -47,14 +40,14 @@ const QDrant = {
     const namespace = await this.namespace(client, _namespace);
     return namespace?.vectorCount || 0;
   },
-  similarityResponse: async function ({
+  similarityResponse: async ({
     client,
     namespace,
     queryVector,
     similarityThreshold = 0.25,
     topN = 4,
     filterIdentifiers = [],
-  }) {
+  }) => {
     const result = {
       contextTexts: [],
       sourceDocuments: [],
@@ -86,7 +79,7 @@ const QDrant = {
 
     return result;
   },
-  namespace: async function (client, namespace = null) {
+  namespace: async (client, namespace = null) => {
     if (!namespace) throw new Error("No namespace value provided.");
     const collection = await client.getCollection(namespace).catch(() => null);
     if (!collection) return null;
@@ -102,7 +95,7 @@ const QDrant = {
     const { client } = await this.connect();
     return await this.namespaceExists(client, namespace);
   },
-  namespaceExists: async function (client, namespace = null) {
+  namespaceExists: async (client, namespace = null) => {
     if (!namespace) throw new Error("No namespace value provided.");
     const collection = await client.getCollection(namespace).catch((e) => {
       console.error("QDrant::namespaceExists", e.message);
@@ -110,7 +103,7 @@ const QDrant = {
     });
     return !!collection;
   },
-  deleteVectorsInNamespace: async function (client, namespace = null) {
+  deleteVectorsInNamespace: async (client, namespace = null) => {
     await client.deleteCollection(namespace);
     return true;
   },
@@ -152,16 +145,9 @@ const QDrant = {
           const { client } = await this.connect();
           const { chunks } = cacheResult;
           const documentVectors = [];
-          vectorDimension =
-            chunks[0][0]?.vector?.length ??
-            chunks[0][0]?.values?.length ??
-            null;
+          vectorDimension = chunks[0][0]?.vector?.length ?? chunks[0][0]?.values?.length ?? null;
 
-          const collection = await this.getOrCreateCollection(
-            client,
-            namespace,
-            vectorDimension
-          );
+          const collection = await this.getOrCreateCollection(client, namespace, vectorDimension);
           if (!collection)
             throw new Error("Failed to create new QDrant collection!", {
               namespace,
@@ -256,17 +242,11 @@ const QDrant = {
           documentVectors.push({ docId, vectorId: vectorRecord.id });
         }
       } else {
-        throw new Error(
-          "Could not embed document chunks! This document will not be recorded."
-        );
+        throw new Error("Could not embed document chunks! This document will not be recorded.");
       }
 
       const { client } = await this.connect();
-      const collection = await this.getOrCreateCollection(
-        client,
-        namespace,
-        vectorDimension
-      );
+      const collection = await this.getOrCreateCollection(client, namespace, vectorDimension);
       if (!collection)
         throw new Error("Failed to create new QDrant collection!", {
           namespace,
@@ -363,9 +343,7 @@ const QDrant = {
     if (!(await this.namespaceExists(client, namespace)))
       throw new Error("Namespace by that name does not exist.");
     const stats = await this.namespace(client, namespace);
-    return stats
-      ? stats
-      : { message: "No stats were able to be fetched from DB for namespace" };
+    return stats ? stats : { message: "No stats were able to be fetched from DB for namespace" };
   },
   "delete-namespace": async function (reqBody = {}) {
     const { namespace = null } = reqBody;
@@ -387,13 +365,11 @@ const QDrant = {
     }
     return { reset: true };
   },
-  curateSources: function (sources = []) {
+  curateSources: (sources = []) => {
     const documents = [];
     for (const source of sources) {
       if (Object.keys(source).length > 0) {
-        const metadata = source.hasOwnProperty("metadata")
-          ? source.metadata
-          : source;
+        const metadata = source.hasOwnProperty("metadata") ? source.metadata : source;
         documents.push({
           ...metadata,
         });

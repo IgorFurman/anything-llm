@@ -4,13 +4,8 @@ const { EventLogs } = require("../../models/eventLogs");
 const { SystemSettings } = require("../../models/systemSettings");
 const { Telemetry } = require("../../models/telemetry");
 const { reqBody } = require("../../utils/http");
-const {
-  featureFlagEnabled,
-} = require("../../utils/middleware/featureFlagEnabled");
-const {
-  flexUserRoleValid,
-  ROLES,
-} = require("../../utils/middleware/multiUserProtected");
+const { featureFlagEnabled } = require("../../utils/middleware/featureFlagEnabled");
+const { flexUserRoleValid, ROLES } = require("../../utils/middleware/multiUserProtected");
 const { validWorkspaceSlug } = require("../../utils/middleware/validWorkspace");
 const { validatedRequest } = require("../../utils/middleware/validatedRequest");
 
@@ -23,15 +18,11 @@ function liveSyncEndpoints(app) {
     async (request, response) => {
       try {
         const { updatedStatus = false } = reqBody(request);
-        const newStatus =
-          SystemSettings.validations.experimental_live_file_sync(updatedStatus);
+        const newStatus = SystemSettings.validations.experimental_live_file_sync(updatedStatus);
         const currentStatus =
-          (await SystemSettings.get({ label: "experimental_live_file_sync" }))
-            ?.value || "disabled";
+          (await SystemSettings.get({ label: "experimental_live_file_sync" }))?.value || "disabled";
         if (currentStatus === newStatus)
-          return response
-            .status(200)
-            .json({ liveSyncEnabled: newStatus === "enabled" });
+          return response.status(200).json({ liveSyncEnabled: newStatus === "enabled" });
 
         // Already validated earlier - so can hot update.
         await SystemSettings._updateSettings({

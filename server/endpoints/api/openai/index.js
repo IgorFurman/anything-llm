@@ -2,16 +2,11 @@ const { v4: uuidv4 } = require("uuid");
 const { Document } = require("../../../models/documents");
 const { Telemetry } = require("../../../models/telemetry");
 const { Workspace } = require("../../../models/workspace");
-const {
-  getLLMProvider,
-  getEmbeddingEngineSelection,
-} = require("../../../utils/helpers");
+const { getLLMProvider, getEmbeddingEngineSelection } = require("../../../utils/helpers");
 const { reqBody } = require("../../../utils/http");
 const { validApiKey } = require("../../../utils/middleware/validApiKey");
 const { EventLogs } = require("../../../models/eventLogs");
-const {
-  OpenAICompatibleChat,
-} = require("../../../utils/chats/openaiCompatible");
+const { OpenAICompatibleChat } = require("../../../utils/chats/openaiCompatible");
 const { getModelTag } = require("../../utils");
 const { extractTextContent, extractAttachments } = require("./helpers");
 
@@ -62,7 +57,7 @@ function apiOpenAICompatibleEndpoints(app) {
       const workspaces = await Workspace.where();
       for (const workspace of workspaces) {
         const provider = workspace?.chatProvider ?? process.env.LLM_PROVIDER;
-        let LLMProvider = getLLMProvider({
+        const LLMProvider = getLLMProvider({
           provider,
           model: workspace?.chatModel,
         });
@@ -82,11 +77,8 @@ function apiOpenAICompatibleEndpoints(app) {
     }
   });
 
-  app.post(
-    "/v1/openai/chat/completions",
-    [validApiKey],
-    async (request, response) => {
-      /*
+  app.post("/v1/openai/chat/completions", [validApiKey], async (request, response) => {
+    /*
       #swagger.tags = ['OpenAI Compatible Endpoints']
       #swagger.description = 'Execute a chat with a workspace with OpenAI compatibility. Supports streaming as well. Model must be a workspace slug from /models.'
       #swagger.requestBody = {
@@ -114,96 +106,84 @@ function apiOpenAICompatibleEndpoints(app) {
         }
       }
       */
-      try {
-        const {
-          model,
-          messages = [],
-          temperature,
-          stream = false,
-        } = reqBody(request);
-        const workspace = await Workspace.get({ slug: String(model) });
-        if (!workspace) return response.status(401).end();
+    try {
+      const { model, messages = [], temperature, stream = false } = reqBody(request);
+      const workspace = await Workspace.get({ slug: String(model) });
+      if (!workspace) return response.status(401).end();
 
-        const userMessage = messages.pop();
-        if (userMessage.role !== "user") {
-          return response.status(400).json({
-            id: uuidv4(),
-            type: "abort",
-            textResponse: null,
-            sources: [],
-            close: true,
-            error:
-              "No user prompt found. Must be last element in message array with 'user' role.",
-          });
-        }
+      const userMessage = messages.pop();
+      if (userMessage.role !== "user") {
+        return response.status(400).json({
+          id: uuidv4(),
+          type: "abort",
+          textResponse: null,
+          sources: [],
+          close: true,
+          error: "No user prompt found. Must be last element in message array with 'user' role.",
+        });
+      }
 
-        const systemPrompt =
-          messages.find((chat) => chat.role === "system")?.content ?? null;
-        const history = messages.filter((chat) => chat.role !== "system") ?? [];
+      const systemPrompt = messages.find((chat) => chat.role === "system")?.content ?? null;
+      const history = messages.filter((chat) => chat.role !== "system") ?? [];
 
-        if (!stream) {
-          const chatResult = await OpenAICompatibleChat.chatSync({
-            workspace,
-            systemPrompt,
-            history,
-            prompt: extractTextContent(userMessage.content),
-            attachments: extractAttachments(userMessage.content),
-            temperature: Number(temperature),
-          });
-
-          await Telemetry.sendTelemetry("sent_chat", {
-            LLMSelection:
-              workspace.chatProvider ?? process.env.LLM_PROVIDER ?? "openai",
-            Embedder: process.env.EMBEDDING_ENGINE || "inherit",
-            VectorDbSelection: process.env.VECTOR_DB || "lancedb",
-            TTSSelection: process.env.TTS_PROVIDER || "native",
-          });
-          await EventLogs.logEvent("api_sent_chat", {
-            workspaceName: workspace?.name,
-            chatModel: workspace?.chatModel || "System Default",
-          });
-          return response.status(200).json(chatResult);
-        }
-
-        response.setHeader("Cache-Control", "no-cache");
-        response.setHeader("Content-Type", "text/event-stream");
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Connection", "keep-alive");
-        response.flushHeaders();
-
-        await OpenAICompatibleChat.streamChat({
+      if (!stream) {
+        const chatResult = await OpenAICompatibleChat.chatSync({
           workspace,
           systemPrompt,
           history,
           prompt: extractTextContent(userMessage.content),
           attachments: extractAttachments(userMessage.content),
           temperature: Number(temperature),
-          response,
         });
+
         await Telemetry.sendTelemetry("sent_chat", {
-          LLMSelection: process.env.LLM_PROVIDER || "openai",
+          LLMSelection: workspace.chatProvider ?? process.env.LLM_PROVIDER ?? "openai",
           Embedder: process.env.EMBEDDING_ENGINE || "inherit",
           VectorDbSelection: process.env.VECTOR_DB || "lancedb",
           TTSSelection: process.env.TTS_PROVIDER || "native",
-          LLMModel: getModelTag(),
         });
         await EventLogs.logEvent("api_sent_chat", {
           workspaceName: workspace?.name,
           chatModel: workspace?.chatModel || "System Default",
         });
-        response.end();
-      } catch (e) {
-        console.error(e.message, e);
-        response.status(500).end();
+        return response.status(200).json(chatResult);
       }
-    }
-  );
 
-  app.post(
-    "/v1/openai/embeddings",
-    [validApiKey],
-    async (request, response) => {
-      /*
+      response.setHeader("Cache-Control", "no-cache");
+      response.setHeader("Content-Type", "text/event-stream");
+      response.setHeader("Access-Control-Allow-Origin", "*");
+      response.setHeader("Connection", "keep-alive");
+      response.flushHeaders();
+
+      await OpenAICompatibleChat.streamChat({
+        workspace,
+        systemPrompt,
+        history,
+        prompt: extractTextContent(userMessage.content),
+        attachments: extractAttachments(userMessage.content),
+        temperature: Number(temperature),
+        response,
+      });
+      await Telemetry.sendTelemetry("sent_chat", {
+        LLMSelection: process.env.LLM_PROVIDER || "openai",
+        Embedder: process.env.EMBEDDING_ENGINE || "inherit",
+        VectorDbSelection: process.env.VECTOR_DB || "lancedb",
+        TTSSelection: process.env.TTS_PROVIDER || "native",
+        LLMModel: getModelTag(),
+      });
+      await EventLogs.logEvent("api_sent_chat", {
+        workspaceName: workspace?.name,
+        chatModel: workspace?.chatModel || "System Default",
+      });
+      response.end();
+    } catch (e) {
+      console.error(e.message, e);
+      response.status(500).end();
+    }
+  });
+
+  app.post("/v1/openai/embeddings", [validApiKey], async (request, response) => {
+    /*
       #swagger.tags = ['OpenAI Compatible Endpoints']
       #swagger.description = 'Get the embeddings of any arbitrary text string. This will use the embedder provider set in the system. Please ensure the token length of each string fits within the context of your embedder model.'
       #swagger.requestBody = {
@@ -227,50 +207,44 @@ function apiOpenAICompatibleEndpoints(app) {
         }
       }
       */
-      try {
-        const body = reqBody(request);
-        // Support input or "inputs" (for backwards compatibility) as an array of strings or a single string
-        // TODO: "inputs" key support will eventually be fully removed.
-        let input = body?.input || body?.inputs || [];
-        // if input is not an array, make it an array and force to string content
-        if (!Array.isArray(input)) input = [String(input)];
+    try {
+      const body = reqBody(request);
+      // Support input or "inputs" (for backwards compatibility) as an array of strings or a single string
+      // TODO: "inputs" key support will eventually be fully removed.
+      let input = body?.input || body?.inputs || [];
+      // if input is not an array, make it an array and force to string content
+      if (!Array.isArray(input)) input = [String(input)];
 
-        if (Array.isArray(input)) {
-          if (input.length === 0)
-            throw new Error("Input array cannot be empty.");
-          const validArray = input.every((text) => typeof text === "string");
-          if (!validArray)
-            throw new Error("All inputs to be embedded must be strings.");
-        }
-
-        const Embedder = getEmbeddingEngineSelection();
-        const embeddings = await Embedder.embedChunks(input);
-        const data = [];
-        embeddings.forEach((embedding, index) => {
-          data.push({
-            object: "embedding",
-            embedding,
-            index,
-          });
-        });
-
-        return response.status(200).json({
-          object: "list",
-          data,
-          model: Embedder.model,
-        });
-      } catch (e) {
-        console.error(e.message, e);
-        response.status(500).end();
+      if (Array.isArray(input)) {
+        if (input.length === 0) throw new Error("Input array cannot be empty.");
+        const validArray = input.every((text) => typeof text === "string");
+        if (!validArray) throw new Error("All inputs to be embedded must be strings.");
       }
-    }
-  );
 
-  app.get(
-    "/v1/openai/vector_stores",
-    [validApiKey],
-    async (request, response) => {
-      /*
+      const Embedder = getEmbeddingEngineSelection();
+      const embeddings = await Embedder.embedChunks(input);
+      const data = [];
+      embeddings.forEach((embedding, index) => {
+        data.push({
+          object: "embedding",
+          embedding,
+          index,
+        });
+      });
+
+      return response.status(200).json({
+        object: "list",
+        data,
+        model: Embedder.model,
+      });
+    } catch (e) {
+      console.error(e.message, e);
+      response.status(500).end();
+    }
+  });
+
+  app.get("/v1/openai/vector_stores", [validApiKey], async (request, response) => {
+    /*
       #swagger.tags = ['OpenAI Compatible Endpoints']
       #swagger.description = 'List all the vector database collections connected to AnythingLLM. These are essentially workspaces but return their unique vector db identifier - this is the same as the workspace slug.'
       #swagger.responses[200] = {
@@ -301,46 +275,45 @@ function apiOpenAICompatibleEndpoints(app) {
         }
       }
       */
-      try {
-        // We dump all in the first response and despite saying there is
-        // not more data the library still checks with a query param so if
-        // we detect one - respond with nothing.
-        if (Object.keys(request?.query ?? {}).length !== 0) {
-          return response.status(200).json({
-            data: [],
-            has_more: false,
-          });
-        }
-
-        const data = [];
-        const VectorDBProvider = process.env.VECTOR_DB || "lancedb";
-        const workspaces = await Workspace.where();
-
-        for (const workspace of workspaces) {
-          data.push({
-            id: workspace.slug,
-            object: "vector_store",
-            name: workspace.name,
-            file_counts: {
-              total: await Document.count({
-                workspaceId: Number(workspace.id),
-              }),
-            },
-            provider: VectorDBProvider,
-          });
-        }
+    try {
+      // We dump all in the first response and despite saying there is
+      // not more data the library still checks with a query param so if
+      // we detect one - respond with nothing.
+      if (Object.keys(request?.query ?? {}).length !== 0) {
         return response.status(200).json({
-          first_id: [...data].splice(0)?.[0]?.id,
-          last_id: [...data].splice(-1)?.[0]?.id ?? data.splice(1)?.[0]?.id,
-          data,
+          data: [],
           has_more: false,
         });
-      } catch (e) {
-        console.error(e.message, e);
-        response.status(500).end();
       }
+
+      const data = [];
+      const VectorDBProvider = process.env.VECTOR_DB || "lancedb";
+      const workspaces = await Workspace.where();
+
+      for (const workspace of workspaces) {
+        data.push({
+          id: workspace.slug,
+          object: "vector_store",
+          name: workspace.name,
+          file_counts: {
+            total: await Document.count({
+              workspaceId: Number(workspace.id),
+            }),
+          },
+          provider: VectorDBProvider,
+        });
+      }
+      return response.status(200).json({
+        first_id: [...data].splice(0)?.[0]?.id,
+        last_id: [...data].splice(-1)?.[0]?.id ?? data.splice(1)?.[0]?.id,
+        data,
+        has_more: false,
+      });
+    } catch (e) {
+      console.error(e.message, e);
+      response.status(500).end();
     }
-  );
+  });
 }
 
 module.exports = { apiOpenAICompatibleEndpoints };

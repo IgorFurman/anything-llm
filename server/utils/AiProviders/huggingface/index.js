@@ -1,10 +1,6 @@
 const { NativeEmbedder } = require("../../EmbeddingEngines/native");
-const {
-  LLMPerformanceMonitor,
-} = require("../../helpers/chat/LLMPerformanceMonitor");
-const {
-  handleDefaultStreamResponseV2,
-} = require("../../helpers/chat/responses");
+const { LLMPerformanceMonitor } = require("../../helpers/chat/LLMPerformanceMonitor");
+const { handleDefaultStreamResponseV2 } = require("../../helpers/chat/responses");
 
 class HuggingFaceLLM {
   constructor(embedder = null, _modelPreference = null) {
@@ -66,12 +62,7 @@ class HuggingFaceLLM {
     return true;
   }
 
-  constructPrompt({
-    systemPrompt = "",
-    contextTexts = [],
-    chatHistory = [],
-    userPrompt = "",
-  }) {
+  constructPrompt({ systemPrompt = "", contextTexts = [], chatHistory = [], userPrompt = "" }) {
     // System prompt it not enabled for HF model chats
     const prompt = {
       role: "user",
@@ -81,12 +72,7 @@ class HuggingFaceLLM {
       role: "assistant",
       content: "Okay, I will follow those instructions",
     };
-    return [
-      prompt,
-      assistantResponse,
-      ...chatHistory,
-      { role: "user", content: userPrompt },
-    ];
+    return [prompt, assistantResponse, ...chatHistory, { role: "user", content: userPrompt }];
   }
 
   async getChatCompletion(messages = null, { temperature = 0.7 }) {
@@ -102,11 +88,7 @@ class HuggingFaceLLM {
         })
     );
 
-    if (
-      !result.output.hasOwnProperty("choices") ||
-      result.output.choices.length === 0
-    )
-      return null;
+    if (!result.output.hasOwnProperty("choices") || result.output.choices.length === 0) return null;
 
     return {
       textResponse: result.output.choices[0].message.content,
@@ -114,8 +96,7 @@ class HuggingFaceLLM {
         prompt_tokens: result.output.usage?.prompt_tokens || 0,
         completion_tokens: result.output.usage?.completion_tokens || 0,
         total_tokens: result.output.usage?.total_tokens || 0,
-        outputTps:
-          (result.output.usage?.completion_tokens || 0) / result.duration,
+        outputTps: (result.output.usage?.completion_tokens || 0) / result.duration,
         duration: result.duration,
       },
     };

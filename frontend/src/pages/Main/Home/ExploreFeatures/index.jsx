@@ -1,7 +1,7 @@
-import { useNavigate } from "react-router-dom";
-import paths from "@/utils/paths";
 import Workspace from "@/models/workspace";
+import paths from "@/utils/paths";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 export default function ExploreFeatures() {
   const { t } = useTranslation();
@@ -60,45 +60,27 @@ export default function ExploreFeatures() {
       <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <FeatureCard
           title={t("main-page.exploreMore.features.customAgents.title")}
-          description={t(
-            "main-page.exploreMore.features.customAgents.description"
-          )}
-          primaryAction={t(
-            "main-page.exploreMore.features.customAgents.primaryAction"
-          )}
-          secondaryAction={t(
-            "main-page.exploreMore.features.customAgents.secondaryAction"
-          )}
+          description={t("main-page.exploreMore.features.customAgents.description")}
+          primaryAction={t("main-page.exploreMore.features.customAgents.primaryAction")}
+          secondaryAction={t("main-page.exploreMore.features.customAgents.secondaryAction")}
           onPrimaryAction={chatWithAgent}
           onSecondaryAction={buildAgentFlow}
           isNew={true}
         />
         <FeatureCard
           title={t("main-page.exploreMore.features.slashCommands.title")}
-          description={t(
-            "main-page.exploreMore.features.slashCommands.description"
-          )}
-          primaryAction={t(
-            "main-page.exploreMore.features.slashCommands.primaryAction"
-          )}
-          secondaryAction={t(
-            "main-page.exploreMore.features.slashCommands.secondaryAction"
-          )}
+          description={t("main-page.exploreMore.features.slashCommands.description")}
+          primaryAction={t("main-page.exploreMore.features.slashCommands.primaryAction")}
+          secondaryAction={t("main-page.exploreMore.features.slashCommands.secondaryAction")}
           onPrimaryAction={setSlashCommand}
           onSecondaryAction={exploreSlashCommands}
           isNew={false}
         />
         <FeatureCard
           title={t("main-page.exploreMore.features.systemPrompts.title")}
-          description={t(
-            "main-page.exploreMore.features.systemPrompts.description"
-          )}
-          primaryAction={t(
-            "main-page.exploreMore.features.systemPrompts.primaryAction"
-          )}
-          secondaryAction={t(
-            "main-page.exploreMore.features.systemPrompts.secondaryAction"
-          )}
+          description={t("main-page.exploreMore.features.systemPrompts.description")}
+          primaryAction={t("main-page.exploreMore.features.systemPrompts.primaryAction")}
+          secondaryAction={t("main-page.exploreMore.features.systemPrompts.secondaryAction")}
           onPrimaryAction={setSystemPrompt}
           onSecondaryAction={managePromptVariables}
           isNew={true}
@@ -120,9 +102,7 @@ function FeatureCard({
   return (
     <div className="border border-theme-home-border rounded-lg py-4 px-5 flex flex-col justify-between gap-y-4">
       <div className="flex flex-col gap-y-2">
-        <h2 className="text-theme-home-text font-semibold flex items-center gap-x-2">
-          {title}
-        </h2>
+        <h2 className="text-theme-home-text font-semibold flex items-center gap-x-2">{title}</h2>
         <p className="text-theme-home-text-secondary text-sm">{description}</p>
       </div>
       <div className="flex flex-col gap-y-[10px]">

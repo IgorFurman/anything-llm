@@ -1,9 +1,4 @@
-const {
-  DataType,
-  MetricType,
-  IndexType,
-  MilvusClient,
-} = require("@zilliz/milvus2-sdk-node");
+const { DataType, MetricType, IndexType, MilvusClient } = require("@zilliz/milvus2-sdk-node");
 const { TextSplitter } = require("../../TextSplitter");
 const { SystemSettings } = require("../../../models/systemSettings");
 const { v4: uuidv4 } = require("uuid");
@@ -17,15 +12,14 @@ const Milvus = {
   // so we need to enforce that by re-normalizing the names when communicating with
   // the DB.
   // If the first char of the collection is not an underscore or letter the collection name will be invalid.
-  normalize: function (inputString) {
+  normalize: (inputString) => {
     let normalized = inputString.replace(/[^a-zA-Z0-9_]/g, "_");
     if (new RegExp(/^[a-zA-Z_]/).test(normalized.slice(0, 1)))
       normalized = `anythingllm_${normalized}`;
     return normalized;
   },
-  connect: async function () {
-    if (process.env.VECTOR_DB !== "milvus")
-      throw new Error("Milvus::Invalid ENV settings");
+  connect: async () => {
+    if (process.env.VECTOR_DB !== "milvus") throw new Error("Milvus::Invalid ENV settings");
 
     const client = new MilvusClient({
       address: process.env.MILVUS_ADDRESS,
@@ -35,9 +29,7 @@ const Milvus = {
 
     const { isHealthy } = await client.checkHealth();
     if (!isHealthy)
-      throw new Error(
-        "MilvusDB::Invalid Heartbeat received - is the instance online?"
-      );
+      throw new Error("MilvusDB::Invalid Heartbeat received - is the instance online?");
 
     return { client };
   },
@@ -182,10 +174,7 @@ const Milvus = {
             });
             return { vectorized: true, error: null };
           } catch (insertError) {
-            console.error(
-              "Error inserting cached chunks:",
-              insertError.message
-            );
+            console.error("Error inserting cached chunks:", insertError.message);
             return { vectorized: false, error: insertError.message };
           }
         }
@@ -228,9 +217,7 @@ const Milvus = {
           documentVectors.push({ docId, vectorId: vectorRecord.id });
         }
       } else {
-        throw new Error(
-          "Could not embed document chunks! This document will not be recorded."
-        );
+        throw new Error("Could not embed document chunks! This document will not be recorded.");
       }
 
       if (vectors.length > 0) {
@@ -251,9 +238,7 @@ const Milvus = {
           });
 
           if (insertResult?.status.error_code !== "Success") {
-            throw new Error(
-              `Error embedding into Milvus! Reason:${insertResult?.status.reason}`
-            );
+            throw new Error(`Error embedding into Milvus! Reason:${insertResult?.status.reason}`);
           }
         }
         await storeVectorResult(chunks, fullFilePath);
@@ -375,9 +360,7 @@ const Milvus = {
     if (!(await this.namespaceExists(client, namespace)))
       throw new Error("Namespace by that name does not exist.");
     const stats = await this.namespace(client, namespace);
-    return stats
-      ? stats
-      : { message: "No stats were able to be fetched from DB for namespace" };
+    return stats ? stats : { message: "No stats were able to be fetched from DB for namespace" };
   },
   "delete-namespace": async function (reqBody = {}) {
     const { namespace = null } = reqBody;
@@ -392,7 +375,7 @@ const Milvus = {
       message: `Namespace ${namespace} was deleted along with ${vectorCount} vectors.`,
     };
   },
-  curateSources: function (sources = []) {
+  curateSources: (sources = []) => {
     const documents = [];
     for (const source of sources) {
       const { metadata = {} } = source;

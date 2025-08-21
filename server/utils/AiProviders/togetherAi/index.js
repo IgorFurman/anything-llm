@@ -1,10 +1,6 @@
 const { NativeEmbedder } = require("../../EmbeddingEngines/native");
-const {
-  handleDefaultStreamResponseV2,
-} = require("../../helpers/chat/responses");
-const {
-  LLMPerformanceMonitor,
-} = require("../../helpers/chat/LLMPerformanceMonitor");
+const { handleDefaultStreamResponseV2 } = require("../../helpers/chat/responses");
+const { LLMPerformanceMonitor } = require("../../helpers/chat/LLMPerformanceMonitor");
 const fs = require("fs");
 const path = require("path");
 const { safeJsonParse } = require("../../http");
@@ -25,10 +21,7 @@ async function togetherAiModels(apiKey = null) {
     const timestampMs = Number(fs.readFileSync(cacheAtPath));
     if (now - timestampMs <= 6.048e8) {
       // 1 Week in MS
-      return safeJsonParse(
-        fs.readFileSync(cacheModelPath, { encoding: "utf-8" }),
-        []
-      );
+      return safeJsonParse(fs.readFileSync(cacheModelPath, { encoding: "utf-8" }), []);
     }
   }
 
@@ -54,8 +47,7 @@ async function togetherAiModels(apiKey = null) {
       }));
 
     // Cache the results
-    if (!fs.existsSync(cacheFolder))
-      fs.mkdirSync(cacheFolder, { recursive: true });
+    if (!fs.existsSync(cacheFolder)) fs.mkdirSync(cacheFolder, { recursive: true });
     fs.writeFileSync(cacheModelPath, JSON.stringify(validModels), {
       encoding: "utf-8",
     });
@@ -68,10 +60,7 @@ async function togetherAiModels(apiKey = null) {
     console.error("Error fetching Together AI models:", error);
     // If cache exists but is stale, still use it as fallback
     if (fs.existsSync(cacheModelPath)) {
-      return safeJsonParse(
-        fs.readFileSync(cacheModelPath, { encoding: "utf-8" }),
-        []
-      );
+      return safeJsonParse(fs.readFileSync(cacheModelPath, { encoding: "utf-8" }), []);
     }
     return [];
   }
@@ -79,8 +68,7 @@ async function togetherAiModels(apiKey = null) {
 
 class TogetherAiLLM {
   constructor(embedder = null, modelPreference = null) {
-    if (!process.env.TOGETHER_AI_API_KEY)
-      throw new Error("No TogetherAI API key was set.");
+    if (!process.env.TOGETHER_AI_API_KEY) throw new Error("No TogetherAI API key was set.");
     const { OpenAI: OpenAIApi } = require("openai");
     this.openai = new OpenAIApi({
       baseURL: "https://api.together.xyz/v1",
@@ -115,7 +103,7 @@ class TogetherAiLLM {
     }
 
     const content = [{ type: "text", text: userPrompt }];
-    for (let attachment of attachments) {
+    for (const attachment of attachments) {
       content.push({
         type: "image_url",
         image_url: {
@@ -179,9 +167,7 @@ class TogetherAiLLM {
 
   async getChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!(await this.isValidChatCompletionModel(this.model)))
-      throw new Error(
-        `TogetherAI chat: ${this.model} is not valid for chat completion!`
-      );
+      throw new Error(`TogetherAI chat: ${this.model} is not valid for chat completion!`);
 
     const result = await LLMPerformanceMonitor.measureAsyncFunction(
       this.openai.chat.completions
@@ -195,11 +181,7 @@ class TogetherAiLLM {
         })
     );
 
-    if (
-      !result.output.hasOwnProperty("choices") ||
-      result.output.choices.length === 0
-    )
-      return null;
+    if (!result.output.hasOwnProperty("choices") || result.output.choices.length === 0) return null;
 
     return {
       textResponse: result.output.choices[0].message.content,
@@ -215,9 +197,7 @@ class TogetherAiLLM {
 
   async streamGetChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!(await this.isValidChatCompletionModel(this.model)))
-      throw new Error(
-        `TogetherAI chat: ${this.model} is not valid for chat completion!`
-      );
+      throw new Error(`TogetherAI chat: ${this.model} is not valid for chat completion!`);
 
     const measuredStreamRequest = await LLMPerformanceMonitor.measureStream(
       this.openai.chat.completions.create({

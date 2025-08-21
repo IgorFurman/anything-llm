@@ -1,14 +1,10 @@
-import React, { useState, useEffect } from "react";
-import System from "../../../models/system";
-import SingleUserAuth from "./SingleUserAuth";
-import MultiUserAuth from "./MultiUserAuth";
-import {
-  AUTH_TOKEN,
-  AUTH_USER,
-  AUTH_TIMESTAMP,
-} from "../../../utils/constants";
-import useLogo from "../../../hooks/useLogo";
 import illustration from "@/media/illustrations/login-illustration.svg";
+import React, { useState, useEffect } from "react";
+import useLogo from "../../../hooks/useLogo";
+import System from "../../../models/system";
+import { AUTH_TIMESTAMP, AUTH_TOKEN, AUTH_USER } from "../../../utils/constants";
+import MultiUserAuth from "./MultiUserAuth";
+import SingleUserAuth from "./SingleUserAuth";
 
 export default function PasswordModal({ mode = "single" }) {
   const { loginLogo } = useLogo();

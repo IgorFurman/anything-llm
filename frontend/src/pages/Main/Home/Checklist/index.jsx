@@ -1,23 +1,19 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
-import ManageWorkspace, {
-  useManageWorkspaceModal,
-} from "@/components/Modals/ManageWorkspace";
-import NewWorkspaceModal, {
-  useNewWorkspaceModal,
-} from "@/components/Modals/NewWorkspace";
+import ManageWorkspace, { useManageWorkspaceModal } from "@/components/Modals/ManageWorkspace";
+import NewWorkspaceModal, { useNewWorkspaceModal } from "@/components/Modals/NewWorkspace";
 import Workspace from "@/models/workspace";
+import { safeJsonParse } from "@/utils/request";
+import showToast from "@/utils/toast";
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import ConfettiExplosion from "react-confetti-explosion";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { ChecklistItem } from "./ChecklistItem";
-import showToast from "@/utils/toast";
 import {
   CHECKLIST_HIDDEN,
-  CHECKLIST_STORAGE_KEY,
   CHECKLIST_ITEMS,
+  CHECKLIST_STORAGE_KEY,
   CHECKLIST_UPDATED_EVENT,
 } from "./constants";
-import ConfettiExplosion from "react-confetti-explosion";
-import { safeJsonParse } from "@/utils/request";
-import { useTranslation } from "react-i18next";
 
 const MemoizedChecklistItem = React.memo(ChecklistItem);
 export default function Checklist() {
@@ -35,8 +31,7 @@ export default function Checklist() {
     hideModal: hideNewWsModal,
     showing: showingNewWsModal,
   } = useNewWorkspaceModal();
-  const { showModal: showManageWsModal, hideModal: hideManageWsModal } =
-    useManageWorkspaceModal();
+  const { showModal: showManageWsModal, hideModal: hideManageWsModal } = useManageWorkspaceModal();
 
   const createItemHandler = useCallback(
     (item) => {
@@ -50,14 +45,7 @@ export default function Checklist() {
           showNewWsModal,
         });
     },
-    [
-      workspaces,
-      navigate,
-      setSelectedWorkspace,
-      showManageWsModal,
-      showToast,
-      showNewWsModal,
-    ]
+    [workspaces, navigate, setSelectedWorkspace, showManageWsModal, showToast, showNewWsModal]
   );
 
   useEffect(() => {
@@ -71,8 +59,7 @@ export default function Checklist() {
         // If the checklist is completed then dont continue and just show the completed state.
         const checklist = window.localStorage.getItem(CHECKLIST_STORAGE_KEY);
         const existingChecklist = checklist ? safeJsonParse(checklist, {}) : {};
-        const isCompleted =
-          Object.keys(existingChecklist).length === CHECKLIST_ITEMS().length;
+        const isCompleted = Object.keys(existingChecklist).length === CHECKLIST_ITEMS().length;
         setIsCompleted(isCompleted);
         if (isCompleted) return;
 
@@ -82,10 +69,7 @@ export default function Checklist() {
         setWorkspaces(workspaces);
         if (workspaces.length > 0) {
           existingChecklist["create_workspace"] = true;
-          window.localStorage.setItem(
-            CHECKLIST_STORAGE_KEY,
-            JSON.stringify(existingChecklist)
-          );
+          window.localStorage.setItem(CHECKLIST_STORAGE_KEY, JSON.stringify(existingChecklist));
         }
 
         evaluateChecklist(); // Evaluate checklist on mount.
@@ -125,9 +109,7 @@ export default function Checklist() {
       if (!checklist) return;
       const completedItems = safeJsonParse(checklist, {});
       setCompletedCount(Object.keys(completedItems).length);
-      setIsCompleted(
-        Object.keys(completedItems).length === CHECKLIST_ITEMS().length
-      );
+      setIsCompleted(Object.keys(completedItems).length === CHECKLIST_ITEMS().length);
     } catch (error) {
       console.error(error);
     }
@@ -172,8 +154,7 @@ export default function Checklist() {
             </h1>
             {CHECKLIST_ITEMS().length - completedCount > 0 && (
               <p className="text-theme-home-text-secondary text-xs">
-                {CHECKLIST_ITEMS().length - completedCount}{" "}
-                {t("main-page.checklist.tasksLeft")}
+                {CHECKLIST_ITEMS().length - completedCount} {t("main-page.checklist.tasksLeft")}
               </p>
             )}
           </div>

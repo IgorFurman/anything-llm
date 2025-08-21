@@ -7,8 +7,7 @@ const TRANSLATIONS = {
     },
     llm: {
       title: "Preferencje modeli językowych",
-      description:
-        "AnythingLLM może współpracować z wieloma dostawcami modeli językowych",
+      description: "AnythingLLM może współpracować z wieloma dostawcami modeli językowych",
     },
     userSetup: {
       title: "Konfiguracja użytkownika",
@@ -19,8 +18,7 @@ const TRANSLATIONS = {
       instancePassword: "Hasło instancji",
       setPassword: "Czy chcesz ustawić hasło?",
       passwordReq: "Hasła muszą składać się z co najmniej 8 znaków.",
-      passwordWarn:
-        "Ważne jest, aby zapisać to hasło, ponieważ nie ma metody jego odzyskania.",
+      passwordWarn: "Ważne jest, aby zapisać to hasło, ponieważ nie ma metody jego odzyskania.",
       adminUsername: "Nazwa użytkownika konta administratora",
       adminUsernameReq:
         "Nazwa użytkownika musi składać się z co najmniej 6 znaków i zawierać wyłącznie małe litery, cyfry, podkreślenia i myślniki bez spacji.",
@@ -31,15 +29,12 @@ const TRANSLATIONS = {
     },
     data: {
       title: "Obsługa danych i prywatność",
-      description:
-        "Dbamy o przejrzystość i kontrolę danych osobowych użytkowników.",
-      settingsHint:
-        "Ustawienia te można zmienić w dowolnym momencie w ustawieniach.",
+      description: "Dbamy o przejrzystość i kontrolę danych osobowych użytkowników.",
+      settingsHint: "Ustawienia te można zmienić w dowolnym momencie w ustawieniach.",
     },
     survey: {
       title: "Witamy w AnythingLLM",
-      description:
-        "Pomóż nam stworzyć AnythingLLM dostosowany do Twoich potrzeb. Opcjonalnie.",
+      description: "Pomóż nam stworzyć AnythingLLM dostosowany do Twoich potrzeb. Opcjonalnie.",
       email: "Jaki jest Twój adres e-mail?",
       useCase: "Do czego będziesz używać AnythingLLM?",
       useCaseWork: "Do pracy",
@@ -53,8 +48,7 @@ const TRANSLATIONS = {
     },
     workspace: {
       title: "Utwórz swój pierwszy obszar roboczy",
-      description:
-        "Stwórz swój pierwszy obszar roboczy i zacznij korzystać z AnythingLLM.",
+      description: "Stwórz swój pierwszy obszar roboczy i zacznij korzystać z AnythingLLM.",
     },
   },
   common: {
@@ -138,8 +132,7 @@ const TRANSLATIONS = {
     part4:
       'To proste. Wszystkie kolekcje są zorganizowane w zbiorach, które nazywamy "obszarami roboczymi". Obszary robocze to zbiory plików, dokumentów, obrazów, plików PDF i innych plików, które zostaną przekształcone w coś, co LLM może zrozumieć i wykorzystać w rozmowie. Pliki można dodawać i usuwać w dowolnym momencie.',
     createWorkspace: "Utwórz swój pierwszy obszar roboczy",
-    user2:
-      "Czy to coś w rodzaju Dropboxa AI? A co z czatowaniem? To jest chatbot, prawda?",
+    user2: "Czy to coś w rodzaju Dropboxa AI? A co z czatowaniem? To jest chatbot, prawda?",
     part5:
       "AnythingLLM to coś więcej niż inteligentniejszy Dropbox. AnythingLLM oferuje dwa sposoby komunikacji z danymi: <i>Pytanie:</i> Twoje czaty zwrócą dane lub wnioski znalezione w dokumentach w obszarze roboczym, do którego ma dostęp. Dodanie większej liczby dokumentów do obszaru roboczego czyni go bardziej inteligentnym! <i>Konwersacyjny:</i> Twoje dokumenty + bieżąca historia czatów jednocześnie przyczyniają się do wiedzy LLM. Świetnie nadaje się do dodawania informacji tekstowych w czasie rzeczywistym lub poprawek i nieporozumień, które może mieć LLM. Możesz przełączać się między tymi trybami <i>w trakcie rozmowy! </i>",
     user3: "Wow, to brzmi niesamowicie, pozwól mi już to wypróbować!",
@@ -148,13 +141,11 @@ const TRANSLATIONS = {
     contact: "Kontakt z Mintplex Labs",
   },
   "main-page": {
-    noWorkspaceError:
-      "Przed rozpoczęciem czatu należy utworzyć obszar roboczy.",
+    noWorkspaceError: "Przed rozpoczęciem czatu należy utworzyć obszar roboczy.",
     checklist: {
       title: "Pierwsze kroki",
       tasksLeft: "- zadania do wykonania",
-      completed:
-        "Jesteś na najlepszej drodze do zostania ekspertem AnythingLLM!",
+      completed: "Jesteś na najlepszej drodze do zostania ekspertem AnythingLLM!",
       dismiss: "zamknij",
       tasks: {
         create_workspace: {
@@ -200,22 +191,19 @@ const TRANSLATIONS = {
       features: {
         customAgents: {
           title: "Niestandardowi agenci AI",
-          description:
-            "Twórz potężnych agentów AI i automatyzacje bez użycia kodu.",
+          description: "Twórz potężnych agentów AI i automatyzacje bez użycia kodu.",
           primaryAction: "Czat przy użyciu @agent",
           secondaryAction: "Zbuduj Agents Flow",
         },
         slashCommands: {
           title: "Polecenia slash",
-          description:
-            "Oszczędzaj czas i dodawaj prompty dzięki niestandardowym poleceniom slash.",
+          description: "Oszczędzaj czas i dodawaj prompty dzięki niestandardowym poleceniom slash.",
           primaryAction: "Utwórz polecenie slash",
           secondaryAction: "Przeglądaj Community Hub",
         },
         systemPrompts: {
           title: "Instrukcje systemowe",
-          description:
-            "Zmodyfikuj instrukcję systemową, aby dostosować odpowiedzi AI.",
+          description: "Zmodyfikuj instrukcję systemową, aby dostosować odpowiedzi AI.",
           primaryAction: "Modyfikuj instrukcję systemową",
           secondaryAction: "Zarządzaj zmiennymi",
         },
@@ -250,8 +238,7 @@ const TRANSLATIONS = {
       description: "Całkowita liczba wektorów w bazie danych wektorów.",
     },
     names: {
-      description:
-        "Spowoduje to jedynie zmianę wyświetlanej nazwy obszaru roboczego.",
+      description: "Spowoduje to jedynie zmianę wyświetlanej nazwy obszaru roboczego.",
     },
     message: {
       title: "Sugerowane wiadomości na czacie",
@@ -312,8 +299,7 @@ const TRANSLATIONS = {
       "desc-start":
         "Liczba poprzednich wiadomości, które zostaną uwzględnione w pamięci krótkotrwałej",
       recommend: "Zalecane: 20.",
-      "desc-end":
-        "Więcej niż 45 może prowadzić do problemów z działaniem czatu.",
+      "desc-end": "Więcej niż 45 może prowadzić do problemów z działaniem czatu.",
     },
     prompt: {
       title: "Instrukcja systemowa",
@@ -344,8 +330,7 @@ const TRANSLATIONS = {
     },
     temperature: {
       title: "Temperatura modelu",
-      "desc-start":
-        'To ustawienie kontroluje, jak "kreatywne" będą odpowiedzi modelu językowego.',
+      "desc-start": 'To ustawienie kontroluje, jak "kreatywne" będą odpowiedzi modelu językowego.',
       "desc-end":
         "Im wyższa liczba, tym większa kreatywność. W przypadku niektórych modeli może to prowadzić do niespójnych odpowiedzi przy zbyt wysokich ustawieniach.",
       hint: "Większość modeli językowych ma różne dopuszczalne zakresy wartości. Informacje na ten temat można uzyskać u dostawcy modelu językowego.",
@@ -455,8 +440,7 @@ const TRANSLATIONS = {
     },
     branding: {
       title: "Branding i white-labeling",
-      description:
-        "Oznakuj swoją instancję AnythingLLM niestandardowym brandingiem.",
+      description: "Oznakuj swoją instancję AnythingLLM niestandardowym brandingiem.",
     },
     chat: {
       title: "Czat",
@@ -471,8 +455,7 @@ const TRANSLATIONS = {
       },
       spellcheck: {
         title: "Włącz sprawdzanie pisowni",
-        description:
-          "Włącz lub wyłącz sprawdzanie pisowni w polu wprowadzania tekstu.",
+        description: "Włącz lub wyłącz sprawdzanie pisowni w polu wprowadzania tekstu.",
       },
     },
     items: {
@@ -496,8 +479,7 @@ const TRANSLATIONS = {
       },
       "chat-message-alignment": {
         title: "Wyrównanie wiadomości czatu",
-        description:
-          "Wybór trybu wyrównania wiadomości podczas korzystania z interfejsu czatu.",
+        description: "Wybór trybu wyrównania wiadomości podczas korzystania z interfejsu czatu.",
       },
       "display-language": {
         title: "Język",
@@ -527,8 +509,7 @@ const TRANSLATIONS = {
       },
       "browser-appearance": {
         title: "Wygląd przeglądarki",
-        description:
-          "Dostosuj wygląd karty przeglądarki, gdy aplikacja jest otwarta.",
+        description: "Dostosuj wygląd karty przeglądarki, gdy aplikacja jest otwarta.",
         tab: {
           title: "Tytuł",
           description:
@@ -536,8 +517,7 @@ const TRANSLATIONS = {
         },
         favicon: {
           title: "Favicon",
-          description:
-            "Użyj niestandardowej ikony favicon dla karty przeglądarki.",
+          description: "Użyj niestandardowej ikony favicon dla karty przeglądarki.",
         },
       },
       "sidebar-footer": {
@@ -550,8 +530,7 @@ const TRANSLATIONS = {
   },
   api: {
     title: "Klucze API",
-    description:
-      "Klucze API umożliwiają dostęp do instancji AnythingLLM i zarządzanie nią.",
+    description: "Klucze API umożliwiają dostęp do instancji AnythingLLM i zarządzanie nią.",
     link: "Przeczytaj dokumentację API",
     generate: "Generuj nowy klucz API",
     table: {
@@ -586,8 +565,7 @@ const TRANSLATIONS = {
       "Korzystanie z lokalnego modelu Whisper na komputerach z ograniczoną pamięcią RAM lub procesorem może spowodować przerwanie pracy AnythingLLM podczas przetwarzania plików multimedialnych.",
     "warn-recommend":
       "Zalecana konfiguracja to co najmniej 2 GB pamięci RAM, przesyłaj pliki <10 MB.",
-    "warn-end":
-      "Wbudowany model zostanie automatycznie pobrany przy pierwszym użyciu.",
+    "warn-end": "Wbudowany model zostanie automatycznie pobrany przy pierwszym użyciu.",
   },
   embedding: {
     title: "Preferencje dot. embeddingów",
@@ -641,8 +619,7 @@ const TRANSLATIONS = {
   "embed-chats": {
     title: "Historia czatu",
     export: "Eksport",
-    description:
-      "Są to wszystkie czaty i wiadomości z dowolnego opublikowanego widżetu czatu.",
+    description: "Są to wszystkie czaty i wiadomości z dowolnego opublikowanego widżetu czatu.",
     table: {
       embed: "Obszar roboczy",
       sender: "Nadawca",
@@ -701,15 +678,13 @@ const TRANSLATIONS = {
       selected_files: "Znaleziono {{count}} plików markdown",
       importing: "Importowanie folderu Obsidian...",
       import_vault: "Importuj folder",
-      processing_time:
-        "Może to trochę potrwać w zależności od wielkości folderu.",
+      processing_time: "Może to trochę potrwać w zależności od wielkości folderu.",
       vault_warning:
         "Aby uniknąć konfliktów, upewnij się, że folder Obsidian nie jest aktualnie otwarty.",
     },
     github: {
       name: "GitHub Repo",
-      description:
-        "Zaimportuj całe publiczne lub prywatne repozytorium GitHub jednym kliknięciem.",
+      description: "Zaimportuj całe publiczne lub prywatne repozytorium GitHub jednym kliknięciem.",
       URL: "Adres URL repozytorium GitHub",
       URL_explained: "Adres URL repozytorium GitHub, które chcesz pobrać.",
       token: "Token dostępu GitHub",
@@ -722,8 +697,7 @@ const TRANSLATIONS = {
       token_explained_link2: " tymczasowy token dostępu",
       token_explained_end: " aby uniknąć tego problemu.",
       ignores: "Ignorowane pliki",
-      git_ignore:
-        "Lista w formacie .gitignore. Naciśnij enter po każdym wpisie, aby go zapisać.",
+      git_ignore: "Lista w formacie .gitignore. Naciśnij enter po każdym wpisie, aby go zapisać.",
       task_explained:
         "Po zakończeniu wszystkie pliki będą dostępne do osadzenia w obszarach roboczych w selektorze dokumentów.",
       branch: "Gałąź, z której mają być pobierane pliki.",
@@ -731,20 +705,17 @@ const TRANSLATIONS = {
       branch_explained: "Gałąź, z której mają być pobierane pliki.",
       token_information:
         "Bez wypełnienia <b>GitHub Access Token</b> ten konektor danych będzie mógł pobierać tylko pliki <b>z głównego katalogu</b> repozytorium ze względu na ograniczenia szybkości publicznego API GitHub.",
-      token_personal:
-        "Uzyskaj bezpłatny osobisty token dostępu do konta GitHub tutaj.",
+      token_personal: "Uzyskaj bezpłatny osobisty token dostępu do konta GitHub tutaj.",
     },
     gitlab: {
       name: "GitLab Repo",
-      description:
-        "Zaimportuj całe publiczne lub prywatne repozytorium GitLab jednym kliknięciem.",
+      description: "Zaimportuj całe publiczne lub prywatne repozytorium GitLab jednym kliknięciem.",
       URL: "Adres URL repozytorium GitLab",
       URL_explained: "Adres URL repozytorium GitLab, które chcesz pobrać.",
       token: "Token dostępu GitLab",
       optional: "opcjonalny",
       token_explained: "Token dostępu, zapobiegający ograniczeniu szybkości.",
-      token_description:
-        "Wybierz dodatkowe elementy do pobrania z interfejsu API GitLab.",
+      token_description: "Wybierz dodatkowe elementy do pobrania z interfejsu API GitLab.",
       token_explained_start: "Bez ",
       token_explained_link1: "Osobistego tokenu dostępu ",
       token_explained_middle:
@@ -753,8 +724,7 @@ const TRANSLATIONS = {
       token_explained_end: " aby uniknąć tego problemu.",
       fetch_issues: "Pobierz Issues jako Dokumenty",
       ignores: "Ignorowane pliki",
-      git_ignore:
-        "Lista w formacie .gitignore. Naciśnij enter po każdym wpisie, aby go zapisać.",
+      git_ignore: "Lista w formacie .gitignore. Naciśnij enter po każdym wpisie, aby go zapisać.",
       task_explained:
         "Po zakończeniu wszystkie pliki będą dostępne do osadzenia w obszarach roboczych w selektorze dokumentów.",
       branch: "Gałąź, z której chcesz pobierać pliki",
@@ -762,8 +732,7 @@ const TRANSLATIONS = {
       branch_explained: "Gałąź, z której mają być pobierane pliki.",
       token_information:
         "Bez wypełnienia <b>GitLab Access Token</b> ten konektor danych będzie mógł pobierać tylko pliki <b>z głównego katalogu</b> repozytorium ze względu na ograniczenia szybkości publicznego API GitLab.",
-      token_personal:
-        "Uzyskaj bezpłatny osobisty token dostępu do konta GitLab tutaj.",
+      token_personal: "Uzyskaj bezpłatny osobisty token dostępu do konta GitLab tutaj.",
     },
     youtube: {
       name: "Transkrypcja YouTube",
@@ -784,8 +753,7 @@ const TRANSLATIONS = {
       description:
         "Pobiera treści ze strony internetowej wraz z jej podstronami do określonej głębokości (liczby podstron).",
       URL: "Adres URL witryny",
-      URL_explained:
-        "Adres URL strony internetowej, z której chcesz pobrać treści.",
+      URL_explained: "Adres URL strony internetowej, z której chcesz pobrać treści.",
       depth: "Głębokość przeszukiwania",
       depth_explained:
         "Określa ile poziomów podstron zostanie przeszukanych począwszy od głównego adresu URL.",
@@ -803,8 +771,7 @@ const TRANSLATIONS = {
       base_url: "Bazowy adres URL Confluence",
       base_url_explained: "Jest to podstawowy adres URL Confluence.",
       space_key: "Klucz przestrzeni Confluence",
-      space_key_explained:
-        "Jest to klucz instancji Confluence. Zwykle zaczyna się od ~",
+      space_key_explained: "Jest to klucz instancji Confluence. Zwykle zaczyna się od ~",
       username: "Nazwa użytkownika Confluence",
       username_explained: "Nazwa użytkownika Confluence",
       auth_type: "Typ autoryzacji Confluence",
@@ -881,8 +848,7 @@ const TRANSLATIONS = {
         "Podczas <b>obserwowania</b> dokumentu w AnythingLLM będziemy <i>automatycznie</i> synchronizować zawartość dokumentu z jego oryginalnym źródłem w regularnych odstępach czasu. Spowoduje to automatyczną aktualizację zawartości w każdym obszarze roboczym, w którym ten plik jest zarządzany.",
       watch_explained_block2:
         "Ta funkcja obsługuje obecnie treści online i nie będzie dostępna dla dokumentów przesyłanych ręcznie.",
-      watch_explained_block3_start:
-        "Możesz zarządzać obserwowanymi dokumentami z poziomu",
+      watch_explained_block3_start: "Możesz zarządzać obserwowanymi dokumentami z poziomu",
       watch_explained_block3_link: "Menedżer plików",
       watch_explained_block3_end: " widok administratora.",
       accept: "Ok, rozumiem",
@@ -937,13 +903,11 @@ const TRANSLATIONS = {
       search: "Wyszukaj dostawców LLM",
       loading_workspace_settings: "Ładowanie ustawień obszaru roboczego...",
       available_models: "Dostępne modele dla {{provider}}",
-      available_models_description:
-        "Wybierz model, który będzie używany w tym obszarze roboczym.",
+      available_models_description: "Wybierz model, który będzie używany w tym obszarze roboczym.",
       save: "Użyj tego modelu",
       saving: "Ustawienie modelu jako domyślnego dla obszaru roboczego...",
       missing_credentials: "Temu dostawcy brakuje poświadczeń!",
-      missing_credentials_description:
-        "Kliknij, aby skonfigurować poświadczenia",
+      missing_credentials_description: "Kliknij, aby skonfigurować poświadczenia",
     },
   },
   profile_settings: {
@@ -1002,10 +966,8 @@ const TRANSLATIONS = {
           "Tagi służą do oznaczania instrukcji systemowych w celu łatwiejszego wyszukiwania. Można dodać wiele tagów. Maksymalnie 5 tagów. Maksymalnie 20 znaków na tag.",
         tags_placeholder: "Wpisz i naciśnij Enter, aby dodać tagi",
         visibility_label: "Widoczność",
-        public_description:
-          "Publiczne instrukcje systemowe są widoczne dla wszystkich.",
-        private_description:
-          "Prywatne instrukcje systemowe są widoczne tylko dla użytkownika.",
+        public_description: "Publiczne instrukcje systemowe są widoczne dla wszystkich.",
+        private_description: "Prywatne instrukcje systemowe są widoczne tylko dla użytkownika.",
         publish_button: "Opublikuj w Community Hub",
         submitting: "Publikacja...",
         submit: "Opublikuj w Community Hub",
@@ -1015,13 +977,10 @@ const TRANSLATIONS = {
         prompt_placeholder: "Wprowadź tutaj instrukcję systemową...",
       },
       agent_flow: {
-        public_description:
-          "Przepływy agentów publicznych są widoczne dla wszystkich.",
-        private_description:
-          "Przepływy prywatnych agentów są widoczne tylko dla użytkownika.",
+        public_description: "Przepływy agentów publicznych są widoczne dla wszystkich.",
+        private_description: "Przepływy prywatnych agentów są widoczne tylko dla użytkownika.",
         success_title: "Sukces!",
-        success_description:
-          "Twój Agent Flow został opublikowany w Community Hub!",
+        success_description: "Twój Agent Flow został opublikowany w Community Hub!",
         success_thank_you: "Dziękujemy za udostępnienie społeczności!",
         view_on_hub: "Zobacz w Community Hub",
         modal_title: "Publikowanie przepływu agenta",
@@ -1044,8 +1003,7 @@ const TRANSLATIONS = {
       },
       slash_command: {
         success_title: "Sukces!",
-        success_description:
-          "Twoje polecenie slash zostało opublikowane w centrum społeczności!",
+        success_description: "Twoje polecenie slash zostało opublikowane w centrum społeczności!",
         success_thank_you: "Dziękujemy za udostępnienie społeczności!",
         view_on_hub: "Zobacz w Community Hub",
         modal_title: "Publikuj polecenie slash",
@@ -1064,10 +1022,8 @@ const TRANSLATIONS = {
           "Tagi są używane do oznaczania poleceń slash w celu łatwiejszego wyszukiwania. Można dodać wiele tagów. Maksymalnie 5 tagów. Maksymalnie 20 znaków na tag.",
         tags_placeholder: "Wpisz i naciśnij Enter, aby dodać tagi",
         visibility_label: "Widoczność",
-        public_description:
-          "Publiczne polecenia slash są widoczne dla wszystkich.",
-        private_description:
-          "Prywatne polecenia slash są widoczne tylko dla użytkownika.",
+        public_description: "Publiczne polecenia slash są widoczne dla wszystkich.",
+        private_description: "Prywatne polecenia slash są widoczne tylko dla użytkownika.",
         publish_button: "Opublikuj w Community Hub",
         submitting: "Publikacja...",
         prompt_label: "Prompt",

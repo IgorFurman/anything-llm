@@ -1,6 +1,4 @@
-import useGetProviderModels, {
-  DISABLED_PROVIDERS,
-} from "@/hooks/useGetProvidersModels";
+import useGetProviderModels, { DISABLED_PROVIDERS } from "@/hooks/useGetProvidersModels";
 import paths from "@/utils/paths";
 import { useTranslation } from "react-i18next";
 import { Link, useParams } from "react-router-dom";
@@ -33,14 +31,9 @@ function supportedModel(provider, model = "") {
   return true;
 }
 
-export default function AgentModelSelection({
-  provider,
-  workspace,
-  setHasChanges,
-}) {
+export default function AgentModelSelection({ provider, workspace, setHasChanges }) {
   const { slug } = useParams();
-  const { defaultModels, customModels, loading } =
-    useGetProviderModels(provider);
+  const { defaultModels, customModels, loading } = useGetProviderModels(provider);
 
   const { t } = useTranslation();
   if (DISABLED_PROVIDERS.includes(provider)) {
@@ -50,10 +43,7 @@ export default function AgentModelSelection({
           Multi-model support is not supported for this provider yet.
           <br />
           Agent's will use{" "}
-          <Link
-            to={paths.workspace.settings.chatSettings(slug)}
-            className="underline"
-          >
+          <Link to={paths.workspace.settings.chatSettings(slug)} className="underline">
             the model set for the workspace
           </Link>{" "}
           or{" "}
@@ -114,11 +104,7 @@ export default function AgentModelSelection({
             {defaultModels.map((model) => {
               if (!supportedModel(provider, model)) return null;
               return (
-                <option
-                  key={model}
-                  value={model}
-                  selected={workspace?.agentModel === model}
-                >
+                <option key={model} value={model} selected={workspace?.agentModel === model}>
                   {model}
                 </option>
               );
@@ -143,27 +129,26 @@ export default function AgentModelSelection({
           </optgroup>
         )}
         {/* For providers like TogetherAi where we partition model by creator entity. */}
-        {!Array.isArray(customModels) &&
-          Object.keys(customModels).length > 0 && (
-            <>
-              {Object.entries(customModels).map(([organization, models]) => (
-                <optgroup key={organization} label={organization}>
-                  {models.map((model) => {
-                    if (!supportedModel(provider, model.id)) return null;
-                    return (
-                      <option
-                        key={model.id}
-                        value={model.id}
-                        selected={workspace?.agentModel === model.id}
-                      >
-                        {model.name}
-                      </option>
-                    );
-                  })}
-                </optgroup>
-              ))}
-            </>
-          )}
+        {!Array.isArray(customModels) && Object.keys(customModels).length > 0 && (
+          <>
+            {Object.entries(customModels).map(([organization, models]) => (
+              <optgroup key={organization} label={organization}>
+                {models.map((model) => {
+                  if (!supportedModel(provider, model.id)) return null;
+                  return (
+                    <option
+                      key={model.id}
+                      value={model.id}
+                      selected={workspace?.agentModel === model.id}
+                    >
+                      {model.name}
+                    </option>
+                  );
+                })}
+              </optgroup>
+            ))}
+          </>
+        )}
       </select>
     </div>
   );

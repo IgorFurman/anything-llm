@@ -4,13 +4,10 @@ const FlowInfoNode = forwardRef(({ config, onConfigChange }, refs) => {
   return (
     <div className="space-y-4">
       <div>
-        <label className="block text-sm font-medium text-theme-text-primary mb-2">
-          Flow Name
-        </label>
+        <label className="block text-sm font-medium text-theme-text-primary mb-2">Flow Name</label>
         <div className="flex flex-col text-xs text-theme-text-secondary mt-2 mb-3">
           <p className="">
-            It is important to give your flow a name that an LLM can easily
-            understand.
+            It is important to give your flow a name that an LLM can easily understand.
           </p>
           <p>"SendMessageToDiscord", "CheckStockPrice", "CheckWeather"</p>
         </div>
@@ -38,9 +35,9 @@ const FlowInfoNode = forwardRef(({ config, onConfigChange }, refs) => {
         </label>
         <div className="flex flex-col text-xs text-theme-text-secondary mt-2 mb-3">
           <p className="">
-            It is equally important to give your flow a description that an LLM
-            can easily understand. Be sure to include the purpose of the flow,
-            the context it will be used in, and any other relevant information.
+            It is equally important to give your flow a description that an LLM can easily
+            understand. Be sure to include the purpose of the flow, the context it will be used in,
+            and any other relevant information.
           </p>
         </div>
         <textarea

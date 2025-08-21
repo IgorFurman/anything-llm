@@ -19,8 +19,7 @@ class LocalWhisper {
 
     this.modelPath = path.resolve(this.cacheDir, ...this.model.split("/"));
     // Make directory when it does not exist in existing installations
-    if (!fs.existsSync(this.cacheDir))
-      fs.mkdirSync(this.cacheDir, { recursive: true });
+    if (!fs.existsSync(this.cacheDir)) fs.mkdirSync(this.cacheDir, { recursive: true });
 
     this.#log("Initialized.");
   }
@@ -66,14 +65,11 @@ class LocalWhisper {
       const wavefile = require("wavefile");
       const ffmpeg = require("fluent-ffmpeg");
       const outFolder = path.resolve(__dirname, `../../storage/tmp`);
-      if (!fs.existsSync(outFolder))
-        fs.mkdirSync(outFolder, { recursive: true });
+      if (!fs.existsSync(outFolder)) fs.mkdirSync(outFolder, { recursive: true });
 
       const fileExtension = path.extname(sourcePath).toLowerCase();
       if (fileExtension !== ".wav") {
-        this.#log(
-          `File conversion required! ${fileExtension} file detected - converting to .wav`
-        );
+        this.#log(`File conversion required! ${fileExtension} file detected - converting to .wav`);
         const outputFile = path.resolve(outFolder, `${v4()}.wav`);
         const convert = new Promise((resolve) => {
           ffmpeg(sourcePath)
@@ -83,9 +79,7 @@ class LocalWhisper {
               resolve(false);
             })
             .on("progress", (progress) =>
-              this.#log(
-                `Conversion Processing! ${progress.targetSize}KB converted`
-              )
+              this.#log(`Conversion Processing! ${progress.targetSize}KB converted`)
             )
             .on("end", () => {
               this.#log(`Conversion Complete! File converted to .wav!`);
@@ -95,19 +89,17 @@ class LocalWhisper {
         });
         const success = await convert;
         if (!success)
-          throw new Error(
-            "[Conversion Failed]: Could not convert file to .wav format!"
-          );
+          throw new Error("[Conversion Failed]: Could not convert file to .wav format!");
 
         const chunks = [];
         const stream = fs.createReadStream(outputFile);
-        for await (let chunk of stream) chunks.push(chunk);
+        for await (const chunk of stream) chunks.push(chunk);
         buffer = Buffer.concat(chunks);
         fs.rmSync(outputFile);
       } else {
         const chunks = [];
         const stream = fs.createReadStream(sourcePath);
-        for await (let chunk of stream) chunks.push(chunk);
+        for await (const chunk of stream) chunks.push(chunk);
         buffer = Buffer.concat(chunks);
       }
 
@@ -129,8 +121,7 @@ class LocalWhisper {
 
           // Merge channels into first channel to save memory
           for (let i = 0; i < audioData[0].length; ++i) {
-            audioData[0][i] =
-              (SCALING_FACTOR * (audioData[0][i] + audioData[1][i])) / 2;
+            audioData[0][i] = (SCALING_FACTOR * (audioData[0][i] + audioData[1][i])) / 2;
           }
         }
         audioData = audioData[0];
@@ -179,10 +170,7 @@ class LocalWhisper {
           "The native whisper model failed to download from the huggingface.co CDN. Your internet connection may be unstable or blocked by Huggingface.co - you will need to download the model manually and place it in the storage/models folder to use local Whisper transcription.";
       }
 
-      this.#log(
-        `Failed to load the native whisper model: ${errMsg}`,
-        error.stack
-      );
+      this.#log(`Failed to load the native whisper model: ${errMsg}`, error.stack);
       throw new Error(errMsg);
     }
   }
@@ -190,14 +178,9 @@ class LocalWhisper {
   async processFile(fullFilePath, filename) {
     try {
       const audioDataPromise = new Promise((resolve) =>
-        this.#convertToWavAudioData(fullFilePath).then((audioData) =>
-          resolve(audioData)
-        )
+        this.#convertToWavAudioData(fullFilePath).then((audioData) => resolve(audioData))
       );
-      const [audioData, transcriber] = await Promise.all([
-        audioDataPromise,
-        this.client(),
-      ]);
+      const [audioData, transcriber] = await Promise.all([audioDataPromise, this.client()]);
 
       if (!audioData) {
         this.#log(`Failed to parse content from ${filename}.`);

@@ -26,10 +26,7 @@ async function grepCommand(message, user = null) {
   // Allows multiple commands in one message
   let updatedMessage = message;
   for (const preset of userPresets) {
-    const regex = new RegExp(
-      `(?:\\b\\s|^)(${preset.command})(?:\\b\\s|$)`,
-      "g"
-    );
+    const regex = new RegExp(`(?:\\b\\s|^)(${preset.command})(?:\\b\\s|$)`, "g");
     updatedMessage = updatedMessage.replace(regex, preset.prompt);
   }
 
@@ -48,10 +45,7 @@ async function grepAllSlashCommands(message) {
   // Allows multiple commands in one message
   let updatedMessage = message;
   for (const preset of allPresets) {
-    const regex = new RegExp(
-      `(?:\\b\\s|^)(${preset.command})(?:\\b\\s|$)`,
-      "g"
-    );
+    const regex = new RegExp(`(?:\\b\\s|^)(${preset.command})(?:\\b\\s|$)`, "g");
     updatedMessage = updatedMessage.replace(regex, preset.prompt);
   }
 
@@ -92,10 +86,7 @@ async function chatPrompt(workspace, user = null) {
   const basePrompt =
     workspace?.openAiPrompt ??
     "Given the following conversation, relevant context, and a follow up question, reply with an answer to the current question the user is asking. Return only your response to the question given the above information following the users instructions as needed.";
-  return await SystemPromptVariables.expandSystemPromptVariables(
-    basePrompt,
-    user?.id
-  );
+  return await SystemPromptVariables.expandSystemPromptVariables(basePrompt, user?.id);
 }
 
 // We use this util function to deduplicate sources from similarity searching

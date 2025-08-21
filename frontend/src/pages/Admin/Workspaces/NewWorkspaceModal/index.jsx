@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { X } from "@phosphor-icons/react";
 import Admin from "@/models/admin";
+import { X } from "@phosphor-icons/react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 export default function NewWorkspaceModal({ closeModal }) {
@@ -36,10 +36,7 @@ export default function NewWorkspaceModal({ closeModal }) {
           <form onSubmit={handleCreate}>
             <div className="space-y-4">
               <div>
-                <label
-                  htmlFor="name"
-                  className="block mb-2 text-sm font-medium text-white"
-                >
+                <label htmlFor="name" className="block mb-2 text-sm font-medium text-white">
                   {t("common.workspaces-name")}
                 </label>
                 <input
@@ -54,8 +51,8 @@ export default function NewWorkspaceModal({ closeModal }) {
               </div>
               {error && <p className="text-red-400 text-sm">Error: {error}</p>}
               <p className="text-white text-opacity-60 text-xs md:text-sm">
-                After creating this workspace only admins will be able to see
-                it. You can add users after it has been created.
+                After creating this workspace only admins will be able to see it. You can add users
+                after it has been created.
               </p>
             </div>
             <div className="flex justify-between items-center mt-6 pt-6 border-t border-theme-modal-border">

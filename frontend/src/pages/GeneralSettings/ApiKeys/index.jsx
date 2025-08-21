@@ -1,19 +1,19 @@
-import { useEffect, useState } from "react";
 import Sidebar from "@/components/SettingsSidebar";
+import { useEffect, useState } from "react";
 import { isMobile } from "react-device-detect";
 import * as Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { PlusCircle } from "@phosphor-icons/react";
+import ModalWrapper from "@/components/ModalWrapper";
+import CTAButton from "@/components/lib/CTAButton";
+import { useModal } from "@/hooks/useModal";
 import Admin from "@/models/admin";
-import ApiKeyRow from "./ApiKeyRow";
-import NewApiKeyModal from "./NewApiKeyModal";
+import System from "@/models/system";
 import paths from "@/utils/paths";
 import { userFromStorage } from "@/utils/request";
-import System from "@/models/system";
-import ModalWrapper from "@/components/ModalWrapper";
-import { useModal } from "@/hooks/useModal";
-import CTAButton from "@/components/lib/CTAButton";
+import { PlusCircle } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
+import ApiKeyRow from "./ApiKeyRow";
+import NewApiKeyModal from "./NewApiKeyModal";
 
 export default function AdminApiKeys() {
   const { isOpen, openModal, closeModal } = useModal();
@@ -64,12 +64,8 @@ export default function AdminApiKeys() {
             </a>
           </div>
           <div className="w-full justify-end flex">
-            <CTAButton
-              onClick={openModal}
-              className="mt-3 mr-0 mb-4 md:-mb-14 z-10"
-            >
-              <PlusCircle className="h-4 w-4" weight="bold" />{" "}
-              {t("api.generate")}
+            <CTAButton onClick={openModal} className="mt-3 mr-0 mb-4 md:-mb-14 z-10">
+              <PlusCircle className="h-4 w-4" weight="bold" /> {t("api.generate")}
             </CTAButton>
           </div>
           <div className="overflow-x-auto mt-6">
@@ -110,11 +106,7 @@ export default function AdminApiKeys() {
                     </tr>
                   ) : (
                     apiKeys.map((apiKey) => (
-                      <ApiKeyRow
-                        key={apiKey.id}
-                        apiKey={apiKey}
-                        removeApiKey={removeApiKey}
-                      />
+                      <ApiKeyRow key={apiKey.id} apiKey={apiKey} removeApiKey={removeApiKey} />
                     ))
                   )}
                 </tbody>
@@ -123,10 +115,7 @@ export default function AdminApiKeys() {
           </div>
         </div>
         <ModalWrapper isOpen={isOpen}>
-          <NewApiKeyModal
-            closeModal={closeModal}
-            onSuccess={fetchExistingKeys}
-          />
+          <NewApiKeyModal closeModal={closeModal} onSuccess={fetchExistingKeys} />
         </ModalWrapper>
       </div>
     </div>

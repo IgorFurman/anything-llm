@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
+import ModalWrapper from "@/components/ModalWrapper";
+import Sidebar from "@/components/SettingsSidebar";
+import CTAButton from "@/components/lib/CTAButton";
+import { useModal } from "@/hooks/useModal";
 import System from "@/models/system";
 import showToast from "@/utils/toast";
 import { Plus } from "@phosphor-icons/react";
-import Sidebar from "@/components/SettingsSidebar";
+import React, { useState, useEffect } from "react";
 import { isMobile } from "react-device-detect";
-import CTAButton from "@/components/lib/CTAButton";
-import VariableRow from "./VariableRow";
-import ModalWrapper from "@/components/ModalWrapper";
-import AddVariableModal from "./AddVariableModal";
-import { useModal } from "@/hooks/useModal";
 import * as Skeleton from "react-loading-skeleton";
+import AddVariableModal from "./AddVariableModal";
+import VariableRow from "./VariableRow";
 import "react-loading-skeleton/dist/skeleton.css";
 
 export default function SystemPromptVariables() {
@@ -49,17 +49,13 @@ export default function SystemPromptVariables() {
               </p>
             </div>
             <p className="text-xs leading-[18px] font-base text-theme-text-secondary">
-              System prompt variables are used to store configuration values
-              that can be referenced in your system prompt to enable dynamic
-              content in your prompts.
+              System prompt variables are used to store configuration values that can be referenced
+              in your system prompt to enable dynamic content in your prompts.
             </p>
           </div>
 
           <div className="w-full justify-end flex">
-            <CTAButton
-              onClick={openModal}
-              className="mt-3 mr-0 mb-4 md:-mb-6 z-10"
-            >
+            <CTAButton onClick={openModal} className="mt-3 mr-0 mb-4 md:-mb-6 z-10">
               <Plus className="h-4 w-4" weight="bold" /> Add Variable
             </CTAButton>
           </div>
@@ -76,9 +72,7 @@ export default function SystemPromptVariables() {
                 containerClassName="flex w-full"
               />
             ) : variables.length === 0 ? (
-              <div className="text-center py-4 text-theme-text-secondary">
-                No variables found
-              </div>
+              <div className="text-center py-4 text-theme-text-secondary">No variables found</div>
             ) : (
               <table className="w-full text-sm text-left rounded-lg min-w-[640px] border-spacing-0">
                 <thead className="text-theme-text-secondary text-xs leading-[18px] font-bold uppercase border-white/10 border-b">
@@ -99,11 +93,7 @@ export default function SystemPromptVariables() {
                 </thead>
                 <tbody>
                   {variables.map((variable) => (
-                    <VariableRow
-                      key={variable.id}
-                      variable={variable}
-                      onRefresh={fetchVariables}
-                    />
+                    <VariableRow key={variable.id} variable={variable} onRefresh={fetchVariables} />
                   ))}
                 </tbody>
               </table>

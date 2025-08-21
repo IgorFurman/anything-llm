@@ -66,20 +66,20 @@ const Workspace = {
     },
     openAiTemp: (value) => {
       if (value === null || value === undefined) return null;
-      const temp = parseFloat(value);
+      const temp = Number.parseFloat(value);
       if (isNullOrNaN(temp) || temp < 0) return null;
       return temp;
     },
     openAiHistory: (value) => {
       if (value === null || value === undefined) return 20;
-      const history = parseInt(value);
+      const history = Number.parseInt(value);
       if (isNullOrNaN(history)) return 20;
       if (history < 0) return 0;
       return history;
     },
     similarityThreshold: (value) => {
       if (value === null || value === undefined) return 0.25;
-      const threshold = parseFloat(value);
+      const threshold = Number.parseFloat(value);
       if (isNullOrNaN(threshold)) return 0.25;
       if (threshold < 0) return 0.0;
       if (threshold > 1) return 1.0;
@@ -87,7 +87,7 @@ const Workspace = {
     },
     topN: (value) => {
       if (value === null || value === undefined) return 4;
-      const n = parseInt(value);
+      const n = Number.parseInt(value);
       if (isNullOrNaN(n)) return 4;
       if (n < 1) return 1;
       return n;
@@ -121,11 +121,7 @@ const Workspace = {
       return String(value);
     },
     vectorSearchMode: (value) => {
-      if (
-        !value ||
-        typeof value !== "string" ||
-        !["default", "rerank"].includes(value)
-      )
+      if (!value || typeof value !== "string" || !["default", "rerank"].includes(value))
         return "default";
       return value;
     },
@@ -138,7 +134,7 @@ const Workspace = {
    * @param  {...any} args - slugify args for npm package.
    * @returns {string}
    */
-  slugify: function (...args) {
+  slugify: (...args) => {
     slugifyModule.extend({
       "+": " plus ",
       "!": " bang ",
@@ -243,7 +239,7 @@ const Workspace = {
    * @param {Object} data - The data to update.
    * @returns {Promise<{workspace: Object | null, message: string | null}>} A promise that resolves to an object containing the updated workspace and an error message if applicable.
    */
-  _update: async function (id = null, data = {}) {
+  _update: async (id = null, data = {}) => {
     if (!id) throw new Error("No workspace id provided for update");
 
     try {
@@ -259,8 +255,7 @@ const Workspace = {
   },
 
   getWithUser: async function (user = null, clause = {}) {
-    if ([ROLES.admin, ROLES.manager].includes(user.role))
-      return this.get(clause);
+    if ([ROLES.admin, ROLES.manager].includes(user.role)) return this.get(clause);
 
     try {
       const workspace = await prisma.workspaces.findFirst({
@@ -290,7 +285,7 @@ const Workspace = {
     }
   },
 
-  get: async function (clause = {}) {
+  get: async (clause = {}) => {
     try {
       const workspace = await prisma.workspaces.findFirst({
         where: clause,
@@ -306,7 +301,7 @@ const Workspace = {
     }
   },
 
-  delete: async function (clause = {}) {
+  delete: async (clause = {}) => {
     try {
       await prisma.workspaces.delete({
         where: clause,
@@ -318,7 +313,7 @@ const Workspace = {
     }
   },
 
-  where: async function (clause = {}, limit = null, orderBy = null) {
+  where: async (clause = {}, limit = null, orderBy = null) => {
     try {
       const results = await prisma.workspaces.findMany({
         where: clause,
@@ -332,12 +327,7 @@ const Workspace = {
     }
   },
 
-  whereWithUser: async function (
-    user,
-    clause = {},
-    limit = null,
-    orderBy = null
-  ) {
+  whereWithUser: async function (user, clause = {}, limit = null, orderBy = null) {
     if ([ROLES.admin, ROLES.manager].includes(user.role))
       return await this.where(clause, limit, orderBy);
 
@@ -365,9 +355,9 @@ const Workspace = {
     try {
       const workspaces = await this.where(clause, limit, orderBy);
       for (const workspace of workspaces) {
-        const userIds = (
-          await WorkspaceUser.where({ workspace_id: Number(workspace.id) })
-        ).map((rel) => rel.user_id);
+        const userIds = (await WorkspaceUser.where({ workspace_id: Number(workspace.id) })).map(
+          (rel) => rel.user_id
+        );
         workspace.userIds = userIds;
       }
       return workspaces;
@@ -382,11 +372,11 @@ const Workspace = {
    * @param {number} workspaceId - The ID of the workspace to get users for.
    * @returns {Promise<Array<{userId: number, username: string, role: string}>>} A promise that resolves to an array of user objects.
    */
-  workspaceUsers: async function (workspaceId) {
+  workspaceUsers: async (workspaceId) => {
     try {
-      const users = (
-        await WorkspaceUser.where({ workspace_id: Number(workspaceId) })
-      ).map((rel) => rel);
+      const users = (await WorkspaceUser.where({ workspace_id: Number(workspaceId) })).map(
+        (rel) => rel
+      );
 
       const usersById = await User.where({
         id: { in: users.map((user) => user.user_id) },
@@ -415,7 +405,7 @@ const Workspace = {
    * @param {number[]} userIds - An array of user IDs to add to the workspace.
    * @returns {Promise<{success: boolean, error: string | null}>} A promise that resolves to an object containing the success status and an error message if applicable.
    */
-  updateUsers: async function (workspaceId, userIds = []) {
+  updateUsers: async (workspaceId, userIds = []) => {
     try {
       await WorkspaceUser.delete({ workspace_id: Number(workspaceId) });
       await WorkspaceUser.createManyUsers(userIds, workspaceId);
@@ -483,7 +473,7 @@ const Workspace = {
    * @param {import("../node_modules/.prisma/client/index.d.ts").Prisma.TypeMap['model']['workspaces']['operations']['findMany']['args']} prismaQuery
    * @returns
    */
-  _findMany: async function (prismaQuery = {}) {
+  _findMany: async (prismaQuery = {}) => {
     try {
       const results = await prisma.workspaces.findMany(prismaQuery);
       return results;
@@ -498,7 +488,7 @@ const Workspace = {
    * @param {import("../node_modules/.prisma/client/index.d.ts").Prisma.TypeMap['model']['workspaces']['operations']['findFirst']['args']} prismaQuery
    * @returns
    */
-  _findFirst: async function (prismaQuery = {}) {
+  _findFirst: async (prismaQuery = {}) => {
     try {
       const results = await prisma.workspaces.findFirst(prismaQuery);
       return results;
@@ -514,7 +504,7 @@ const Workspace = {
    * @param {number} options.workspaceId - The ID of the workspace to get prompt history for.
    * @returns {Promise<Array<{id: number, prompt: string, modifiedAt: Date, modifiedBy: number, user: {id: number, username: string, role: string}}>>} A promise that resolves to an array of prompt history objects.
    */
-  promptHistory: async function ({ workspaceId }) {
+  promptHistory: async ({ workspaceId }) => {
     try {
       const results = await PromptHistory.forWorkspace(workspaceId);
       return results;
@@ -530,7 +520,7 @@ const Workspace = {
    * @param {number} options.workspaceId - The ID of the workspace to delete prompt history for.
    * @returns {Promise<boolean>} A promise that resolves to a boolean indicating the success of the operation.
    */
-  deleteAllPromptHistory: async function ({ workspaceId }) {
+  deleteAllPromptHistory: async ({ workspaceId }) => {
     try {
       return await PromptHistory.delete({ workspaceId });
     } catch (error) {
@@ -546,7 +536,7 @@ const Workspace = {
    * @param {number} options.id - The ID of the prompt history to delete.
    * @returns {Promise<boolean>} A promise that resolves to a boolean indicating the success of the operation.
    */
-  deletePromptHistory: async function ({ workspaceId, id }) {
+  deletePromptHistory: async ({ workspaceId, id }) => {
     try {
       return await PromptHistory.delete({ id, workspaceId });
     } catch (error) {

@@ -4,9 +4,7 @@ const {
   formatChatHistory,
 } = require("../../helpers/chat/responses");
 const { MODEL_MAP } = require("../modelMap");
-const {
-  LLMPerformanceMonitor,
-} = require("../../helpers/chat/LLMPerformanceMonitor");
+const { LLMPerformanceMonitor } = require("../../helpers/chat/LLMPerformanceMonitor");
 
 class OpenAiLLM {
   constructor(embedder = null, modelPreference = null) {
@@ -25,9 +23,7 @@ class OpenAiLLM {
 
     this.embedder = embedder ?? new NativeEmbedder();
     this.defaultTemp = 0.7;
-    this.log(
-      `Initialized ${this.model} with context window ${this.promptWindowLimit()}`
-    );
+    this.log(`Initialized ${this.model} with context window ${this.promptWindowLimit()}`);
   }
 
   log(text, ...args) {
@@ -75,8 +71,7 @@ class OpenAiLLM {
   // and introduce latency for no reason.
   async isValidChatCompletionModel(modelName = "") {
     const isPreset =
-      modelName.toLowerCase().includes("gpt") ||
-      modelName.toLowerCase().startsWith("o");
+      modelName.toLowerCase().includes("gpt") || modelName.toLowerCase().startsWith("o");
     if (isPreset) return true;
 
     const model = await this.openai.models
@@ -97,7 +92,7 @@ class OpenAiLLM {
     }
 
     const content = [{ type: "text", text: userPrompt }];
-    for (let attachment of attachments) {
+    for (const attachment of attachments) {
       content.push({
         type: "image_url",
         image_url: {
@@ -140,9 +135,7 @@ class OpenAiLLM {
 
   async getChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!(await this.isValidChatCompletionModel(this.model)))
-      throw new Error(
-        `OpenAI chat: ${this.model} is not valid for chat completion!`
-      );
+      throw new Error(`OpenAI chat: ${this.model} is not valid for chat completion!`);
 
     const result = await LLMPerformanceMonitor.measureAsyncFunction(
       this.openai.chat.completions
@@ -156,11 +149,7 @@ class OpenAiLLM {
         })
     );
 
-    if (
-      !result.output.hasOwnProperty("choices") ||
-      result.output.choices.length === 0
-    )
-      return null;
+    if (!result.output.hasOwnProperty("choices") || result.output.choices.length === 0) return null;
 
     return {
       textResponse: result.output.choices[0].message.content,
@@ -176,9 +165,7 @@ class OpenAiLLM {
 
   async streamGetChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!(await this.isValidChatCompletionModel(this.model)))
-      throw new Error(
-        `OpenAI chat: ${this.model} is not valid for chat completion!`
-      );
+      throw new Error(`OpenAI chat: ${this.model} is not valid for chat completion!`);
 
     const measuredStreamRequest = await LLMPerformanceMonitor.measureStream(
       this.openai.chat.completions.create({

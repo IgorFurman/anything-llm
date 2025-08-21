@@ -1,11 +1,11 @@
 import CTAButton from "@/components/lib/CTAButton";
-import CommunityHubImportItemSteps from "../..";
-import showToast from "@/utils/toast";
+import AgentFlows from "@/models/agentFlows";
 import paths from "@/utils/paths";
+import { safeJsonParse } from "@/utils/request";
+import showToast from "@/utils/toast";
 import { CircleNotch } from "@phosphor-icons/react";
 import { useState } from "react";
-import AgentFlows from "@/models/agentFlows";
-import { safeJsonParse } from "@/utils/request";
+import CommunityHubImportItemSteps from "../..";
 
 export default function AgentFlow({ item, setStep }) {
   const flowInfo = safeJsonParse(item.flow, { steps: [] });
@@ -14,10 +14,7 @@ export default function AgentFlow({ item, setStep }) {
   async function importAgentFlow() {
     try {
       setLoading(true);
-      const { success, error, flow } = await AgentFlows.saveFlow(
-        item.name,
-        flowInfo
-      );
+      const { success, error, flow } = await AgentFlows.saveFlow(item.name, flowInfo);
       if (!success) throw new Error(error);
       if (!!flow?.uuid) await AgentFlows.toggleFlow(flow.uuid, true); // Enable the flow automatically after import
 
@@ -53,8 +50,8 @@ export default function AgentFlow({ item, setStep }) {
       </div>
       <div className="flex flex-col gap-y-[25px] text-white/80 light:text-theme-text-secondary text-sm">
         <p>
-          Agent flows allow you to create reusable sequences of actions that can
-          be triggered by your agent.
+          Agent flows allow you to create reusable sequences of actions that can be triggered by
+          your agent.
         </p>
         <div className="flex flex-col gap-y-2">
           <p className="font-semibold">Flow Details:</p>

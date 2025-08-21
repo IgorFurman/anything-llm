@@ -8,9 +8,8 @@ const { sourceIdentifier } = require("../../chats");
 
 const PineconeDB = {
   name: "Pinecone",
-  connect: async function () {
-    if (process.env.VECTOR_DB !== "pinecone")
-      throw new Error("Pinecone::Invalid ENV settings");
+  connect: async () => {
+    if (process.env.VECTOR_DB !== "pinecone") throw new Error("Pinecone::Invalid ENV settings");
 
     const client = new Pinecone({
       apiKey: process.env.PINECONE_API_KEY,
@@ -26,24 +25,21 @@ const PineconeDB = {
     const { pineconeIndex } = await this.connect();
     const { namespaces } = await pineconeIndex.describeIndexStats();
 
-    return Object.values(namespaces).reduce(
-      (a, b) => a + (b?.recordCount || 0),
-      0
-    );
+    return Object.values(namespaces).reduce((a, b) => a + (b?.recordCount || 0), 0);
   },
   namespaceCount: async function (_namespace = null) {
     const { pineconeIndex } = await this.connect();
     const namespace = await this.namespace(pineconeIndex, _namespace);
     return namespace?.recordCount || 0;
   },
-  similarityResponse: async function ({
+  similarityResponse: async ({
     client,
     namespace,
     queryVector,
     similarityThreshold = 0.25,
     topN = 4,
     filterIdentifiers = [],
-  }) {
+  }) => {
     const result = {
       contextTexts: [],
       sourceDocuments: [],
@@ -76,7 +72,7 @@ const PineconeDB = {
 
     return result;
   },
-  namespace: async function (index, namespace = null) {
+  namespace: async (index, namespace = null) => {
     if (!namespace) throw new Error("No namespace value provided.");
     const { namespaces } = await index.describeIndexStats();
     return namespaces.hasOwnProperty(namespace) ? namespaces[namespace] : null;
@@ -86,12 +82,12 @@ const PineconeDB = {
     const { pineconeIndex } = await this.connect();
     return await this.namespaceExists(pineconeIndex, namespace);
   },
-  namespaceExists: async function (index, namespace = null) {
+  namespaceExists: async (index, namespace = null) => {
     if (!namespace) throw new Error("No namespace value provided.");
     const { namespaces } = await index.describeIndexStats();
     return namespaces.hasOwnProperty(namespace);
   },
-  deleteVectorsInNamespace: async function (index, namespace = null) {
+  deleteVectorsInNamespace: async (index, namespace = null) => {
     const pineconeNamespace = index.namespace(namespace);
     await pineconeNamespace.deleteAll();
     return true;
@@ -174,9 +170,7 @@ const PineconeDB = {
           documentVectors.push({ docId, vectorId: vectorRecord.id });
         }
       } else {
-        throw new Error(
-          "Could not embed document chunks! This document will not be recorded."
-        );
+        throw new Error("Could not embed document chunks! This document will not be recorded.");
       }
 
       if (vectors.length > 0) {
@@ -224,9 +218,7 @@ const PineconeDB = {
     if (!(await this.namespaceExists(pineconeIndex, namespace)))
       throw new Error("Namespace by that name does not exist.");
     const stats = await this.namespace(pineconeIndex, namespace);
-    return stats
-      ? stats
-      : { message: "No stats were able to be fetched from DB" };
+    return stats ? stats : { message: "No stats were able to be fetched from DB" };
   },
   "delete-namespace": async function (reqBody = {}) {
     const { namespace = null } = reqBody;
@@ -253,9 +245,7 @@ const PineconeDB = {
 
     const { pineconeIndex } = await this.connect();
     if (!(await this.namespaceExists(pineconeIndex, namespace)))
-      throw new Error(
-        "Invalid namespace - has it been collected and populated yet?"
-      );
+      throw new Error("Invalid namespace - has it been collected and populated yet?");
 
     const queryVector = await LLMConnector.embedTextInput(input);
     const { contextTexts, sourceDocuments } = await this.similarityResponse({
@@ -276,16 +266,14 @@ const PineconeDB = {
       message: false,
     };
   },
-  curateSources: function (sources = []) {
+  curateSources: (sources = []) => {
     const documents = [];
     for (const source of sources) {
       const { metadata = {} } = source;
       if (Object.keys(metadata).length > 0) {
         documents.push({
           ...metadata,
-          ...(source.hasOwnProperty("pageContent")
-            ? { text: source.pageContent }
-            : {}),
+          ...(source.hasOwnProperty("pageContent") ? { text: source.pageContent } : {}),
         });
       }
     }

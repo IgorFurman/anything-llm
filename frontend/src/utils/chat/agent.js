@@ -1,8 +1,8 @@
-import { v4 } from "uuid";
-import { safeJsonParse } from "../request";
 import { saveAs } from "file-saver";
-import { API_BASE } from "../constants";
 import { useEffect, useState } from "react";
+import { v4 } from "uuid";
+import { API_BASE } from "../constants";
+import { safeJsonParse } from "../request";
 
 export const AGENT_SESSION_START = "agentSessionStart";
 export const AGENT_SESSION_END = "agentSessionEnd";
@@ -111,9 +111,7 @@ export function useIsAgentSessionActive() {
   useEffect(() => {
     function listenForAgentSession() {
       if (!window) return;
-      window.addEventListener(AGENT_SESSION_START, () =>
-        setActiveSession(true)
-      );
+      window.addEventListener(AGENT_SESSION_START, () => setActiveSession(true));
       window.addEventListener(AGENT_SESSION_END, () => setActiveSession(false));
     }
     listenForAgentSession();

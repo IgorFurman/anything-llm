@@ -14,9 +14,7 @@ async function setupTelemetry() {
   }
 
   if (Telemetry.isDev()) {
-    console.log(
-      `\x1b[33m[TELEMETRY STUBBED]\x1b[0m Anonymous Telemetry stubbed in development.`
-    );
+    console.log(`\x1b[33m[TELEMETRY STUBBED]\x1b[0m Anonymous Telemetry stubbed in development.`);
     return;
   }
 

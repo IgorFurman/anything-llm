@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from "react";
 import * as Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import Workspace from "@/models/workspace";
-import ManageWorkspace, {
-  useManageWorkspaceModal,
-} from "../../Modals/ManageWorkspace";
-import paths from "@/utils/paths";
-import { useParams, useNavigate } from "react-router-dom";
-import { GearSix, UploadSimple, DotsSixVertical } from "@phosphor-icons/react";
 import useUser from "@/hooks/useUser";
-import ThreadContainer from "./ThreadContainer";
-import { useMatch } from "react-router-dom";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import Workspace from "@/models/workspace";
+import paths from "@/utils/paths";
 import showToast from "@/utils/toast";
+import { DotsSixVertical, GearSix, UploadSimple } from "@phosphor-icons/react";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { useNavigate, useParams } from "react-router-dom";
+import { useMatch } from "react-router-dom";
+import ManageWorkspace, { useManageWorkspaceModal } from "../../Modals/ManageWorkspace";
+import ThreadContainer from "./ThreadContainer";
 
 export default function ActiveWorkspaces() {
   const navigate = useNavigate();
@@ -57,9 +55,7 @@ export default function ActiveWorkspaces() {
     const [removed] = reorderedWorkspaces.splice(startIndex, 1);
     reorderedWorkspaces.splice(endIndex, 0, removed);
     setWorkspaces(reorderedWorkspaces);
-    const success = Workspace.storeWorkspaceOrder(
-      reorderedWorkspaces.map((w) => w.id)
-    );
+    const success = Workspace.storeWorkspaceOrder(reorderedWorkspaces.map((w) => w.id));
     if (!success) {
       showToast("Failed to reorder workspaces", "error");
       Workspace.all().then((workspaces) => setWorkspaces(workspaces));
@@ -102,11 +98,7 @@ export default function ActiveWorkspaces() {
                     >
                       <div className="flex gap-x-2 items-center justify-between">
                         <a
-                          href={
-                            isActive
-                              ? null
-                              : paths.workspace.chat(workspace.slug)
-                          }
+                          href={isActive ? null : paths.workspace.chat(workspace.slug)}
                           aria-current={isActive ? "page" : ""}
                           className={`
                             transition-all duration-[200ms]
@@ -118,10 +110,7 @@ export default function ActiveWorkspaces() {
                         >
                           <div className="flex flex-row justify-between w-full items-center">
                             {user?.role !== "default" && (
-                              <div
-                                {...provided.dragHandleProps}
-                                className="cursor-grab mr-[3px]"
-                              >
+                              <div {...provided.dragHandleProps} className="cursor-grab mr-[3px]">
                                 <DotsSixVertical
                                   size={20}
                                   color="var(--theme-sidebar-item-workspace-active)"
@@ -164,9 +153,7 @@ export default function ActiveWorkspaces() {
                                     navigate(
                                       isInWorkspaceSettings
                                         ? paths.workspace.chat(workspace.slug)
-                                        : paths.workspace.settings.generalAppearance(
-                                            workspace.slug
-                                          )
+                                        : paths.workspace.settings.generalAppearance(workspace.slug)
                                     );
                                   }}
                                   className="rounded-md flex items-center justify-center text-[#A7A8A9] hover:text-white ml-auto p-[2px] hover:bg-[#646768]"
@@ -174,8 +161,7 @@ export default function ActiveWorkspaces() {
                                 >
                                   <GearSix
                                     color={
-                                      isInWorkspaceSettings &&
-                                      workspace.slug === slug
+                                      isInWorkspaceSettings && workspace.slug === slug
                                         ? "#46C8FF"
                                         : undefined
                                     }
@@ -187,12 +173,7 @@ export default function ActiveWorkspaces() {
                           </div>
                         </a>
                       </div>
-                      {isActive && (
-                        <ThreadContainer
-                          workspace={workspace}
-                          isActive={isActive}
-                        />
-                      )}
+                      {isActive && <ThreadContainer workspace={workspace} isActive={isActive} />}
                     </div>
                   )}
                 </Draggable>

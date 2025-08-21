@@ -1,8 +1,8 @@
-import { useRef } from "react";
-import { Trash } from "@phosphor-icons/react";
 import { stripUuidAndJsonFromString } from "@/components/Modals/ManageWorkspace/Documents/Directory/utils";
-import moment from "moment";
 import System from "@/models/system";
+import { Trash } from "@phosphor-icons/react";
+import moment from "moment";
+import { useRef } from "react";
 
 export default function DocumentSyncQueueRow({ queue }) {
   const rowRef = useRef(null);
@@ -17,10 +17,7 @@ export default function DocumentSyncQueueRow({ queue }) {
 
   return (
     <>
-      <tr
-        ref={rowRef}
-        className="bg-transparent text-white text-opacity-80 text-sm font-medium"
-      >
+      <tr ref={rowRef} className="bg-transparent text-white text-opacity-80 text-sm font-medium">
         <td scope="row" className="px-6 py-4 whitespace-nowrap">
           {stripUuidAndJsonFromString(queue.workspaceDoc.filename)}
         </td>

@@ -5,8 +5,7 @@ const { ROLES } = require("../../middleware/multiUserProtected");
 // are allowed to do this and that the new or existing user will be at or below their permission level.
 // the user executing this function should be an admin or manager.
 function validRoleSelection(currentUser = {}, newUserParams = {}) {
-  if (!newUserParams.hasOwnProperty("role"))
-    return { valid: true, error: null }; // not updating role, so skip.
+  if (!newUserParams.hasOwnProperty("role")) return { valid: true, error: null }; // not updating role, so skip.
   if (currentUser.role === ROLES.admin) return { valid: true, error: null };
   if (currentUser.role === ROLES.manager) {
     const validRoles = [ROLES.manager, ROLES.default];

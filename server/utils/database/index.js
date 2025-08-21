@@ -2,8 +2,7 @@ const { getGitVersion } = require("../../endpoints/utils");
 const { Telemetry } = require("../../models/telemetry");
 
 function checkColumnTemplate(tablename = null, column = null) {
-  if (!tablename || !column)
-    throw new Error(`Migration Error`, { tablename, column });
+  if (!tablename || !column) throw new Error(`Migration Error`, { tablename, column });
   return `SELECT COUNT(*) AS _exists FROM pragma_table_info('${tablename}') WHERE name='${column}'`;
 }
 
@@ -24,9 +23,7 @@ async function checkForMigrations(model, db) {
   if (model.migrations().length === 0) return;
   const toMigrate = [];
   for (const { colName, execCmd, doif } of model.migrations()) {
-    const { _exists } = await db.get(
-      checkColumnTemplate(model.tablename, colName)
-    );
+    const { _exists } = await db.get(checkColumnTemplate(model.tablename, colName));
     const colExists = _exists !== 0;
     if (colExists !== doif) continue;
 
@@ -93,9 +90,7 @@ async function setupTelemetry() {
   }
 
   if (Telemetry.isDev()) {
-    console.log(
-      `\x1b[33m[TELEMETRY STUBBED]\x1b[0m Anonymous Telemetry stubbed in development.`
-    );
+    console.log(`\x1b[33m[TELEMETRY STUBBED]\x1b[0m Anonymous Telemetry stubbed in development.`);
     return;
   }
 

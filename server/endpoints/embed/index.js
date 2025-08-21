@@ -8,10 +8,7 @@ const {
   canRespond,
   setConnectionMeta,
 } = require("../../utils/middleware/embedMiddleware");
-const {
-  convertToChatHistory,
-  writeResponseChunk,
-} = require("../../utils/helpers/chat/responses");
+const { convertToChatHistory, writeResponseChunk } = require("../../utils/helpers/chat/responses");
 
 function embeddedEndpoints(app) {
   if (!app) return;
@@ -66,45 +63,31 @@ function embeddedEndpoints(app) {
     }
   );
 
-  app.get(
-    "/embed/:embedId/:sessionId",
-    [validEmbedConfig],
-    async (request, response) => {
-      try {
-        const { sessionId } = request.params;
-        const embed = response.locals.embedConfig;
-        const history = await EmbedChats.forEmbedByUser(
-          embed.id,
-          sessionId,
-          null,
-          null,
-          true
-        );
+  app.get("/embed/:embedId/:sessionId", [validEmbedConfig], async (request, response) => {
+    try {
+      const { sessionId } = request.params;
+      const embed = response.locals.embedConfig;
+      const history = await EmbedChats.forEmbedByUser(embed.id, sessionId, null, null, true);
 
-        response.status(200).json({ history: convertToChatHistory(history) });
-      } catch (e) {
-        console.error(e.message, e);
-        response.sendStatus(500).end();
-      }
+      response.status(200).json({ history: convertToChatHistory(history) });
+    } catch (e) {
+      console.error(e.message, e);
+      response.sendStatus(500).end();
     }
-  );
+  });
 
-  app.delete(
-    "/embed/:embedId/:sessionId",
-    [validEmbedConfig],
-    async (request, response) => {
-      try {
-        const { sessionId } = request.params;
-        const embed = response.locals.embedConfig;
+  app.delete("/embed/:embedId/:sessionId", [validEmbedConfig], async (request, response) => {
+    try {
+      const { sessionId } = request.params;
+      const embed = response.locals.embedConfig;
 
-        await EmbedChats.markHistoryInvalid(embed.id, sessionId);
-        response.status(200).end();
-      } catch (e) {
-        console.error(e.message, e);
-        response.sendStatus(500).end();
-      }
+      await EmbedChats.markHistoryInvalid(embed.id, sessionId);
+      response.status(200).end();
+    } catch (e) {
+      console.error(e.message, e);
+      response.sendStatus(500).end();
     }
-  );
+  });
 }
 
 module.exports = { embeddedEndpoints };

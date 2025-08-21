@@ -16,11 +16,11 @@ describe("FlowExecutor: getValueFromPath", () => {
     expect(executor.getValueFromPath(obj, -1)).toBe("");
     expect(executor.getValueFromPath(obj, undefined)).toBe("");
     expect(executor.getValueFromPath(obj, [1, 2, 3])).toBe("");
-    expect(executor.getValueFromPath(obj, () => { })).toBe("");
+    expect(executor.getValueFromPath(obj, () => {})).toBe("");
   });
 
   it("should be able to resolve a value from a dot path at various levels", () => {
-    let obj = {
+    const obj = {
       a: {
         prop: "top-prop",
         b: {
@@ -31,9 +31,9 @@ describe("FlowExecutor: getValueFromPath", () => {
             { id: 1, name: "answer2" },
             { id: 2, name: "answer3" },
             { id: 3, name: "answer4" },
-          ]
-        }
-      }
+          ],
+        },
+      },
     };
     expect(executor.getValueFromPath(obj, "a.prop")).toBe("top-prop");
     expect(executor.getValueFromPath(obj, "a.b.c")).toBe("answer");
@@ -78,14 +78,14 @@ describe("FlowExecutor: getValueFromPath", () => {
       a: {
         items: [
           {
-            'my-long-key': [
+            "my-long-key": [
               { id: 1, name: "answer1" },
               { id: 2, name: "answer2" },
               { id: 3, name: "answer3" },
-            ]
+            ],
           },
         ],
-      }
+      },
     };
     expect(executor.getValueFromPath(obj, "a.items[0]['my-long-key'][1].id")).toBe(2);
     expect(executor.getValueFromPath(obj, "a.items[0]['my-long-key'][1].name")).toBe("answer2");

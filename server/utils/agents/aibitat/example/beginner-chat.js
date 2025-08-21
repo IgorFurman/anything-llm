@@ -22,9 +22,7 @@ const aibitat = new AIbitat({
       properties: {},
     },
     handler: async () => {
-      return await fetch(
-        "https://raw.githubusercontent.com/wladiston/aibitat/main/README.md"
-      )
+      return await fetch("https://raw.githubusercontent.com/wladiston/aibitat/main/README.md")
         .then((res) => res.text())
         .then((html) => NodeHtmlMarkdown.translate(html))
         .catch((e) => {
@@ -43,9 +41,7 @@ const aibitat = new AIbitat({
 
 async function main() {
   if (!process.env.OPEN_AI_KEY)
-    throw new Error(
-      "This example requires a valid OPEN_AI_KEY in the env.development file"
-    );
+    throw new Error("This example requires a valid OPEN_AI_KEY in the env.development file");
   await aibitat.start({
     from: Agent.HUMAN,
     to: Agent.AI,

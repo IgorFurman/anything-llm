@@ -1,7 +1,7 @@
+import { KEYBOARD_SHORTCUTS_HELP_EVENT } from "@/utils/keyboardShortcuts";
 import paths from "@/utils/paths";
 import { ArrowCircleUpRight } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
-import { KEYBOARD_SHORTCUTS_HELP_EVENT } from "@/utils/keyboardShortcuts";
 
 export default function Resources() {
   const { t } = useTranslation();

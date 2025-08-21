@@ -39,10 +39,8 @@ class NovitaProvider extends InheritMultiple([Provider, UnTooled]) {
         messages,
       })
       .then((result) => {
-        if (!result.hasOwnProperty("choices"))
-          throw new Error("Novita chat: No results!");
-        if (result.choices.length === 0)
-          throw new Error("Novita chat: No results length!");
+        if (!result.hasOwnProperty("choices")) throw new Error("Novita chat: No results!");
+        if (result.choices.length === 0) throw new Error("Novita chat: No results length!");
         return result.choices[0].message.content;
       })
       .catch((_) => {

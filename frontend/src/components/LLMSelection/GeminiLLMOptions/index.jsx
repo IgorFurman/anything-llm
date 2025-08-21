@@ -9,9 +9,7 @@ export default function GeminiLLMOptions({ settings }) {
     <div className="w-full flex flex-col">
       <div className="w-full flex items-center gap-[36px] mt-1.5">
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
-            Google AI API Key
-          </label>
+          <label className="text-white text-sm font-semibold block mb-3">Google AI API Key</label>
           <input
             type="password"
             name="GeminiLLMApiKey"
@@ -87,9 +85,7 @@ function GeminiModelSelection({ apiKey, settings }) {
   if (loading) {
     return (
       <div className="flex flex-col w-60">
-        <label className="text-white text-sm font-semibold block mb-3">
-          Chat Model Selection
-        </label>
+        <label className="text-white text-sm font-semibold block mb-3">Chat Model Selection</label>
         <select
           name="GeminiLLMModelPref"
           disabled={true}
@@ -105,9 +101,7 @@ function GeminiModelSelection({ apiKey, settings }) {
 
   return (
     <div className="flex flex-col w-60">
-      <label className="text-white text-sm font-semibold block mb-3">
-        Chat Model Selection
-      </label>
+      <label className="text-white text-sm font-semibold block mb-3">Chat Model Selection</label>
       <select
         name="GeminiLLMModelPref"
         required={true}

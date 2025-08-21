@@ -26,11 +26,7 @@ export default function LLMSelectorSidePanel({
             className={`border-none hover:cursor-pointer hover:bg-theme-checklist-item-bg-hover flex gap-x-2 items-center p-2 rounded-md ${selectedLLMProvider === llm.value ? "bg-theme-checklist-item-bg" : ""}`}
             onClick={() => onProviderClick(llm.value)}
           >
-            <img
-              src={llm.logo}
-              alt={`${llm.name} logo`}
-              className="w-6 h-6 rounded-md"
-            />
+            <img src={llm.logo} alt={`${llm.name} logo`} className="w-6 h-6 rounded-md" />
             <div className="flex flex-col">
               <div className="text-xs text-theme-text-primary">{llm.name}</div>
             </div>

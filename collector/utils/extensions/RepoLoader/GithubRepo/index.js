@@ -22,9 +22,7 @@ async function loadGithubRepo(args, response) {
       reason: "Could not prepare GitHub repo for loading! Check URL",
     };
 
-  console.log(
-    `-- Working GitHub ${repo.author}/${repo.project}:${repo.branch} --`
-  );
+  console.log(`-- Working GitHub ${repo.author}/${repo.project}:${repo.branch} --`);
   const docs = await repo.recursiveLoader();
   if (!docs.length) {
     return {
@@ -40,14 +38,10 @@ async function loadGithubRepo(args, response) {
 
   const outFolderPath =
     process.env.NODE_ENV === "development"
-      ? path.resolve(
-          __dirname,
-          `../../../../../server/storage/documents/${outFolder}`
-        )
+      ? path.resolve(__dirname, `../../../../../server/storage/documents/${outFolder}`)
       : path.resolve(process.env.STORAGE_DIR, `documents/${outFolder}`);
 
-  if (!fs.existsSync(outFolderPath))
-    fs.mkdirSync(outFolderPath, { recursive: true });
+  if (!fs.existsSync(outFolderPath)) fs.mkdirSync(outFolderPath, { recursive: true });
 
   for (const doc of docs) {
     if (!doc.pageContent) continue;
@@ -58,19 +52,13 @@ async function loadGithubRepo(args, response) {
       docAuthor: repo.author,
       description: "No description found.",
       docSource: doc.metadata.source,
-      chunkSource: generateChunkSource(
-        repo,
-        doc,
-        response.locals.encryptionWorker
-      ),
+      chunkSource: generateChunkSource(repo, doc, response.locals.encryptionWorker),
       published: new Date().toLocaleString(),
       wordCount: doc.pageContent.split(" ").length,
       pageContent: doc.pageContent,
       token_count_estimate: tokenizeString(doc.pageContent),
     };
-    console.log(
-      `[GitHub Loader]: Saving ${doc.metadata.source} to ${outFolder}`
-    );
+    console.log(`[GitHub Loader]: Saving ${doc.metadata.source} to ${outFolder}`);
     writeToServerDocuments({
       data,
       filename: `${slugify(doc.metadata.source)}-${data.id}`,
@@ -95,12 +83,7 @@ async function loadGithubRepo(args, response) {
  * Gets the page content from a specific source file in a give GitHub Repo, not all items in a repo.
  * @returns
  */
-async function fetchGithubFile({
-  repoUrl,
-  branch,
-  accessToken = null,
-  sourceFilePath,
-}) {
+async function fetchGithubFile({ repoUrl, branch, accessToken = null, sourceFilePath }) {
   const repo = new RepoLoader({
     repo: repoUrl,
     branch,
@@ -151,9 +134,7 @@ function generateChunkSource(repo, doc, encryptionWorker) {
     path: doc.metadata.source,
     pat: !!repo.accessToken ? repo.accessToken : null,
   };
-  return `github://${repo.repo}?payload=${encryptionWorker.encrypt(
-    JSON.stringify(payload)
-  )}`;
+  return `github://${repo.repo}?payload=${encryptionWorker.encrypt(JSON.stringify(payload))}`;
 }
 
 module.exports = { loadGithubRepo, fetchGithubFile };

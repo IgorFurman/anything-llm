@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import System from "@/models/system";
 import PreLoader from "@/components/Preloader";
+import useProviderEndpointAutoDiscovery from "@/hooks/useProviderEndpointAutoDiscovery";
+import System from "@/models/system";
 import { OLLAMA_COMMON_URLS } from "@/utils/constants";
 import { CaretDown, CaretUp, Info } from "@phosphor-icons/react";
-import useProviderEndpointAutoDiscovery from "@/hooks/useProviderEndpointAutoDiscovery";
+import React, { useEffect, useState } from "react";
 import { Tooltip } from "react-tooltip";
 
 export default function OllamaLLMOptions({ settings }) {
@@ -24,9 +24,7 @@ export default function OllamaLLMOptions({ settings }) {
   const [performanceMode, setPerformanceMode] = useState(
     settings?.OllamaLLMPerformanceMode || "base"
   );
-  const [maxTokens, setMaxTokens] = useState(
-    settings?.OllamaLLMTokenLimit || 4096
-  );
+  const [maxTokens, setMaxTokens] = useState(settings?.OllamaLLMTokenLimit || 4096);
 
   return (
     <div className="w-full flex flex-col gap-y-7">
@@ -37,9 +35,7 @@ export default function OllamaLLMOptions({ settings }) {
           authToken={authToken.value}
         />
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-2">
-            Max Tokens
-          </label>
+          <label className="text-white text-sm font-semibold block mb-2">Max Tokens</label>
           <input
             type="number"
             name="OllamaLLMTokenLimit"
@@ -80,9 +76,7 @@ export default function OllamaLLMOptions({ settings }) {
           <div className="w-full flex items-start gap-4">
             <div className="flex flex-col w-60">
               <div className="flex justify-between items-center mb-2">
-                <label className="text-white text-sm font-semibold">
-                  Ollama Base URL
-                </label>
+                <label className="text-white text-sm font-semibold">Ollama Base URL</label>
                 {loading ? (
                   <PreLoader size="6" />
                 ) : (
@@ -142,20 +136,20 @@ export default function OllamaLLMOptions({ settings }) {
                 className="tooltip !text-xs max-w-xs"
               >
                 <p className="text-red-500">
-                  <strong>Note:</strong> Be careful with the Maximum mode. It
-                  may increase resource usage significantly.
+                  <strong>Note:</strong> Be careful with the Maximum mode. It may increase resource
+                  usage significantly.
                 </p>
                 <br />
                 <p>
-                  <strong>Base:</strong> Ollama automatically limits the context
-                  to 2048 tokens, keeping resources usage low while maintaining
-                  good performance. Suitable for most users and models.
+                  <strong>Base:</strong> Ollama automatically limits the context to 2048 tokens,
+                  keeping resources usage low while maintaining good performance. Suitable for most
+                  users and models.
                 </p>
                 <br />
                 <p>
-                  <strong>Maximum:</strong> Uses the full context window (up to
-                  Max Tokens). Will result in increased resource usage but
-                  allows for larger context conversations. <br />
+                  <strong>Maximum:</strong> Uses the full context window (up to Max Tokens). Will
+                  result in increased resource usage but allows for larger context conversations.{" "}
+                  <br />
                   <br />
                   This is not recommended for most users.
                 </p>
@@ -177,8 +171,7 @@ export default function OllamaLLMOptions({ settings }) {
                 <option value="-1">Forever</option>
               </select>
               <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
-                Choose how long Ollama should keep your model in memory before
-                unloading.
+                Choose how long Ollama should keep your model in memory before unloading.
                 <a
                   className="underline text-blue-300"
                   href="https://github.com/ollama/ollama/blob/main/docs/faq.md#how-do-i-keep-a-model-loaded-in-memory-or-make-it-unload-immediately"
@@ -193,24 +186,18 @@ export default function OllamaLLMOptions({ settings }) {
           </div>
           <div className="w-full flex items-start gap-4">
             <div className="flex flex-col w-100">
-              <label className="text-white text-sm font-semibold">
-                Auth Token
-              </label>
+              <label className="text-white text-sm font-semibold">Auth Token</label>
               <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
-                Enter a <code>Bearer</code> Auth Token for interacting with your
-                Ollama server.
+                Enter a <code>Bearer</code> Auth Token for interacting with your Ollama server.
                 <br />
-                Used <b>only</b> if running Ollama behind an authentication
-                server.
+                Used <b>only</b> if running Ollama behind an authentication server.
               </p>
               <input
                 type="password"
                 name="OllamaLLMAuthToken"
                 className="border-none bg-theme-settings-input-bg mt-2 text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg outline-none block w-full p-2.5"
                 placeholder="Ollama Auth Token"
-                defaultValue={
-                  settings?.OllamaLLMAuthToken ? "*".repeat(20) : ""
-                }
+                defaultValue={settings?.OllamaLLMAuthToken ? "*".repeat(20) : ""}
                 value={authTokenValue.value}
                 onChange={authToken.onChange}
                 onBlur={authToken.onBlur}
@@ -226,11 +213,7 @@ export default function OllamaLLMOptions({ settings }) {
   );
 }
 
-function OllamaLLMModelSelection({
-  settings,
-  basePath = null,
-  authToken = null,
-}) {
+function OllamaLLMModelSelection({ settings, basePath = null, authToken = null }) {
   const [customModels, setCustomModels] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -243,11 +226,7 @@ function OllamaLLMModelSelection({
       }
       setLoading(true);
       try {
-        const { models } = await System.customModels(
-          "ollama",
-          authToken,
-          basePath
-        );
+        const { models } = await System.customModels("ollama", authToken, basePath);
         setCustomModels(models || []);
       } catch (error) {
         console.error("Failed to fetch custom models:", error);
@@ -261,23 +240,19 @@ function OllamaLLMModelSelection({
   if (loading || customModels.length == 0) {
     return (
       <div className="flex flex-col w-60">
-        <label className="text-white text-sm font-semibold block mb-2">
-          Ollama Model
-        </label>
+        <label className="text-white text-sm font-semibold block mb-2">Ollama Model</label>
         <select
           name="OllamaLLMModelPref"
           disabled={true}
           className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
         >
           <option disabled={true} selected={true}>
-            {!!basePath
-              ? "--loading available models--"
-              : "Enter Ollama URL first"}
+            {!!basePath ? "--loading available models--" : "Enter Ollama URL first"}
           </option>
         </select>
         <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
-          Select the Ollama model you want to use. Models will load after
-          entering a valid Ollama URL.
+          Select the Ollama model you want to use. Models will load after entering a valid Ollama
+          URL.
         </p>
       </div>
     );
@@ -285,9 +260,7 @@ function OllamaLLMModelSelection({
 
   return (
     <div className="flex flex-col w-60">
-      <label className="text-white text-sm font-semibold block mb-2">
-        Ollama Model
-      </label>
+      <label className="text-white text-sm font-semibold block mb-2">Ollama Model</label>
       <select
         name="OllamaLLMModelPref"
         required={true}

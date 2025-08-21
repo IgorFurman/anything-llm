@@ -8,10 +8,7 @@ const {
 } = require("../utils/middleware/communityHubDownloadsEnabled");
 const { EventLogs } = require("../models/eventLogs");
 const { Telemetry } = require("../models/telemetry");
-const {
-  flexUserRoleValid,
-  ROLES,
-} = require("../utils/middleware/multiUserProtected");
+const { flexUserRoleValid, ROLES } = require("../utils/middleware/multiUserProtected");
 
 function communityHubEndpoints(app) {
   if (!app) return;
@@ -189,8 +186,7 @@ function communityHubEndpoints(app) {
       try {
         const { communityHubItemType } = request.params;
         const { connectionKey } = await SystemSettings.hubSettings();
-        if (!connectionKey)
-          throw new Error("Community Hub connection key not found");
+        if (!connectionKey) throw new Error("Community Hub connection key not found");
 
         const data = reqBody(request);
         const { success, error, itemId } = await CommunityHub.createStaticItem(
@@ -205,9 +201,7 @@ function communityHubEndpoints(app) {
           { itemType: communityHubItemType },
           response.locals?.user?.id
         );
-        response
-          .status(200)
-          .json({ success: true, error: null, item: { id: itemId } });
+        response.status(200).json({ success: true, error: null, item: { id: itemId } });
       } catch (error) {
         console.error(error);
         response.status(500).json({ success: false, error: error.message });

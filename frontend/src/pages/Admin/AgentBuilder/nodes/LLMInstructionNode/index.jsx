@@ -1,10 +1,6 @@
 import React from "react";
 
-export default function LLMInstructionNode({
-  config,
-  onConfigChange,
-  renderVariableSelect,
-}) {
+export default function LLMInstructionNode({ config, onConfigChange, renderVariableSelect }) {
   return (
     <div className="space-y-4">
       <div>

@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
 import System from "@/models/system";
 import showToast from "@/utils/toast";
-import pluralize from "pluralize";
-import { TagsInput } from "react-tag-input-component";
 import { Info, Warning } from "@phosphor-icons/react";
-import { Tooltip } from "react-tooltip";
+import pluralize from "pluralize";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { TagsInput } from "react-tag-input-component";
+import { Tooltip } from "react-tooltip";
 
 const DEFAULT_BRANCHES = ["main", "master"];
 export default function GitlabOptions() {
@@ -25,11 +25,10 @@ export default function GitlabOptions() {
 
     try {
       setLoading(true);
-      showToast(
-        "Fetching all files for repo - this may take a while.",
-        "info",
-        { clear: true, autoClose: false }
-      );
+      showToast("Fetching all files for repo - this may take a while.", "info", {
+        clear: true,
+        autoClose: false,
+      });
       const { data, error } = await System.dataConnectors.gitlab.collect({
         repo: form.get("repo"),
         accessToken: form.get("accessToken"),
@@ -92,9 +91,7 @@ export default function GitlabOptions() {
               <div className="flex flex-col pr-10">
                 <div className="flex flex-col gap-y-1 mb-4">
                   <label className="text-white font-bold text-sm flex gap-x-2 items-center">
-                    <p className="font-bold text-white">
-                      {t("connectors.gitlab.token")}
-                    </p>{" "}
+                    <p className="font-bold text-white">{t("connectors.gitlab.token")}</p>{" "}
                     <p className="text-xs font-light flex items-center">
                       <span className="text-theme-text-secondary">
                         {t("connectors.gitlab.optional")}
@@ -156,18 +153,13 @@ export default function GitlabOptions() {
                   </label>
                 </div>
               </div>
-              <GitLabBranchSelection
-                repo={settings.repo}
-                accessToken={settings.accessToken}
-              />
+              <GitLabBranchSelection repo={settings.repo} accessToken={settings.accessToken} />
             </div>
 
             <div className="flex flex-col w-full py-4 pr-10">
               <div className="flex flex-col gap-y-1 mb-4">
                 <label className="text-white text-sm flex gap-x-2 items-center">
-                  <p className="text-white text-sm font-bold">
-                    {t("connectors.gitlab.ignores")}
-                  </p>
+                  <p className="text-white text-sm font-bold">{t("connectors.gitlab.ignores")}</p>
                 </label>
                 <p className="text-xs font-normal text-theme-text-secondary">
                   {t("connectors.gitlab.git_ignore")}
@@ -197,9 +189,7 @@ export default function GitlabOptions() {
               {loading ? "Collecting files..." : "Submit"}
             </button>
             {loading && (
-              <p className="text-xs text-white/50">
-                {t("connectors.gitlab.task_explained")}
-              </p>
+              <p className="text-xs text-white/50">{t("connectors.gitlab.task_explained")}</p>
             )}
           </div>
         </form>
@@ -236,9 +226,7 @@ function GitLabBranchSelection({ repo, accessToken }) {
     return (
       <div className="flex flex-col w-60">
         <div className="flex flex-col gap-y-1 mb-4">
-          <label className="text-white text-sm font-bold">
-            {t("connectors.gitlab.branch")}
-          </label>
+          <label className="text-white text-sm font-bold">{t("connectors.gitlab.branch")}</label>
           <p className="text-xs font-normal text-theme-text-secondary">
             {t("connectors.gitlab.branch_explained")}
           </p>
@@ -324,12 +312,7 @@ function PATTooltip({ accessToken }) {
           data-tooltip-place="right"
         />
       )}
-      <Tooltip
-        delayHide={300}
-        id="access-token-tooltip"
-        className="max-w-xs z-99"
-        clickable={true}
-      >
+      <Tooltip delayHide={300} id="access-token-tooltip" className="max-w-xs z-99" clickable={true}>
         <p className="text-sm">
           {t("connectors.gitlab.token_explained_start")}
           <a

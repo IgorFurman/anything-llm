@@ -2,13 +2,13 @@ import useLoginMode from "@/hooks/useLoginMode";
 import usePfp from "@/hooks/usePfp";
 import useUser from "@/hooks/useUser";
 import System from "@/models/system";
+import { AUTH_TIMESTAMP, AUTH_TOKEN, AUTH_USER } from "@/utils/constants";
 import paths from "@/utils/paths";
 import { userFromStorage } from "@/utils/request";
 import { Person } from "@phosphor-icons/react";
 import { useEffect, useRef, useState } from "react";
-import AccountModal from "../AccountModal";
-import { AUTH_TIMESTAMP, AUTH_TOKEN, AUTH_USER } from "@/utils/constants";
 import { useTranslation } from "react-i18next";
+import AccountModal from "../AccountModal";
 
 export default function UserButton() {
   const { t } = useTranslation();
@@ -46,9 +46,7 @@ export default function UserButton() {
     const fetchSupportEmail = async () => {
       const supportEmail = await System.fetchSupportEmail();
       setSupportEmail(
-        supportEmail?.email
-          ? `mailto:${supportEmail.email}`
-          : paths.mailToMintplex()
+        supportEmail?.email ? `mailto:${supportEmail.email}` : paths.mailToMintplex()
       );
     };
     fetchSupportEmail();
@@ -102,10 +100,7 @@ export default function UserButton() {
         </div>
       )}
       {user && showAccountSettings && (
-        <AccountModal
-          user={user}
-          hideModal={() => setShowAccountSettings(false)}
-        />
+        <AccountModal user={user} hideModal={() => setShowAccountSettings(false)} />
       )}
     </div>
   );
@@ -118,11 +113,7 @@ function UserDisplay() {
   if (pfp) {
     return (
       <div className="w-[35px] h-[35px] rounded-full flex-shrink-0 overflow-hidden transition-all duration-300 bg-gray-100 hover:border-slate-100 hover:border-opacity-50 border-transparent border hover:opacity-60">
-        <img
-          src={pfp}
-          alt="User profile picture"
-          className="w-full h-full object-cover"
-        />
+        <img src={pfp} alt="User profile picture" className="w-full h-full object-cover" />
       </div>
     );
   }

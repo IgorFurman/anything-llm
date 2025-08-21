@@ -1,12 +1,12 @@
-import paths from "@/utils/paths";
-import LGroupImg from "./l_group.png";
-import RGroupImg from "./r_group.png";
-import LGroupImgLight from "./l_group-light.png";
-import RGroupImgLight from "./r_group-light.png";
-import AnythingLLMLogo from "@/media/logo/anything-llm.png";
-import { useNavigate } from "react-router-dom";
 import { useTheme } from "@/hooks/useTheme";
+import AnythingLLMLogo from "@/media/logo/anything-llm.png";
+import paths from "@/utils/paths";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import LGroupImgLight from "./l_group-light.png";
+import LGroupImg from "./l_group.png";
+import RGroupImgLight from "./r_group-light.png";
+import RGroupImg from "./r_group.png";
 
 const IMG_SRCSET = {
   light: {

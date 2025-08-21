@@ -1,10 +1,7 @@
 module.exports.SqlAgentQuery = {
   name: "sql-query",
-  plugin: function () {
-    const {
-      getDBClient,
-      listSQLConnections,
-    } = require("./SQLConnectors/index.js");
+  plugin: () => {
+    const { getDBClient, listSQLConnections } = require("./SQLConnectors/index.js");
 
     return {
       name: "sql-query",
@@ -31,12 +28,10 @@ module.exports.SqlAgentQuery = {
               }),
             },
             {
-              prompt:
-                "Do we have anyone in the staff table for our production db named 'sam'? ",
+              prompt: "Do we have anyone in the staff table for our production db named 'sam'? ",
               call: JSON.stringify({
                 database_id: "production",
-                sql_query:
-                  "SElECT * FROM staff WHERE first_name='sam%' OR last_name='sam%'",
+                sql_query: "SElECT * FROM staff WHERE first_name='sam%' OR last_name='sam%'",
               }),
             },
           ],
@@ -65,10 +60,7 @@ module.exports.SqlAgentQuery = {
                 (db) => db.database_id === database_id
               );
               if (!databaseConfig) {
-                this.super.handlerProps.log(
-                  `sql-query failed to find config!`,
-                  database_id
-                );
+                this.super.handlerProps.log(`sql-query failed to find config!`, database_id);
                 return `No database connection for ${database_id} was found!`;
               }
 
@@ -80,10 +72,7 @@ module.exports.SqlAgentQuery = {
               this.super.introspect(`Running SQL: ${sql_query}`);
               const result = await db.runQuery(sql_query);
               if (result.error) {
-                this.super.handlerProps.log(
-                  `sql-query tool reported error`,
-                  result.error
-                );
+                this.super.handlerProps.log(`sql-query tool reported error`, result.error);
                 this.super.introspect(`Error: ${result.error}`);
                 return `There was an error running the query: ${result.error}`;
               }

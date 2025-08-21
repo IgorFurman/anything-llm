@@ -1,8 +1,8 @@
-import GenericHubCard from "./generic";
-import SystemPromptHubCard from "./systemPrompt";
-import SlashCommandHubCard from "./slashCommand";
-import AgentSkillHubCard from "./agentSkill";
 import AgentFlowHubCard from "./agentFlow";
+import AgentSkillHubCard from "./agentSkill";
+import GenericHubCard from "./generic";
+import SlashCommandHubCard from "./slashCommand";
+import SystemPromptHubCard from "./systemPrompt";
 
 export default function HubItemCard({ type, item }) {
   switch (type) {

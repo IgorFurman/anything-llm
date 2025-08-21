@@ -1,14 +1,9 @@
-import { AVAILABLE_LLM_PROVIDERS } from "@/pages/GeneralSettings/LLMPreference";
 import { DISABLED_PROVIDERS } from "@/hooks/useGetProvidersModels";
+import { AVAILABLE_LLM_PROVIDERS } from "@/pages/GeneralSettings/LLMPreference";
 
-export function autoScrollToSelectedLLMProvider(
-  selectedLLMProvider,
-  timeout = 500
-) {
+export function autoScrollToSelectedLLMProvider(selectedLLMProvider, timeout = 500) {
   setTimeout(() => {
-    const selectedButton = document.querySelector(
-      `[data-llm-value="${selectedLLMProvider}"]`
-    );
+    const selectedButton = document.querySelector(`[data-llm-value="${selectedLLMProvider}"]`);
     if (!selectedButton) return;
     selectedButton.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }, timeout);
@@ -31,9 +26,7 @@ export function validatedModelSelection(model) {
 
     // If the model is not in the dropdown, return the first model in the dropdown
     // to prevent invalid provider<>model selection issues
-    const selectedOption = selectOption.querySelector(
-      `option[value="${model}"]`
-    );
+    const selectedOption = selectOption.querySelector(`option[value="${model}"]`);
     if (!selectedOption) return selectOption.querySelector(`option`).value;
 
     // If the model is in the dropdown, return the model as is
@@ -44,9 +37,7 @@ export function validatedModelSelection(model) {
 }
 
 export function hasMissingCredentials(settings, provider) {
-  const providerEntry = AVAILABLE_LLM_PROVIDERS.find(
-    (p) => p.value === provider
-  );
+  const providerEntry = AVAILABLE_LLM_PROVIDERS.find((p) => p.value === provider);
   if (!providerEntry) return false;
 
   for (const requiredKey of providerEntry.requiredConfig) {

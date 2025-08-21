@@ -3,9 +3,7 @@ export default function GenericOpenAiOptions({ settings }) {
     <div className="flex flex-col gap-y-7">
       <div className="flex gap-[36px] mt-1.5 flex-wrap">
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
-            Base URL
-          </label>
+          <label className="text-white text-sm font-semibold block mb-3">Base URL</label>
           <input
             type="url"
             name="GenericOpenAiBasePath"
@@ -18,9 +16,7 @@ export default function GenericOpenAiOptions({ settings }) {
           />
         </div>
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
-            API Key
-          </label>
+          <label className="text-white text-sm font-semibold block mb-3">API Key</label>
           <input
             type="password"
             name="GenericOpenAiKey"
@@ -33,9 +29,7 @@ export default function GenericOpenAiOptions({ settings }) {
           />
         </div>
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
-            Chat Model Name
-          </label>
+          <label className="text-white text-sm font-semibold block mb-3">Chat Model Name</label>
           <input
             type="text"
             name="GenericOpenAiModelPref"
@@ -65,9 +59,7 @@ export default function GenericOpenAiOptions({ settings }) {
           />
         </div>
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
-            Max Tokens
-          </label>
+          <label className="text-white text-sm font-semibold block mb-3">Max Tokens</label>
           <input
             type="number"
             name="GenericOpenAiMaxTokens"

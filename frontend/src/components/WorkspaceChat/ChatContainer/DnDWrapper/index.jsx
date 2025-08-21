@@ -1,10 +1,10 @@
-import { useState, useEffect, createContext, useContext } from "react";
-import { v4 } from "uuid";
-import System from "@/models/system";
-import { useDropzone } from "react-dropzone";
-import DndIcon from "./dnd-icon.png";
-import Workspace from "@/models/workspace";
 import useUser from "@/hooks/useUser";
+import System from "@/models/system";
+import Workspace from "@/models/workspace";
+import { createContext, useContext, useEffect, useState } from "react";
+import { useDropzone } from "react-dropzone";
+import { v4 } from "uuid";
+import DndIcon from "./dnd-icon.png";
 
 export const DndUploaderContext = createContext();
 export const REMOVE_ATTACHMENT_EVENT = "ATTACHMENT_REMOVE";
@@ -43,10 +43,7 @@ export function DnDFileUploaderProvider({ workspace, children }) {
     return () => {
       window.removeEventListener(REMOVE_ATTACHMENT_EVENT, handleRemove);
       window.removeEventListener(CLEAR_ATTACHMENTS_EVENT, resetAttachments);
-      window.removeEventListener(
-        PASTE_ATTACHMENT_EVENT,
-        handlePastedAttachment
-      );
+      window.removeEventListener(PASTE_ATTACHMENT_EVENT, handlePastedAttachment);
     };
   }, []);
 
@@ -181,27 +178,25 @@ export function DnDFileUploaderProvider({ workspace, children }) {
       const formData = new FormData();
       formData.append("file", attachment.file, attachment.file.name);
       promises.push(
-        Workspace.uploadAndEmbedFile(workspace.slug, formData).then(
-          ({ response, data }) => {
-            const updates = {
-              status: response.ok ? "success" : "failed",
-              error: data?.error ?? null,
-              document: data?.document,
-            };
+        Workspace.uploadAndEmbedFile(workspace.slug, formData).then(({ response, data }) => {
+          const updates = {
+            status: response.ok ? "success" : "failed",
+            error: data?.error ?? null,
+            document: data?.document,
+          };
 
-            setFiles((prev) => {
-              return prev.map(
-                (
-                  /** @type {Attachment} */
-                  prevFile
-                ) => {
-                  if (prevFile.uid !== attachment.uid) return prevFile;
-                  return { ...prevFile, ...updates };
-                }
-              );
-            });
-          }
-        )
+          setFiles((prev) => {
+            return prev.map(
+              (
+                /** @type {Attachment} */
+                prevFile
+              ) => {
+                if (prevFile.uid !== attachment.uid) return prevFile;
+                return { ...prevFile, ...updates };
+              }
+            );
+          });
+        })
       );
     }
 
@@ -221,8 +216,7 @@ export function DnDFileUploaderProvider({ workspace, children }) {
 }
 
 export default function DnDFileUploaderWrapper({ children }) {
-  const { onDrop, ready, dragging, setDragging } =
-    useContext(DndUploaderContext);
+  const { onDrop, ready, dragging, setDragging } = useContext(DndUploaderContext);
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     disabled: !ready,

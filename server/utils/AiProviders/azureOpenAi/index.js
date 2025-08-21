@@ -3,17 +3,13 @@ const {
   formatChatHistory,
   handleDefaultStreamResponseV2,
 } = require("../../helpers/chat/responses");
-const {
-  LLMPerformanceMonitor,
-} = require("../../helpers/chat/LLMPerformanceMonitor");
+const { LLMPerformanceMonitor } = require("../../helpers/chat/LLMPerformanceMonitor");
 
 class AzureOpenAiLLM {
   constructor(embedder = null, modelPreference = null) {
     const { AzureOpenAI } = require("openai");
-    if (!process.env.AZURE_OPENAI_ENDPOINT)
-      throw new Error("No Azure API endpoint was set.");
-    if (!process.env.AZURE_OPENAI_KEY)
-      throw new Error("No Azure API key was set.");
+    if (!process.env.AZURE_OPENAI_ENDPOINT) throw new Error("No Azure API endpoint was set.");
+    if (!process.env.AZURE_OPENAI_KEY) throw new Error("No Azure API key was set.");
 
     this.apiVersion = "2024-12-01-preview";
     this.openai = new AzureOpenAI({
@@ -22,8 +18,7 @@ class AzureOpenAiLLM {
       endpoint: process.env.AZURE_OPENAI_ENDPOINT,
     });
     this.model = modelPreference ?? process.env.OPEN_MODEL_PREF;
-    this.isOTypeModel =
-      process.env.AZURE_OPENAI_MODEL_TYPE === "reasoning" || false;
+    this.isOTypeModel = process.env.AZURE_OPENAI_MODEL_TYPE === "reasoning" || false;
     this.limits = {
       history: this.promptWindowLimit() * 0.15,
       system: this.promptWindowLimit() * 0.15,
@@ -56,9 +51,7 @@ class AzureOpenAiLLM {
   streamingEnabled() {
     // Streaming of reasoning models is not supported
     if (this.isOTypeModel) {
-      this.#log(
-        "Streaming will be disabled. AZURE_OPENAI_MODEL_TYPE is set to 'reasoning'."
-      );
+      this.#log("Streaming will be disabled. AZURE_OPENAI_MODEL_TYPE is set to 'reasoning'.");
       return false;
     }
     return "streamGetChatCompletion" in this;
@@ -97,7 +90,7 @@ class AzureOpenAiLLM {
     }
 
     const content = [{ type: "text", text: userPrompt }];
-    for (let attachment of attachments) {
+    for (const attachment of attachments) {
       content.push({
         type: "image_url",
         image_url: {
@@ -143,11 +136,7 @@ class AzureOpenAiLLM {
       })
     );
 
-    if (
-      !result.output.hasOwnProperty("choices") ||
-      result.output.choices.length === 0
-    )
-      return null;
+    if (!result.output.hasOwnProperty("choices") || result.output.choices.length === 0) return null;
 
     return {
       textResponse: result.output.choices[0].message.content,

@@ -1,11 +1,7 @@
 const { v4 } = require("uuid");
 const fs = require("fs");
 const { tokenizeString } = require("../../utils/tokenizer");
-const {
-  createdDate,
-  trashFile,
-  writeToServerDocuments,
-} = require("../../utils/files");
+const { createdDate, trashFile, writeToServerDocuments } = require("../../utils/files");
 const { default: slugify } = require("slugify");
 
 async function asTxt({ fullFilePath = "", filename = "" }) {

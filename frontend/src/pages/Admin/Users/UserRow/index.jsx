@@ -1,10 +1,10 @@
+import ModalWrapper from "@/components/ModalWrapper";
+import { useModal } from "@/hooks/useModal";
+import Admin from "@/models/admin";
+import showToast from "@/utils/toast";
 import { useRef, useState } from "react";
 import { titleCase } from "text-case";
-import Admin from "@/models/admin";
 import EditUserModal from "./EditUserModal";
-import showToast from "@/utils/toast";
-import { useModal } from "@/hooks/useModal";
-import ModalWrapper from "@/components/ModalWrapper";
 
 const ModMap = {
   admin: ["admin", "manager", "default"],
@@ -92,11 +92,7 @@ export default function UserRow({ currUser, user }) {
         </td>
       </tr>
       <ModalWrapper isOpen={isOpen}>
-        <EditUserModal
-          currentUser={currUser}
-          user={user}
-          closeModal={closeModal}
-        />
+        <EditUserModal currentUser={currUser} user={user} closeModal={closeModal} />
       </ModalWrapper>
     </>
   );

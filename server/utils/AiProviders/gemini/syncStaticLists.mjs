@@ -1,7 +1,7 @@
 /**
  * This is a script that syncs the static lists of models from the Gemini API
  * so that maintainers can keep the fallback lists up to date.
- * 
+ *
  * To run, cd into this directory and run:
  * node syncStaticLists.mjs
  */
@@ -11,7 +11,7 @@ import path from "path";
 import dotenv from "dotenv";
 
 dotenv.config({ path: `../../../.env.development` });
-const existingCachePath = path.resolve('../../../storage/models/gemini')
+const existingCachePath = path.resolve("../../../storage/models/gemini");
 
 // This will fetch all of the models from the Gemini API as well as post-process them
 // to remove any models that are deprecated or experimental.

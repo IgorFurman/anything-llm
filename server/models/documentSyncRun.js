@@ -10,9 +10,7 @@ const DocumentSyncRun = {
   save: async function (queueId = null, status = null, result = {}) {
     try {
       if (!this.statuses.hasOwnProperty(status))
-        throw new Error(
-          `DocumentSyncRun status ${status} is not a valid status.`
-        );
+        throw new Error(`DocumentSyncRun status ${status} is not a valid status.`);
 
       const run = await prisma.document_sync_executions.create({
         data: {
@@ -28,7 +26,7 @@ const DocumentSyncRun = {
     }
   },
 
-  get: async function (clause = {}) {
+  get: async (clause = {}) => {
     try {
       const queue = await prisma.document_sync_executions.findFirst({
         where: clause,
@@ -40,12 +38,7 @@ const DocumentSyncRun = {
     }
   },
 
-  where: async function (
-    clause = {},
-    limit = null,
-    orderBy = null,
-    include = {}
-  ) {
+  where: async (clause = {}, limit = null, orderBy = null, include = {}) => {
     try {
       const results = await prisma.document_sync_executions.findMany({
         where: clause,
@@ -60,7 +53,7 @@ const DocumentSyncRun = {
     }
   },
 
-  count: async function (clause = {}, limit = null, orderBy = {}) {
+  count: async (clause = {}, limit = null, orderBy = {}) => {
     try {
       const count = await prisma.document_sync_executions.count({
         where: clause,
@@ -74,7 +67,7 @@ const DocumentSyncRun = {
     }
   },
 
-  delete: async function (clause = {}) {
+  delete: async (clause = {}) => {
     try {
       await prisma.document_sync_executions.deleteMany({ where: clause });
       return true;

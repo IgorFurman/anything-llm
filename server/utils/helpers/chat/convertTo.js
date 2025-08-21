@@ -7,9 +7,7 @@ const { safeJsonParse } = require("../../http");
 
 async function convertToCSV(preparedData) {
   const headers = new Set(["id", "workspace", "prompt", "response", "sent_at"]);
-  preparedData.forEach((item) =>
-    Object.keys(item).forEach((key) => headers.add(key))
-  );
+  preparedData.forEach((item) => Object.keys(item).forEach((key) => headers.add(key)));
 
   const rows = [Array.from(headers).join(",")];
 
@@ -41,8 +39,7 @@ async function convertToJSONL(workspaceChatsMap) {
 }
 
 async function prepareChatsForExport(format = "jsonl", chatType = "workspace") {
-  if (!exportMap.hasOwnProperty(format))
-    throw new Error(`Invalid export type: ${format}`);
+  if (!exportMap.hasOwnProperty(format)) throw new Error(`Invalid export type: ${format}`);
 
   let chats;
   if (chatType === "workspace") {
@@ -75,9 +72,7 @@ async function prepareChatsForExport(format = "jsonl", chatType = "workspace") {
       if (chatType === "embed") {
         return {
           ...baseData,
-          workspace: chat.embed_config
-            ? chat.embed_config.workspace.name
-            : "unknown workspace",
+          workspace: chat.embed_config ? chat.embed_config.workspace.name : "unknown workspace",
         };
       }
 
@@ -89,12 +84,7 @@ async function prepareChatsForExport(format = "jsonl", chatType = "workspace") {
           : chat.api_session_id !== null
             ? "API"
             : "unknown user",
-        rating:
-          chat.feedbackScore === null
-            ? "--"
-            : chat.feedbackScore
-              ? "GOOD"
-              : "BAD",
+        rating: chat.feedbackScore === null ? "--" : chat.feedbackScore ? "GOOD" : "BAD",
       };
     });
 
@@ -105,10 +95,7 @@ async function prepareChatsForExport(format = "jsonl", chatType = "workspace") {
     const preparedData = chats.map((chat) => {
       const responseJson = JSON.parse(chat.response);
       return {
-        instruction: buildSystemPrompt(
-          chat,
-          chat.workspace ? chat.workspace.openAiPrompt : null
-        ),
+        instruction: buildSystemPrompt(chat, chat.workspace ? chat.workspace.openAiPrompt : null),
         input: chat.prompt,
         output: responseJson.text,
       };

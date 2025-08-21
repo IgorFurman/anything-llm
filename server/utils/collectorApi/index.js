@@ -80,9 +80,7 @@ class CollectorApi {
       headers: {
         "Content-Type": "application/json",
         "X-Integrity": this.comkey.sign(data),
-        "X-Payload-Signer": this.comkey.encrypt(
-          new EncryptionManager().xPayload
-        ),
+        "X-Payload-Signer": this.comkey.encrypt(new EncryptionManager().xPayload),
       },
       body: data,
     })
@@ -118,9 +116,7 @@ class CollectorApi {
       headers: {
         "Content-Type": "application/json",
         "X-Integrity": this.comkey.sign(data),
-        "X-Payload-Signer": this.comkey.encrypt(
-          new EncryptionManager().xPayload
-        ),
+        "X-Payload-Signer": this.comkey.encrypt(new EncryptionManager().xPayload),
       },
       body: data,
     })
@@ -153,9 +149,7 @@ class CollectorApi {
       headers: {
         "Content-Type": "application/json",
         "X-Integrity": this.comkey.sign(data),
-        "X-Payload-Signer": this.comkey.encrypt(
-          new EncryptionManager().xPayload
-        ),
+        "X-Payload-Signer": this.comkey.encrypt(new EncryptionManager().xPayload),
       },
       body: data,
     })
@@ -180,9 +174,7 @@ class CollectorApi {
       headers: {
         "Content-Type": "application/json",
         "X-Integrity": this.comkey.sign(body),
-        "X-Payload-Signer": this.comkey.encrypt(
-          new EncryptionManager().xPayload
-        ),
+        "X-Payload-Signer": this.comkey.encrypt(new EncryptionManager().xPayload),
       },
     })
       .then((res) => {
@@ -216,9 +208,7 @@ class CollectorApi {
       headers: {
         "Content-Type": "application/json",
         "X-Integrity": this.comkey.sign(data),
-        "X-Payload-Signer": this.comkey.encrypt(
-          new EncryptionManager().xPayload
-        ),
+        "X-Payload-Signer": this.comkey.encrypt(new EncryptionManager().xPayload),
       },
       body: data,
     })

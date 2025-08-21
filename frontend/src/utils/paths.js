@@ -75,12 +75,8 @@ export default {
       generalAppearance: (slug) => {
         return `/workspace/${slug}/settings/general-appearance`;
       },
-      chatSettings: function (slug, options = {}) {
-        return applyOptions(
-          `/workspace/${slug}/settings/chat-settings`,
-          options
-        );
-      },
+      chatSettings: (slug, options = {}) =>
+        applyOptions(`/workspace/${slug}/settings/chat-settings`, options),
       vectorDatabase: (slug) => {
         return `/workspace/${slug}/settings/vector-database`;
       },
@@ -178,9 +174,7 @@ export default {
   },
   communityHub: {
     website: () => {
-      return import.meta.env.DEV
-        ? `http://localhost:5173`
-        : `https://hub.anythingllm.com`;
+      return import.meta.env.DEV ? `http://localhost:5173` : `https://hub.anythingllm.com`;
     },
     /**
      * View more items of a given type on the community hub.

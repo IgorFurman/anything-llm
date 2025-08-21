@@ -130,8 +130,7 @@ const TRANSLATIONS = {
     part4:
       'Es simple. Todas las colecciones se organizan en contenedores que llamamos "Workspaces". Los Workspaces son contenedores de archivos, documentos, imágenes, PDFs y otros archivos que se transformarán en algo que los LLM puedan entender y usar en una conversación.\n\nPuedes agregar y eliminar archivos en cualquier momento.',
     createWorkspace: "Crea tu primer workspace",
-    user2:
-      "¿Es esto como un Dropbox de IA o algo así? ¿Qué hay de chatear? ¿Es un chatbot, no?",
+    user2: "¿Es esto como un Dropbox de IA o algo así? ¿Qué hay de chatear? ¿Es un chatbot, no?",
     part5:
       "AnythingLLM es más que un Dropbox más inteligente.\n\nAnythingLLM ofrece dos formas de interactuar con tus datos:\n\n<i>Consulta:</i> Tus chats devolverán datos o inferencias encontradas con los documentos en tu workspace al que tiene acceso. ¡Agregar más documentos al workspace lo hace más inteligente! \n\n<i>Conversacional:</i> Tus documentos y tu historial de chat en curso contribuyen al conocimiento del LLM al mismo tiempo. Ideal para agregar información en tiempo real basada en texto o correcciones y malentendidos que el LLM pueda tener.\n\n¡Puedes alternar entre ambos modos <i>en medio de una conversación!</i>",
     user3: "¡Vaya, esto suena increíble, déjame probarlo ya!",
@@ -156,8 +155,7 @@ const TRANSLATIONS = {
       description: "Número total de vectores en tu base de datos de vectores.",
     },
     names: {
-      description:
-        "Esto solo cambiará el nombre de visualización de tu espacio de trabajo.",
+      description: "Esto solo cambiará el nombre de visualización de tu espacio de trabajo.",
     },
     message: {
       title: "Mensajes de chat sugeridos",
@@ -170,8 +168,7 @@ const TRANSLATIONS = {
     },
     pfp: {
       title: "Imagen de perfil del asistente",
-      description:
-        "Personaliza la imagen de perfil del asistente para este espacio de trabajo.",
+      description: "Personaliza la imagen de perfil del asistente para este espacio de trabajo.",
       image: "Imagen del espacio de trabajo",
       remove: "Eliminar imagen del espacio de trabajo",
     },
@@ -203,8 +200,7 @@ const TRANSLATIONS = {
       title: "Modo de chat",
       chat: {
         title: "Chat",
-        "desc-start":
-          "proporcionará respuestas con el conocimiento general del LLM",
+        "desc-start": "proporcionará respuestas con el conocimiento general del LLM",
         and: "y",
         "desc-end": "el contexto del documento que se encuentre.",
       },
@@ -250,8 +246,7 @@ const TRANSLATIONS = {
     },
     temperature: {
       title: "Temperatura de LLM",
-      "desc-start":
-        'Esta configuración controla cuán "creativas" serán las respuestas de tu LLM.',
+      "desc-start": 'Esta configuración controla cuán "creativas" serán las respuestas de tu LLM.',
       "desc-end":
         "Cuanto mayor sea el número, más creativas serán las respuestas. Para algunos modelos, esto puede llevar a respuestas incoherentes cuando se establece demasiado alto.",
       hint: "La mayoría de los LLM tienen varios rangos aceptables de valores válidos. Consulta a tu proveedor de LLM para obtener esa información.",
@@ -279,10 +274,8 @@ const TRANSLATIONS = {
       resetting: "Borrando vectores...",
       confirm:
         "Estás a punto de restablecer la base de datos de vectores de este espacio de trabajo. Esto eliminará todas las incrustaciones de vectores actualmente incrustadas.\n\nLos archivos de origen originales permanecerán intactos. Esta acción es irreversible.",
-      error:
-        "¡No se pudo restablecer la base de datos de vectores del espacio de trabajo!",
-      success:
-        "¡La base de datos de vectores del espacio de trabajo fue restablecida!",
+      error: "¡No se pudo restablecer la base de datos de vectores del espacio de trabajo!",
+      success: "¡La base de datos de vectores del espacio de trabajo fue restablecida!",
     },
   },
   agent: {
@@ -320,8 +313,7 @@ const TRANSLATIONS = {
       },
       scrape: {
         title: "Rastrear sitios web",
-        description:
-          "Permitir que el agente visite y rastree el contenido de sitios web.",
+        description: "Permitir que el agente visite y rastree el contenido de sitios web.",
       },
       generate: {
         title: "Generar gráficos",
@@ -392,10 +384,8 @@ const TRANSLATIONS = {
     provider: "Proveedor de transcripción",
     "warn-start":
       "El uso del modelo local Whisper en máquinas con RAM o CPU limitadas puede bloquear AnythingLLM al procesar archivos multimedia.",
-    "warn-recommend":
-      "Recomendamos al menos 2GB de RAM y subir archivos <10Mb.",
-    "warn-end":
-      "El modelo incorporado se descargará automáticamente en el primer uso.",
+    "warn-recommend": "Recomendamos al menos 2GB de RAM y subir archivos <10Mb.",
+    "warn-end": "El modelo incorporado se descargará automáticamente en el primer uso.",
   },
   embedding: {
     title: "Preferencia de incrustación",
@@ -461,8 +451,7 @@ const TRANSLATIONS = {
   },
   multi: {
     title: "Modo multiusuario",
-    description:
-      "Configura tu instancia para admitir a tu equipo activando el modo multiusuario.",
+    description: "Configura tu instancia para admitir a tu equipo activando el modo multiusuario.",
     enable: {
       "is-enable": "El modo multiusuario está habilitado",
       enable: "Habilitar modo multiusuario",
@@ -480,8 +469,7 @@ const TRANSLATIONS = {
   },
   event: {
     title: "Registros de eventos",
-    description:
-      "Ver todas las acciones y eventos que ocurren en esta instancia para monitoreo.",
+    description: "Ver todas las acciones y eventos que ocurren en esta instancia para monitoreo.",
     clear: "Borrar registros de eventos",
     table: {
       type: "Tipo de evento",
@@ -825,13 +813,11 @@ const TRANSLATIONS = {
     },
   },
   "main-page": {
-    noWorkspaceError:
-      "Por favor, crea un espacio de trabajo antes de iniciar un chat.",
+    noWorkspaceError: "Por favor, crea un espacio de trabajo antes de iniciar un chat.",
     checklist: {
       title: "Comenzando",
       tasksLeft: "tareas restantes",
-      completed:
-        "¡Estás en camino de convertirte en un experto en AnythingLLM!",
+      completed: "¡Estás en camino de convertirte en un experto en AnythingLLM!",
       dismiss: "cerrar",
       tasks: {
         create_workspace: {
@@ -877,8 +863,7 @@ const TRANSLATIONS = {
       features: {
         customAgents: {
           title: "Agentes de IA Personalizados",
-          description:
-            "Crea poderosos agentes de IA y automatizaciones sin código.",
+          description: "Crea poderosos agentes de IA y automatizaciones sin código.",
           primaryAction: "Chatear usando @agente",
           secondaryAction: "Crear un flujo de agente",
         },

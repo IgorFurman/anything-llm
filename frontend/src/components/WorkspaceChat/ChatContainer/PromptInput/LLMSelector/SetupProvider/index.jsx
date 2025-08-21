@@ -1,17 +1,11 @@
-import { createPortal } from "react-dom";
 import ModalWrapper from "@/components/ModalWrapper";
-import { X } from "@phosphor-icons/react";
 import System from "@/models/system";
 import showToast from "@/utils/toast";
+import { X } from "@phosphor-icons/react";
+import { createPortal } from "react-dom";
 import { useTranslation } from "react-i18next";
 
-export default function SetupProvider({
-  isOpen,
-  closeModal,
-  postSubmit,
-  settings,
-  llmProvider,
-}) {
+export default function SetupProvider({ isOpen, closeModal, postSubmit, settings, llmProvider }) {
   if (!isOpen) return null;
 
   async function handleUpdate(e) {
@@ -22,10 +16,7 @@ export default function SetupProvider({
     for (var [key, value] of form.entries()) data[key] = value;
     const { error } = await System.updateSystem(data);
     if (error) {
-      showToast(
-        `Failed to save ${llmProvider.name} settings: ${error}`,
-        "error"
-      );
+      showToast(`Failed to save ${llmProvider.name} settings: ${error}`, "error");
       return;
     }
 
@@ -56,12 +47,9 @@ export default function SetupProvider({
             <div className="px-7 py-6">
               <div className="space-y-6 max-h-[60vh] overflow-y-auto p-1">
                 <p className="text-sm text-white/60">
-                  To use {llmProvider.name} as this workspace's LLM you need to
-                  set it up first.
+                  To use {llmProvider.name} as this workspace's LLM you need to set it up first.
                 </p>
-                <div>
-                  {llmProvider.options(settings, { credentialsOnly: true })}
-                </div>
+                <div>{llmProvider.options(settings, { credentialsOnly: true })}</div>
               </div>
             </div>
             <div className="flex justify-between items-center mt-6 pt-6 border-t border-theme-modal-border px-7 pb-6">

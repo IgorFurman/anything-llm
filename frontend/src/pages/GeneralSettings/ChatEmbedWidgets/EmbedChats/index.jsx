@@ -1,14 +1,14 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import useQuery from "@/hooks/useQuery";
-import ChatRow from "./ChatRow";
 import Embed from "@/models/embed";
-import { useTranslation } from "react-i18next";
-import { CaretDown, Download } from "@phosphor-icons/react";
-import showToast from "@/utils/toast";
-import { saveAs } from "file-saver";
 import System from "@/models/system";
+import showToast from "@/utils/toast";
+import { CaretDown, Download } from "@phosphor-icons/react";
+import { saveAs } from "file-saver";
+import { useTranslation } from "react-i18next";
+import ChatRow from "./ChatRow";
 
 const exportOptions = {
   csv: {
@@ -59,8 +59,7 @@ export default function EmbedChatsView() {
   const handleDumpChats = async (exportType) => {
     const chats = await System.exportChats(exportType, "embed");
     if (!!chats) {
-      const { name, mimeType, fileExtension, filenameFunc } =
-        exportOptions[exportType];
+      const { name, mimeType, fileExtension, filenameFunc } = exportOptions[exportType];
       const blob = new Blob([chats], { type: mimeType });
       saveAs(blob, `${filenameFunc()}.${fileExtension}`);
       showToast(`Embed chats exported successfully as ${name}.`, "success");

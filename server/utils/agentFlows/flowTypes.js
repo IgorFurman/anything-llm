@@ -35,8 +35,7 @@ const FLOW_TYPES = {
       },
       directOutput: {
         type: "boolean",
-        description:
-          "Whether to return the response directly to the user without LLM processing",
+        description: "Whether to return the response directly to the user without LLM processing",
       },
     },
     examples: [

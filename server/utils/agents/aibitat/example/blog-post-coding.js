@@ -1,10 +1,5 @@
 const AIbitat = require("../index.js");
-const {
-  cli,
-  webBrowsing,
-  fileHistory,
-  webScraping,
-} = require("../plugins/index.js");
+const { cli, webBrowsing, fileHistory, webScraping } = require("../plugins/index.js");
 require("dotenv").config({ path: `../../../../.env.development` });
 
 const aibitat = new AIbitat({
@@ -36,9 +31,7 @@ const aibitat = new AIbitat({
 
 async function main() {
   if (!process.env.OPEN_AI_KEY)
-    throw new Error(
-      "This example requires a valid OPEN_AI_KEY in the env.development file"
-    );
+    throw new Error("This example requires a valid OPEN_AI_KEY in the env.development file");
   await aibitat.start({
     from: "pm",
     to: "content-team",

@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
 import { FullScreenLoader } from "@/components/Preloader";
-import paths from "@/utils/paths";
 import useQuery from "@/hooks/useQuery";
 import System from "@/models/system";
 import { AUTH_TIMESTAMP, AUTH_TOKEN, AUTH_USER } from "@/utils/constants";
+import paths from "@/utils/paths";
+import React, { useEffect, useState } from "react";
 
 export default function SimpleSSOPassthrough() {
   const query = useQuery();

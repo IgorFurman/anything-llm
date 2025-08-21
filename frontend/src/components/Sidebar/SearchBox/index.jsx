@@ -1,11 +1,11 @@
-import { useState, useEffect, useRef } from "react";
-import { Plus, MagnifyingGlass } from "@phosphor-icons/react";
+import Preloader from "@/components/Preloader";
+import Workspace from "@/models/workspace";
+import paths from "@/utils/paths";
+import { MagnifyingGlass, Plus } from "@phosphor-icons/react";
+import debounce from "lodash.debounce";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import paths from "@/utils/paths";
-import Preloader from "@/components/Preloader";
-import debounce from "lodash.debounce";
-import Workspace from "@/models/workspace";
 import { Tooltip } from "react-tooltip";
 
 const DEFAULT_SEARCH_RESULTS = {
@@ -27,8 +27,7 @@ export default function SearchBox({ user, showNewWsModal }) {
       const searchValue = e.target.value;
       setSearchTerm(searchValue);
       setLoading(true);
-      const searchResults =
-        await Workspace.searchWorkspaceOrThread(searchValue);
+      const searchResults = await Workspace.searchWorkspaceOrThread(searchValue);
       setSearchResults(searchResults);
     } catch (error) {
       console.error(error);
@@ -47,8 +46,7 @@ export default function SearchBox({ user, showNewWsModal }) {
 
   useEffect(() => {
     window.addEventListener(SEARCH_RESULT_SELECTED, handleReset);
-    return () =>
-      window.removeEventListener(SEARCH_RESULT_SELECTED, handleReset);
+    return () => window.removeEventListener(SEARCH_RESULT_SELECTED, handleReset);
   }, []);
 
   return (
@@ -70,15 +68,8 @@ export default function SearchBox({ user, showNewWsModal }) {
           hidden={!!searchTerm}
         />
       </div>
-      <ShortWidthNewWorkspaceButton
-        user={user}
-        showNewWsModal={showNewWsModal}
-      />
-      <SearchResults
-        searchResults={searchResults}
-        searchTerm={searchTerm}
-        loading={loading}
-      />
+      <ShortWidthNewWorkspaceButton user={user} showNewWsModal={showNewWsModal} />
+      <SearchResults searchResults={searchResults} searchTerm={searchTerm} loading={loading} />
     </div>
   );
 }
@@ -105,19 +96,14 @@ function SearchResults({ searchResults, searchTerm, loading }) {
       </SearchResultWrapper>
     );
 
-  if (
-    searchResults.workspaces.length === 0 &&
-    searchResults.threads.length === 0
-  ) {
+  if (searchResults.workspaces.length === 0 && searchResults.threads.length === 0) {
     return (
       <SearchResultWrapper>
         <div className="flex flex-col gap-y-[8px] h-[200px] justify-center items-center">
           <p className="text-theme-text-secondary text-xs font-semibold text-center">
             No results found for
             <br />
-            <span className="text-theme-text-primary font-semibold text-sm">
-              "{searchTerm}"
-            </span>
+            <span className="text-theme-text-primary font-semibold text-sm">"{searchTerm}"</span>
           </p>
         </div>
       </SearchResultWrapper>
@@ -151,17 +137,10 @@ function SearchResultCategory({ items, name }) {
   if (!items?.length) return null;
   return (
     <div className="flex flex-col gap-y-[8px]">
-      <p className="text-theme-text-secondary text-xs uppercase font-semibold px-[4px]">
-        {name}
-      </p>
+      <p className="text-theme-text-secondary text-xs uppercase font-semibold px-[4px]">{name}</p>
       <div className="flex flex-col gap-y-[6px]">
         {items.map((item) => (
-          <SearchResultItem
-            key={item.id}
-            to={item.to}
-            name={item.name}
-            hint={item.hint}
-          />
+          <SearchResultItem key={item.id} to={item.to} name={item.name} hint={item.hint} />
         ))}
       </div>
     </div>
@@ -178,11 +157,7 @@ function SearchResultItem({ to, name, hint }) {
     >
       <p className="text-theme-text-primary text-sm truncate w-[80%]">
         {name}
-        {hint && (
-          <span className="text-theme-text-secondary text-xs ml-[4px]">
-            | {hint}
-          </span>
-        )}
+        {hint && <span className="text-theme-text-secondary text-xs ml-[4px]">| {hint}</span>}
       </p>
     </Link>
   );

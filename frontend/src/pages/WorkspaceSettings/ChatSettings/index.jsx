@@ -1,15 +1,15 @@
+import CTAButton from "@/components/lib/CTAButton";
 import System from "@/models/system";
 import Workspace from "@/models/workspace";
 import showToast from "@/utils/toast";
 import { castToType } from "@/utils/types";
 import { useEffect, useRef, useState } from "react";
 import ChatHistorySettings from "./ChatHistorySettings";
-import ChatPromptSettings from "./ChatPromptSettings";
-import ChatTemperatureSettings from "./ChatTemperatureSettings";
 import ChatModeSelection from "./ChatModeSelection";
-import WorkspaceLLMSelection from "./WorkspaceLLMSelection";
+import ChatPromptSettings from "./ChatPromptSettings";
 import ChatQueryRefusalResponse from "./ChatQueryRefusalResponse";
-import CTAButton from "@/components/lib/CTAButton";
+import ChatTemperatureSettings from "./ChatTemperatureSettings";
+import WorkspaceLLMSelection from "./WorkspaceLLMSelection";
 
 export default function ChatSettings({ workspace }) {
   const [settings, setSettings] = useState({});
@@ -31,10 +31,7 @@ export default function ChatSettings({ workspace }) {
     const data = {};
     const form = new FormData(formEl.current);
     for (var [key, value] of form.entries()) data[key] = castToType(key, value);
-    const { workspace: updatedWorkspace, message } = await Workspace.update(
-      workspace.slug,
-      data
-    );
+    const { workspace: updatedWorkspace, message } = await Workspace.update(workspace.slug, data);
     if (!!updatedWorkspace) {
       showToast("Workspace updated!", "success", { clear: true });
     } else {
@@ -55,9 +52,7 @@ export default function ChatSettings({ workspace }) {
       >
         {hasChanges && (
           <div className="absolute top-0 right-0">
-            <CTAButton type="submit">
-              {saving ? "Updating..." : "Update Workspace"}
-            </CTAButton>
+            <CTAButton type="submit">{saving ? "Updating..." : "Update Workspace"}</CTAButton>
           </div>
         )}
         <WorkspaceLLMSelection
@@ -65,22 +60,10 @@ export default function ChatSettings({ workspace }) {
           workspace={workspace}
           setHasChanges={setHasChanges}
         />
-        <ChatModeSelection
-          workspace={workspace}
-          setHasChanges={setHasChanges}
-        />
-        <ChatHistorySettings
-          workspace={workspace}
-          setHasChanges={setHasChanges}
-        />
-        <ChatPromptSettings
-          workspace={workspace}
-          setHasChanges={setHasChanges}
-        />
-        <ChatQueryRefusalResponse
-          workspace={workspace}
-          setHasChanges={setHasChanges}
-        />
+        <ChatModeSelection workspace={workspace} setHasChanges={setHasChanges} />
+        <ChatHistorySettings workspace={workspace} setHasChanges={setHasChanges} />
+        <ChatPromptSettings workspace={workspace} setHasChanges={setHasChanges} />
+        <ChatQueryRefusalResponse workspace={workspace} setHasChanges={setHasChanges} />
         <ChatTemperatureSettings
           settings={settings}
           workspace={workspace}

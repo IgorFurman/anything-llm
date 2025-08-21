@@ -31,9 +31,7 @@ class AzureOpenAiProvider extends Provider {
         model: this.model,
         // stream: true,
         messages,
-        ...(Array.isArray(functions) && functions?.length > 0
-          ? { functions }
-          : {}),
+        ...(Array.isArray(functions) && functions?.length > 0 ? { functions } : {}),
       });
 
       // Right now, we only support one completion,

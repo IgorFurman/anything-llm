@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
+import MCPLogo from "@/media/agents/mcp-logo.svg";
+import MCPServers from "@/models/mcpServers";
 import showToast from "@/utils/toast";
 import { CaretDown, Gear } from "@phosphor-icons/react";
-import MCPLogo from "@/media/agents/mcp-logo.svg";
+import pluralize from "pluralize";
+import React, { useState, useEffect, useRef } from "react";
 import { titleCase } from "text-case";
 import truncate from "truncate";
-import MCPServers from "@/models/mcpServers";
-import pluralize from "pluralize";
 
 function ManageServerMenu({ server, toggleServer, onDelete }) {
   const [open, setOpen] = useState(false);
@@ -84,9 +84,7 @@ function ManageServerMenu({ server, toggleServer, onDelete }) {
             onClick={handleToggleServer}
             className="border-none flex items-center rounded-lg gap-x-2 hover:bg-theme-action-menu-item-hover py-1.5 px-2 transition-colors duration-200 w-full text-left"
           >
-            <span className="text-sm">
-              {running ? "Stop MCP Server" : "Start MCP Server"}
-            </span>
+            <span className="text-sm">{running ? "Stop MCP Server" : "Start MCP Server"}</span>
           </button>
           <button
             type="button"
@@ -114,8 +112,7 @@ export default function ServerPanel({ server, toggleServer, onDelete }) {
               </label>
               {server.tools.length > 0 && (
                 <p className="text-theme-text-secondary text-sm">
-                  {server.tools.length} {pluralize("tool", server.tools.length)}{" "}
-                  available
+                  {server.tools.length} {pluralize("tool", server.tools.length)} available
                 </p>
               )}
             </div>
@@ -158,8 +155,7 @@ function RenderServerStatus({ server }) {
   return (
     <div className="flex flex-col gap-y-2">
       <p className="text-theme-text-primary text-sm">
-        This MCP server is not running - it may be stopped or experiencing an
-        error on startup.
+        This MCP server is not running - it may be stopped or experiencing an error on startup.
       </p>
       <div className="bg-theme-bg-primary rounded-lg p-4">
         <p className="text-red-500 text-sm font-mono">{server.error}</p>
@@ -192,13 +188,9 @@ function ServerTool({ tool }) {
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-x-2">
-          <p className="text-theme-text-primary font-mono font-bold text-sm">
-            {tool.name}
-          </p>
+          <p className="text-theme-text-primary font-mono font-bold text-sm">{tool.name}</p>
           {!open && (
-            <p className="text-theme-text-secondary text-sm">
-              {truncate(tool.description, 70)}
-            </p>
+            <p className="text-theme-text-secondary text-sm">{truncate(tool.description, 70)}</p>
           )}
         </div>
         <div className="border-none text-theme-text-secondary hover:text-cta-button">
@@ -208,30 +200,22 @@ function ServerTool({ tool }) {
       {open && (
         <div className="flex flex-col gap-y-2">
           <div className="flex flex-col gap-y-2">
-            <p className="text-theme-text-secondary text-sm text-left">
-              {tool.description}
-            </p>
+            <p className="text-theme-text-secondary text-sm text-left">{tool.description}</p>
           </div>
           <div className="flex flex-col gap-y-2">
-            <p className="text-theme-text-primary text-sm text-left">
-              Tool call arguments
-            </p>
+            <p className="text-theme-text-primary text-sm text-left">Tool call arguments</p>
             <div className="flex flex-col gap-y-2">
-              {Object.entries(tool.inputSchema?.properties || {}).map(
-                ([key, value]) => (
-                  <div key={key} className="flex items-center gap-x-2">
-                    <p className="text-theme-text-secondary text-sm text-left font-bold">
-                      {key}
-                      {tool.inputSchema?.required?.includes(key) && (
-                        <sup className="text-red-500">*</sup>
-                      )}
-                    </p>
-                    <p className="text-theme-text-secondary text-sm text-left">
-                      {value.type}
-                    </p>
-                  </div>
-                )
-              )}
+              {Object.entries(tool.inputSchema?.properties || {}).map(([key, value]) => (
+                <div key={key} className="flex items-center gap-x-2">
+                  <p className="text-theme-text-secondary text-sm text-left font-bold">
+                    {key}
+                    {tool.inputSchema?.required?.includes(key) && (
+                      <sup className="text-red-500">*</sup>
+                    )}
+                  </p>
+                  <p className="text-theme-text-secondary text-sm text-left">{value.type}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>

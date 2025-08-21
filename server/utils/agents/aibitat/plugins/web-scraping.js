@@ -15,8 +15,7 @@ const webScraping = {
           super: aibitat,
           name: this.name,
           controller: new AbortController(),
-          description:
-            "Scrapes the content of a webpage or online resource from a provided URL.",
+          description: "Scrapes the content of a webpage or online resource from a provided URL.",
           examples: [
             {
               prompt: "What is anythingllm.com about?",
@@ -58,19 +57,14 @@ const webScraping = {
            * @returns
            */
           scrape: async function (url) {
-            this.super.introspect(
-              `${this.caller}: Scraping the content of ${url}`
-            );
-            const { success, content } =
-              await new CollectorApi().getLinkContent(url);
+            this.super.introspect(`${this.caller}: Scraping the content of ${url}`);
+            const { success, content } = await new CollectorApi().getLinkContent(url);
 
             if (!success) {
               this.super.introspect(
                 `${this.caller}: could not scrape ${url}. I can't use this page's content.`
               );
-              throw new Error(
-                `URL could not be scraped and no content was found.`
-              );
+              throw new Error(`URL could not be scraped and no content was found.`);
             }
 
             if (!content || content?.length === 0) {
@@ -89,9 +83,7 @@ const webScraping = {
               `${this.caller}: This page's content is way too long. I will summarize it right now.`
             );
             this.super.onAbort(() => {
-              this.super.handlerProps.log(
-                "Abort was triggered, exiting summarization early."
-              );
+              this.super.handlerProps.log("Abort was triggered, exiting summarization early.");
               this.controller.abort();
             });
 

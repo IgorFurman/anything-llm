@@ -1,32 +1,27 @@
-import React, { useEffect, useRef, useState } from "react";
-import Admin from "@/models/admin";
-import AnythingLLMIcon from "@/media/logo/anything-llm-icon.png";
-import GoogleSearchIcon from "./icons/google.png";
-import SearchApiIcon from "./icons/searchapi.png";
-import SerperDotDevIcon from "./icons/serper.png";
-import BingSearchIcon from "./icons/bing.png";
-import SerplySearchIcon from "./icons/serply.png";
-import SearXNGSearchIcon from "./icons/searxng.png";
-import TavilySearchIcon from "./icons/tavily.svg";
-import DuckDuckGoIcon from "./icons/duckduckgo.png";
-import {
-  CaretUpDown,
-  MagnifyingGlass,
-  X,
-  ListMagnifyingGlass,
-} from "@phosphor-icons/react";
-import SearchProviderItem from "./SearchProviderItem";
 import WebSearchImage from "@/media/agents/scrape-websites.png";
+import AnythingLLMIcon from "@/media/logo/anything-llm-icon.png";
+import Admin from "@/models/admin";
+import { CaretUpDown, ListMagnifyingGlass, MagnifyingGlass, X } from "@phosphor-icons/react";
+import React, { useEffect, useRef, useState } from "react";
+import SearchProviderItem from "./SearchProviderItem";
 import {
+  BingSearchOptions,
+  DuckDuckGoOptions,
+  GoogleSearchOptions,
+  SearXNGOptions,
   SearchApiOptions,
   SerperDotDevOptions,
-  GoogleSearchOptions,
-  BingSearchOptions,
   SerplySearchOptions,
-  SearXNGOptions,
   TavilySearchOptions,
-  DuckDuckGoOptions,
 } from "./SearchProviderOptions";
+import BingSearchIcon from "./icons/bing.png";
+import DuckDuckGoIcon from "./icons/duckduckgo.png";
+import GoogleSearchIcon from "./icons/google.png";
+import SearchApiIcon from "./icons/searchapi.png";
+import SearXNGSearchIcon from "./icons/searxng.png";
+import SerperDotDevIcon from "./icons/serper.png";
+import SerplySearchIcon from "./icons/serply.png";
+import TavilySearchIcon from "./icons/tavily.svg";
 
 const SEARCH_PROVIDERS = [
   {
@@ -34,16 +29,14 @@ const SEARCH_PROVIDERS = [
     value: "none",
     logo: AnythingLLMIcon,
     options: () => <React.Fragment />,
-    description:
-      "Web search will be disabled until a provider and keys are provided.",
+    description: "Web search will be disabled until a provider and keys are provided.",
   },
   {
     name: "DuckDuckGo",
     value: "duckduckgo-engine",
     logo: DuckDuckGoIcon,
     options: () => <DuckDuckGoOptions />,
-    description:
-      "Free and privacy-focused web search using DuckDuckGo's HTML interface.",
+    description: "Free and privacy-focused web search using DuckDuckGo's HTML interface.",
   },
   {
     name: "Google Search Engine",
@@ -66,8 +59,7 @@ const SEARCH_PROVIDERS = [
     value: "serper-dot-dev",
     logo: SerperDotDevIcon,
     options: (settings) => <SerperDotDevOptions settings={settings} />,
-    description:
-      "Serper.dev web-search. Free account with a 2,500 calls, but then paid.",
+    description: "Serper.dev web-search. Free account with a 2,500 calls, but then paid.",
   },
   {
     name: "Bing Search",
@@ -81,24 +73,21 @@ const SEARCH_PROVIDERS = [
     value: "serply-engine",
     logo: SerplySearchIcon,
     options: (settings) => <SerplySearchOptions settings={settings} />,
-    description:
-      "Serply.io web-search. Free account with a 100 calls/month forever.",
+    description: "Serply.io web-search. Free account with a 100 calls/month forever.",
   },
   {
     name: "SearXNG",
     value: "searxng-engine",
     logo: SearXNGSearchIcon,
     options: (settings) => <SearXNGOptions settings={settings} />,
-    description:
-      "Free, open-source, internet meta-search engine with no tracking.",
+    description: "Free, open-source, internet meta-search engine with no tracking.",
   },
   {
     name: "Tavily Search",
     value: "tavily-search",
     logo: TavilySearchIcon,
     options: (settings) => <TavilySearchOptions settings={settings} />,
-    description:
-      "Tavily Search API. Offers a free tier with 1000 queries per month.",
+    description: "Tavily Search API. Offers a free tier with 1000 queries per month.",
   },
 ];
 
@@ -140,9 +129,7 @@ export default function AgentWebSearchSelection({
 
   useEffect(() => {
     Admin.systemPreferencesByFields(["agent_search_provider"])
-      .then((res) =>
-        setSelectedProvider(res?.settings?.agent_search_provider ?? "none")
-      )
+      .then((res) => setSelectedProvider(res?.settings?.agent_search_provider ?? "none"))
       .catch(() => setSelectedProvider("none"));
   }, []);
 
@@ -154,15 +141,8 @@ export default function AgentWebSearchSelection({
     <div className="p-2">
       <div className="flex flex-col gap-y-[18px] max-w-[500px]">
         <div className="flex items-center gap-x-2">
-          <ListMagnifyingGlass
-            size={24}
-            color="var(--theme-text-primary)"
-            weight="bold"
-          />
-          <label
-            htmlFor="name"
-            className="text-theme-text-primary text-md font-bold"
-          >
+          <ListMagnifyingGlass size={24} color="var(--theme-text-primary)" weight="bold" />
+          <label htmlFor="name" className="text-theme-text-primary text-md font-bold">
             Live web search and browsing
           </label>
           <label className="border-none relative inline-flex items-center ml-auto cursor-pointer">
@@ -176,23 +156,14 @@ export default function AgentWebSearchSelection({
             <span className="ml-3 text-sm font-medium"></span>
           </label>
         </div>
-        <img
-          src={WebSearchImage}
-          alt="Web Search"
-          className="w-full rounded-md"
-        />
+        <img src={WebSearchImage} alt="Web Search" className="w-full rounded-md" />
         <p className="text-theme-text-secondary text-opacity-60 text-xs font-medium py-1.5">
-          Enable your agent to search the web to answer your questions by
-          connecting to a web-search (SERP) provider. Web search during agent
-          sessions will not work until this is set up.
+          Enable your agent to search the web to answer your questions by connecting to a web-search
+          (SERP) provider. Web search during agent sessions will not work until this is set up.
         </p>
         <div hidden={!enabled}>
           <div className="relative">
-            <input
-              type="hidden"
-              name="system::agent_search_provider"
-              value={selectedProvider}
-            />
+            <input type="hidden" name="system::agent_search_provider" value={selectedProvider} />
             {searchMenuOpen && (
               <div
                 className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-70 backdrop-blur-sm z-10"

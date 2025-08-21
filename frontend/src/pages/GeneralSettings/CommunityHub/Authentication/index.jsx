@@ -1,12 +1,12 @@
-import Sidebar from "@/components/SettingsSidebar";
-import { isMobile } from "react-device-detect";
-import { useEffect, useState } from "react";
-import CommunityHub from "@/models/communityHub";
 import ContextualSaveBar from "@/components/ContextualSaveBar";
-import showToast from "@/utils/toast";
 import { FullScreenLoader } from "@/components/Preloader";
+import Sidebar from "@/components/SettingsSidebar";
+import CommunityHub from "@/models/communityHub";
 import paths from "@/utils/paths";
+import showToast from "@/utils/toast";
 import { Info } from "@phosphor-icons/react";
+import { useEffect, useState } from "react";
+import { isMobile } from "react-device-detect";
 import UserItems from "./UserItems";
 
 function useCommunityHubAuthentication() {
@@ -33,8 +33,7 @@ function useCommunityHubAuthentication() {
       const response = await CommunityHub.updateSettings({
         hub_api_key: connectionKey,
       });
-      if (!response.success)
-        return showToast("Failed to save API key", "error");
+      if (!response.success) return showToast("Failed to save API key", "error");
       setHasChanges(false);
       showToast("API key saved successfully", "success");
       setOriginalConnectionKey(connectionKey);
@@ -52,8 +51,7 @@ function useCommunityHubAuthentication() {
       const response = await CommunityHub.updateSettings({
         hub_api_key: "",
       });
-      if (!response.success)
-        return showToast("Failed to disconnect from hub", "error");
+      if (!response.success) return showToast("Failed to disconnect from hub", "error");
       setHasChanges(false);
       showToast("Disconnected from AnythingLLM Community Hub", "success");
       setOriginalConnectionKey("");
@@ -126,9 +124,9 @@ export default function CommunityHubAuthentication() {
               </p>
             </div>
             <p className="text-xs leading-[18px] font-base text-theme-text-secondary">
-              Connecting your AnythingLLM Community Hub account allows you to
-              access your <b>private</b> AnythingLLM Community Hub items as well
-              as upload your own items to the AnythingLLM Community Hub.
+              Connecting your AnythingLLM Community Hub account allows you to access your{" "}
+              <b>private</b> AnythingLLM Community Hub items as well as upload your own items to the
+              AnythingLLM Community Hub.
             </p>
           </div>
 
@@ -142,16 +140,14 @@ export default function CommunityHubAuthentication() {
                   </h1>
                 </div>
                 <p className="text-sm text-theme-text-secondary">
-                  Connecting your AnythingLLM Community Hub account allows you
-                  to pull in your <b>private</b> items from the AnythingLLM
-                  Community Hub as well as upload your own items to the
-                  AnythingLLM Community Hub.
+                  Connecting your AnythingLLM Community Hub account allows you to pull in your{" "}
+                  <b>private</b> items from the AnythingLLM Community Hub as well as upload your own
+                  items to the AnythingLLM Community Hub.
                   <br />
                   <br />
                   <i>
-                    You do not need to connect your AnythingLLM Community Hub
-                    account to pull in public items from the AnythingLLM
-                    Community Hub.
+                    You do not need to connect your AnythingLLM Community Hub account to pull in
+                    public items from the AnythingLLM Community Hub.
                   </i>
                 </p>
               </div>
@@ -174,10 +170,7 @@ export default function CommunityHubAuthentication() {
               <div className="flex items-center justify-between mt-2">
                 <p className="text-theme-text-secondary text-xs">
                   You can get your API key from your{" "}
-                  <a
-                    href={paths.communityHub.profile()}
-                    className="underline text-primary-button"
-                  >
+                  <a href={paths.communityHub.profile()} className="underline text-primary-button">
                     AnythingLLM Community Hub profile page
                   </a>
                   .

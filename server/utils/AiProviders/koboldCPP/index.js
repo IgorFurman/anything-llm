@@ -4,18 +4,14 @@ const {
   writeResponseChunk,
   formatChatHistory,
 } = require("../../helpers/chat/responses");
-const {
-  LLMPerformanceMonitor,
-} = require("../../helpers/chat/LLMPerformanceMonitor");
+const { LLMPerformanceMonitor } = require("../../helpers/chat/LLMPerformanceMonitor");
 const { v4: uuidv4 } = require("uuid");
 
 class KoboldCPPLLM {
   constructor(embedder = null, modelPreference = null) {
     const { OpenAI: OpenAIApi } = require("openai");
     if (!process.env.KOBOLD_CPP_BASE_PATH)
-      throw new Error(
-        "KoboldCPP must have a valid base path to use for the api."
-      );
+      throw new Error("KoboldCPP must have a valid base path to use for the api.");
 
     this.basePath = process.env.KOBOLD_CPP_BASE_PATH;
     this.openai = new OpenAIApi({
@@ -58,8 +54,7 @@ class KoboldCPPLLM {
 
   static promptWindowLimit(_modelName) {
     const limit = process.env.KOBOLD_CPP_MODEL_TOKEN_LIMIT || 4096;
-    if (!limit || isNaN(Number(limit)))
-      throw new Error("No token context limit was set.");
+    if (!limit || isNaN(Number(limit))) throw new Error("No token context limit was set.");
     return Number(limit);
   }
 
@@ -67,8 +62,7 @@ class KoboldCPPLLM {
   // and if undefined - assume 4096 window.
   promptWindowLimit() {
     const limit = process.env.KOBOLD_CPP_MODEL_TOKEN_LIMIT || 4096;
-    if (!limit || isNaN(Number(limit)))
-      throw new Error("No token context limit was set.");
+    if (!limit || isNaN(Number(limit))) throw new Error("No token context limit was set.");
     return Number(limit);
   }
 
@@ -89,7 +83,7 @@ class KoboldCPPLLM {
     }
 
     const content = [{ type: "text", text: userPrompt }];
-    for (let attachment of attachments) {
+    for (const attachment of attachments) {
       content.push({
         type: "image_url",
         image_url: {
@@ -140,11 +134,7 @@ class KoboldCPPLLM {
         })
     );
 
-    if (
-      !result.output.hasOwnProperty("choices") ||
-      result.output.choices.length === 0
-    )
-      return null;
+    if (!result.output.hasOwnProperty("choices") || result.output.choices.length === 0) return null;
 
     const promptTokens = LLMPerformanceMonitor.countTokens(messages);
     const completionTokens = LLMPerformanceMonitor.countTokens([
@@ -182,15 +172,13 @@ class KoboldCPPLLM {
 
     return new Promise(async (resolve) => {
       let fullText = "";
-      let usage = {
+      const usage = {
         prompt_tokens: LLMPerformanceMonitor.countTokens(stream.messages || []),
         completion_tokens: 0,
       };
 
       const handleAbort = () => {
-        usage.completion_tokens = LLMPerformanceMonitor.countTokens([
-          { content: fullText },
-        ]);
+        usage.completion_tokens = LLMPerformanceMonitor.countTokens([{ content: fullText }]);
         stream?.endMeasurement(usage);
         clientAbortedHandler(resolve, fullText);
       };
@@ -215,8 +203,7 @@ class KoboldCPPLLM {
         // KoboldCPP finishes with "length" or "stop"
         if (
           message.finish_reason !== "null" &&
-          (message.finish_reason === "length" ||
-            message.finish_reason === "stop")
+          (message.finish_reason === "length" || message.finish_reason === "stop")
         ) {
           writeResponseChunk(response, {
             uuid,
@@ -227,9 +214,7 @@ class KoboldCPPLLM {
             error: false,
           });
           response.removeListener("close", handleAbort);
-          usage.completion_tokens = LLMPerformanceMonitor.countTokens([
-            { content: fullText },
-          ]);
+          usage.completion_tokens = LLMPerformanceMonitor.countTokens([{ content: fullText }]);
           stream?.endMeasurement(usage);
           resolve(fullText);
         }

@@ -1,15 +1,7 @@
-const {
-  multiUserMode,
-  userFromSession,
-  reqBody,
-  safeJsonParse,
-} = require("../utils/http");
+const { multiUserMode, userFromSession, reqBody, safeJsonParse } = require("../utils/http");
 const { validatedRequest } = require("../utils/middleware/validatedRequest");
 const { Telemetry } = require("../models/telemetry");
-const {
-  flexUserRoleValid,
-  ROLES,
-} = require("../utils/middleware/multiUserProtected");
+const { flexUserRoleValid, ROLES } = require("../utils/middleware/multiUserProtected");
 const { EventLogs } = require("../models/eventLogs");
 const { WorkspaceThread } = require("../models/workspaceThread");
 const {
@@ -30,10 +22,7 @@ function workspaceThreadEndpoints(app) {
       try {
         const user = await userFromSession(request, response);
         const workspace = response.locals.workspace;
-        const { thread, message } = await WorkspaceThread.new(
-          workspace,
-          user?.id
-        );
+        const { thread, message } = await WorkspaceThread.new(workspace, user?.id);
         await Telemetry.sendTelemetry(
           "workspace_thread_created",
           {
@@ -83,11 +72,7 @@ function workspaceThreadEndpoints(app) {
 
   app.delete(
     "/workspace/:slug/thread/:threadSlug",
-    [
-      validatedRequest,
-      flexUserRoleValid([ROLES.all]),
-      validWorkspaceAndThreadSlug,
-    ],
+    [validatedRequest, flexUserRoleValid([ROLES.all]), validWorkspaceAndThreadSlug],
     async (_, response) => {
       try {
         const thread = response.locals.thread;
@@ -125,11 +110,7 @@ function workspaceThreadEndpoints(app) {
 
   app.get(
     "/workspace/:slug/thread/:threadSlug/chats",
-    [
-      validatedRequest,
-      flexUserRoleValid([ROLES.all]),
-      validWorkspaceAndThreadSlug,
-    ],
+    [validatedRequest, flexUserRoleValid([ROLES.all]), validWorkspaceAndThreadSlug],
     async (request, response) => {
       try {
         const user = await userFromSession(request, response);
@@ -157,19 +138,12 @@ function workspaceThreadEndpoints(app) {
 
   app.post(
     "/workspace/:slug/thread/:threadSlug/update",
-    [
-      validatedRequest,
-      flexUserRoleValid([ROLES.all]),
-      validWorkspaceAndThreadSlug,
-    ],
+    [validatedRequest, flexUserRoleValid([ROLES.all]), validWorkspaceAndThreadSlug],
     async (request, response) => {
       try {
         const data = reqBody(request);
         const currentThread = response.locals.thread;
-        const { thread, message } = await WorkspaceThread.update(
-          currentThread,
-          data
-        );
+        const { thread, message } = await WorkspaceThread.update(currentThread, data);
         response.status(200).json({ thread, message });
       } catch (e) {
         console.error(e.message, e);
@@ -180,11 +154,7 @@ function workspaceThreadEndpoints(app) {
 
   app.delete(
     "/workspace/:slug/thread/:threadSlug/delete-edited-chats",
-    [
-      validatedRequest,
-      flexUserRoleValid([ROLES.all]),
-      validWorkspaceAndThreadSlug,
-    ],
+    [validatedRequest, flexUserRoleValid([ROLES.all]), validWorkspaceAndThreadSlug],
     async (request, response) => {
       try {
         const { startingId } = reqBody(request);
@@ -209,16 +179,11 @@ function workspaceThreadEndpoints(app) {
 
   app.post(
     "/workspace/:slug/thread/:threadSlug/update-chat",
-    [
-      validatedRequest,
-      flexUserRoleValid([ROLES.all]),
-      validWorkspaceAndThreadSlug,
-    ],
+    [validatedRequest, flexUserRoleValid([ROLES.all]), validWorkspaceAndThreadSlug],
     async (request, response) => {
       try {
         const { chatId, newText = null } = reqBody(request);
-        if (!newText || !String(newText).trim())
-          throw new Error("Cannot save empty response");
+        if (!newText || !String(newText).trim()) throw new Error("Cannot save empty response");
 
         const user = await userFromSession(request, response);
         const workspace = response.locals.workspace;

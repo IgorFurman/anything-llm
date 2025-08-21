@@ -1,11 +1,7 @@
-import React from "react";
 import { CaretRight } from "@phosphor-icons/react";
+import React from "react";
 
-export default function AgentFlowsList({
-  flows = [],
-  selectedFlow,
-  handleClick,
-}) {
+export default function AgentFlowsList({ flows = [], selectedFlow, handleClick }) {
   if (flows.length === 0) {
     return (
       <div className="text-theme-text-secondary text-center text-xs flex flex-col gap-y-2">
@@ -14,6 +10,7 @@ export default function AgentFlowsList({
           href="https://docs.anythingllm.com/agent-flows/getting-started"
           target="_blank"
           className="text-theme-text-secondary underline hover:text-cta-button"
+          rel="noreferrer"
         >
           Learn more about Agent Flows.
         </a>
@@ -29,13 +26,9 @@ export default function AgentFlowsList({
           className={`py-3 px-4 flex items-center justify-between ${
             index === 0 ? "rounded-t-xl" : ""
           } ${
-            index === flows.length - 1
-              ? "rounded-b-xl"
-              : "border-b border-white/10"
+            index === flows.length - 1 ? "rounded-b-xl" : "border-b border-white/10"
           } cursor-pointer transition-all duration-300 hover:bg-theme-bg-primary ${
-            selectedFlow?.uuid === flow.uuid
-              ? "bg-white/10 light:bg-theme-bg-sidebar"
-              : ""
+            selectedFlow?.uuid === flow.uuid ? "bg-white/10 light:bg-theme-bg-sidebar" : ""
           }`}
           onClick={() => handleClick?.(flow)}
         >
@@ -44,11 +37,7 @@ export default function AgentFlowsList({
             <div className="text-sm text-theme-text-secondary font-medium">
               {flow.active ? "On" : "Off"}
             </div>
-            <CaretRight
-              size={14}
-              weight="bold"
-              className="text-theme-text-secondary"
-            />
+            <CaretRight size={14} weight="bold" className="text-theme-text-secondary" />
           </div>
         </div>
       ))}

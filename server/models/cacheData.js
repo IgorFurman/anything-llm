@@ -1,7 +1,7 @@
 const prisma = require("../utils/prisma");
 
 const CacheData = {
-  new: async function (inputs = {}) {
+  new: async (inputs = {}) => {
     try {
       const cache = await prisma.cache_data.create({
         data: inputs,
@@ -13,7 +13,7 @@ const CacheData = {
     }
   },
 
-  get: async function (clause = {}, limit = null, orderBy = null) {
+  get: async (clause = {}, limit = null, orderBy = null) => {
     try {
       const cache = await prisma.cache_data.findFirst({
         where: clause,
@@ -27,7 +27,7 @@ const CacheData = {
     }
   },
 
-  delete: async function (clause = {}) {
+  delete: async (clause = {}) => {
     try {
       await prisma.cache_data.deleteMany({
         where: clause,
@@ -39,7 +39,7 @@ const CacheData = {
     }
   },
 
-  where: async function (clause = {}, limit = null, orderBy = null) {
+  where: async (clause = {}, limit = null, orderBy = null) => {
     try {
       const caches = await prisma.cache_data.findMany({
         where: clause,
@@ -53,7 +53,7 @@ const CacheData = {
     }
   },
 
-  count: async function (clause = {}) {
+  count: async (clause = {}) => {
     try {
       const count = await prisma.cache_data.count({
         where: clause,

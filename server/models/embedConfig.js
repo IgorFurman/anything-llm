@@ -17,17 +17,14 @@ const EmbedConfig = {
     "message_limit",
   ],
 
-  new: async function (data, creatorId = null) {
+  new: async (data, creatorId = null) => {
     try {
       const embed = await prisma.embed_configs.create({
         data: {
           uuid: v4(),
           enabled: true,
           chat_mode: validatedCreationData(data?.chat_mode, "chat_mode"),
-          allowlist_domains: validatedCreationData(
-            data?.allowlist_domains,
-            "allowlist_domains"
-          ),
+          allowlist_domains: validatedCreationData(data?.allowlist_domains, "allowlist_domains"),
           allow_model_override: validatedCreationData(
             data?.allow_model_override,
             "allow_model_override"
@@ -40,18 +37,12 @@ const EmbedConfig = {
             data?.allow_prompt_override,
             "allow_prompt_override"
           ),
-          max_chats_per_day: validatedCreationData(
-            data?.max_chats_per_day,
-            "max_chats_per_day"
-          ),
+          max_chats_per_day: validatedCreationData(data?.max_chats_per_day, "max_chats_per_day"),
           max_chats_per_session: validatedCreationData(
             data?.max_chats_per_session,
             "max_chats_per_session"
           ),
-          message_limit: validatedCreationData(
-            data?.message_limit,
-            "message_limit"
-          ),
+          message_limit: validatedCreationData(data?.message_limit, "message_limit"),
           createdBy: Number(creatorId) ?? null,
           workspace: {
             connect: { id: Number(data.workspace_id) },
@@ -67,11 +58,8 @@ const EmbedConfig = {
 
   update: async function (embedId = null, data = {}) {
     if (!embedId) throw new Error("No embed id provided for update");
-    const validKeys = Object.keys(data).filter((key) =>
-      this.writable.includes(key)
-    );
-    if (validKeys.length === 0)
-      return { embed: { id }, message: "No valid fields to update!" };
+    const validKeys = Object.keys(data).filter((key) => this.writable.includes(key));
+    if (validKeys.length === 0) return { embed: { id }, message: "No valid fields to update!" };
 
     const updates = {};
     validKeys.map((key) => {
@@ -90,7 +78,7 @@ const EmbedConfig = {
     }
   },
 
-  get: async function (clause = {}) {
+  get: async (clause = {}) => {
     try {
       const embedConfig = await prisma.embed_configs.findFirst({
         where: clause,
@@ -103,7 +91,7 @@ const EmbedConfig = {
     }
   },
 
-  getWithWorkspace: async function (clause = {}) {
+  getWithWorkspace: async (clause = {}) => {
     try {
       const embedConfig = await prisma.embed_configs.findFirst({
         where: clause,
@@ -119,7 +107,7 @@ const EmbedConfig = {
     }
   },
 
-  delete: async function (clause = {}) {
+  delete: async (clause = {}) => {
     try {
       await prisma.embed_configs.delete({
         where: clause,
@@ -131,7 +119,7 @@ const EmbedConfig = {
     }
   },
 
-  where: async function (clause = {}, limit = null, orderBy = null) {
+  where: async (clause = {}, limit = null, orderBy = null) => {
     try {
       const results = await prisma.embed_configs.findMany({
         where: clause,
@@ -145,11 +133,7 @@ const EmbedConfig = {
     }
   },
 
-  whereWithWorkspace: async function (
-    clause = {},
-    limit = null,
-    orderBy = null
-  ) {
+  whereWithWorkspace: async (clause = {}, limit = null, orderBy = null) => {
     try {
       const results = await prisma.embed_configs.findMany({
         where: clause,
@@ -172,7 +156,7 @@ const EmbedConfig = {
   // Will return null if process should be skipped
   // an empty array means the system will check. This
   // prevents a bad parse from allowing all requests
-  parseAllowedHosts: function (embed) {
+  parseAllowedHosts: (embed) => {
     if (!embed.allowlist_domains) return null;
 
     try {
@@ -191,12 +175,7 @@ const BOOLEAN_KEYS = [
   "enabled",
 ];
 
-const NUMBER_KEYS = [
-  "max_chats_per_day",
-  "max_chats_per_session",
-  "workspace_id",
-  "message_limit",
-];
+const NUMBER_KEYS = ["max_chats_per_day", "max_chats_per_session", "workspace_id", "message_limit"];
 
 // Helper to validate a data object strictly into the proper format
 function validatedCreationData(value, field) {
@@ -215,8 +194,7 @@ function validatedCreationData(value, field) {
           .split(",")
           .map((input) => {
             let url = input;
-            if (!url.includes("http://") && !url.includes("https://"))
-              url = `https://${url}`;
+            if (!url.includes("http://") && !url.includes("https://")) url = `https://${url}`;
             try {
               new URL(url);
               return url;

@@ -4,14 +4,14 @@ import {
   FileCsv,
   FileDoc,
   FileHtml,
-  FileText,
   FileImage,
   FilePdf,
+  FileText,
   WarningOctagon,
   X,
 } from "@phosphor-icons/react";
-import { REMOVE_ATTACHMENT_EVENT } from "../../DnDWrapper";
 import { Tooltip } from "react-tooltip";
+import { REMOVE_ATTACHMENT_EVENT } from "../../DnDWrapper";
 
 /**
  * @param {{attachments: import("../../DnDWrapper").Attachment[]}}
@@ -32,14 +32,11 @@ export default function AttachmentManager({ attachments }) {
  * @param {{attachment: import("../../DnDWrapper").Attachment}}
  */
 function AttachmentItem({ attachment }) {
-  const { uid, file, status, error, document, type, contentString } =
-    attachment;
+  const { uid, file, status, error, document, type, contentString } = attachment;
   const { iconBgColor, Icon } = displayFromFile(file);
 
   function removeFileFromQueue() {
-    window.dispatchEvent(
-      new CustomEvent(REMOVE_ATTACHMENT_EVENT, { detail: { uid, document } })
-    );
+    window.dispatchEvent(new CustomEvent(REMOVE_ATTACHMENT_EVENT, { detail: { uid, document } }));
   }
 
   if (status === "in_progress") {
@@ -55,9 +52,7 @@ function AttachmentItem({ attachment }) {
           />
         </div>
         <div className="flex flex-col w-[125px]">
-          <p className="text-theme-attachment-text text-xs font-semibold truncate">
-            {file.name}
-          </p>
+          <p className="text-theme-attachment-text text-xs font-semibold truncate">{file.name}</p>
           <p className="text-theme-attachment-text-secondary text-[10px] leading-[14px] font-medium">
             Uploading...
           </p>
@@ -89,9 +84,7 @@ function AttachmentItem({ attachment }) {
             <WarningOctagon size={24} className="text-theme-attachment-icon" />
           </div>
           <div className="flex flex-col w-[125px]">
-            <p className="text-theme-attachment-text text-xs font-semibold truncate">
-              {file.name}
-            </p>
+            <p className="text-theme-attachment-text text-xs font-semibold truncate">{file.name}</p>
             <p className="text-theme-attachment-text-secondary text-[10px] leading-[14px] font-medium truncate">
               {error ?? "File not embedded!"}
             </p>
@@ -138,9 +131,7 @@ function AttachmentItem({ attachment }) {
             </div>
           )}
           <div className="flex flex-col w-[125px]">
-            <p className="text-theme-attachment-text text-xs font-semibold truncate">
-              {file.name}
-            </p>
+            <p className="text-theme-attachment-text text-xs font-semibold truncate">{file.name}</p>
             <p className="text-theme-attachment-text-secondary text-[10px] leading-[14px] font-medium">
               Image attached!
             </p>
@@ -175,16 +166,10 @@ function AttachmentItem({ attachment }) {
         <div
           className={`${iconBgColor} rounded-md flex items-center justify-center flex-shrink-0 h-[32px] w-[32px] m-1`}
         >
-          <Icon
-            size={24}
-            weight="light"
-            className="text-theme-attachment-icon"
-          />
+          <Icon size={24} weight="light" className="text-theme-attachment-icon" />
         </div>
         <div className="flex flex-col w-[125px]">
-          <p className="text-white text-xs font-semibold truncate">
-            {file.name}
-          </p>
+          <p className="text-white text-xs font-semibold truncate">{file.name}</p>
           <p className="text-theme-attachment-text-secondary text-[10px] leading-[14px] font-medium">
             File embedded!
           </p>

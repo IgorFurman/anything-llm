@@ -10,40 +10,28 @@ const { Telemetry } = require("./telemetry");
 const DocumentSyncQueue = {
   featureKey: "experimental_live_file_sync",
   // update the validFileTypes and .canWatch properties when adding elements here.
-  validFileTypes: [
-    "link",
-    "youtube",
-    "confluence",
-    "github",
-    "gitlab",
-    "drupalwiki",
-  ],
+  validFileTypes: ["link", "youtube", "confluence", "github", "gitlab", "drupalwiki"],
   defaultStaleAfter: 604800000,
   maxRepeatFailures: 5, // How many times a run can fail in a row before pruning.
   writable: [],
 
-  bootWorkers: function () {
+  bootWorkers: () => {
     new BackgroundService().boot();
   },
 
-  killWorkers: function () {
+  killWorkers: () => {
     new BackgroundService().stop();
   },
 
   /** Check is the Document Sync/Watch feature is enabled and can be used. */
   enabled: async function () {
-    return (
-      (await SystemSettings.get({ label: this.featureKey }))?.value ===
-      "enabled"
-    );
+    return (await SystemSettings.get({ label: this.featureKey }))?.value === "enabled";
   },
 
   /**
    * @param {import("@prisma/client").document_sync_queues} queueRecord - queue record to calculate for
    */
-  calcNextSync: function (queueRecord) {
-    return new Date(Number(new Date()) + queueRecord.staleAfterMs);
-  },
+  calcNextSync: (queueRecord) => new Date(Number(new Date()) + queueRecord.staleAfterMs),
 
   /**
    * Check if the document can be watched based on the metadata fields
@@ -52,11 +40,10 @@ const DocumentSyncQueue = {
    * @param {string} metadata.chunkSource - chunk source of the document
    * @returns {boolean} - true if the document can be watched, false otherwise
    */
-  canWatch: function ({ title, chunkSource = null } = {}) {
+  canWatch: ({ title, chunkSource = null } = {}) => {
     if (!chunkSource) return false;
 
-    if (chunkSource.startsWith("link://") && title.endsWith(".html"))
-      return true; // If is web-link material (prior to feature most chunkSources were links://)
+    if (chunkSource.startsWith("link://") && title.endsWith(".html")) return true; // If is web-link material (prior to feature most chunkSources were links://)
     if (chunkSource.startsWith("youtube://")) return true; // If is a youtube link
     if (chunkSource.startsWith("confluence://")) return true; // If is a confluence document link
     if (chunkSource.startsWith("github://")) return true; // If is a GitHub file reference
@@ -80,12 +67,9 @@ const DocumentSyncQueue = {
       const workspaceDocIds = (
         await Document.where({ filename: document.filename, watched: true })
       ).map((rec) => rec.id);
-      const hasRecords =
-        (await this.count({ workspaceDocId: { in: workspaceDocIds } })) > 0;
+      const hasRecords = (await this.count({ workspaceDocId: { in: workspaceDocIds } })) > 0;
       if (hasRecords)
-        throw new Error(
-          `Cannot watch this document again - it already has a queue set.`
-        );
+        throw new Error(`Cannot watch this document again - it already has a queue set.`);
 
       const queue = await prisma.document_sync_queues.create({
         data: {
@@ -93,10 +77,7 @@ const DocumentSyncQueue = {
           nextSyncAt: new Date(Number(new Date()) + this.defaultStaleAfter),
         },
       });
-      await Document._updateAll(
-        { filename: document.filename },
-        { watched: true }
-      );
+      await Document._updateAll({ filename: document.filename }, { watched: true });
       return queue || null;
     } catch (error) {
       console.error(error.message);
@@ -119,10 +100,7 @@ const DocumentSyncQueue = {
         await Document.where({ filename: document.filename, watched: true })
       ).map((rec) => rec.id);
       await this.delete({ workspaceDocId: { in: workspaceDocIds } });
-      await Document._updateAll(
-        { filename: document.filename },
-        { watched: false }
-      );
+      await Document._updateAll({ filename: document.filename }, { watched: false });
       return true;
     } catch (error) {
       console.error(error.message);
@@ -130,7 +108,7 @@ const DocumentSyncQueue = {
     }
   },
 
-  _update: async function (id = null, data = {}) {
+  _update: async (id = null, data = {}) => {
     if (!id) throw new Error("No id provided for update");
 
     try {
@@ -145,7 +123,7 @@ const DocumentSyncQueue = {
     }
   },
 
-  get: async function (clause = {}) {
+  get: async (clause = {}) => {
     try {
       const queue = await prisma.document_sync_queues.findFirst({
         where: clause,
@@ -157,12 +135,7 @@ const DocumentSyncQueue = {
     }
   },
 
-  where: async function (
-    clause = {},
-    limit = null,
-    orderBy = null,
-    include = {}
-  ) {
+  where: async (clause = {}, limit = null, orderBy = null, include = {}) => {
     try {
       const results = await prisma.document_sync_queues.findMany({
         where: clause,
@@ -177,7 +150,7 @@ const DocumentSyncQueue = {
     }
   },
 
-  count: async function (clause = {}, limit = null) {
+  count: async (clause = {}, limit = null) => {
     try {
       const count = await prisma.document_sync_queues.count({
         where: clause,
@@ -190,7 +163,7 @@ const DocumentSyncQueue = {
     }
   },
 
-  delete: async function (clause = {}) {
+  delete: async (clause = {}) => {
     try {
       await prisma.document_sync_queues.deleteMany({ where: clause });
       return true;
@@ -228,7 +201,7 @@ const DocumentSyncQueue = {
     return queues;
   },
 
-  saveRun: async function (queueId = null, status = null, result = {}) {
+  saveRun: async (queueId = null, status = null, result = {}) => {
     const { DocumentSyncRun } = require("./documentSyncRun");
     return DocumentSyncRun.save(queueId, status, result);
   },

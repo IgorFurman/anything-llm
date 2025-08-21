@@ -4,14 +4,7 @@ export const AWS_REGIONS = [
     full_name: "US East (N. Virginia)",
     code: "us-east-1",
     public: true,
-    zones: [
-      "us-east-1a",
-      "us-east-1b",
-      "us-east-1c",
-      "us-east-1d",
-      "us-east-1e",
-      "us-east-1f",
-    ],
+    zones: ["us-east-1a", "us-east-1b", "us-east-1c", "us-east-1d", "us-east-1e", "us-east-1f"],
   },
   {
     name: "Ohio",
@@ -111,24 +104,14 @@ export const AWS_REGIONS = [
     code: "ap-northeast-1",
     public: true,
     zone_limit: 3,
-    zones: [
-      "ap-northeast-1a",
-      "ap-northeast-1b",
-      "ap-northeast-1c",
-      "ap-northeast-1d",
-    ],
+    zones: ["ap-northeast-1a", "ap-northeast-1b", "ap-northeast-1c", "ap-northeast-1d"],
   },
   {
     name: "Seoul",
     full_name: "Asia Pacific (Seoul)",
     code: "ap-northeast-2",
     public: true,
-    zones: [
-      "ap-northeast-2a",
-      "ap-northeast-2b",
-      "ap-northeast-2c",
-      "ap-northeast-2d",
-    ],
+    zones: ["ap-northeast-2a", "ap-northeast-2b", "ap-northeast-2c", "ap-northeast-2d"],
   },
   {
     name: "Osaka",

@@ -7,8 +7,7 @@ const EncryptionMgr = new EncryptionManager();
 async function validatedRequest(request, response, next) {
   const multiUserMode = await SystemSettings.isMultiUserMode();
   response.locals.multiUserMode = multiUserMode;
-  if (multiUserMode)
-    return await validateMultiUserRequest(request, response, next);
+  if (multiUserMode) return await validateMultiUserRequest(request, response, next);
 
   // When in development passthrough auth token for ease of development.
   // Or if the user simply did not set an Auth token or JWT Secret
@@ -53,12 +52,7 @@ async function validatedRequest(request, response, next) {
   // be unsafe. As a consequence, existing JWTs with invalid `p` values that do not match the regex
   // in ln:44 will be marked invalid so they can be logged out and forced to log back in and obtain an encrypted token.
   // This kind of methodology only applies to single-user password mode.
-  if (
-    !bcrypt.compareSync(
-      EncryptionMgr.decrypt(p),
-      bcrypt.hashSync(process.env.AUTH_TOKEN, 10)
-    )
-  ) {
+  if (!bcrypt.compareSync(EncryptionMgr.decrypt(p), bcrypt.hashSync(process.env.AUTH_TOKEN, 10))) {
     response.status(401).json({
       error: "Invalid auth credentials.",
     });

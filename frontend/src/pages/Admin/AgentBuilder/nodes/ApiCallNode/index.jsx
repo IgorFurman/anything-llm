@@ -1,11 +1,7 @@
+import { CaretDown, Plus, X } from "@phosphor-icons/react";
 import React, { useRef, useState } from "react";
-import { Plus, X, CaretDown } from "@phosphor-icons/react";
 
-export default function ApiCallNode({
-  config,
-  onConfigChange,
-  renderVariableSelect,
-}) {
+export default function ApiCallNode({ config, onConfigChange, renderVariableSelect }) {
   const urlInputRef = useRef(null);
   const [showVarMenu, setShowVarMenu] = useState(false);
   const varButtonRef = useRef(null);
@@ -22,9 +18,7 @@ export default function ApiCallNode({
   };
 
   const removeHeader = (index) => {
-    const newHeaders = [...(config.headers || [])].filter(
-      (_, i) => i !== index
-    );
+    const newHeaders = [...(config.headers || [])].filter((_, i) => i !== index);
     onConfigChange({ headers: newHeaders });
   };
 
@@ -37,11 +31,7 @@ export default function ApiCallNode({
     const currentValue = config.url;
 
     const newValue =
-      currentValue.substring(0, start) +
-      "${" +
-      variableName +
-      "}" +
-      currentValue.substring(end);
+      currentValue.substring(0, start) + "${" + variableName + "}" + currentValue.substring(end);
 
     onConfigChange({ url: newValue });
     setShowVarMenu(false);
@@ -57,9 +47,7 @@ export default function ApiCallNode({
   return (
     <div className="space-y-4">
       <div>
-        <label className="block text-sm font-medium text-theme-text-primary mb-2">
-          URL
-        </label>
+        <label className="block text-sm font-medium text-theme-text-primary mb-2">URL</label>
         <div className="flex gap-2">
           <input
             ref={urlInputRef}
@@ -96,20 +84,14 @@ export default function ApiCallNode({
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-theme-text-primary mb-2">
-          Method
-        </label>
+        <label className="block text-sm font-medium text-theme-text-primary mb-2">Method</label>
         <select
           value={config.method}
           onChange={(e) => onConfigChange({ method: e.target.value })}
           className="w-full border-none bg-theme-settings-input-bg text-theme-text-primary text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none p-2.5"
         >
           {["GET", "POST", "DELETE", "PUT", "PATCH"].map((method) => (
-            <option
-              key={method}
-              value={method}
-              className="bg-theme-settings-input-bg"
-            >
+            <option key={method} value={method} className="bg-theme-settings-input-bg">
               {method}
             </option>
           ))}
@@ -118,9 +100,7 @@ export default function ApiCallNode({
 
       <div>
         <div className="flex items-center justify-between mb-2">
-          <label className="text-sm font-medium text-theme-text-primary">
-            Headers
-          </label>
+          <label className="text-sm font-medium text-theme-text-primary">Headers</label>
           <button
             onClick={addHeader}
             className="p-1.5 rounded-lg border-none bg-theme-settings-input-bg text-theme-text-primary hover:bg-theme-action-menu-item-hover transition-colors duration-300"
@@ -136,9 +116,7 @@ export default function ApiCallNode({
                 type="text"
                 placeholder="Header name"
                 value={header.key}
-                onChange={(e) =>
-                  handleHeaderChange(index, "key", e.target.value)
-                }
+                onChange={(e) => handleHeaderChange(index, "key", e.target.value)}
                 className="flex-1 border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none p-2.5"
                 autoComplete="off"
                 spellCheck={false}
@@ -147,9 +125,7 @@ export default function ApiCallNode({
                 type="text"
                 placeholder="Value"
                 value={header.value}
-                onChange={(e) =>
-                  handleHeaderChange(index, "value", e.target.value)
-                }
+                onChange={(e) => handleHeaderChange(index, "value", e.target.value)}
                 className="flex-1 border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none p-2.5"
                 autoComplete="off"
                 spellCheck={false}
@@ -177,22 +153,13 @@ export default function ApiCallNode({
               onChange={(e) => onConfigChange({ bodyType: e.target.value })}
               className="w-full p-2.5 text-sm rounded-lg bg-theme-bg-primary border border-white/5 text-theme-text-primary focus:border-primary-button focus:ring-1 focus:ring-primary-button outline-none light:bg-theme-settings-input-bg light:border-black/10"
             >
-              <option
-                value="json"
-                className="bg-theme-bg-primary light:bg-theme-settings-input-bg"
-              >
+              <option value="json" className="bg-theme-bg-primary light:bg-theme-settings-input-bg">
                 JSON
               </option>
-              <option
-                value="text"
-                className="bg-theme-bg-primary light:bg-theme-settings-input-bg"
-              >
+              <option value="text" className="bg-theme-bg-primary light:bg-theme-settings-input-bg">
                 Raw Text
               </option>
-              <option
-                value="form"
-                className="bg-theme-bg-primary light:bg-theme-settings-input-bg"
-              >
+              <option value="form" className="bg-theme-bg-primary light:bg-theme-settings-input-bg">
                 Form Data
               </option>
             </select>
@@ -252,10 +219,7 @@ export default function ApiCallNode({
                 ))}
                 <button
                   onClick={() => {
-                    const newFormData = [
-                      ...(config.formData || []),
-                      { key: "", value: "" },
-                    ];
+                    const newFormData = [...(config.formData || []), { key: "", value: "" }];
                     onConfigChange({ formData: newFormData });
                   }}
                   className="w-full p-2.5 rounded-lg border-none bg-theme-settings-input-bg text-theme-text-primary hover:bg-theme-action-menu-item-hover transition-colors duration-300 text-sm"

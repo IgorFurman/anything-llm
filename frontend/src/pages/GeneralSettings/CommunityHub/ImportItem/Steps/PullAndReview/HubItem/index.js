@@ -1,8 +1,8 @@
-import SystemPrompt from "./SystemPrompt";
-import SlashCommand from "./SlashCommand";
-import UnknownItem from "./Unknown";
-import AgentSkill from "./AgentSkill";
 import AgentFlow from "./AgentFlow";
+import AgentSkill from "./AgentSkill";
+import SlashCommand from "./SlashCommand";
+import SystemPrompt from "./SystemPrompt";
+import UnknownItem from "./Unknown";
 
 const HubItemComponent = {
   "agent-skill": AgentSkill,

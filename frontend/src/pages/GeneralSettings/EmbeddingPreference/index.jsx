@@ -1,42 +1,42 @@
-import React, { useEffect, useState, useRef } from "react";
 import Sidebar from "@/components/SettingsSidebar";
-import { isMobile } from "react-device-detect";
+import VoyageAiLogo from "@/media/embeddingprovider/voyageai.png";
+import AzureOpenAiLogo from "@/media/llmprovider/azure.png";
+import CohereLogo from "@/media/llmprovider/cohere.png";
+import GeminiAiLogo from "@/media/llmprovider/gemini.png";
+import GenericOpenAiLogo from "@/media/llmprovider/generic-openai.png";
+import LiteLLMLogo from "@/media/llmprovider/litellm.png";
+import LMStudioLogo from "@/media/llmprovider/lmstudio.png";
+import LocalAiLogo from "@/media/llmprovider/localai.png";
+import MistralAiLogo from "@/media/llmprovider/mistral.jpeg";
+import OllamaLogo from "@/media/llmprovider/ollama.png";
+import OpenAiLogo from "@/media/llmprovider/openai.png";
+import AnythingLLMIcon from "@/media/logo/anything-llm-icon.png";
 import System from "@/models/system";
 import showToast from "@/utils/toast";
-import AnythingLLMIcon from "@/media/logo/anything-llm-icon.png";
-import OpenAiLogo from "@/media/llmprovider/openai.png";
-import AzureOpenAiLogo from "@/media/llmprovider/azure.png";
-import GeminiAiLogo from "@/media/llmprovider/gemini.png";
-import LocalAiLogo from "@/media/llmprovider/localai.png";
-import OllamaLogo from "@/media/llmprovider/ollama.png";
-import LMStudioLogo from "@/media/llmprovider/lmstudio.png";
-import CohereLogo from "@/media/llmprovider/cohere.png";
-import VoyageAiLogo from "@/media/embeddingprovider/voyageai.png";
-import LiteLLMLogo from "@/media/llmprovider/litellm.png";
-import GenericOpenAiLogo from "@/media/llmprovider/generic-openai.png";
-import MistralAiLogo from "@/media/llmprovider/mistral.jpeg";
+import React, { useEffect, useState, useRef } from "react";
+import { isMobile } from "react-device-detect";
 
-import PreLoader from "@/components/Preloader";
 import ChangeWarningModal from "@/components/ChangeWarning";
-import OpenAiOptions from "@/components/EmbeddingSelection/OpenAiOptions";
 import AzureAiOptions from "@/components/EmbeddingSelection/AzureAiOptions";
+import CohereEmbeddingOptions from "@/components/EmbeddingSelection/CohereOptions";
 import GeminiOptions from "@/components/EmbeddingSelection/GeminiOptions";
+import GenericOpenAiEmbeddingOptions from "@/components/EmbeddingSelection/GenericOpenAiOptions";
+import LMStudioEmbeddingOptions from "@/components/EmbeddingSelection/LMStudioOptions";
+import LiteLLMOptions from "@/components/EmbeddingSelection/LiteLLMOptions";
 import LocalAiOptions from "@/components/EmbeddingSelection/LocalAiOptions";
 import NativeEmbeddingOptions from "@/components/EmbeddingSelection/NativeEmbeddingOptions";
 import OllamaEmbeddingOptions from "@/components/EmbeddingSelection/OllamaOptions";
-import LMStudioEmbeddingOptions from "@/components/EmbeddingSelection/LMStudioOptions";
-import CohereEmbeddingOptions from "@/components/EmbeddingSelection/CohereOptions";
+import OpenAiOptions from "@/components/EmbeddingSelection/OpenAiOptions";
 import VoyageAiOptions from "@/components/EmbeddingSelection/VoyageAiOptions";
-import LiteLLMOptions from "@/components/EmbeddingSelection/LiteLLMOptions";
-import GenericOpenAiEmbeddingOptions from "@/components/EmbeddingSelection/GenericOpenAiOptions";
+import PreLoader from "@/components/Preloader";
 
 import EmbedderItem from "@/components/EmbeddingSelection/EmbedderItem";
-import { CaretUpDown, MagnifyingGlass, X } from "@phosphor-icons/react";
-import { useModal } from "@/hooks/useModal";
+import MistralAiOptions from "@/components/EmbeddingSelection/MistralAiOptions";
 import ModalWrapper from "@/components/ModalWrapper";
 import CTAButton from "@/components/lib/CTAButton";
+import { useModal } from "@/hooks/useModal";
+import { CaretUpDown, MagnifyingGlass, X } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
-import MistralAiOptions from "@/components/EmbeddingSelection/MistralAiOptions";
 
 const EMBEDDERS = [
   {
@@ -44,8 +44,7 @@ const EMBEDDERS = [
     value: "native",
     logo: AnythingLLMIcon,
     options: (settings) => <NativeEmbeddingOptions settings={settings} />,
-    description:
-      "Use the built-in embedding provider for AnythingLLM. Zero setup!",
+    description: "Use the built-in embedding provider for AnythingLLM. Zero setup!",
   },
   {
     name: "OpenAI",
@@ -87,8 +86,7 @@ const EMBEDDERS = [
     value: "lmstudio",
     logo: LMStudioLogo,
     options: (settings) => <LMStudioEmbeddingOptions settings={settings} />,
-    description:
-      "Discover, download, and run thousands of cutting edge LLMs in a few clicks.",
+    description: "Discover, download, and run thousands of cutting edge LLMs in a few clicks.",
   },
   {
     name: "Cohere",
@@ -122,9 +120,7 @@ const EMBEDDERS = [
     name: "Generic OpenAI",
     value: "generic-openai",
     logo: GenericOpenAiLogo,
-    options: (settings) => (
-      <GenericOpenAiEmbeddingOptions settings={settings} />
-    ),
+    options: (settings) => <GenericOpenAiEmbeddingOptions settings={settings} />,
     description: "Run embedding models from any OpenAI compatible API service.",
   },
 ];
@@ -158,8 +154,7 @@ export default function GeneralEmbeddingPreference() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (
-      (selectedEmbedder !== settings?.EmbeddingEngine ||
-        embedderModelChanged(e.target)) &&
+      (selectedEmbedder !== settings?.EmbeddingEngine || embedderModelChanged(e.target)) &&
       hasChanges &&
       (hasEmbeddings || hasCachedEmbeddings)
     ) {
@@ -224,9 +219,7 @@ export default function GeneralEmbeddingPreference() {
     setFilteredEmbedders(filtered);
   }, [searchQuery, selectedEmbedder]);
 
-  const selectedEmbedderObject = EMBEDDERS.find(
-    (embedder) => embedder.value === selectedEmbedder
-  );
+  const selectedEmbedderObject = EMBEDDERS.find((embedder) => embedder.value === selectedEmbedder);
 
   return (
     <div className="w-screen h-screen overflow-hidden bg-theme-bg-container flex">
@@ -245,17 +238,11 @@ export default function GeneralEmbeddingPreference() {
           style={{ height: isMobile ? "100%" : "calc(100% - 32px)" }}
           className="relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full h-full overflow-y-scroll p-4 md:p-0"
         >
-          <form
-            id="embedding-form"
-            onSubmit={handleSubmit}
-            className="flex w-full"
-          >
+          <form id="embedding-form" onSubmit={handleSubmit} className="flex w-full">
             <div className="flex flex-col w-full px-1 md:pl-6 md:pr-[50px] py-16 md:py-6">
               <div className="w-full flex flex-col gap-y-1 pb-6 border-white light:border-theme-sidebar-border border-b-2 border-opacity-10">
                 <div className="flex gap-x-4 items-center">
-                  <p className="text-lg leading-6 font-bold text-white">
-                    {t("embedding.title")}
-                  </p>
+                  <p className="text-lg leading-6 font-bold text-white">{t("embedding.title")}</p>
                 </div>
                 <p className="text-xs leading-[18px] font-base text-white text-opacity-60">
                   {t("embedding.desc-start")}
@@ -265,10 +252,7 @@ export default function GeneralEmbeddingPreference() {
               </div>
               <div className="w-full justify-end flex">
                 {hasChanges && (
-                  <CTAButton
-                    onClick={() => handleSubmit()}
-                    className="mt-3 mr-0 -mb-14 z-10"
-                  >
+                  <CTAButton onClick={() => handleSubmit()} className="mt-3 mr-0 -mb-14 z-10">
                     {saving ? t("common.saving") : t("common.save")}
                   </CTAButton>
                 )}
@@ -347,22 +331,15 @@ export default function GeneralEmbeddingPreference() {
                         </div>
                       </div>
                     </div>
-                    <CaretUpDown
-                      size={24}
-                      weight="bold"
-                      className="text-white"
-                    />
+                    <CaretUpDown size={24} weight="bold" className="text-white" />
                   </button>
                 )}
               </div>
-              <div
-                onChange={() => setHasChanges(true)}
-                className="mt-4 flex flex-col gap-y-1"
-              >
+              <div onChange={() => setHasChanges(true)} className="mt-4 flex flex-col gap-y-1">
                 {selectedEmbedder &&
-                  EMBEDDERS.find(
-                    (embedder) => embedder.value === selectedEmbedder
-                  )?.options(settings)}
+                  EMBEDDERS.find((embedder) => embedder.value === selectedEmbedder)?.options(
+                    settings
+                  )}
               </div>
             </div>
           </form>

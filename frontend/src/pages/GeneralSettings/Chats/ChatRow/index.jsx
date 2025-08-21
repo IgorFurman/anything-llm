@@ -1,19 +1,16 @@
-import truncate from "truncate";
-import { X, Trash } from "@phosphor-icons/react";
-import System from "@/models/system";
 import ModalWrapper from "@/components/ModalWrapper";
 import { useModal } from "@/hooks/useModal";
+import System from "@/models/system";
+import { Trash, X } from "@phosphor-icons/react";
+import truncate from "truncate";
 
 // Some LLMs may return a "valid" response that truncation fails to truncate because
 // it stored an Object as opposed to a string for the `text` field.
 function parseText(jsonResponse = "") {
   try {
     const json = JSON.parse(jsonResponse);
-    if (!json.hasOwnProperty("text"))
-      throw new Error('JSON response has no property "text".');
-    return typeof json.text !== "string"
-      ? JSON.stringify(json.text)
-      : json.text;
+    if (!json.hasOwnProperty("text")) throw new Error('JSON response has no property "text".');
+    return typeof json.text !== "string" ? JSON.stringify(json.text) : json.text;
   } catch (e) {
     console.error(e);
     return "--failed to parse--";
@@ -34,9 +31,7 @@ export default function ChatRow({ chat, onDelete }) {
 
   const handleDelete = async () => {
     if (
-      !window.confirm(
-        `Are you sure you want to delete this chat?\n\nThis action is irreversible.`
-      )
+      !window.confirm(`Are you sure you want to delete this chat?\n\nThis action is irreversible.`)
     )
       return false;
     await System.deleteChat(chat.id);
@@ -46,12 +41,8 @@ export default function ChatRow({ chat, onDelete }) {
   return (
     <>
       <tr className="bg-transparent text-white text-opacity-80 text-xs font-medium border-b border-white/10 h-10">
-        <td className="px-6 font-medium whitespace-nowrap text-white">
-          {chat.id}
-        </td>
-        <td className="px-6 font-medium whitespace-nowrap text-white">
-          {chat.user?.username}
-        </td>
+        <td className="px-6 font-medium whitespace-nowrap text-white">{chat.id}</td>
+        <td className="px-6 font-medium whitespace-nowrap text-white">{chat.user?.username}</td>
         <td className="px-6">{chat.workspace?.name}</td>
         <td
           onClick={openPromptModal}
@@ -79,10 +70,7 @@ export default function ChatRow({ chat, onDelete }) {
         <TextPreview text={chat.prompt} closeModal={closePromptModal} />
       </ModalWrapper>
       <ModalWrapper isOpen={isResponseOpen}>
-        <TextPreview
-          text={parseText(chat.response)}
-          closeModal={closeResponseModal}
-        />
+        <TextPreview text={parseText(chat.response)} closeModal={closeResponseModal} />
       </ModalWrapper>
     </>
   );

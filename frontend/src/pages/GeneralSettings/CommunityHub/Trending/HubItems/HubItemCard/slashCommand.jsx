@@ -1,6 +1,6 @@
-import truncate from "truncate";
-import { Link } from "react-router-dom";
 import paths from "@/utils/paths";
+import { Link } from "react-router-dom";
+import truncate from "truncate";
 import { VisibilityIcon } from "./generic";
 
 export default function SlashCommandHubCard({ item }) {
@@ -17,16 +17,12 @@ export default function SlashCommandHubCard({ item }) {
         </div>
         <div className="flex flex-col gap-2">
           <p className="text-white/60 text-xs mt-1">{item.description}</p>
-          <label className="text-white/60 text-xs font-semibold mt-4">
-            Command
-          </label>
+          <label className="text-white/60 text-xs font-semibold mt-4">Command</label>
           <p className="text-white/60 text-xs bg-zinc-900 light:bg-slate-200 px-2 py-1 rounded-md font-mono border border-slate-800 light:border-slate-300">
             {item.command}
           </p>
 
-          <label className="text-white/60 text-xs font-semibold mt-4">
-            Prompt
-          </label>
+          <label className="text-white/60 text-xs font-semibold mt-4">Prompt</label>
           <p className="text-white/60 text-xs bg-zinc-900 light:bg-slate-200 px-2 py-1 rounded-md font-mono border border-slate-800 light:border-slate-300">
             {truncate(item.prompt, 90)}
           </p>

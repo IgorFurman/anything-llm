@@ -1,9 +1,6 @@
 const ImportedPlugin = require("../../utils/agents/imported");
 const { reqBody } = require("../../utils/http");
-const {
-  flexUserRoleValid,
-  ROLES,
-} = require("../../utils/middleware/multiUserProtected");
+const { flexUserRoleValid, ROLES } = require("../../utils/middleware/multiUserProtected");
 const { validatedRequest } = require("../../utils/middleware/validatedRequest");
 
 function importedAgentPluginEndpoints(app) {
@@ -34,10 +31,7 @@ function importedAgentPluginEndpoints(app) {
       try {
         const { hubId } = request.params;
         const { updates } = reqBody(request);
-        const updatedConfig = ImportedPlugin.updateImportedPlugin(
-          hubId,
-          updates
-        );
+        const updatedConfig = ImportedPlugin.updateImportedPlugin(hubId, updates);
         response.status(200).json(updatedConfig);
       } catch (e) {
         console.error(e);

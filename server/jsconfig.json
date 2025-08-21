@@ -3,12 +3,6 @@
     "module": "commonjs",
     "target": "ES2020"
   },
-  "include": [
-    "./endpoints/**/*",
-    "./models/**/*",
-    "./utils/**/*",
-    "./swagger/**/*",
-    "index.js"
-  ],
+  "include": ["./endpoints/**/*", "./models/**/*", "./utils/**/*", "./swagger/**/*", "index.js"],
   "exclude": ["node_modules", "storage"]
 }

@@ -1,17 +1,17 @@
-import { useEffect, useState } from "react";
 import Sidebar from "@/components/SettingsSidebar";
+import { useEffect, useState } from "react";
 import { isMobile } from "react-device-detect";
 import * as Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { PlusCircle } from "@phosphor-icons/react";
-import BrowserExtensionApiKey from "@/models/browserExtensionApiKey";
-import BrowserExtensionApiKeyRow from "./BrowserExtensionApiKeyRow";
-import CTAButton from "@/components/lib/CTAButton";
-import NewBrowserExtensionApiKeyModal from "./NewBrowserExtensionApiKeyModal";
 import ModalWrapper from "@/components/ModalWrapper";
+import CTAButton from "@/components/lib/CTAButton";
 import { useModal } from "@/hooks/useModal";
+import BrowserExtensionApiKey from "@/models/browserExtensionApiKey";
 import { fullApiUrl } from "@/utils/constants";
+import { PlusCircle } from "@phosphor-icons/react";
 import { Tooltip } from "react-tooltip";
+import BrowserExtensionApiKeyRow from "./BrowserExtensionApiKeyRow";
+import NewBrowserExtensionApiKeyModal from "./NewBrowserExtensionApiKeyModal";
 
 export default function BrowserExtensionApiKeys() {
   const [loading, setLoading] = useState(true);
@@ -54,15 +54,11 @@ export default function BrowserExtensionApiKeys() {
               </p>
             </div>
             <p className="text-xs leading-[18px] font-base text-theme-text-secondary mt-2">
-              Manage API keys for browser extensions connecting to your
-              AnythingLLM instance.
+              Manage API keys for browser extensions connecting to your AnythingLLM instance.
             </p>
           </div>
           <div className="w-full justify-end flex">
-            <CTAButton
-              onClick={openModal}
-              className="mt-3 mr-0 mb-4 md:-mb-14 z-10"
-            >
+            <CTAButton onClick={openModal} className="mt-3 mr-0 mb-4 md:-mb-14 z-10">
               <PlusCircle className="h-4 w-4" weight="bold" />
               Generate New API Key
             </CTAButton>
@@ -103,10 +99,7 @@ export default function BrowserExtensionApiKeys() {
                 <tbody>
                   {apiKeys.length === 0 ? (
                     <tr className="bg-transparent text-theme-text-secondary text-sm font-medium">
-                      <td
-                        colSpan={isMultiUser ? "4" : "3"}
-                        className="px-6 py-4 text-center"
-                      >
+                      <td colSpan={isMultiUser ? "4" : "3"} className="px-6 py-4 text-center">
                         No API keys found
                       </td>
                     </tr>

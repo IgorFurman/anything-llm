@@ -4,12 +4,12 @@ const { v4: uuidv4 } = require("uuid");
 const WorkspaceAgentInvocation = {
   // returns array of strings with their @ handle.
   // must start with @agent for now.
-  parseAgents: function (promptString) {
+  parseAgents: (promptString) => {
     if (!promptString.startsWith("@agent")) return [];
     return promptString.split(/\s+/).filter((v) => v.startsWith("@"));
   },
 
-  close: async function (uuid) {
+  close: async (uuid) => {
     if (!uuid) return;
     try {
       await prisma.workspace_agent_invocations.update({
@@ -19,7 +19,7 @@ const WorkspaceAgentInvocation = {
     } catch {}
   },
 
-  new: async function ({ prompt, workspace, user = null, thread = null }) {
+  new: async ({ prompt, workspace, user = null, thread = null }) => {
     try {
       const invocation = await prisma.workspace_agent_invocations.create({
         data: {
@@ -38,7 +38,7 @@ const WorkspaceAgentInvocation = {
     }
   },
 
-  get: async function (clause = {}) {
+  get: async (clause = {}) => {
     try {
       const invocation = await prisma.workspace_agent_invocations.findFirst({
         where: clause,
@@ -51,7 +51,7 @@ const WorkspaceAgentInvocation = {
     }
   },
 
-  getWithWorkspace: async function (clause = {}) {
+  getWithWorkspace: async (clause = {}) => {
     try {
       const invocation = await prisma.workspace_agent_invocations.findFirst({
         where: clause,
@@ -67,7 +67,7 @@ const WorkspaceAgentInvocation = {
     }
   },
 
-  delete: async function (clause = {}) {
+  delete: async (clause = {}) => {
     try {
       await prisma.workspace_agent_invocations.delete({
         where: clause,
@@ -79,7 +79,7 @@ const WorkspaceAgentInvocation = {
     }
   },
 
-  where: async function (clause = {}, limit = null, orderBy = null) {
+  where: async (clause = {}, limit = null, orderBy = null) => {
     try {
       const results = await prisma.workspace_agent_invocations.findMany({
         where: clause,

@@ -1,21 +1,21 @@
-import { useEffect, useRef, useState, useMemo, useCallback } from "react";
+import { useChatMessageAlignment } from "@/hooks/useChatMessageAlignment";
+import useTextSize from "@/hooks/useTextSize";
+import useUser from "@/hooks/useUser";
+import Appearance from "@/models/appearance";
+import Workspace from "@/models/workspace";
+import paths from "@/utils/paths";
+import { ArrowDown } from "@phosphor-icons/react";
+import debounce from "lodash.debounce";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
+import { v4 } from "uuid";
+import { useManageWorkspaceModal } from "../../../Modals/ManageWorkspace";
+import ManageWorkspace from "../../../Modals/ManageWorkspace";
+import Chartable from "./Chartable";
 import HistoricalMessage from "./HistoricalMessage";
 import PromptReply from "./PromptReply";
 import StatusResponse from "./StatusResponse";
-import { useManageWorkspaceModal } from "../../../Modals/ManageWorkspace";
-import ManageWorkspace from "../../../Modals/ManageWorkspace";
-import { ArrowDown } from "@phosphor-icons/react";
-import debounce from "lodash.debounce";
-import useUser from "@/hooks/useUser";
-import Chartable from "./Chartable";
-import Workspace from "@/models/workspace";
-import { useParams } from "react-router-dom";
-import paths from "@/utils/paths";
-import Appearance from "@/models/appearance";
-import useTextSize from "@/hooks/useTextSize";
-import { v4 } from "uuid";
-import { useTranslation } from "react-i18next";
-import { useChatMessageAlignment } from "@/hooks/useChatMessageAlignment";
 
 export default function ChatHistory({
   history = [],
@@ -63,8 +63,7 @@ export default function ChatHistory({
     const chatHistoryElement = chatHistoryRef.current;
     if (chatHistoryElement) {
       chatHistoryElement.addEventListener("scroll", debouncedScroll);
-      return () =>
-        chatHistoryElement.removeEventListener("scroll", debouncedScroll);
+      return () => chatHistoryElement.removeEventListener("scroll", debouncedScroll);
     }
   }, []);
 
@@ -85,12 +84,7 @@ export default function ChatHistory({
     sendCommand({ text: `${heading} ${message}`, autoSubmit: true });
   };
 
-  const saveEditedMessage = async ({
-    editedMessage,
-    chatId,
-    role,
-    attachments = [],
-  }) => {
+  const saveEditedMessage = async ({ editedMessage, chatId, role, attachments = [] }) => {
     if (!editedMessage) return; // Don't save empty edits.
 
     // if the edit was a user message, we will auto-regenerate the response and delete all
@@ -119,32 +113,18 @@ export default function ChatHistory({
     // If role is an assistant we simply want to update the comment and save on the backend as an edit.
     if (role === "assistant") {
       const updatedHistory = [...history];
-      const targetIdx = history.findIndex(
-        (msg) => msg.chatId === chatId && msg.role === role
-      );
+      const targetIdx = history.findIndex((msg) => msg.chatId === chatId && msg.role === role);
       if (targetIdx < 0) return;
       updatedHistory[targetIdx].content = editedMessage;
       updateHistory(updatedHistory);
-      await Workspace.updateChatResponse(
-        workspace.slug,
-        threadSlug,
-        chatId,
-        editedMessage
-      );
+      await Workspace.updateChatResponse(workspace.slug, threadSlug, chatId, editedMessage);
       return;
     }
   };
 
   const forkThread = async (chatId) => {
-    const newThreadSlug = await Workspace.forkThread(
-      workspace.slug,
-      threadSlug,
-      chatId
-    );
-    window.location.href = paths.workspace.thread(
-      workspace.slug,
-      newThreadSlug
-    );
+    const newThreadSlug = await Workspace.forkThread(workspace.slug, threadSlug, chatId);
+    window.location.href = paths.workspace.thread(workspace.slug, newThreadSlug);
   };
 
   const compiledHistory = useMemo(
@@ -157,13 +137,7 @@ export default function ChatHistory({
         forkThread,
         getMessageAlignment,
       }),
-    [
-      workspace,
-      history,
-      regenerateAssistantMessage,
-      saveEditedMessage,
-      forkThread,
-    ]
+    [workspace, history, regenerateAssistantMessage, saveEditedMessage, forkThread]
   );
   const lastMessageInfo = useMemo(() => getLastMessageInfo(history), [history]);
   const renderStatusResponse = useCallback(
@@ -188,16 +162,11 @@ export default function ChatHistory({
     return (
       <div className="flex flex-col h-full md:mt-0 pb-44 md:pb-40 w-full justify-end items-center">
         <div className="flex flex-col items-center md:items-start md:max-w-[600px] w-full px-4">
-          <p className="text-white/60 text-lg font-base py-4">
-            {t("chat_window.welcome")}
-          </p>
+          <p className="text-white/60 text-lg font-base py-4">{t("chat_window.welcome")}</p>
           {!user || user.role !== "default" ? (
             <p className="w-full items-center text-white/60 text-lg font-base flex flex-col md:flex-row gap-x-1">
               {t("chat_window.get_started")}
-              <span
-                className="underline font-medium cursor-pointer"
-                onClick={showModal}
-              >
+              <span className="underline font-medium cursor-pointer" onClick={showModal}>
                 {t("chat_window.upload")}
               </span>
               {t("chat_window.or")}{" "}
@@ -214,12 +183,7 @@ export default function ChatHistory({
             sendSuggestion={handleSendSuggestedMessage}
           />
         </div>
-        {showing && (
-          <ManageWorkspace
-            hideModal={hideModal}
-            providedSlug={workspace.slug}
-          />
-        )}
+        {showing && <ManageWorkspace hideModal={hideModal} providedSlug={workspace.slug} />}
       </div>
     );
   }
@@ -234,9 +198,7 @@ export default function ChatHistory({
       {compiledHistory.map((item, index) =>
         Array.isArray(item) ? renderStatusResponse(item, index) : item
       )}
-      {showing && (
-        <ManageWorkspace hideModal={hideModal} providedSlug={workspace.slug} />
-      )}
+      {showing && <ManageWorkspace hideModal={hideModal} providedSlug={workspace.slug} />}
       {!isAtBottom && (
         <div className="fixed bottom-40 right-10 md:right-20 z-50 cursor-pointer animate-pulse">
           <div className="flex flex-col items-center">
@@ -306,8 +268,7 @@ function buildMessages({
   getMessageAlignment,
 }) {
   return history.reduce((acc, props, index) => {
-    const isLastBotReply =
-      index === history.length - 1 && props.role === "assistant";
+    const isLastBotReply = index === history.length - 1 && props.role === "assistant";
 
     if (props?.type === "statusResponse" && !!props.content) {
       if (acc.length > 0 && Array.isArray(acc[acc.length - 1])) {
@@ -319,9 +280,7 @@ function buildMessages({
     }
 
     if (props.type === "rechartVisualize" && !!props.content) {
-      acc.push(
-        <Chartable key={props.uuid} workspace={workspace} props={props} />
-      );
+      acc.push(<Chartable key={props.uuid} workspace={workspace} props={props} />);
     } else if (isLastBotReply && props.animate) {
       acc.push(
         <PromptReply

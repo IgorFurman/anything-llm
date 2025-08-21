@@ -1,6 +1,6 @@
 import { useChatMessageAlignment } from "@/hooks/useChatMessageAlignment";
-import { Tooltip } from "react-tooltip";
 import { useTranslation } from "react-i18next";
+import { Tooltip } from "react-tooltip";
 
 export function MessageDirection() {
   const { t } = useTranslation();

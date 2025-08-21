@@ -1,11 +1,8 @@
 class VoyageAiEmbedder {
   constructor() {
-    if (!process.env.VOYAGEAI_API_KEY)
-      throw new Error("No Voyage AI API key was set.");
+    if (!process.env.VOYAGEAI_API_KEY) throw new Error("No Voyage AI API key was set.");
 
-    const {
-      VoyageEmbeddings,
-    } = require("@langchain/community/embeddings/voyage");
+    const { VoyageEmbeddings } = require("@langchain/community/embeddings/voyage");
 
     this.model = process.env.EMBEDDING_MODEL_PREF || "voyage-3-lite";
     this.voyage = new VoyageEmbeddings({
@@ -55,11 +52,7 @@ class VoyageAiEmbedder {
       return embeddings;
     } catch (error) {
       console.error("Voyage AI Failed to embed:", error);
-      if (
-        error.message.includes(
-          "Cannot read properties of undefined (reading '0')"
-        )
-      )
+      if (error.message.includes("Cannot read properties of undefined (reading '0')"))
         throw new Error("Voyage AI failed to embed: Rate limit reached");
       throw error;
     }

@@ -54,16 +54,11 @@ export default function SupportEmail() {
 
   if (loading || !user?.role) return null;
   return (
-    <form
-      className="flex flex-col gap-y-0.5 mt-4"
-      onSubmit={updateSupportEmail}
-    >
+    <form className="flex flex-col gap-y-0.5 mt-4" onSubmit={updateSupportEmail}>
       <p className="text-sm leading-6 font-semibold text-white">
         {t("customization.items.support-email.title")}
       </p>
-      <p className="text-xs text-white/60">
-        {t("customization.items.support-email.description")}
-      </p>
+      <p className="text-xs text-white/60">{t("customization.items.support-email.description")}</p>
       <div className="flex items-center gap-x-4">
         <input
           name="supportEmail"

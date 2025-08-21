@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { X } from "@phosphor-icons/react";
 import ModalWrapper from "@/components/ModalWrapper";
-import { CMD_REGEX } from ".";
+import { X } from "@phosphor-icons/react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { CMD_REGEX } from ".";
 
 export default function AddPresetModal({ isOpen, onClose, onSave }) {
   const [command, setCommand] = useState("");
@@ -42,18 +42,12 @@ export default function AddPresetModal({ isOpen, onClose, onSave }) {
             <X size={24} weight="bold" className="text-white" />
           </button>
         </div>
-        <div
-          className="h-full w-full overflow-y-auto"
-          style={{ maxHeight: "calc(100vh - 200px)" }}
-        >
+        <div className="h-full w-full overflow-y-auto" style={{ maxHeight: "calc(100vh - 200px)" }}>
           <form onSubmit={handleSubmit}>
             <div className="py-7 px-9 space-y-2 flex-col">
               <div className="w-full flex flex-col gap-y-4">
                 <div>
-                  <label
-                    htmlFor="command"
-                    className="block mb-2 text-sm font-medium text-white"
-                  >
+                  <label htmlFor="command" className="block mb-2 text-sm font-medium text-white">
                     {t("chat_window.command")}
                   </label>
                   <div className="flex items-center">
@@ -73,10 +67,7 @@ export default function AddPresetModal({ isOpen, onClose, onSave }) {
                   </div>
                 </div>
                 <div>
-                  <label
-                    htmlFor="prompt"
-                    className="block mb-2 text-sm font-medium text-white"
-                  >
+                  <label htmlFor="prompt" className="block mb-2 text-sm font-medium text-white">
                     Prompt
                   </label>
                   <textarea

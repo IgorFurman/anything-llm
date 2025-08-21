@@ -23,8 +23,7 @@ export default function PGVectorOptions({ settings }) {
               clickable={true}
             >
               <p className="text-md whitespace-pre-line break-words">
-                This is the connection string for the Postgres database in the
-                format of <br />
+                This is the connection string for the Postgres database in the format of <br />
                 <code>postgresql://username:password@host:port/database</code>
                 <br />
                 <br />
@@ -35,10 +34,7 @@ export default function PGVectorOptions({ settings }) {
                   <li>Create access to the database</li>
                 </ul>
                 <br />
-                <b>
-                  You must have the pgvector extension installed on the
-                  database.
-                </b>
+                <b>You must have the pgvector extension installed on the database.</b>
               </p>
             </Tooltip>
           </div>
@@ -47,9 +43,7 @@ export default function PGVectorOptions({ settings }) {
             name="PGVectorConnectionString"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             placeholder="postgresql://username:password@host:port/database"
-            defaultValue={
-              settings?.PGVectorConnectionString ? "*".repeat(20) : ""
-            }
+            defaultValue={settings?.PGVectorConnectionString ? "*".repeat(20) : ""}
             required={true}
             autoComplete="off"
             spellCheck={false}
@@ -58,9 +52,7 @@ export default function PGVectorOptions({ settings }) {
 
         <div className="flex flex-col w-60">
           <div className="flex items-center gap-x-1 mb-3">
-            <label className="text-white text-sm font-semibold block">
-              Vector Table Name
-            </label>
+            <label className="text-white text-sm font-semibold block">Vector Table Name</label>
             <Info
               size={16}
               className="text-theme-text-secondary cursor-pointer"
@@ -74,16 +66,15 @@ export default function PGVectorOptions({ settings }) {
               clickable={true}
             >
               <p className="text-md whitespace-pre-line break-words">
-                This is the name of the table in the Postgres database that will
-                store the vectors.
+                This is the name of the table in the Postgres database that will store the vectors.
                 <br />
                 <br />
                 By default, the table name is <code>anythingllm_vectors</code>.
                 <br />
                 <br />
                 <b>
-                  This table must not already exist on the database - it will be
-                  created automatically.
+                  This table must not already exist on the database - it will be created
+                  automatically.
                 </b>
               </p>
             </Tooltip>

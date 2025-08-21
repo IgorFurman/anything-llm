@@ -1,7 +1,5 @@
 const { v4 } = require("uuid");
-const {
-  PuppeteerWebBaseLoader,
-} = require("langchain/document_loaders/web/puppeteer");
+const { PuppeteerWebBaseLoader } = require("langchain/document_loaders/web/puppeteer");
 const { writeToServerDocuments } = require("../../utils/files");
 const { tokenizeString } = require("../../utils/tokenizer");
 const { default: slugify } = require("slugify");
@@ -80,7 +78,7 @@ async function scrapeGenericUrl({
 function validatedHeaders(headers = {}) {
   try {
     if (Object.keys(headers).length === 0) return {};
-    let validHeaders = {};
+    const validHeaders = {};
     for (const key of Object.keys(headers)) {
       if (!key?.trim()) continue;
       if (typeof headers[key] !== "string" || !headers[key]?.trim()) continue;
@@ -103,7 +101,7 @@ function validatedHeaders(headers = {}) {
  */
 async function getPageContent({ link, captureAs = "text", headers = {} }) {
   try {
-    let pageContents = [];
+    const pageContents = [];
     const loader = new PuppeteerWebBaseLoader(link, {
       launchOptions: {
         headless: "new",
@@ -124,7 +122,7 @@ async function getPageContent({ link, captureAs = "text", headers = {} }) {
     });
 
     // Override scrape method if headers are available
-    let overrideHeaders = validatedHeaders(headers);
+    const overrideHeaders = validatedHeaders(headers);
     if (Object.keys(overrideHeaders).length > 0) {
       loader.scrape = async function () {
         const { launch } = await PuppeteerWebBaseLoader.imports();

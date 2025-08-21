@@ -23,10 +23,7 @@ class Deduplicator {
   constructor() {}
 
   trackRun(key, params = {}) {
-    const hash = crypto
-      .createHash("sha256")
-      .update(JSON.stringify({ key, params }))
-      .digest("hex");
+    const hash = crypto.createHash("sha256").update(JSON.stringify({ key, params })).digest("hex");
     this.#hashes[hash] = Number(new Date());
   }
 

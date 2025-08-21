@@ -92,9 +92,7 @@ Make sure the format use double quotes and property names are string literals. P
               this.tracker.markUnique(this.name);
               return "The chart was generated and returned to the user. This function completed successfully. Do not make another chart.";
             } catch (error) {
-              this.super.handlerProps.log(
-                `create-chart raised an error. ${error.message}`
-              );
+              this.super.handlerProps.log(`create-chart raised an error. ${error.message}`);
               return `Let the user know this action was not successful. An error was raised while generating the chart. ${error.message}`;
             }
           },

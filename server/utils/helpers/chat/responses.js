@@ -26,7 +26,7 @@ function handleDefaultStreamResponseV2(response, stream, responseProps) {
   // 3. We need to track the usage metrics for every provider that uses this function - not just OpenAI
   // Other keys are added by the LLMPerformanceMonitor.measureStream method
   let hasUsageMetrics = false;
-  let usage = {
+  const usage = {
     // prompt_tokens can be in this object if the provider supports it - otherwise we manually count it
     // When the stream is created in the LLMProviders `streamGetChatCompletion` `LLMPerformanceMonitor.measureStream` call.
     completion_tokens: 0,
@@ -194,9 +194,7 @@ function convertToPromptHistory(history = []) {
         role: "user",
         content: prompt,
         // if there are attachments, add them as a property to the user message so we can reuse them in chat history later if supported by the llm.
-        ...(data?.attachments?.length > 0
-          ? { attachments: data?.attachments }
-          : {}),
+        ...(data?.attachments?.length > 0 ? { attachments: data?.attachments } : {}),
       },
       {
         role: "assistant",
@@ -232,11 +230,7 @@ function writeResponseChunk(response, data) {
  * @param {('asProperty'|'spread')} mode - "asProperty" or "spread". Determines how the content is formatted in the message object.
  * @returns {object[]}
  */
-function formatChatHistory(
-  chatHistory = [],
-  formatterFunction,
-  mode = "asProperty"
-) {
+function formatChatHistory(chatHistory = [], formatterFunction, mode = "asProperty") {
   return chatHistory.map((historicalMessage) => {
     if (
       historicalMessage?.role !== "user" || // Only user messages can have attachments

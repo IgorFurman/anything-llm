@@ -12,11 +12,7 @@ const sharedWebScraper = new CollectorApi();
 class ImportedPlugin {
   constructor(config) {
     this.config = config;
-    this.handlerLocation = path.resolve(
-      pluginsPath,
-      this.config.hubId,
-      "handler.js"
-    );
+    this.handlerLocation = path.resolve(pluginsPath, this.config.hubId, "handler.js");
     delete require.cache[require.resolve(this.handlerLocation)];
     this.handler = require(this.handlerLocation);
     this.name = config.hubId;
@@ -31,11 +27,7 @@ class ImportedPlugin {
    * @returns {ImportedPlugin} - The plugin handler.
    */
   static loadPluginByHubId(hubId) {
-    const configLocation = path.resolve(
-      pluginsPath,
-      normalizePath(hubId),
-      "plugin.json"
-    );
+    const configLocation = path.resolve(pluginsPath, normalizePath(hubId), "plugin.json");
     if (!this.isValidLocation(configLocation)) return;
     const config = safeJsonParse(fs.readFileSync(configLocation, "utf8"));
     return new ImportedPlugin(config);
@@ -66,11 +58,7 @@ class ImportedPlugin {
     this.checkPluginFolderExists();
     const folders = fs.readdirSync(path.resolve(pluginsPath));
     for (const folder of folders) {
-      const configLocation = path.resolve(
-        pluginsPath,
-        normalizePath(folder),
-        "plugin.json"
-      );
+      const configLocation = path.resolve(pluginsPath, normalizePath(folder), "plugin.json");
       if (!this.isValidLocation(configLocation)) continue;
       const config = safeJsonParse(fs.readFileSync(configLocation, "utf8"));
       if (config.active) plugins.push(`@@${config.hubId}`);
@@ -89,11 +77,7 @@ class ImportedPlugin {
 
     const folders = fs.readdirSync(path.resolve(pluginsPath));
     for (const folder of folders) {
-      const configLocation = path.resolve(
-        pluginsPath,
-        normalizePath(folder),
-        "plugin.json"
-      );
+      const configLocation = path.resolve(pluginsPath, normalizePath(folder), "plugin.json");
       if (!this.isValidLocation(configLocation)) continue;
       const config = safeJsonParse(fs.readFileSync(configLocation, "utf8"));
       plugins.push(config);
@@ -108,17 +92,10 @@ class ImportedPlugin {
    * @returns {object} - The updated configuration.
    */
   static updateImportedPlugin(hubId, config) {
-    const configLocation = path.resolve(
-      pluginsPath,
-      normalizePath(hubId),
-      "plugin.json"
-    );
+    const configLocation = path.resolve(pluginsPath, normalizePath(hubId), "plugin.json");
     if (!this.isValidLocation(configLocation)) return;
 
-    const currentConfig = safeJsonParse(
-      fs.readFileSync(configLocation, "utf8"),
-      null
-    );
+    const currentConfig = safeJsonParse(fs.readFileSync(configLocation, "utf8"), null);
     if (!currentConfig) return;
 
     const updatedConfig = { ...currentConfig, ...config };
@@ -146,11 +123,7 @@ class ImportedPlugin {
    * @returns {boolean} - True if the handler.js file exists, false otherwise.
    */
   static validateImportedPluginHandler(hubId) {
-    const handlerLocation = path.resolve(
-      pluginsPath,
-      normalizePath(hubId),
-      "handler.js"
-    );
+    const handlerLocation = path.resolve(pluginsPath, normalizePath(hubId), "handler.js");
     return this.isValidLocation(handlerLocation);
   }
 
@@ -217,9 +190,7 @@ class ImportedPlugin {
     if (!hubId) return { success: false, error: "No hubId passed to import." };
 
     const zipFilePath = path.resolve(pluginsPath, `${item.id}.zip`);
-    const pluginFile = item.manifest.files.find(
-      (file) => file.name === "plugin.json"
-    );
+    const pluginFile = item.manifest.files.find((file) => file.name === "plugin.json");
     if (!pluginFile)
       return {
         success: false,
@@ -243,12 +214,10 @@ class ImportedPlugin {
             new URL(url).origin
           );
           const zipFile = fs.createWriteStream(zipFilePath);
-          const request = httpLib.get(url, function (response) {
+          const request = httpLib.get(url, (response) => {
             response.pipe(zipFile);
             zipFile.on("finish", () => {
-              console.log(
-                "ImportedPlugin.importCommunityItemFromUrl - downloaded zip file"
-              );
+              console.log("ImportedPlugin.importCommunityItemFromUrl - downloaded zip file");
               resolve(true);
             });
           });
@@ -270,8 +239,7 @@ class ImportedPlugin {
       });
 
       const success = await downloadZipFile;
-      if (!success)
-        return { success: false, error: "Failed to download zip file." };
+      if (!success) return { success: false, error: "Failed to download zip file." };
 
       // Unzip the file to the plugin folder
       // Note: https://github.com/cthackers/adm-zip?tab=readme-ov-file#electron-original-fs
@@ -292,10 +260,7 @@ class ImportedPlugin {
       );
       return { success: true, error: null };
     } catch (error) {
-      console.error(
-        "ImportedPlugin.importCommunityItemFromUrl - error: ",
-        error
-      );
+      console.error("ImportedPlugin.importCommunityItemFromUrl - error: ", error);
       return { success: false, error: error.message };
     } finally {
       if (fs.existsSync(zipFilePath)) fs.unlinkSync(zipFilePath);

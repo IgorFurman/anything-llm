@@ -1,8 +1,8 @@
-import { useRef, useState } from "react";
 import BrowserExtensionApiKey from "@/models/browserExtensionApiKey";
-import showToast from "@/utils/toast";
-import { Trash, Copy, Check, Plug } from "@phosphor-icons/react";
 import { POPUP_BROWSER_EXTENSION_EVENT } from "@/utils/constants";
+import showToast from "@/utils/toast";
+import { Check, Copy, Plug, Trash } from "@phosphor-icons/react";
+import { useRef, useState } from "react";
 
 export default function BrowserExtensionApiKeyRow({
   apiKey,
@@ -46,10 +46,7 @@ export default function BrowserExtensionApiKeyRow({
   const handleConnect = () => {
     // Sending a message to Chrome extension to pop up the extension window
     // This will open the extension window and attempt to connect with the API key
-    window.postMessage(
-      { type: POPUP_BROWSER_EXTENSION_EVENT, apiKey: connectionString },
-      "*"
-    );
+    window.postMessage({ type: POPUP_BROWSER_EXTENSION_EVENT, apiKey: connectionString }, "*");
     showToast("Attempting to connect to browser extension...", "info", {
       clear: true,
     });
@@ -70,11 +67,7 @@ export default function BrowserExtensionApiKeyRow({
               data-tooltip-content="Copy connection string"
               className="border-none text-theme-text-primary hover:text-theme-text-secondary transition-colors duration-200 p-1 rounded"
             >
-              {copied ? (
-                <Check className="h-4 w-4 text-green-500" />
-              ) : (
-                <Copy className="h-4 w-4" />
-              )}
+              {copied ? <Check className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4" />}
             </button>
 
             <button
@@ -88,14 +81,8 @@ export default function BrowserExtensionApiKeyRow({
           </div>
         </div>
       </td>
-      {isMultiUser && (
-        <td className="px-6 py-2">
-          {apiKey.user ? apiKey.user.username : "N/A"}
-        </td>
-      )}
-      <td className="px-6 py-2">
-        {new Date(apiKey.createdAt).toLocaleString()}
-      </td>
+      {isMultiUser && <td className="px-6 py-2">{apiKey.user ? apiKey.user.username : "N/A"}</td>}
+      <td className="px-6 py-2">{new Date(apiKey.createdAt).toLocaleString()}</td>
       <td className="px-6 py-2">
         <button
           onClick={handleRevoke}

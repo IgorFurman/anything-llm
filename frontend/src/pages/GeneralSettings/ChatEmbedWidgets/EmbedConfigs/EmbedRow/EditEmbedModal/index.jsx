@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import Embed from "@/models/embed";
+import showToast from "@/utils/toast";
 import { X } from "@phosphor-icons/react";
+import React, { useState } from "react";
 import {
   BooleanInput,
   ChatModeSelection,
@@ -8,8 +10,6 @@ import {
   WorkspaceSelection,
   enforceSubmissionSchema,
 } from "../../NewEmbedModal";
-import Embed from "@/models/embed";
-import showToast from "@/utils/toast";
 
 export default function EditEmbedModal({ embed, closeModal }) {
   const [error, setError] = useState(null);
@@ -52,11 +52,7 @@ export default function EditEmbedModal({ embed, closeModal }) {
               <WorkspaceSelection defaultValue={embed.workspace.id} />
               <ChatModeSelection defaultValue={embed.chat_mode} />
               <PermittedDomains
-                defaultValue={
-                  embed.allowlist_domains
-                    ? JSON.parse(embed.allowlist_domains)
-                    : []
-                }
+                defaultValue={embed.allowlist_domains ? JSON.parse(embed.allowlist_domains) : []}
               />
               <NumberInput
                 name="max_chats_per_day"
@@ -97,8 +93,8 @@ export default function EditEmbedModal({ embed, closeModal }) {
 
               {error && <p className="text-red-400 text-sm">Error: {error}</p>}
               <p className="text-white text-opacity-60 text-xs md:text-sm">
-                After creating an embed you will be provided a link that you can
-                publish on your website with a simple
+                After creating an embed you will be provided a link that you can publish on your
+                website with a simple
                 <code className="border-none bg-theme-settings-input-bg text-white mx-1 px-1 rounded-sm">
                   &lt;script&gt;
                 </code>{" "}

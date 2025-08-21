@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { X } from "@phosphor-icons/react";
 import Document from "@/models/document";
+import { X } from "@phosphor-icons/react";
+import React, { useState } from "react";
 
 export default function NewFolderModal({ closeModal, files, setFiles }) {
   const [error, setError] = useState(null);
@@ -49,10 +49,7 @@ export default function NewFolderModal({ closeModal, files, setFiles }) {
           <form onSubmit={handleCreate}>
             <div className="space-y-4">
               <div>
-                <label
-                  htmlFor="folderName"
-                  className="block mb-2 text-sm font-medium text-white"
-                >
+                <label htmlFor="folderName" className="block mb-2 text-sm font-medium text-white">
                   Folder Name
                 </label>
                 <input

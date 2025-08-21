@@ -1,21 +1,21 @@
-import UploadFile from "../UploadFile";
 import PreLoader from "@/components/Preloader";
+import { useModal } from "@/hooks/useModal";
+import Document from "@/models/document";
+import System from "@/models/system";
+import { safeJsonParse } from "@/utils/request";
+import showToast from "@/utils/toast";
+import { MagnifyingGlass, Plus, Trash } from "@phosphor-icons/react";
+import debounce from "lodash.debounce";
 import { memo, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Tooltip } from "react-tooltip";
+import UploadFile from "../UploadFile";
+import ContextMenu from "./ContextMenu";
 import FolderRow from "./FolderRow";
-import System from "@/models/system";
-import { MagnifyingGlass, Plus, Trash } from "@phosphor-icons/react";
-import Document from "@/models/document";
-import showToast from "@/utils/toast";
 import FolderSelectionPopup from "./FolderSelectionPopup";
 import MoveToFolderIcon from "./MoveToFolderIcon";
-import { useModal } from "@/hooks/useModal";
 import NewFolderModal from "./NewFolderModal";
-import debounce from "lodash.debounce";
 import { filterFileSearchResults } from "./utils";
-import ContextMenu from "./ContextMenu";
-import { Tooltip } from "react-tooltip";
-import { safeJsonParse } from "@/utils/request";
 
 function Directory({
   files,
@@ -142,9 +142,7 @@ function Directory({
     const toMove = [];
     for (const itemId of Object.keys(selectedItems)) {
       for (const currentFolder of files.items) {
-        const foundItem = currentFolder.items.find(
-          (file) => file.id === itemId
-        );
+        const foundItem = currentFolder.items.find((file) => file.id === itemId);
         if (foundItem) {
           toMove.push({ ...foundItem, folderName: currentFolder.name });
           break;
@@ -153,10 +151,7 @@ function Directory({
     }
     setLoading(true);
     setLoadingMessage(`Moving ${toMove.length} documents. Please wait.`);
-    const { success, message } = await Document.moveToFolder(
-      toMove,
-      folder.name
-    );
+    const { success, message } = await Document.moveToFolder(toMove, folder.name);
     if (!success) {
       showToast(`Error moving files: ${message}`, "error");
       setLoading(false);
@@ -167,10 +162,7 @@ function Directory({
       // show info if some files were not moved due to being embedded
       showToast(message, "info");
     } else {
-      showToast(
-        t("connectors.directory.move-success", { count: toMove.length }),
-        "success"
-      );
+      showToast(t("connectors.directory.move-success", { count: toMove.length }), "success");
     }
     await fetchKeys(true);
     setSelectedItems({});
@@ -249,10 +241,7 @@ function Directory({
                       <FolderRow
                         key={index}
                         item={item}
-                        selected={isSelected(
-                          item.id,
-                          item.type === "folder" ? item : null
-                        )}
+                        selected={isSelected(item.id, item.type === "folder" ? item : null)}
                         onRowClick={() => toggleSelection(item)}
                         toggleSelection={toggleSelection}
                         isSelected={isSelected}
@@ -282,18 +271,14 @@ function Directory({
                     </button>
                     <div className="relative">
                       <button
-                        onClick={() =>
-                          setShowFolderSelection(!showFolderSelection)
-                        }
+                        onClick={() => setShowFolderSelection(!showFolderSelection)}
                         className="border-none text-sm font-semibold bg-white light:bg-[#E0F2FE] h-[32px] w-[32px] rounded-lg text-dark-text hover:bg-neutral-800/80 hover:text-white light:text-[#026AA2] light:hover:bg-[#026AA2] light:hover:text-white flex justify-center items-center group"
                       >
                         <MoveToFolderIcon className="text-dark-text light:text-[#026AA2] group-hover:text-white" />
                       </button>
                       {showFolderSelection && (
                         <FolderSelectionPopup
-                          folders={files.items.filter(
-                            (item) => item.type === "folder"
-                          )}
+                          folders={files.items.filter((item) => item.type === "folder")}
                           onSelect={moveToFolder}
                           onClose={() => setShowFolderSelection(false)}
                         />
@@ -320,11 +305,7 @@ function Directory({
         </div>
         {isFolderModalOpen && (
           <div className="bg-black/60 backdrop-blur-sm fixed top-0 left-0 outline-none w-screen h-screen flex items-center justify-center z-30">
-            <NewFolderModal
-              closeModal={closeFolderModal}
-              files={files}
-              setFiles={setFiles}
-            />
+            <NewFolderModal closeModal={closeFolderModal} files={files} setFiles={setFiles} />
           </div>
         )}
         <ContextMenu
@@ -356,9 +337,7 @@ function DirectoryTooltips() {
         if (!data) return null;
         return (
           <div className="text-xs">
-            <p className="text-white light:invert font-medium break-all">
-              {data.title}
-            </p>
+            <p className="text-white light:invert font-medium break-all">{data.title}</p>
             <div className="flex mt-1 gap-x-2">
               <p className="">
                 Date: <b>{data.date}</b>

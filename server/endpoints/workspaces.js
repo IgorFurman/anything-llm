@@ -1,11 +1,6 @@
 const path = require("path");
 const fs = require("fs");
-const {
-  reqBody,
-  multiUserMode,
-  userFromSession,
-  safeJsonParse,
-} = require("../utils/http");
+const { reqBody, multiUserMode, userFromSession, safeJsonParse } = require("../utils/http");
 const { normalizePath, isWithin } = require("../utils/files");
 const { Workspace } = require("../models/workspace");
 const { Document } = require("../models/documents");
@@ -15,21 +10,13 @@ const { getVectorDbClass } = require("../utils/helpers");
 const { handleFileUpload, handlePfpUpload } = require("../utils/files/multer");
 const { validatedRequest } = require("../utils/middleware/validatedRequest");
 const { Telemetry } = require("../models/telemetry");
-const {
-  flexUserRoleValid,
-  ROLES,
-} = require("../utils/middleware/multiUserProtected");
+const { flexUserRoleValid, ROLES } = require("../utils/middleware/multiUserProtected");
 const { EventLogs } = require("../models/eventLogs");
-const {
-  WorkspaceSuggestedMessages,
-} = require("../models/workspacesSuggestedMessages");
+const { WorkspaceSuggestedMessages } = require("../models/workspacesSuggestedMessages");
 const { validWorkspaceSlug } = require("../utils/middleware/validWorkspace");
 const { convertToChatHistory } = require("../utils/helpers/chat/responses");
 const { CollectorApi } = require("../utils/collectorApi");
-const {
-  determineWorkspacePfpFilepath,
-  fetchPfp,
-} = require("../utils/files/pfp");
+const { determineWorkspacePfpFilepath, fetchPfp } = require("../utils/files/pfp");
 const { getTTSProvider } = require("../utils/TextToSpeech");
 const { WorkspaceThread } = require("../models/workspaceThread");
 const truncate = require("truncate");
@@ -70,8 +57,7 @@ function workspaceEndpoints(app) {
           },
           user?.id
         );
-        if (onboardingComplete === true)
-          await Telemetry.sendTelemetry("onboarding_complete");
+        if (onboardingComplete === true) await Telemetry.sendTelemetry("onboarding_complete");
 
         response.status(200).json({ workspace, message });
       } catch (e) {
@@ -99,10 +85,7 @@ function workspaceEndpoints(app) {
         }
 
         await Workspace.trackChange(currWorkspace, data, user);
-        const { workspace, message } = await Workspace.update(
-          currWorkspace.id,
-          data
-        );
+        const { workspace, message } = await Workspace.update(currWorkspace.id, data);
         response.status(200).json({ workspace, message });
       } catch (e) {
         console.error(e.message, e);
@@ -113,12 +96,8 @@ function workspaceEndpoints(app) {
 
   app.post(
     "/workspace/:slug/upload",
-    [
-      validatedRequest,
-      flexUserRoleValid([ROLES.admin, ROLES.manager]),
-      handleFileUpload,
-    ],
-    async function (request, response) {
+    [validatedRequest, flexUserRoleValid([ROLES.admin, ROLES.manager]), handleFileUpload],
+    async (request, response) => {
       try {
         const Collector = new CollectorApi();
         const { originalname } = request.file;
@@ -135,8 +114,7 @@ function workspaceEndpoints(app) {
           return;
         }
 
-        const { success, reason } =
-          await Collector.processDocument(originalname);
+        const { success, reason } = await Collector.processDocument(originalname);
         if (!success) {
           response.status(500).json({ success: false, error: reason }).end();
           return;
@@ -191,11 +169,7 @@ function workspaceEndpoints(app) {
           `Link ${link} uploaded processed and successfully. It is now available in documents.`
         );
         await Telemetry.sendTelemetry("link_uploaded");
-        await EventLogs.logEvent(
-          "link_uploaded",
-          { link },
-          response.locals?.user?.id
-        );
+        await EventLogs.logEvent("link_uploaded", { link }, response.locals?.user?.id);
         response.status(200).json({ success: true, error: null });
       } catch (e) {
         console.error(e.message, e);
@@ -221,11 +195,7 @@ function workspaceEndpoints(app) {
           return;
         }
 
-        await Document.removeDocuments(
-          currWorkspace,
-          deletes,
-          response.locals?.user?.id
-        );
+        await Document.removeDocuments(currWorkspace, deletes, response.locals?.user?.id);
         const { failedToEmbed = [], errors = [] } = await Document.addDocuments(
           currWorkspace,
           adds,
@@ -457,8 +427,7 @@ function workspaceEndpoints(app) {
     async (request, response) => {
       try {
         const { chatId, newText = null } = reqBody(request);
-        if (!newText || !String(newText).trim())
-          throw new Error("Cannot save empty response");
+        if (!newText || !String(newText).trim()) throw new Error("Cannot save empty response");
 
         const user = await userFromSession(request, response);
         const workspace = response.locals.workspace;
@@ -505,10 +474,7 @@ function workspaceEndpoints(app) {
           return;
         }
 
-        const result = await WorkspaceChats.updateFeedbackScore(
-          chatId,
-          feedback
-        );
+        const result = await WorkspaceChats.updateFeedbackScore(chatId, feedback);
         response.status(200).json({ success: result });
       } catch (error) {
         console.error("Error updating chat feedback:", error);
@@ -520,17 +486,14 @@ function workspaceEndpoints(app) {
   app.get(
     "/workspace/:slug/suggested-messages",
     [validatedRequest, flexUserRoleValid([ROLES.all])],
-    async function (request, response) {
+    async (request, response) => {
       try {
         const { slug } = request.params;
-        const suggestedMessages =
-          await WorkspaceSuggestedMessages.getMessages(slug);
+        const suggestedMessages = await WorkspaceSuggestedMessages.getMessages(slug);
         response.status(200).json({ success: true, suggestedMessages });
       } catch (error) {
         console.error("Error fetching suggested messages:", error);
-        response
-          .status(500)
-          .json({ success: false, message: "Internal server error" });
+        response.status(500).json({ success: false, message: "Internal server error" });
       }
     }
   );
@@ -566,11 +529,7 @@ function workspaceEndpoints(app) {
 
   app.post(
     "/workspace/:slug/update-pin",
-    [
-      validatedRequest,
-      flexUserRoleValid([ROLES.admin, ROLES.manager]),
-      validWorkspaceSlug,
-    ],
+    [validatedRequest, flexUserRoleValid([ROLES.admin, ROLES.manager]), validWorkspaceSlug],
     async (request, response) => {
       try {
         const { docPath, pinStatus = false } = reqBody(request);
@@ -594,7 +553,7 @@ function workspaceEndpoints(app) {
   app.get(
     "/workspace/:slug/tts/:chatId",
     [validatedRequest, flexUserRoleValid([ROLES.all]), validWorkspaceSlug],
-    async function (request, response) {
+    async (request, response) => {
       try {
         const { chatId } = request.params;
         const workspace = response.locals.workspace;
@@ -636,7 +595,7 @@ function workspaceEndpoints(app) {
   app.get(
     "/workspace/:slug/pfp",
     [validatedRequest, flexUserRoleValid([ROLES.all])],
-    async function (request, response) {
+    async (request, response) => {
       try {
         const { slug } = request.params;
         const cachedResponse = responseCache.get(slug);
@@ -678,12 +637,8 @@ function workspaceEndpoints(app) {
 
   app.post(
     "/workspace/:slug/upload-pfp",
-    [
-      validatedRequest,
-      flexUserRoleValid([ROLES.admin, ROLES.manager]),
-      handlePfpUpload,
-    ],
-    async function (request, response) {
+    [validatedRequest, flexUserRoleValid([ROLES.admin, ROLES.manager]), handlePfpUpload],
+    async (request, response) => {
       try {
         const { slug } = request.params;
         const uploadedFileName = request.randomFileName;
@@ -698,26 +653,18 @@ function workspaceEndpoints(app) {
         const oldPfpFilename = workspaceRecord.pfpFilename;
         if (oldPfpFilename) {
           const storagePath = path.join(__dirname, "../storage/assets/pfp");
-          const oldPfpPath = path.join(
-            storagePath,
-            normalizePath(workspaceRecord.pfpFilename)
-          );
+          const oldPfpPath = path.join(storagePath, normalizePath(workspaceRecord.pfpFilename));
           if (!isWithin(path.resolve(storagePath), path.resolve(oldPfpPath)))
             throw new Error("Invalid path name");
           if (fs.existsSync(oldPfpPath)) fs.unlinkSync(oldPfpPath);
         }
 
-        const { workspace, message } = await Workspace._update(
-          workspaceRecord.id,
-          {
-            pfpFilename: uploadedFileName,
-          }
-        );
+        const { workspace, message } = await Workspace._update(workspaceRecord.id, {
+          pfpFilename: uploadedFileName,
+        });
 
         return response.status(workspace ? 200 : 500).json({
-          message: workspace
-            ? "Profile picture uploaded successfully."
-            : message,
+          message: workspace ? "Profile picture uploaded successfully." : message,
         });
       } catch (error) {
         console.error("Error processing the profile picture upload:", error);
@@ -729,7 +676,7 @@ function workspaceEndpoints(app) {
   app.delete(
     "/workspace/:slug/remove-pfp",
     [validatedRequest, flexUserRoleValid([ROLES.admin, ROLES.manager])],
-    async function (request, response) {
+    async (request, response) => {
       try {
         const { slug } = request.params;
         const workspaceRecord = await Workspace.get({
@@ -739,29 +686,21 @@ function workspaceEndpoints(app) {
 
         if (oldPfpFilename) {
           const storagePath = path.join(__dirname, "../storage/assets/pfp");
-          const oldPfpPath = path.join(
-            storagePath,
-            normalizePath(oldPfpFilename)
-          );
+          const oldPfpPath = path.join(storagePath, normalizePath(oldPfpFilename));
           if (!isWithin(path.resolve(storagePath), path.resolve(oldPfpPath)))
             throw new Error("Invalid path name");
           if (fs.existsSync(oldPfpPath)) fs.unlinkSync(oldPfpPath);
         }
 
-        const { workspace, message } = await Workspace._update(
-          workspaceRecord.id,
-          {
-            pfpFilename: null,
-          }
-        );
+        const { workspace, message } = await Workspace._update(workspaceRecord.id, {
+          pfpFilename: null,
+        });
 
         // Clear the cache
         responseCache.delete(slug);
 
         return response.status(workspace ? 200 : 500).json({
-          message: workspace
-            ? "Profile picture removed successfully."
-            : message,
+          message: workspace ? "Profile picture removed successfully." : message,
         });
       } catch (error) {
         console.error("Error processing the profile picture removal:", error);
@@ -778,18 +717,17 @@ function workspaceEndpoints(app) {
         const user = await userFromSession(request, response);
         const workspace = response.locals.workspace;
         const { chatId, threadSlug } = reqBody(request);
-        if (!chatId)
-          return response.status(400).json({ message: "chatId is required" });
+        if (!chatId) return response.status(400).json({ message: "chatId is required" });
 
         // Get threadId we are branching from if that request body is sent
         // and is a valid thread slug.
         const threadId = !!threadSlug
-          ? (
+          ? ((
               await WorkspaceThread.get({
                 slug: String(threadSlug),
                 workspace_id: workspace.id,
               })
-            )?.id ?? null
+            )?.id ?? null)
           : null;
         const chatsToFork = await WorkspaceChats.where(
           {
@@ -804,10 +742,11 @@ function workspaceEndpoints(app) {
           { id: "asc" }
         );
 
-        const { thread: newThread, message: threadError } =
-          await WorkspaceThread.new(workspace, user?.id);
-        if (threadError)
-          return response.status(500).json({ error: threadError });
+        const { thread: newThread, message: threadError } = await WorkspaceThread.new(
+          workspace,
+          user?.id
+        );
+        if (threadError) return response.status(500).json({ error: threadError });
 
         let lastMessageText = "";
         const chatsData = chatsToFork.map((chat) => {
@@ -824,9 +763,7 @@ function workspaceEndpoints(app) {
         });
         await WorkspaceChats.bulkCreate(chatsData);
         await WorkspaceThread.update(newThread, {
-          name: !!lastMessageText
-            ? truncate(lastMessageText, 22)
-            : "Forked Thread",
+          name: !!lastMessageText ? truncate(lastMessageText, 22) : "Forked Thread",
         });
 
         await EventLogs.logEvent(
@@ -857,9 +794,7 @@ function workspaceEndpoints(app) {
           user_id: user?.id ?? null,
         });
         if (!validChat)
-          return response
-            .status(404)
-            .json({ success: false, error: "Chat not found." });
+          return response.status(404).json({ success: false, error: "Chat not found." });
 
         await WorkspaceChats._update(validChat.id, { include: false });
         response.json({ success: true, error: null });
@@ -873,12 +808,8 @@ function workspaceEndpoints(app) {
   /** Handles the uploading and embedding in one-call by uploading via drag-and-drop in chat container. */
   app.post(
     "/workspace/:slug/upload-and-embed",
-    [
-      validatedRequest,
-      flexUserRoleValid([ROLES.admin, ROLES.manager]),
-      handleFileUpload,
-    ],
-    async function (request, response) {
+    [validatedRequest, flexUserRoleValid([ROLES.admin, ROLES.manager]), handleFileUpload],
+    async (request, response) => {
       try {
         const { slug = null } = request.params;
         const user = await userFromSession(request, response);
@@ -906,8 +837,7 @@ function workspaceEndpoints(app) {
           return;
         }
 
-        const { success, reason, documents } =
-          await Collector.processDocument(originalname);
+        const { success, reason, documents } = await Collector.processDocument(originalname);
         if (!success || documents?.length === 0) {
           response.status(500).json({ success: false, error: reason }).end();
           return;
@@ -933,9 +863,7 @@ function workspaceEndpoints(app) {
         );
 
         if (failedToEmbed.length > 0)
-          return response
-            .status(200)
-            .json({ success: false, error: errors?.[0], document: null });
+          return response.status(200).json({ success: false, error: errors?.[0], document: null });
 
         response.status(200).json({
           success: true,
@@ -951,12 +879,8 @@ function workspaceEndpoints(app) {
 
   app.delete(
     "/workspace/:slug/remove-and-unembed",
-    [
-      validatedRequest,
-      flexUserRoleValid([ROLES.admin, ROLES.manager]),
-      handleFileUpload,
-    ],
-    async function (request, response) {
+    [validatedRequest, flexUserRoleValid([ROLES.admin, ROLES.manager]), handleFileUpload],
+    async (request, response) => {
       try {
         const { slug = null } = request.params;
         const body = reqBody(request);
@@ -965,8 +889,7 @@ function workspaceEndpoints(app) {
           ? await Workspace.getWithUser(user, { slug })
           : await Workspace.get({ slug });
 
-        if (!currWorkspace || !body.documentLocation)
-          return response.sendStatus(400).end();
+        if (!currWorkspace || !body.documentLocation) return response.sendStatus(400).end();
 
         // Will delete the document from the entire system + wil unembed it.
         await purgeDocument(body.documentLocation);
@@ -997,11 +920,7 @@ function workspaceEndpoints(app) {
 
   app.delete(
     "/workspace/:slug/prompt-history",
-    [
-      validatedRequest,
-      flexUserRoleValid([ROLES.admin, ROLES.manager]),
-      validWorkspaceSlug,
-    ],
+    [validatedRequest, flexUserRoleValid([ROLES.admin, ROLES.manager]), validWorkspaceSlug],
     async (_, response) => {
       try {
         response.status(200).json({
@@ -1018,11 +937,7 @@ function workspaceEndpoints(app) {
 
   app.delete(
     "/workspace/prompt-history/:id",
-    [
-      validatedRequest,
-      flexUserRoleValid([ROLES.admin, ROLES.manager]),
-      validWorkspaceSlug,
-    ],
+    [validatedRequest, flexUserRoleValid([ROLES.admin, ROLES.manager]), validWorkspaceSlug],
     async (request, response) => {
       try {
         const { id } = request.params;
@@ -1049,10 +964,7 @@ function workspaceEndpoints(app) {
     async (request, response) => {
       try {
         const { searchTerm } = reqBody(request);
-        const searchResults = await searchWorkspaceAndThreads(
-          searchTerm,
-          response.locals?.user
-        );
+        const searchResults = await searchWorkspaceAndThreads(searchTerm, response.locals?.user);
         response.status(200).json(searchResults);
       } catch (error) {
         console.error("Error searching for workspaces:", error);

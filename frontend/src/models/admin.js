@@ -129,14 +129,11 @@ const Admin = {
       });
   },
   updateUsersInWorkspace: async (workspaceId, userIds = []) => {
-    return await fetch(
-      `${API_BASE}/admin/workspaces/${workspaceId}/update-users`,
-      {
-        method: "POST",
-        headers: baseHeaders(),
-        body: JSON.stringify({ userIds }),
-      }
-    )
+    return await fetch(`${API_BASE}/admin/workspaces/${workspaceId}/update-users`, {
+      method: "POST",
+      headers: baseHeaders(),
+      body: JSON.stringify({ userIds }),
+    })
       .then((res) => res.json())
       .catch((e) => {
         console.error(e);
@@ -176,13 +173,10 @@ const Admin = {
    * @returns {Promise<{settings: Object, error: string}>} - System preferences object
    */
   systemPreferencesByFields: async (labels = []) => {
-    return await fetch(
-      `${API_BASE}/admin/system-preferences-for?labels=${labels.join(",")}`,
-      {
-        method: "GET",
-        headers: baseHeaders(),
-      }
-    )
+    return await fetch(`${API_BASE}/admin/system-preferences-for?labels=${labels.join(",")}`, {
+      method: "GET",
+      headers: baseHeaders(),
+    })
       .then((res) => res.json())
       .catch((e) => {
         console.error(e);
@@ -203,8 +197,8 @@ const Admin = {
   },
 
   // API Keys
-  getApiKeys: async function () {
-    return fetch(`${API_BASE}/admin/api-keys`, {
+  getApiKeys: async () =>
+    fetch(`${API_BASE}/admin/api-keys`, {
       method: "GET",
       headers: baseHeaders(),
     })
@@ -217,10 +211,9 @@ const Admin = {
       .catch((e) => {
         console.error(e);
         return { apiKeys: [], error: e.message };
-      });
-  },
-  generateApiKey: async function () {
-    return fetch(`${API_BASE}/admin/generate-api-key`, {
+      }),
+  generateApiKey: async () =>
+    fetch(`${API_BASE}/admin/generate-api-key`, {
       method: "POST",
       headers: baseHeaders(),
     })
@@ -233,10 +226,9 @@ const Admin = {
       .catch((e) => {
         console.error(e);
         return { apiKey: null, error: e.message };
-      });
-  },
-  deleteApiKey: async function (apiKeyId = "") {
-    return fetch(`${API_BASE}/admin/delete-api-key/${apiKeyId}`, {
+      }),
+  deleteApiKey: async (apiKeyId = "") =>
+    fetch(`${API_BASE}/admin/delete-api-key/${apiKeyId}`, {
       method: "DELETE",
       headers: baseHeaders(),
     })
@@ -244,8 +236,7 @@ const Admin = {
       .catch((e) => {
         console.error(e);
         return false;
-      });
-  },
+      }),
 };
 
 export default Admin;

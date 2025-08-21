@@ -1,28 +1,28 @@
-import React, { useEffect, useRef, useState } from "react";
-import paths from "@/utils/paths";
+import useAppVersion from "@/hooks/useAppVersion";
 import useLogo from "@/hooks/useLogo";
+import useUser from "@/hooks/useUser";
+import System from "@/models/system";
+import paths from "@/utils/paths";
+import showToast from "@/utils/toast";
 import {
-  House,
-  List,
-  Robot,
   Flask,
   Gear,
-  UserCircleGear,
-  PencilSimpleLine,
-  Nut,
-  Toolbox,
   Globe,
+  House,
+  List,
+  Nut,
+  PencilSimpleLine,
+  Robot,
+  Toolbox,
+  UserCircleGear,
 } from "@phosphor-icons/react";
-import useUser from "@/hooks/useUser";
+import React, { useEffect, useRef, useState } from "react";
 import { isMobile } from "react-device-detect";
-import Footer from "../Footer";
-import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import showToast from "@/utils/toast";
-import System from "@/models/system";
-import Option from "./MenuOption";
+import { Link } from "react-router-dom";
 import { CanViewChatHistoryProvider } from "../CanViewChatHistory";
-import useAppVersion from "@/hooks/useAppVersion";
+import Footer from "../Footer";
+import Option from "./MenuOption";
 
 export default function SettingsSidebar() {
   const { t } = useTranslation();
@@ -73,9 +73,7 @@ export default function SettingsSidebar() {
         >
           <div
             className={`${
-              showBgOverlay
-                ? "transition-all opacity-1"
-                : "transition-none opacity-0"
+              showBgOverlay ? "transition-all opacity-1" : "transition-none opacity-0"
             }  duration-500 fixed top-0 left-0 bg-theme-bg-secondary bg-opacity-75 w-screen h-screen`}
             onClick={() => setShowSidebar(false)}
           />
@@ -112,9 +110,7 @@ export default function SettingsSidebar() {
                     <div className="h-[1.5px] bg-[#3D4147] mx-3 mt-[14px]" />
                     <SupportEmail />
                     <Link
-                      hidden={
-                        user?.hasOwnProperty("role") && user.role !== "admin"
-                      }
+                      hidden={user?.hasOwnProperty("role") && user.role !== "admin"}
                       to={paths.settings.privacy()}
                       className="text-theme-text-secondary hover:text-white text-xs leading-[18px] mx-3"
                     >
@@ -163,9 +159,7 @@ export default function SettingsSidebar() {
                   <div className="h-[1.5px] bg-[#3D4147] mx-3 mt-[14px]" />
                   <SupportEmail />
                   <Link
-                    hidden={
-                      user?.hasOwnProperty("role") && user.role !== "admin"
-                    }
+                    hidden={user?.hasOwnProperty("role") && user.role !== "admin"}
                     to={paths.settings.privacy()}
                     className="text-theme-text-secondary hover:text-white hover:light:text-theme-text-primary text-xs leading-[18px] mx-3"
                   >
@@ -193,9 +187,7 @@ function SupportEmail() {
     const fetchSupportEmail = async () => {
       const supportEmail = await System.fetchSupportEmail();
       setSupportEmail(
-        supportEmail?.email
-          ? `mailto:${supportEmail.email}`
-          : paths.mailToMintplex()
+        supportEmail?.email ? `mailto:${supportEmail.email}` : paths.mailToMintplex()
       );
     };
     fetchSupportEmail();
@@ -409,9 +401,7 @@ const SidebarOptions = ({ user = null, t }) => (
 function HoldToReveal({ children, holdForMs = 3_000 }) {
   let timeout = null;
   const [showing, setShowing] = useState(
-    window.localStorage.getItem(
-      "anythingllm_experimental_feature_preview_unlocked"
-    )
+    window.localStorage.getItem("anythingllm_experimental_feature_preview_unlocked")
   );
 
   useEffect(() => {
@@ -421,10 +411,7 @@ function HoldToReveal({ children, holdForMs = 3_000 }) {
         setShowing(true);
         // Setting toastId prevents hook spam from holding control too many times or the event not detaching
         showToast("Experimental feature previews unlocked!");
-        window.localStorage.setItem(
-          "anythingllm_experimental_feature_preview_unlocked",
-          "enabled"
-        );
+        window.localStorage.setItem("anythingllm_experimental_feature_preview_unlocked", "enabled");
         window.removeEventListener("keypress", onPress);
         window.removeEventListener("keyup", onRelease);
         clearTimeout(timeout);

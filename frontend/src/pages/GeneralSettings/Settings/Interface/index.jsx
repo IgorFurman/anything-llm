@@ -2,8 +2,8 @@ import Sidebar from "@/components/SettingsSidebar";
 import { isMobile } from "react-device-detect";
 import { useTranslation } from "react-i18next";
 import LanguagePreference from "../components/LanguagePreference";
-import ThemePreference from "../components/ThemePreference";
 import { MessageDirection } from "../components/MessageDirection";
+import ThemePreference from "../components/ThemePreference";
 
 export default function InterfaceSettings() {
   const { t } = useTranslation();

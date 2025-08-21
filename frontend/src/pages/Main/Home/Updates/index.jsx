@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
-import { safeJsonParse } from "@/utils/request";
-import { Link } from "react-router-dom";
 import PlaceholderOne from "@/media/announcements/placeholder-1.png";
 import PlaceholderTwo from "@/media/announcements/placeholder-2.png";
 import PlaceholderThree from "@/media/announcements/placeholder-3.png";
+import { safeJsonParse } from "@/utils/request";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 /**
  * @typedef {Object} NewsItem
@@ -90,9 +90,7 @@ function AnnouncementCard({
         />
         <div className="flex flex-col gap-y-1">
           <h3 className="text-theme-home-text font-medium text-sm">{title}</h3>
-          <p className="text-theme-home-text-secondary text-xs line-clamp-2">
-            {subtitle}
-          </p>
+          <p className="text-theme-home-text-secondary text-xs line-clamp-2">{subtitle}</p>
           <div className="flex items-center gap-x-4 text-xs text-theme-home-text-secondary">
             <span className="text-theme-home-update-source">{author}</span>
             <span>{date ?? "Recently"}</span>
@@ -114,13 +112,10 @@ function getCachedNews() {
 
     /** @type {{news: NewsItem[]|null, timestamp: number|null}|null} */
     const parsedNews = safeJsonParse(cachedNews, null);
-    if (!parsedNews || !parsedNews?.news?.length || !parsedNews.timestamp)
-      return null;
+    if (!parsedNews || !parsedNews?.news?.length || !parsedNews.timestamp) return null;
 
     const now = new Date();
-    const cacheExpiration = new Date(
-      parsedNews.timestamp + NEWS_CACHE_CONFIG.ttl
-    );
+    const cacheExpiration = new Date(parsedNews.timestamp + NEWS_CACHE_CONFIG.ttl);
     if (now < cacheExpiration) return parsedNews.news;
     return null;
   } catch (error) {
@@ -154,10 +149,7 @@ async function fetchRemoteNews() {
     /** @type {NewsItem[]|null} */
     const announcementData = await fetch(dataURL)
       .then((res) => {
-        if (!res.ok)
-          throw new Error(
-            `${res.status} - Failed to fetch remote news from ${dataURL}`
-          );
+        if (!res.ok) throw new Error(`${res.status} - Failed to fetch remote news from ${dataURL}`);
         return res.json();
       })
       .catch((err) => {

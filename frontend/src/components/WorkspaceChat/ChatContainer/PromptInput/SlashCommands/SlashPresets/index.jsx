@@ -1,24 +1,20 @@
-import { useEffect, useState, useRef } from "react";
-import { useIsAgentSessionActive } from "@/utils/chat/agent";
-import AddPresetModal from "./AddPresetModal";
-import EditPresetModal from "./EditPresetModal";
+import PublishEntityModal from "@/components/CommunityHub/PublishEntityModal";
 import { useModal } from "@/hooks/useModal";
 import System from "@/models/system";
-import { DotsThree, Plus } from "@phosphor-icons/react";
+import { useIsAgentSessionActive } from "@/utils/chat/agent";
 import showToast from "@/utils/toast";
-import { useSearchParams } from "react-router-dom";
+import { DotsThree, Plus } from "@phosphor-icons/react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import PublishEntityModal from "@/components/CommunityHub/PublishEntityModal";
+import { useSearchParams } from "react-router-dom";
+import AddPresetModal from "./AddPresetModal";
+import EditPresetModal from "./EditPresetModal";
 
 export const CMD_REGEX = new RegExp(/[^a-zA-Z0-9_-]/g);
 export default function SlashPresets({ setShowing, sendCommand, promptRef }) {
   const { t } = useTranslation();
   const isActiveAgentSession = useIsAgentSessionActive();
-  const {
-    isOpen: isAddModalOpen,
-    openModal: openAddModal,
-    closeModal: closeAddModal,
-  } = useModal();
+  const { isOpen: isAddModalOpen, openModal: openAddModal, closeModal: closeAddModal } = useModal();
   const {
     isOpen: isEditModalOpen,
     openModal: openEditModal,
@@ -44,10 +40,7 @@ export default function SlashPresets({ setShowing, sendCommand, promptRef }) {
    * automatically when the component mounts.
    */
   useEffect(() => {
-    if (
-      searchParams.get("action") === "open-new-slash-command-modal" &&
-      !isAddModalOpen
-    )
+    if (searchParams.get("action") === "open-new-slash-command-modal" && !isAddModalOpen)
       openAddModal();
   }, []);
 
@@ -76,10 +69,7 @@ export default function SlashPresets({ setShowing, sendCommand, promptRef }) {
   };
 
   const handleUpdatePreset = async (updatedPreset) => {
-    const { error } = await System.updateSlashCommandPreset(
-      updatedPreset.id,
-      updatedPreset
-    );
+    const { error } = await System.updateSlashCommandPreset(updatedPreset.id, updatedPreset);
 
     if (!!error) {
       showToast(error, "error");
@@ -137,11 +127,7 @@ export default function SlashPresets({ setShowing, sendCommand, promptRef }) {
           </div>
         </div>
       </button>
-      <AddPresetModal
-        isOpen={isAddModalOpen}
-        onClose={closeAddModal}
-        onSave={handleSavePreset}
-      />
+      <AddPresetModal isOpen={isAddModalOpen} onClose={closeAddModal} onSave={handleSavePreset} />
       {selectedPreset && (
         <EditPresetModal
           isOpen={isEditModalOpen}
@@ -190,12 +176,8 @@ function PresetItem({ preset, onUse, onEdit, onPublish }) {
       className="border-none w-full hover:cursor-pointer hover:bg-theme-action-menu-item-hover px-2 py-2 rounded-xl flex flex-row justify-start items-center relative"
     >
       <div className="flex-col text-left flex pointer-events-none flex-1 min-w-0">
-        <div className="text-theme-text-primary text-sm font-bold truncate">
-          {preset.command}
-        </div>
-        <div className="text-theme-text-secondary text-sm truncate">
-          {preset.description}
-        </div>
+        <div className="text-theme-text-primary text-sm font-bold truncate">{preset.command}</div>
+        <div className="text-theme-text-secondary text-sm truncate">{preset.description}</div>
       </div>
       <button
         ref={menuButtonRef}

@@ -1,9 +1,5 @@
 const { v4 } = require("uuid");
-const {
-  createdDate,
-  trashFile,
-  writeToServerDocuments,
-} = require("../../utils/files");
+const { createdDate, trashFile, writeToServerDocuments } = require("../../utils/files");
 const { tokenizeString } = require("../../utils/tokenizer");
 const { default: slugify } = require("slugify");
 const { LocalWhisper } = require("../../utils/WhisperProviders/localWhisper");
@@ -15,9 +11,7 @@ const WHISPER_PROVIDERS = {
 };
 
 async function asAudio({ fullFilePath = "", filename = "", options = {} }) {
-  const WhisperProvider = WHISPER_PROVIDERS.hasOwnProperty(
-    options?.whisperProvider
-  )
+  const WhisperProvider = WHISPER_PROVIDERS.hasOwnProperty(options?.whisperProvider)
     ? WHISPER_PROVIDERS[options?.whisperProvider]
     : WHISPER_PROVIDERS.local;
 
@@ -64,9 +58,7 @@ async function asAudio({ fullFilePath = "", filename = "", options = {} }) {
     filename: `${slugify(filename)}-${data.id}`,
   });
   trashFile(fullFilePath);
-  console.log(
-    `[SUCCESS]: ${filename} transcribed, converted & ready for embedding.\n`
-  );
+  console.log(`[SUCCESS]: ${filename} transcribed, converted & ready for embedding.\n`);
   return { success: true, reason: null, documents: [document] };
 }
 

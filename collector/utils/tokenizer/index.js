@@ -6,9 +6,7 @@ class TikTokenTokenizer {
 
   constructor() {
     if (TikTokenTokenizer.instance) {
-      this.log(
-        "Singleton instance already exists. Returning existing instance."
-      );
+      this.log("Singleton instance already exists. Returning existing instance.");
       return TikTokenTokenizer.instance;
     }
 

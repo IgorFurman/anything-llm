@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
 import System from "@/models/system";
-import { useTranslation } from "react-i18next";
 import showToast from "@/utils/toast";
-import pluralize from "pluralize";
-import { TagsInput } from "react-tag-input-component";
 import { Info, Warning } from "@phosphor-icons/react";
+import pluralize from "pluralize";
+import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { TagsInput } from "react-tag-input-component";
 import { Tooltip } from "react-tooltip";
 
 const DEFAULT_BRANCHES = ["main", "master"];
@@ -26,11 +26,10 @@ export default function GithubOptions() {
 
     try {
       setLoading(true);
-      showToast(
-        "Fetching all files for repo - this may take a while.",
-        "info",
-        { clear: true, autoClose: false }
-      );
+      showToast("Fetching all files for repo - this may take a while.", "info", {
+        clear: true,
+        autoClose: false,
+      });
       const { data, error } = await System.dataConnectors.github.collect({
         repo: form.get("repo"),
         accessToken: form.get("accessToken"),
@@ -91,9 +90,7 @@ export default function GithubOptions() {
               <div className="flex flex-col pr-10">
                 <div className="flex flex-col gap-y-1 mb-4">
                   <label className="text-white font-bold text-sm flex gap-x-2 items-center">
-                    <p className="font-bold text-white">
-                      {t("connectors.github.token")}
-                    </p>{" "}
+                    <p className="font-bold text-white">{t("connectors.github.token")}</p>{" "}
                     <p className="text-xs font-light flex items-center">
                       <span className="text-theme-text-secondary">
                         {t("connectors.github.optional")}
@@ -117,18 +114,13 @@ export default function GithubOptions() {
                   onBlur={() => setSettings({ ...settings, accessToken })}
                 />
               </div>
-              <GitHubBranchSelection
-                repo={settings.repo}
-                accessToken={settings.accessToken}
-              />
+              <GitHubBranchSelection repo={settings.repo} accessToken={settings.accessToken} />
             </div>
 
             <div className="flex flex-col w-full py-4 pr-10">
               <div className="flex flex-col gap-y-1 mb-4">
                 <label className="text-white text-sm flex gap-x-2 items-center">
-                  <p className="text-white text-sm font-bold">
-                    {t("connectors.github.ignores")}
-                  </p>
+                  <p className="text-white text-sm font-bold">{t("connectors.github.ignores")}</p>
                 </label>
                 <p className="text-xs font-normal text-theme-text-secondary">
                   {t("connectors.github.git_ignore")}
@@ -158,9 +150,7 @@ export default function GithubOptions() {
               {loading ? "Collecting files..." : "Submit"}
             </button>
             {loading && (
-              <p className="text-xs text-white/50">
-                {t("connectors.github.task_explained")}
-              </p>
+              <p className="text-xs text-white/50">{t("connectors.github.task_explained")}</p>
             )}
           </div>
         </form>
@@ -284,12 +274,7 @@ function PATTooltip({ accessToken }) {
           data-tooltip-place="right"
         />
       )}
-      <Tooltip
-        delayHide={300}
-        id="access-token-tooltip"
-        className="max-w-xs z-99"
-        clickable={true}
-      >
+      <Tooltip delayHide={300} id="access-token-tooltip" className="max-w-xs z-99" clickable={true}>
         <p className="text-sm">
           {t("connectors.github.token_explained_start")}
           <a

@@ -3,10 +3,8 @@ const { Ollama } = require("ollama");
 
 class OllamaEmbedder {
   constructor() {
-    if (!process.env.EMBEDDING_BASE_PATH)
-      throw new Error("No embedding base path was set.");
-    if (!process.env.EMBEDDING_MODEL_PREF)
-      throw new Error("No embedding model was set.");
+    if (!process.env.EMBEDDING_BASE_PATH) throw new Error("No embedding base path was set.");
+    if (!process.env.EMBEDDING_MODEL_PREF) throw new Error("No embedding model was set.");
 
     this.basePath = process.env.EMBEDDING_BASE_PATH;
     this.model = process.env.EMBEDDING_MODEL_PREF;
@@ -37,9 +35,7 @@ class OllamaEmbedder {
   }
 
   async embedTextInput(textInput) {
-    const result = await this.embedChunks(
-      Array.isArray(textInput) ? textInput : [textInput]
-    );
+    const result = await this.embedChunks(Array.isArray(textInput) ? textInput : [textInput]);
     return result?.[0] || [];
   }
 
@@ -59,12 +55,8 @@ class OllamaEmbedder {
    */
   async embedChunks(textChunks = []) {
     if (!(await this.#isAlive()))
-      throw new Error(
-        `Ollama service could not be reached. Is Ollama running?`
-      );
-    this.log(
-      `Embedding ${textChunks.length} chunks of text with ${this.model}.`
-    );
+      throw new Error(`Ollama service could not be reached. Is Ollama running?`);
+    this.log(`Embedding ${textChunks.length} chunks of text with ${this.model}.`);
 
     let data = [];
     let error = null;

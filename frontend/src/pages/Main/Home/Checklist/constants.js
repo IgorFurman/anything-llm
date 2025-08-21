@@ -1,13 +1,7 @@
-import {
-  SquaresFour,
-  ChatDots,
-  Files,
-  ChatCenteredText,
-  UsersThree,
-} from "@phosphor-icons/react";
-import SlashCommandIcon from "./ChecklistItem/icons/SlashCommand";
 import paths from "@/utils/paths";
+import { ChatCenteredText, ChatDots, Files, SquaresFour, UsersThree } from "@phosphor-icons/react";
 import { t } from "i18next";
+import SlashCommandIcon from "./ChecklistItem/icons/SlashCommand";
 
 const noop = () => {};
 
@@ -57,12 +51,7 @@ export const CHECKLIST_ITEMS = () => [
     title: t("main-page.checklist.tasks.send_chat.title"),
     description: t("main-page.checklist.tasks.send_chat.description"),
     action: t("main-page.checklist.tasks.send_chat.action"),
-    handler: ({
-      workspaces = [],
-      navigate = noop,
-      showToast = noop,
-      showNewWsModal = noop,
-    }) => {
+    handler: ({ workspaces = [], navigate = noop, showToast = noop, showNewWsModal = noop }) => {
       if (workspaces.length === 0) {
         showToast(t("main-page.noWorkspaceError"), "warning", {
           clear: true,
@@ -105,12 +94,7 @@ export const CHECKLIST_ITEMS = () => [
     title: t("main-page.checklist.tasks.setup_system_prompt.title"),
     description: t("main-page.checklist.tasks.setup_system_prompt.description"),
     action: t("main-page.checklist.tasks.setup_system_prompt.action"),
-    handler: ({
-      workspaces = [],
-      navigate = noop,
-      showNewWsModal = noop,
-      showToast = noop,
-    }) => {
+    handler: ({ workspaces = [], navigate = noop, showNewWsModal = noop, showToast = noop }) => {
       if (workspaces.length === 0) {
         showToast(t("main-page.noWorkspaceError"), "warning", {
           clear: true,
@@ -130,16 +114,9 @@ export const CHECKLIST_ITEMS = () => [
   {
     id: "define_slash_command",
     title: t("main-page.checklist.tasks.define_slash_command.title"),
-    description: t(
-      "main-page.checklist.tasks.define_slash_command.description"
-    ),
+    description: t("main-page.checklist.tasks.define_slash_command.description"),
     action: t("main-page.checklist.tasks.define_slash_command.action"),
-    handler: ({
-      workspaces = [],
-      navigate = noop,
-      showNewWsModal = noop,
-      showToast = noop,
-    }) => {
+    handler: ({ workspaces = [], navigate = noop, showNewWsModal = noop, showToast = noop }) => {
       if (workspaces.length === 0) {
         showToast(t("main-page.noWorkspaceError"), "warning", { clear: true });
         showNewWsModal();

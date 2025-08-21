@@ -1,6 +1,6 @@
-import { Pencil } from "@phosphor-icons/react";
-import { useState, useEffect, useRef } from "react";
 import Appearance from "@/models/appearance";
+import { Pencil } from "@phosphor-icons/react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 const EDIT_EVENT = "toggle-message-edit";
@@ -33,34 +33,22 @@ export function useEditMessage({ chatId, role }) {
 export function EditMessageAction({ chatId = null, role, isEditing }) {
   const { t } = useTranslation();
   function handleEditClick() {
-    window.dispatchEvent(
-      new CustomEvent(EDIT_EVENT, { detail: { chatId, role } })
-    );
+    window.dispatchEvent(new CustomEvent(EDIT_EVENT, { detail: { chatId, role } }));
   }
 
   if (!chatId || isEditing) return null;
   return (
-    <div
-      className={`mt-3 relative ${
-        role === "user" && !isEditing ? "" : "!opacity-100"
-      }`}
-    >
+    <div className={`mt-3 relative ${role === "user" && !isEditing ? "" : "!opacity-100"}`}>
       <button
         onClick={handleEditClick}
         data-tooltip-id="edit-input-text"
         data-tooltip-content={`${
-          role === "user"
-            ? t("chat_window.edit_prompt")
-            : t("chat_window.edit_response")
+          role === "user" ? t("chat_window.edit_prompt") : t("chat_window.edit_response")
         } `}
         className="border-none text-zinc-300"
         aria-label={`Edit ${role === "user" ? t("chat_window.edit_prompt") : t("chat_window.edit_response")}`}
       >
-        <Pencil
-          color="var(--theme-sidebar-footer-icon-fill)"
-          size={21}
-          className="mb-1"
-        />
+        <Pencil color="var(--theme-sidebar-footer-icon-fill)" size={21} className="mb-1" />
       </button>
     </div>
   );
@@ -81,15 +69,11 @@ export function EditMessageForm({
     const form = new FormData(e.target);
     const editedMessage = form.get("editedMessage");
     saveChanges({ editedMessage, chatId, role, attachments });
-    window.dispatchEvent(
-      new CustomEvent(EDIT_EVENT, { detail: { chatId, role, attachments } })
-    );
+    window.dispatchEvent(new CustomEvent(EDIT_EVENT, { detail: { chatId, role, attachments } }));
   }
 
   function cancelEdits() {
-    window.dispatchEvent(
-      new CustomEvent(EDIT_EVENT, { detail: { chatId, role, attachments } })
-    );
+    window.dispatchEvent(new CustomEvent(EDIT_EVENT, { detail: { chatId, role, attachments } }));
     return false;
   }
 

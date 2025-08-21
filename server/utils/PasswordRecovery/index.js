@@ -1,10 +1,7 @@
 const bcrypt = require("bcrypt");
 const { v4, validate } = require("uuid");
 const { User } = require("../../models/user");
-const {
-  RecoveryCode,
-  PasswordResetToken,
-} = require("../../models/passwordRecovery");
+const { RecoveryCode, PasswordResetToken } = require("../../models/passwordRecovery");
 
 async function generateRecoveryCodes(userId) {
   const newRecoveryCodes = [];
@@ -37,16 +34,14 @@ async function recoverAccount(username = "", recoveryCodes = []) {
   // If hashes do not exist for a user
   // because this is a user who has not logged out and back in since upgrade.
   const allUserHashes = await RecoveryCode.hashesForUser(user.id);
-  if (allUserHashes.length < 4)
-    return { success: false, error: "Invalid recovery codes" };
+  if (allUserHashes.length < 4) return { success: false, error: "Invalid recovery codes" };
 
   // If they tried to send more than two unique codes, we only take the first two
   const uniqueRecoveryCodes = [...new Set(recoveryCodes)]
     .map((code) => code.trim())
     .filter((code) => validate(code)) // we know that any provided code must be a uuid v4.
     .slice(0, 2);
-  if (uniqueRecoveryCodes.length !== 2)
-    return { success: false, error: "Invalid recovery codes." };
+  if (uniqueRecoveryCodes.length !== 2) return { success: false, error: "Invalid recovery codes." };
 
   const validCodes = uniqueRecoveryCodes.every((code) => {
     let valid = false;
@@ -57,9 +52,7 @@ async function recoverAccount(username = "", recoveryCodes = []) {
   });
   if (!validCodes) return { success: false, error: "Invalid recovery codes" };
 
-  const { passwordResetToken, error } = await PasswordResetToken.create(
-    user.id
-  );
+  const { passwordResetToken, error } = await PasswordResetToken.create(user.id);
   if (!!error) return { success: false, error };
   return { success: true, resetToken: passwordResetToken.token };
 }
@@ -67,8 +60,7 @@ async function recoverAccount(username = "", recoveryCodes = []) {
 async function resetPassword(token, _newPassword = "", confirmPassword = "") {
   const newPassword = String(_newPassword).trim(); // No spaces in passwords
   if (!newPassword) throw new Error("Invalid password.");
-  if (newPassword !== String(confirmPassword))
-    throw new Error("Passwords do not match");
+  if (newPassword !== String(confirmPassword)) throw new Error("Passwords do not match");
 
   const resetToken = await PasswordResetToken.findUnique({
     token: String(token),

@@ -5,10 +5,10 @@
  *  - Eugen Mayer (KontextWork)
  */
 
-import { useState } from "react";
 import System from "@/models/system";
 import showToast from "@/utils/toast";
 import { Warning } from "@phosphor-icons/react";
+import { useState } from "react";
 import { Tooltip } from "react-tooltip";
 
 export default function DrupalWikiOptions() {
@@ -90,9 +90,7 @@ export default function DrupalWikiOptions() {
               </div>
               <div className="flex flex-col pr-10">
                 <div className="flex flex-col gap-y-1 mb-4">
-                  <label className="text-white text-sm font-bold">
-                    Drupal Wiki Space IDs
-                  </label>
+                  <label className="text-white text-sm font-bold">Drupal Wiki Space IDs</label>
                   <p className="text-xs font-normal text-theme-text-secondary">
                     Comma separated Space IDs you want to extract. See the&nbsp;
                     <a
@@ -104,8 +102,8 @@ export default function DrupalWikiOptions() {
                     >
                       manual
                     </a>
-                    &nbsp; on how to retrieve the Space IDs. Be sure that your
-                    'API-Token User' has access to those spaces.
+                    &nbsp; on how to retrieve the Space IDs. Be sure that your 'API-Token User' has
+                    access to those spaces.
                   </p>
                 </div>
                 <input
@@ -121,9 +119,7 @@ export default function DrupalWikiOptions() {
               <div className="flex flex-col pr-10">
                 <div className="flex flex-col gap-y-1 mb-4">
                   <label className="text-white text-sm font-bold flex gap-x-2 items-center">
-                    <p className="font-bold text-white">
-                      Drupal Wiki API Token
-                    </p>
+                    <p className="font-bold text-white">Drupal Wiki API Token</p>
                     <Warning
                       size={14}
                       className="ml-1 text-orange-500 cursor-pointer"
@@ -137,8 +133,8 @@ export default function DrupalWikiOptions() {
                       clickable={true}
                     >
                       <p className="text-sm font-light text-theme-text-primary">
-                        You need to provide an API token for authentication. See
-                        the Drupal Wiki&nbsp;
+                        You need to provide an API token for authentication. See the Drupal
+                        Wiki&nbsp;
                         <a
                           href="https://help.drupal-wiki.com/node/605#2-Zugriffs-Token-generieren"
                           target="_blank"
@@ -178,8 +174,7 @@ export default function DrupalWikiOptions() {
             </button>
             {loading && (
               <p className="text-xs text-theme-text-secondary">
-                Once complete, all pages will be available for embedding into
-                workspaces.
+                Once complete, all pages will be available for embedding into workspaces.
               </p>
             )}
           </div>

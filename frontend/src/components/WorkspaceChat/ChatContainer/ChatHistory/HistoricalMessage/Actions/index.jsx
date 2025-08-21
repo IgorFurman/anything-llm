@@ -1,11 +1,11 @@
-import React, { memo, useState } from "react";
 import useCopyText from "@/hooks/useCopyText";
-import { Check, ThumbsUp, ArrowsClockwise, Copy } from "@phosphor-icons/react";
 import Workspace from "@/models/workspace";
+import { ArrowsClockwise, Check, Copy, ThumbsUp } from "@phosphor-icons/react";
+import React, { memo, useState } from "react";
+import { useTranslation } from "react-i18next";
+import ActionMenu from "./ActionMenu";
 import { EditMessageAction } from "./EditMessage";
 import RenderMetrics from "./RenderMetrics";
-import ActionMenu from "./ActionMenu";
-import { useTranslation } from "react-i18next";
 
 const Actions = ({
   message,
@@ -23,8 +23,7 @@ const Actions = ({
   const { t } = useTranslation();
   const [selectedFeedback, setSelectedFeedback] = useState(feedbackScore);
   const handleFeedback = async (newFeedback) => {
-    const updatedFeedback =
-      selectedFeedback === newFeedback ? null : newFeedback;
+    const updatedFeedback = selectedFeedback === newFeedback ? null : newFeedback;
     await Workspace.updateChatFeedback(chatId, slug, updatedFeedback);
     setSelectedFeedback(updatedFeedback);
   };
@@ -34,17 +33,9 @@ const Actions = ({
       <div className="flex justify-start items-center gap-x-[8px]">
         <CopyMessage message={message} />
         <div className="md:group-hover:opacity-100 transition-all duration-300 md:opacity-0 flex justify-start items-center gap-x-[8px]">
-          <EditMessageAction
-            chatId={chatId}
-            role={role}
-            isEditing={isEditing}
-          />
+          <EditMessageAction chatId={chatId} role={role} isEditing={isEditing} />
           {isLastMessage && !isEditing && (
-            <RegenerateMessage
-              regenerateMessage={regenerateMessage}
-              slug={slug}
-              chatId={chatId}
-            />
+            <RegenerateMessage regenerateMessage={regenerateMessage} slug={slug} chatId={chatId} />
           )}
           {chatId && role !== "user" && !isEditing && (
             <FeedbackButton
@@ -55,12 +46,7 @@ const Actions = ({
               IconComponent={ThumbsUp}
             />
           )}
-          <ActionMenu
-            chatId={chatId}
-            forkThread={forkThread}
-            isEditing={isEditing}
-            role={role}
-          />
+          <ActionMenu chatId={chatId} forkThread={forkThread} isEditing={isEditing} role={role} />
         </div>
       </div>
       <RenderMetrics metrics={metrics} />
@@ -68,12 +54,7 @@ const Actions = ({
   );
 };
 
-function FeedbackButton({
-  isSelected,
-  handleFeedback,
-  tooltipContent,
-  IconComponent,
-}) {
+function FeedbackButton({ isSelected, handleFeedback, tooltipContent, IconComponent }) {
   return (
     <div className="mt-3 relative">
       <button
@@ -109,17 +90,9 @@ function CopyMessage({ message }) {
           aria-label={t("chat_window.copy")}
         >
           {copied ? (
-            <Check
-              color="var(--theme-sidebar-footer-icon-fill)"
-              size={20}
-              className="mb-1"
-            />
+            <Check color="var(--theme-sidebar-footer-icon-fill)" size={20} className="mb-1" />
           ) : (
-            <Copy
-              color="var(--theme-sidebar-footer-icon-fill)"
-              size={20}
-              className="mb-1"
-            />
+            <Copy color="var(--theme-sidebar-footer-icon-fill)" size={20} className="mb-1" />
           )}
         </button>
       </div>

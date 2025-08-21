@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import System from "@/models/system";
+import { useEffect, useState } from "react";
 
 export default function LiteLLMOptions({ settings }) {
   const [basePathValue, setBasePathValue] = useState(settings?.LiteLLMBasePath);
@@ -11,9 +11,7 @@ export default function LiteLLMOptions({ settings }) {
     <div className="w-full flex flex-col gap-y-7 mt-1.5">
       <div className="w-full flex items-center gap-[36px]">
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
-            Base URL
-          </label>
+          <label className="text-white text-sm font-semibold block mb-3">Base URL</label>
           <input
             type="url"
             name="LiteLLMBasePath"
@@ -27,11 +25,7 @@ export default function LiteLLMOptions({ settings }) {
             onBlur={() => setBasePath(basePathValue)}
           />
         </div>
-        <LiteLLMModelSelection
-          settings={settings}
-          basePath={basePath}
-          apiKey={apiKey}
-        />
+        <LiteLLMModelSelection settings={settings} basePath={basePath} apiKey={apiKey} />
         <div className="flex flex-col w-60">
           <label className="text-white text-sm font-semibold block mb-3">
             Token context window
@@ -99,18 +93,14 @@ function LiteLLMModelSelection({ settings, basePath = null, apiKey = null }) {
   if (loading || customModels.length == 0) {
     return (
       <div className="flex flex-col w-60">
-        <label className="text-white text-sm font-semibold block mb-3">
-          Chat Model Selection
-        </label>
+        <label className="text-white text-sm font-semibold block mb-3">Chat Model Selection</label>
         <select
           name="LiteLLMModelPref"
           disabled={true}
           className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
         >
           <option disabled={true} selected={true}>
-            {basePath?.includes("/v1")
-              ? "-- loading available models --"
-              : "-- waiting for URL --"}
+            {basePath?.includes("/v1") ? "-- loading available models --" : "-- waiting for URL --"}
           </option>
         </select>
       </div>
@@ -119,9 +109,7 @@ function LiteLLMModelSelection({ settings, basePath = null, apiKey = null }) {
 
   return (
     <div className="flex flex-col w-60">
-      <label className="text-white text-sm font-semibold block mb-3">
-        Chat Model Selection
-      </label>
+      <label className="text-white text-sm font-semibold block mb-3">Chat Model Selection</label>
       <select
         name="LiteLLMModelPref"
         required={true}

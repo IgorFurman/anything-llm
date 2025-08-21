@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
 import Sidebar from "@/components/SettingsSidebar";
+import { useEffect, useState } from "react";
 import { isMobile } from "react-device-detect";
 import * as Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { EnvelopeSimple } from "@phosphor-icons/react";
-import Admin from "@/models/admin";
-import InviteRow from "./InviteRow";
-import NewInviteModal from "./NewInviteModal";
-import { useModal } from "@/hooks/useModal";
 import ModalWrapper from "@/components/ModalWrapper";
 import CTAButton from "@/components/lib/CTAButton";
+import { useModal } from "@/hooks/useModal";
+import Admin from "@/models/admin";
+import { EnvelopeSimple } from "@phosphor-icons/react";
+import InviteRow from "./InviteRow";
+import NewInviteModal from "./NewInviteModal";
 
 export default function AdminInvites() {
   const { isOpen, openModal, closeModal } = useModal();
@@ -36,22 +36,16 @@ export default function AdminInvites() {
         <div className="flex flex-col w-full px-1 md:pl-6 md:pr-[50px] md:py-6 py-16">
           <div className="w-full flex flex-col gap-y-1 pb-6 border-white/10 border-b-2">
             <div className="items-center flex gap-x-4">
-              <p className="text-lg leading-6 font-bold text-theme-text-primary">
-                Invitations
-              </p>
+              <p className="text-lg leading-6 font-bold text-theme-text-primary">Invitations</p>
             </div>
             <p className="text-xs leading-[18px] font-base text-theme-text-secondary mt-2">
-              Create invitation links for people in your organization to accept
-              and sign up with. Invitations can only be used by a single user.
+              Create invitation links for people in your organization to accept and sign up with.
+              Invitations can only be used by a single user.
             </p>
           </div>
           <div className="w-full justify-end flex">
-            <CTAButton
-              onClick={openModal}
-              className="mt-3 mr-0 mb-4 md:-mb-12 z-10"
-            >
-              <EnvelopeSimple className="h-4 w-4" weight="bold" /> Create Invite
-              Link
+            <CTAButton onClick={openModal} className="mt-3 mr-0 mb-4 md:-mb-12 z-10">
+              <EnvelopeSimple className="h-4 w-4" weight="bold" /> Create Invite Link
             </CTAButton>
           </div>
           <div className="overflow-x-auto mt-6">
@@ -94,9 +88,7 @@ export default function AdminInvites() {
                       </td>
                     </tr>
                   ) : (
-                    invites.map((invite) => (
-                      <InviteRow key={invite.id} invite={invite} />
-                    ))
+                    invites.map((invite) => <InviteRow key={invite.id} invite={invite} />)
                   )}
                 </tbody>
               </table>

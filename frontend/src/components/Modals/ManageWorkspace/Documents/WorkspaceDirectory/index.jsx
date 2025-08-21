@@ -1,16 +1,16 @@
-import PreLoader from "@/components/Preloader";
-import { dollarFormat } from "@/utils/numbers";
-import WorkspaceFileRow from "./WorkspaceFileRow";
-import { memo, useEffect, useState } from "react";
 import ModalWrapper from "@/components/ModalWrapper";
-import { Eye, PushPin } from "@phosphor-icons/react";
-import { SEEN_DOC_PIN_ALERT, SEEN_WATCH_ALERT } from "@/utils/constants";
-import paths from "@/utils/paths";
-import { Link } from "react-router-dom";
+import PreLoader from "@/components/Preloader";
 import Workspace from "@/models/workspace";
-import { Tooltip } from "react-tooltip";
+import { SEEN_DOC_PIN_ALERT, SEEN_WATCH_ALERT } from "@/utils/constants";
+import { dollarFormat } from "@/utils/numbers";
+import paths from "@/utils/paths";
 import { safeJsonParse } from "@/utils/request";
+import { Eye, PushPin } from "@phosphor-icons/react";
+import { memo, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
+import { Tooltip } from "react-tooltip";
+import WorkspaceFileRow from "./WorkspaceFileRow";
 
 function WorkspaceDirectory({
   workspace,
@@ -60,9 +60,7 @@ function WorkspaceDirectory({
     setLoadingMessage("Removing selected files from workspace");
 
     const itemsToRemove = Object.keys(selectedItems).map((itemId) => {
-      const folder = files.items.find((f) =>
-        f.items.some((i) => i.id === itemId)
-      );
+      const folder = files.items.find((f) => f.items.some((i) => i.id === itemId));
       const item = folder.items.find((i) => i.id === itemId);
       return `${folder.name}/${item.name}`;
     });
@@ -91,9 +89,7 @@ function WorkspaceDirectory({
     return (
       <div className="px-8">
         <div className="flex items-center justify-start w-[560px]">
-          <h3 className="text-white text-base font-bold ml-5">
-            {workspace.name}
-          </h3>
+          <h3 className="text-white text-base font-bold ml-5">{workspace.name}</h3>
         </div>
         <div className="relative w-[560px] h-[445px] bg-theme-settings-input-bg rounded-2xl mt-5 border border-theme-modal-border">
           <div className="text-white/80 text-xs grid grid-cols-12 py-2 px-3.5 border-b border-white/20 light:border-theme-modal-border bg-theme-settings-input-bg sticky top-0 z-10 rounded-t-2xl">
@@ -118,9 +114,7 @@ function WorkspaceDirectory({
     <>
       <div className="px-8">
         <div className="flex items-center justify-start w-[560px]">
-          <h3 className="text-white text-base font-bold ml-5">
-            {workspace.name}
-          </h3>
+          <h3 className="text-white text-base font-bold ml-5">{workspace.name}</h3>
         </div>
         <div className="relative w-[560px] h-[445px] mt-5">
           <div
@@ -131,26 +125,21 @@ function WorkspaceDirectory({
           <div className="relative w-full h-full bg-theme-settings-input-bg rounded-2xl overflow-hidden border border-theme-modal-border">
             <div className="text-white/80 text-xs grid grid-cols-12 py-2 px-3.5 border-b border-white/20 light:border-theme-modal-border bg-theme-settings-input-bg sticky top-0 z-10">
               <div className="col-span-10 flex items-center gap-x-[4px]">
-                {!hasChanges &&
-                files.items.some((folder) => folder.items.length > 0) ? (
+                {!hasChanges && files.items.some((folder) => folder.items.length > 0) ? (
                   <div
                     className={`shrink-0 w-3 h-3 rounded border-[1px] border-solid border-white text-theme-text-primary light:invert flex justify-center items-center cursor-pointer`}
                     role="checkbox"
                     aria-checked={
                       Object.keys(selectedItems).length ===
-                      files.items.reduce(
-                        (sum, folder) => sum + folder.items.length,
-                        0
-                      )
+                      files.items.reduce((sum, folder) => sum + folder.items.length, 0)
                     }
                     tabIndex={0}
                     onClick={toggleSelectAll}
                   >
                     {Object.keys(selectedItems).length ===
-                      files.items.reduce(
-                        (sum, folder) => sum + folder.items.length,
-                        0
-                      ) && <div className="w-2 h-2 bg-white rounded-[2px]" />}
+                      files.items.reduce((sum, folder) => sum + folder.items.length, 0) && (
+                      <div className="w-2 h-2 bg-white rounded-[2px]" />
+                    )}
                   </div>
                 ) : (
                   <div className="shrink-0 w-3 h-3" />
@@ -160,13 +149,8 @@ function WorkspaceDirectory({
               <p className="col-span-2" />
             </div>
             <div className="overflow-y-auto h-[calc(100%-40px)]">
-              {files.items.some((folder) => folder.items.length > 0) ||
-              movedItems.length > 0 ? (
-                <RenderFileRows
-                  files={files}
-                  movedItems={movedItems}
-                  workspace={workspace}
-                >
+              {files.items.some((folder) => folder.items.length > 0) || movedItems.length > 0 ? (
+                <RenderFileRows files={files} movedItems={movedItems} workspace={workspace}>
                   {({ item, folder }) => (
                     <WorkspaceFileRow
                       key={item.id}
@@ -203,10 +187,7 @@ function WorkspaceDirectory({
                       className="border-none text-sm font-semibold bg-white light:bg-[#E0F2FE] h-[30px] px-2.5 rounded-lg hover:bg-neutral-800/80 hover:text-white light:text-[#026AA2] light:hover:bg-[#026AA2] light:hover:text-white"
                     >
                       {Object.keys(selectedItems).length ===
-                      files.items.reduce(
-                        (sum, folder) => sum + folder.items.length,
-                        0
-                      )
+                      files.items.reduce((sum, folder) => sum + folder.items.length, 0)
                         ? t("connectors.directory.deselect_all")
                         : t("connectors.directory.select_all")}
                     </button>
@@ -229,9 +210,7 @@ function WorkspaceDirectory({
                 {embeddingCosts === 0
                   ? ""
                   : `Estimated Cost: ${
-                      embeddingCosts < 0.01
-                        ? `< $0.01`
-                        : dollarFormat(embeddingCosts)
+                      embeddingCosts < 0.01 ? `< $0.01` : dollarFormat(embeddingCosts)
                     }`}
               </p>
               <p className="mt-2 text-xs italic" hidden={embeddingCosts === 0}>
@@ -279,10 +258,7 @@ const PinAlert = memo(() => {
       <div className="w-full max-w-2xl bg-theme-bg-secondary rounded-lg shadow border-2 border-theme-modal-border overflow-hidden">
         <div className="relative p-6 border-b rounded-t border-theme-modal-border">
           <div className="flex items-center gap-2">
-            <PushPin
-              className="text-theme-text-primary text-lg w-6 h-6"
-              weight="regular"
-            />
+            <PushPin className="text-theme-text-primary text-lg w-6 h-6" weight="regular" />
             <h3 className="text-xl font-semibold text-white">
               {t("connectors.pinning.what_pinning")}
             </h3>
@@ -344,10 +320,7 @@ const DocumentWatchAlert = memo(() => {
       <div className="w-full max-w-2xl bg-theme-bg-secondary rounded-lg shadow border-2 border-theme-modal-border overflow-hidden">
         <div className="relative p-6 border-b rounded-t border-theme-modal-border">
           <div className="flex items-center gap-2">
-            <Eye
-              className="text-theme-text-primary text-lg w-6 h-6"
-              weight="regular"
-            />
+            <Eye className="text-theme-text-primary text-lg w-6 h-6" weight="regular" />
             <h3 className="text-xl font-semibold text-white">
               {t("connectors.watching.what_watching")}
             </h3>
@@ -430,9 +403,7 @@ function WorkspaceDocumentTooltips() {
           if (!data) return null;
           return (
             <div className="text-xs">
-              <p className="text-white light:invert font-medium break-all">
-                {data.title}
-              </p>
+              <p className="text-white light:invert font-medium break-all">{data.title}</p>
               <div className="flex mt-1 gap-x-2">
                 <p className="">
                   Date: <b>{data.date}</b>

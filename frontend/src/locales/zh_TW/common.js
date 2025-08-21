@@ -7,8 +7,7 @@ const TRANSLATIONS = {
     },
     llm: {
       title: "LLM 偏好",
-      description:
-        "AnythingLLM 可以與多家 LLM 提供商合作。這將是處理聊天的服務。",
+      description: "AnythingLLM 可以與多家 LLM 提供商合作。這將是處理聊天的服務。",
     },
     userSetup: {
       title: "使用者設定",
@@ -42,8 +41,7 @@ const TRANSLATIONS = {
       useCasePersonal: "用於個人使用",
       useCaseOther: "其他",
       comment: "您是如何聽說 AnythingLLM 的？",
-      commentPlaceholder:
-        "Reddit，Twitter，GitHub，YouTube 等 - 讓我們知道您是如何找到我們的！",
+      commentPlaceholder: "Reddit，Twitter，GitHub，YouTube 等 - 讓我們知道您是如何找到我們的！",
       skip: "跳過調查",
       thankYou: "感謝您的反饋！",
     },
@@ -193,8 +191,7 @@ const TRANSLATIONS = {
     },
     model: {
       title: "工作區對話模型",
-      description:
-        "此工作區將使用的特定對話模型。如果空白，將使用系統 LLM 偏好設定。",
+      description: "此工作區將使用的特定對話模型。如果空白，將使用系統 LLM 偏好設定。",
       wait: "-- 等待模型中 --",
     },
     mode: {
@@ -246,8 +243,7 @@ const TRANSLATIONS = {
     temperature: {
       title: "LLM 溫度值",
       "desc-start": "此設定控制 LLM 回應的「創意度」。",
-      "desc-end":
-        "數值越高，創意度越高。對於某些模型，設定過高可能會導致不連貫的回應。",
+      "desc-end": "數值越高，創意度越高。對於某些模型，設定過高可能會導致不連貫的回應。",
       hint: "大多數 LLM 都有各種可接受的有效值範圍。請查詢您的 LLM 提供者以取得該資訊。",
     },
   },
@@ -255,14 +251,12 @@ const TRANSLATIONS = {
     identifier: "向量資料庫識別碼",
     snippets: {
       title: "最大內容片段數",
-      description:
-        "此設定控制每次對話或查詢時，將傳送至 LLM 的最大內容片段數量。",
+      description: "此設定控制每次對話或查詢時，將傳送至 LLM 的最大內容片段數量。",
       recommend: "建議值：4",
     },
     doc: {
       title: "文件相似度門檻",
-      description:
-        "來源被視為與對話相關所需的最低相似度。數值越高，來源與對話的相似度就必須越高。",
+      description: "來源被視為與對話相關所需的最低相似度。數值越高，來源與對話的相似度就必須越高。",
       zero: "無限制",
       low: "低 (相似度 ≥ .25)",
       medium: "中 (相似度 ≥ .50)",
@@ -295,8 +289,7 @@ const TRANSLATIONS = {
     },
     skill: {
       title: "預設智慧代理人技能",
-      description:
-        "使用這些預先建置的技能來強化預設智慧代理人的自然能力。此設定適用於所有工作區。",
+      description: "使用這些預先建置的技能來強化預設智慧代理人的自然能力。此設定適用於所有工作區。",
       rag: {
         title: "RAG 與長期記憶體",
         description:
@@ -312,20 +305,17 @@ const TRANSLATIONS = {
       },
       generate: {
         title: "產生圖表",
-        description:
-          "讓預設智慧代理人能夠根據提供的資料或對話中給定的資料來產生各種圖表。",
+        description: "讓預設智慧代理人能夠根據提供的資料或對話中給定的資料來產生各種圖表。",
       },
       save: {
         title: "產生並儲存檔案到瀏覽器",
-        description:
-          "讓預設智慧代理人能夠產生並寫入檔案，這些檔案會儲存並可以從您的瀏覽器下載。",
+        description: "讓預設智慧代理人能夠產生並寫入檔案，這些檔案會儲存並可以從您的瀏覽器下載。",
       },
       web: {
         title: "即時網路搜尋與瀏覽",
         "desc-start":
           "讓您的智慧代理人能夠透過連線到網路搜尋 (SERP) 提供者來搜尋網路以回答您的問題。",
-        "desc-end":
-          "在設定完成之前，智慧代理人工作階段期間的網路搜尋將無法運作。",
+        "desc-end": "在設定完成之前，智慧代理人工作階段期間的網路搜尋將無法運作。",
       },
     },
   },
@@ -344,8 +334,7 @@ const TRANSLATIONS = {
   },
   api: {
     title: "API 金鑰",
-    description:
-      "API 金鑰允許持有者以程式化方式存取和管理此 AnythingLLM 系統。",
+    description: "API 金鑰允許持有者以程式化方式存取和管理此 AnythingLLM 系統。",
     link: "閱讀 API 文件",
     generate: "產生新的 API 金鑰",
     table: {
@@ -383,8 +372,7 @@ const TRANSLATIONS = {
   },
   embedding: {
     title: "向量嵌入偏好設定",
-    "desc-start":
-      "當使用原生不支援嵌入引擎的 LLM 時，您可能需要額外指定用於嵌入文字的憑證。",
+    "desc-start": "當使用原生不支援嵌入引擎的 LLM 時，您可能需要額外指定用於嵌入文字的憑證。",
     "desc-end":
       "嵌入是將文字轉換成向量的過程。這些憑證是用於將您的檔案和提示詞轉換成 AnythingLLM 可以處理的格式。",
     provider: {
@@ -393,10 +381,8 @@ const TRANSLATIONS = {
   },
   text: {
     title: "文字分割與區塊化偏好設定",
-    "desc-start":
-      "有時您可能需要修改新文件在插入向量資料庫之前的預設分割和區塊化方式。",
-    "desc-end":
-      "只有在了解文字分割的運作方式及其副作用的情況下，才應該修改此設定。",
+    "desc-start": "有時您可能需要修改新文件在插入向量資料庫之前的預設分割和區塊化方式。",
+    "desc-end": "只有在了解文字分割的運作方式及其副作用的情況下，才應該修改此設定。",
     size: {
       title: "文字區塊大小",
       description: "這是單一向量中可包含的最大字元長度。",
@@ -470,8 +456,7 @@ const TRANSLATIONS = {
   },
   privacy: {
     title: "隱私與資料處理",
-    description:
-      "這是您針對已連線的第三方供應商和 AnythingLLM 如何處理您的資料的設定。",
+    description: "這是您針對已連線的第三方供應商和 AnythingLLM 如何處理您的資料的設定。",
     llm: "LLM 選擇",
     embedding: "向量嵌入偏好設定",
     vector: "向量資料庫",
@@ -490,13 +475,11 @@ const TRANSLATIONS = {
       token_explained: "存取權杖以防止速率限制。",
       token_explained_start: "若沒有 ",
       token_explained_link1: "個人存取權杖",
-      token_explained_middle:
-        "，GitHub API 可能會因為速率限制而限制可收集的檔案數量。您可以 ",
+      token_explained_middle: "，GitHub API 可能會因為速率限制而限制可收集的檔案數量。您可以 ",
       token_explained_link2: "創建一個臨時的存取權杖",
       token_explained_end: " 來避免此問題。",
       ignores: "忽略檔案",
-      git_ignore:
-        "以 .gitignore 格式列出以忽略特定檔案。每輸入一個條目後按 Enter 鍵保存。",
+      git_ignore: "以 .gitignore 格式列出以忽略特定檔案。每輸入一個條目後按 Enter 鍵保存。",
       task_explained: "完成後，所有檔案將可供嵌入到工作區中的檔案選擇器。",
       branch: "您希望收集檔案的分支。",
       branch_loading: "-- 載入可用分支 --",
@@ -516,14 +499,12 @@ const TRANSLATIONS = {
       token_description: "選擇要從 GitLab API 中擷取的其他實體。",
       token_explained_start: "若沒有 ",
       token_explained_link1: "個人存取權杖",
-      token_explained_middle:
-        "，GitLab API 可能會因為速率限制而限制可收集的檔案數量。您可以 ",
+      token_explained_middle: "，GitLab API 可能會因為速率限制而限制可收集的檔案數量。您可以 ",
       token_explained_link2: "創建一個臨時的存取權杖",
       token_explained_end: " 來避免此問題。",
       fetch_issues: "擷取問題作為文件",
       ignores: "忽略檔案",
-      git_ignore:
-        "以 .gitignore 格式列出以忽略特定檔案。每輸入一個條目後按 Enter 鍵保存。",
+      git_ignore: "以 .gitignore 格式列出以忽略特定檔案。每輸入一個條目後按 Enter 鍵保存。",
       task_explained: "完成後，所有檔案將可供嵌入到工作區中的檔案選擇器。",
       branch: "您希望收集檔案的分支",
       branch_loading: "-- 載入可用分支 --",
@@ -536,8 +517,7 @@ const TRANSLATIONS = {
       name: "YouTube 文字稿",
       description: "從連結匯入整個 YouTube 影片的文字稿。",
       URL: "YouTube 影片網址",
-      URL_explained_start:
-        "輸入任何 YouTube 影片的網址以擷取其文字稿。該影片必須擁有 ",
+      URL_explained_start: "輸入任何 YouTube 影片的網址以擷取其文字稿。該影片必須擁有 ",
       URL_explained_link: "字幕",
       URL_explained_end: " 來提供文字稿。",
       task_explained: "完成後，文字稿將可供嵌入到工作區中的檔案選擇器。",
@@ -554,20 +534,17 @@ const TRANSLATIONS = {
       depth_explained: "這是工作人員應從起始網址跟隨的子鏈接數量。",
       max_pages: "最大頁數",
       max_pages_explained: "最大抓取鏈接數量。",
-      task_explained:
-        "完成後，所有抓取的內容將可供嵌入到工作區中的檔案選擇器。",
+      task_explained: "完成後，所有抓取的內容將可供嵌入到工作區中的檔案選擇器。",
     },
     confluence: {
       name: "Confluence",
       description: "單擊即可匯入整個 Confluence 頁面。",
       deployment_type: "Confluence 部署類型",
-      deployment_type_explained:
-        "確定您的 Confluence 實例是託管在 Atlassian 雲端還是自我託管。",
+      deployment_type_explained: "確定您的 Confluence 實例是託管在 Atlassian 雲端還是自我託管。",
       base_url: "Confluence 基本網址",
       base_url_explained: "這是您的 Confluence 空間的基本網址。",
       space_key: "Confluence 空間金鑰",
-      space_key_explained:
-        "這是您 Confluence 實例使用的空間金鑰，通常以 ~ 開頭。",
+      space_key_explained: "這是您 Confluence 實例使用的空間金鑰，通常以 ~ 開頭。",
       username: "Confluence 使用者名稱",
       username_explained: "您的 Confluence 使用者名稱",
       auth_type: "Confluence 認證類型",
@@ -575,8 +552,7 @@ const TRANSLATIONS = {
       auth_type_username: "使用者名稱和存取權杖",
       auth_type_personal: "個人存取權杖",
       token: "Confluence 存取權杖",
-      token_explained_start:
-        "您需要提供一個存取權杖以進行認證。您可以在此生成存取權杖",
+      token_explained_start: "您需要提供一個存取權杖以進行認證。您可以在此生成存取權杖",
       token_explained_link: "這裡",
       token_desc: "用於認證的存取權杖",
       pat_token: "Confluence 個人存取權杖",
@@ -586,8 +562,7 @@ const TRANSLATIONS = {
     manage: {
       documents: "文件",
       "data-connectors": "資料連接器",
-      "desktop-only":
-        "編輯這些設定僅在桌面裝置上可用。請在桌面上訪問此頁面以繼續。",
+      "desktop-only": "編輯這些設定僅在桌面裝置上可用。請在桌面上訪問此頁面以繼續。",
       dismiss: "忽略",
       editing: "編輯中",
     },
@@ -600,8 +575,7 @@ const TRANSLATIONS = {
       name: "名稱",
       "delete-confirmation":
         "您確定要刪除這些檔案和資料夾嗎？\n這將從系統中刪除這些檔案並自動從任何現有工作區中移除它們。\n此操作無法還原。",
-      "removing-message":
-        "正在刪除 {{count}} 文件和 {{folderCount}} 資料夾。請稍候。",
+      "removing-message": "正在刪除 {{count}} 文件和 {{folderCount}} 資料夾。請稍候。",
       "move-success": "成功移動 {{count}} 文件。",
       date: "日期",
       type: "類型",
@@ -614,8 +588,7 @@ const TRANSLATIONS = {
     },
     upload: {
       "processor-offline": "文件處理器無法使用",
-      "processor-offline-desc":
-        "目前無法上傳您的檔案，因為文件處理器離線。請稍後再試。",
+      "processor-offline-desc": "目前無法上傳您的檔案，因為文件處理器離線。請稍後再試。",
       "click-upload": "點擊上傳或拖放檔案",
       "file-types": "支援文字檔案、CSV、試算表、音頻檔案等！",
       "or-submit-link": "或提交一個鏈接",
@@ -629,8 +602,7 @@ const TRANSLATIONS = {
       what_pinning: "什麼是文件固定？",
       pin_explained_block1:
         "當您在 AnythingLLM 中<b>固定</b>一個文件時，我們會將該文件的所有內容注入到您的提示窗口中，讓您的 LLM 完全理解。",
-      pin_explained_block2:
-        "這對於<b>大範圍模型</b>或對知識庫至關重要的小型文件效果最佳。",
+      pin_explained_block2: "這對於<b>大範圍模型</b>或對知識庫至關重要的小型文件效果最佳。",
       pin_explained_block3:
         "如果您沒有從 AnythingLLM 預設獲得理想的答案，那麼固定是一個輕鬆獲得更高質量答案的方法。",
       accept: "好的，明白了",
@@ -639,8 +611,7 @@ const TRANSLATIONS = {
       what_watching: "觀看文件有何作用？",
       watch_explained_block1:
         "當您在 AnythingLLM 中<b>觀看</b>一個文件時，我們會<i>自動</i>定期同步該文件的內容，並在每個管理該文件的工作區中自動更新內容。",
-      watch_explained_block2:
-        "此功能目前僅支持基於線上內容，無法用於手動上傳的文件。",
+      watch_explained_block2: "此功能目前僅支持基於線上內容，無法用於手動上傳的文件。",
       watch_explained_block3_start: "您可以從 ",
       watch_explained_block3_link: "檔案管理器",
       watch_explained_block3_end: " 管理觀看的文件。",
@@ -650,8 +621,7 @@ const TRANSLATIONS = {
       name: "Obsidian",
       description: "一鍵匯入 Obsidian 保險庫。",
       vault_location: "保險庫位置",
-      vault_description:
-        "選擇您的 Obsidian 保險庫資料夾以匯入所有筆記及其連接。",
+      vault_description: "選擇您的 Obsidian 保險庫資料夾以匯入所有筆記及其連接。",
       selected_files: "找到 {{count}} 個 Markdown 檔案",
       importing: "正在匯入保險庫...",
       import_vault: "匯入保險庫",
@@ -720,8 +690,7 @@ const TRANSLATIONS = {
     profile_picture: "個人資料圖片",
     remove_profile_picture: "移除個人資料圖片",
     username: "使用者名稱",
-    username_description:
-      "使用者名稱必須只包含小寫字母、數字、底線和連字號，且沒有空格",
+    username_description: "使用者名稱必須只包含小寫字母、數字、底線和連字號，且沒有空格",
     new_password: "新密碼",
     password_description: "密碼長度必須至少為 8 個字元",
     cancel: "取消",
@@ -933,8 +902,7 @@ const TRANSLATIONS = {
         name_description: "這是您系統提示的顯示名稱。",
         name_placeholder: "我的系統提示",
         description_label: "描述",
-        description_description:
-          "這是您系統提示的描述。用它來描述您系統提示的目的。",
+        description_description: "這是您系統提示的描述。用它來描述您系統提示的目的。",
         tags_label: "標籤",
         tags_description:
           "標籤用於標記您的系統提示，以便於搜尋。您可以添加多個標籤。最多 5 個標籤。每個標籤最多 20 個字元。",
@@ -961,8 +929,7 @@ const TRANSLATIONS = {
         name_description: "這是您代理流程的顯示名稱。",
         name_placeholder: "我的代理流程",
         description_label: "描述",
-        description_description:
-          "這是您代理流程的描述。用它來描述您代理流程的目的。",
+        description_description: "這是您代理流程的描述。用它來描述您代理流程的目的。",
         tags_label: "標籤",
         tags_description:
           "標籤用於標記您的代理流程，以便於搜尋。您可以添加多個標籤。最多 5 個標籤。每個標籤最多 20 個字元。",
@@ -977,8 +944,7 @@ const TRANSLATIONS = {
       generic: {
         unauthenticated: {
           title: "需要驗證",
-          description:
-            "在發布項目之前，您需要通過 AnythingLLM 社群中心進行驗證。",
+          description: "在發布項目之前，您需要通過 AnythingLLM 社群中心進行驗證。",
           button: "連接到社群中心",
         },
       },
@@ -992,8 +958,7 @@ const TRANSLATIONS = {
         name_description: "這是您斜線指令的顯示名稱。",
         name_placeholder: "我的斜線指令",
         description_label: "描述",
-        description_description:
-          "這是您斜線指令的描述。用它來描述您斜線指令的目的。",
+        description_description: "這是您斜線指令的描述。用它來描述您斜線指令的目的。",
         command_label: "指令",
         command_description: "這是使用者將輸入以觸發此預設的斜線指令。",
         command_placeholder: "我的命令",

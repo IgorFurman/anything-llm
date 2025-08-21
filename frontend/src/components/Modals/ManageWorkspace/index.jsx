@@ -1,14 +1,14 @@
-import React, { useState, useEffect, memo } from "react";
+import ModalWrapper from "@/components/ModalWrapper";
 import { X } from "@phosphor-icons/react";
+import React, { useState, useEffect, memo } from "react";
+import { isMobile } from "react-device-detect";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
-import Workspace from "../../../models/workspace";
-import System from "../../../models/system";
-import { isMobile } from "react-device-detect";
 import useUser from "../../../hooks/useUser";
-import DocumentSettings from "./Documents";
+import System from "../../../models/system";
+import Workspace from "../../../models/workspace";
 import DataConnectors from "./DataConnectors";
-import ModalWrapper from "@/components/ModalWrapper";
+import DocumentSettings from "./Documents";
 
 const noop = () => {};
 const ManageWorkspace = ({ hideModal = noop, providedSlug = null }) => {
@@ -60,9 +60,7 @@ const ManageWorkspace = ({ hideModal = noop, providedSlug = null }) => {
             style={{ maxHeight: "calc(100vh - 200px)" }}
           >
             <div className="py-7 px-9 space-y-2 flex-col">
-              <p className="text-white">
-                {t("connectors.manage.desktop-only")}
-              </p>
+              <p className="text-white">{t("connectors.manage.desktop-only")}</p>
             </div>
           </div>
           <div className="flex w-full justify-end items-center p-6 space-x-2 border-t border-theme-modal-border rounded-b">
@@ -95,10 +93,7 @@ const ManageWorkspace = ({ hideModal = noop, providedSlug = null }) => {
           </div>
 
           {user?.role !== "default" && (
-            <ModalTabSwitcher
-              selectedTab={selectedTab}
-              setSelectedTab={setSelectedTab}
-            />
+            <ModalTabSwitcher selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
           )}
 
           {selectedTab === "documents" ? (

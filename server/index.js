@@ -89,12 +89,12 @@ if (process.env.NODE_ENV !== "development") {
     })
   );
 
-  app.use("/", function (_, response) {
+  app.use("/", (_, response) => {
     IndexPage.generate(response);
     return;
   });
 
-  app.get("/robots.txt", function (_, response) {
+  app.get("/robots.txt", (_, response) => {
     response.type("text/plain");
     response.send("User-agent: *\nDisallow: /").end();
   });
@@ -129,7 +129,7 @@ if (process.env.NODE_ENV !== "development") {
   });
 }
 
-app.all("*", function (_, response) {
+app.all("*", (_, response) => {
   response.sendStatus(404);
 });
 

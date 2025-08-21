@@ -4,10 +4,7 @@ const path = require("path");
 const keyPath =
   process.env.NODE_ENV === "development"
     ? path.resolve(__dirname, `../../storage/comkey`)
-    : path.resolve(
-        process.env.STORAGE_DIR ?? path.resolve(__dirname, `../../storage`),
-        `comkey`
-      );
+    : path.resolve(process.env.STORAGE_DIR ?? path.resolve(__dirname, `../../storage`), `comkey`);
 
 // What does this class do?
 // This class generates a hashed version of some text (typically a JSON payload) using a rolling RSA key
@@ -50,28 +47,17 @@ class CommunicationKey {
       },
     });
 
-    if (!fs.existsSync(this.#storageLoc))
-      fs.mkdirSync(this.#storageLoc, { recursive: true });
-    fs.writeFileSync(
-      `${path.resolve(this.#storageLoc, this.#privKeyName)}`,
-      keyPair.privateKey
-    );
-    fs.writeFileSync(
-      `${path.resolve(this.#storageLoc, this.#pubKeyName)}`,
-      keyPair.publicKey
-    );
-    this.log(
-      "RSA key pair generated for signed payloads within AnythingLLM services."
-    );
+    if (!fs.existsSync(this.#storageLoc)) fs.mkdirSync(this.#storageLoc, { recursive: true });
+    fs.writeFileSync(`${path.resolve(this.#storageLoc, this.#privKeyName)}`, keyPair.privateKey);
+    fs.writeFileSync(`${path.resolve(this.#storageLoc, this.#pubKeyName)}`, keyPair.publicKey);
+    this.log("RSA key pair generated for signed payloads within AnythingLLM services.");
   }
 
   // This instance of ComKey on server is intended for generation of Priv/Pub key for signing and decoding.
   // this resource is shared with /collector/ via a class of the same name in /utils which does decoding/verification only
   // while this server class only does signing with the private key.
   sign(textData = "") {
-    return crypto
-      .sign("RSA-SHA256", Buffer.from(textData), this.#readPrivateKey())
-      .toString("hex");
+    return crypto.sign("RSA-SHA256", Buffer.from(textData), this.#readPrivateKey()).toString("hex");
   }
 
   // Use the rolling priv-key to encrypt arbitrary data that is text

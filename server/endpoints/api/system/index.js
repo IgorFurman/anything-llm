@@ -21,8 +21,7 @@ function apiSystemEndpoints(app) {
    }
    */
     try {
-      if (process.env.NODE_ENV !== "production")
-        return response.sendStatus(200).end();
+      if (process.env.NODE_ENV !== "production") return response.sendStatus(200).end();
       dumpENV();
       response.sendStatus(200).end();
     } catch (e) {
@@ -100,11 +99,8 @@ function apiSystemEndpoints(app) {
     }
   });
 
-  app.post(
-    "/v1/system/update-env",
-    [validApiKey],
-    async (request, response) => {
-      /*
+  app.post("/v1/system/update-env", [validApiKey], async (request, response) => {
+    /*
       #swagger.tags = ['System Settings']
       #swagger.description = 'Update a system setting or preference.'
       #swagger.requestBody = {
@@ -138,22 +134,18 @@ function apiSystemEndpoints(app) {
         }
       }
       */
-      try {
-        const body = reqBody(request);
-        const { newValues, error } = await updateENV(body);
-        response.status(200).json({ newValues, error });
-      } catch (e) {
-        console.error(e.message, e);
-        response.sendStatus(500).end();
-      }
+    try {
+      const body = reqBody(request);
+      const { newValues, error } = await updateENV(body);
+      response.status(200).json({ newValues, error });
+    } catch (e) {
+      console.error(e.message, e);
+      response.sendStatus(500).end();
     }
-  );
+  });
 
-  app.get(
-    "/v1/system/export-chats",
-    [validApiKey],
-    async (request, response) => {
-      /*
+  app.get("/v1/system/export-chats", [validApiKey], async (request, response) => {
+    /*
     #swagger.tags = ['System Settings']
     #swagger.description = 'Export all of the chats from the system in a known format. Output depends on the type sent. Will be send with the correct header for the output.'
    #swagger.parameters['type'] = {
@@ -187,28 +179,21 @@ function apiSystemEndpoints(app) {
       }
     }
     */
-      try {
-        const { type = "jsonl" } = request.query;
-        const { contentType, data } = await exportChatsAsType(
-          type,
-          "workspace"
-        );
-        await EventLogs.logEvent("exported_chats", {
-          type,
-        });
-        response.setHeader("Content-Type", contentType);
-        response.status(200).send(data);
-      } catch (e) {
-        console.error(e.message, e);
-        response.sendStatus(500).end();
-      }
+    try {
+      const { type = "jsonl" } = request.query;
+      const { contentType, data } = await exportChatsAsType(type, "workspace");
+      await EventLogs.logEvent("exported_chats", {
+        type,
+      });
+      response.setHeader("Content-Type", contentType);
+      response.status(200).send(data);
+    } catch (e) {
+      console.error(e.message, e);
+      response.sendStatus(500).end();
     }
-  );
-  app.delete(
-    "/v1/system/remove-documents",
-    [validApiKey],
-    async (request, response) => {
-      /*
+  });
+  app.delete("/v1/system/remove-documents", [validApiKey], async (request, response) => {
+    /*
       #swagger.tags = ['System Settings']
       #swagger.description = 'Permanently remove documents from the system.'
       #swagger.requestBody = {
@@ -257,19 +242,15 @@ function apiSystemEndpoints(app) {
         description: 'Internal Server Error'
       }
       */
-      try {
-        const { names } = reqBody(request);
-        for await (const name of names) await purgeDocument(name);
-        response
-          .status(200)
-          .json({ success: true, message: "Documents removed successfully" })
-          .end();
-      } catch (e) {
-        console.error(e.message, e);
-        response.sendStatus(500).end();
-      }
+    try {
+      const { names } = reqBody(request);
+      for await (const name of names) await purgeDocument(name);
+      response.status(200).json({ success: true, message: "Documents removed successfully" }).end();
+    } catch (e) {
+      console.error(e.message, e);
+      response.sendStatus(500).end();
     }
-  );
+  });
 }
 
 module.exports = { apiSystemEndpoints };

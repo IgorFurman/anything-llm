@@ -3,9 +3,7 @@ export default function MistralAiOptions({ settings }) {
     <div className="w-full flex flex-col gap-y-4">
       <div className="w-full flex items-center gap-[36px] mt-1.5">
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
-            API Key
-          </label>
+          <label className="text-white text-sm font-semibold block mb-3">API Key</label>
           <input
             type="password"
             name="MistralApiKey"
@@ -18,9 +16,7 @@ export default function MistralAiOptions({ settings }) {
           />
         </div>
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
-            Model Preference
-          </label>
+          <label className="text-white text-sm font-semibold block mb-3">Model Preference</label>
           <select
             name="EmbeddingModelPref"
             required={true}

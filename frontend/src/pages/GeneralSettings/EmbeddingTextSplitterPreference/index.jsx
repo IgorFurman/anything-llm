@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
-import Sidebar from "@/components/SettingsSidebar";
-import { isMobile } from "react-device-detect";
-import PreLoader from "@/components/Preloader";
-import CTAButton from "@/components/lib/CTAButton";
-import Admin from "@/models/admin";
-import showToast from "@/utils/toast";
-import { numberWithCommas } from "@/utils/numbers";
-import { useTranslation } from "react-i18next";
-import { useModal } from "@/hooks/useModal";
-import ModalWrapper from "@/components/ModalWrapper";
 import ChangeWarningModal from "@/components/ChangeWarning";
+import ModalWrapper from "@/components/ModalWrapper";
+import PreLoader from "@/components/Preloader";
+import Sidebar from "@/components/SettingsSidebar";
+import CTAButton from "@/components/lib/CTAButton";
+import { useModal } from "@/hooks/useModal";
+import Admin from "@/models/admin";
+import { numberWithCommas } from "@/utils/numbers";
+import showToast from "@/utils/toast";
+import React, { useEffect, useState } from "react";
+import { isMobile } from "react-device-detect";
+import { useTranslation } from "react-i18next";
 
 function isNullOrNaN(value) {
   if (value === null) return true;
@@ -32,10 +32,7 @@ export default function EmbeddingTextSplitterPreference() {
       Number(form.get("text_splitter_chunk_overlap")) >=
       Number(form.get("text_splitter_chunk_size"))
     ) {
-      showToast(
-        "Chunk overlap cannot be larger or equal to chunk size.",
-        "error"
-      );
+      showToast("Chunk overlap cannot be larger or equal to chunk size.", "error");
       return;
     }
 
@@ -45,18 +42,12 @@ export default function EmbeddingTextSplitterPreference() {
   const handleSaveSettings = async () => {
     setSaving(true);
     try {
-      const form = new FormData(
-        document.getElementById("text-splitter-chunking-form")
-      );
+      const form = new FormData(document.getElementById("text-splitter-chunking-form"));
       await Admin.updateSystemPreferences({
-        text_splitter_chunk_size: isNullOrNaN(
-          form.get("text_splitter_chunk_size")
-        )
+        text_splitter_chunk_size: isNullOrNaN(form.get("text_splitter_chunk_size"))
           ? 1000
           : Number(form.get("text_splitter_chunk_size")),
-        text_splitter_chunk_overlap: isNullOrNaN(
-          form.get("text_splitter_chunk_overlap")
-        )
+        text_splitter_chunk_overlap: isNullOrNaN(form.get("text_splitter_chunk_overlap"))
           ? 1000
           : Number(form.get("text_splitter_chunk_overlap")),
       });
@@ -105,9 +96,7 @@ export default function EmbeddingTextSplitterPreference() {
             <div className="flex flex-col w-full px-1 md:pl-6 md:pr-[50px] md:py-6 py-16">
               <div className="w-full flex flex-col gap-y-1 pb-4 border-white light:border-theme-sidebar-border border-b-2 border-opacity-10">
                 <div className="flex gap-x-4 items-center">
-                  <p className="text-lg leading-6 font-bold text-white">
-                    {t("text.title")}
-                  </p>
+                  <p className="text-lg leading-6 font-bold text-white">{t("text.title")}</p>
                 </div>
                 <p className="text-xs leading-[18px] font-base text-white text-opacity-60">
                   {t("text.desc-start")} <br />
@@ -128,9 +117,7 @@ export default function EmbeddingTextSplitterPreference() {
                     <label className="text-white text-sm font-semibold block">
                       {t("text.size.title")}
                     </label>
-                    <p className="text-xs text-white/60">
-                      {t("text.size.description")}
-                    </p>
+                    <p className="text-xs text-white/60">{t("text.size.description")}</p>
                   </div>
                   <input
                     type="number"
@@ -161,9 +148,7 @@ export default function EmbeddingTextSplitterPreference() {
                     <label className="text-white text-sm font-semibold block">
                       {t("text.overlap.title")}
                     </label>
-                    <p className="text-xs text-white/60">
-                      {t("text.overlap.description")}
-                    </p>
+                    <p className="text-xs text-white/60">{t("text.overlap.description")}</p>
                   </div>
                   <input
                     type="number"

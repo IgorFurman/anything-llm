@@ -1,12 +1,12 @@
-import Workspace from "@/models/workspace";
-import { castToType } from "@/utils/types";
-import showToast from "@/utils/toast";
-import { useEffect, useRef, useState } from "react";
-import WorkspaceName from "./WorkspaceName";
-import SuggestedChatMessages from "./SuggestedChatMessages";
-import DeleteWorkspace from "./DeleteWorkspace";
-import WorkspacePfp from "./WorkspacePfp";
 import CTAButton from "@/components/lib/CTAButton";
+import Workspace from "@/models/workspace";
+import showToast from "@/utils/toast";
+import { castToType } from "@/utils/types";
+import { useEffect, useRef, useState } from "react";
+import DeleteWorkspace from "./DeleteWorkspace";
+import SuggestedChatMessages from "./SuggestedChatMessages";
+import WorkspaceName from "./WorkspaceName";
+import WorkspacePfp from "./WorkspacePfp";
 
 export default function GeneralInfo({ slug }) {
   const [workspace, setWorkspace] = useState(null);
@@ -30,10 +30,7 @@ export default function GeneralInfo({ slug }) {
     const data = {};
     const form = new FormData(formEl.current);
     for (var [key, value] of form.entries()) data[key] = castToType(key, value);
-    const { workspace: updatedWorkspace, message } = await Workspace.update(
-      workspace.slug,
-      data
-    );
+    const { workspace: updatedWorkspace, message } = await Workspace.update(workspace.slug, data);
     if (!!updatedWorkspace) {
       showToast("Workspace updated!", "success", { clear: true });
     } else {
@@ -46,23 +43,13 @@ export default function GeneralInfo({ slug }) {
   if (!workspace || loading) return null;
   return (
     <div className="w-full relative">
-      <form
-        ref={formEl}
-        onSubmit={handleUpdate}
-        className="w-1/2 flex flex-col gap-y-6"
-      >
+      <form ref={formEl} onSubmit={handleUpdate} className="w-1/2 flex flex-col gap-y-6">
         {hasChanges && (
           <div className="absolute top-0 right-0">
-            <CTAButton type="submit">
-              {saving ? "Updating..." : "Update Workspace"}
-            </CTAButton>
+            <CTAButton type="submit">{saving ? "Updating..." : "Update Workspace"}</CTAButton>
           </div>
         )}
-        <WorkspaceName
-          key={workspace.slug}
-          workspace={workspace}
-          setHasChanges={setHasChanges}
-        />
+        <WorkspaceName key={workspace.slug} workspace={workspace} setHasChanges={setHasChanges} />
       </form>
       <SuggestedChatMessages slug={workspace.slug} />
       <WorkspacePfp workspace={workspace} slug={slug} />

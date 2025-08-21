@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { X } from "@phosphor-icons/react";
 import Admin from "@/models/admin";
 import { userFromStorage } from "@/utils/request";
+import { X } from "@phosphor-icons/react";
+import React, { useState } from "react";
 import { MessageLimitInput, RoleHintDisplay } from "..";
 
 export default function NewUserModal({ closeModal }) {
@@ -48,10 +48,7 @@ export default function NewUserModal({ closeModal }) {
           <form onSubmit={handleCreate}>
             <div className="space-y-4">
               <div>
-                <label
-                  htmlFor="username"
-                  className="block mb-2 text-sm font-medium text-white"
-                >
+                <label htmlFor="username" className="block mb-2 text-sm font-medium text-white">
                   Username
                 </label>
                 <input
@@ -64,15 +61,12 @@ export default function NewUserModal({ closeModal }) {
                   autoComplete="off"
                 />
                 <p className="mt-2 text-xs text-white/60">
-                  Username must only contain lowercase letters, periods,
-                  numbers, underscores, and hyphens with no spaces
+                  Username must only contain lowercase letters, periods, numbers, underscores, and
+                  hyphens with no spaces
                 </p>
               </div>
               <div>
-                <label
-                  htmlFor="password"
-                  className="block mb-2 text-sm font-medium text-white"
-                >
+                <label htmlFor="password" className="block mb-2 text-sm font-medium text-white">
                   Password
                 </label>
                 <input
@@ -89,10 +83,7 @@ export default function NewUserModal({ closeModal }) {
                 </p>
               </div>
               <div>
-                <label
-                  htmlFor="bio"
-                  className="block mb-2 text-sm font-medium text-white"
-                >
+                <label htmlFor="bio" className="block mb-2 text-sm font-medium text-white">
                   Bio
                 </label>
                 <textarea
@@ -104,10 +95,7 @@ export default function NewUserModal({ closeModal }) {
                 />
               </div>
               <div>
-                <label
-                  htmlFor="role"
-                  className="block mb-2 text-sm font-medium text-white"
-                >
+                <label htmlFor="role" className="block mb-2 text-sm font-medium text-white">
                   Role
                 </label>
                 <select
@@ -119,9 +107,7 @@ export default function NewUserModal({ closeModal }) {
                 >
                   <option value="default">Default</option>
                   <option value="manager">Manager</option>
-                  {user?.role === "admin" && (
-                    <option value="admin">Administrator</option>
-                  )}
+                  {user?.role === "admin" && <option value="admin">Administrator</option>}
                 </select>
                 <RoleHintDisplay role={role} />
               </div>
@@ -133,8 +119,8 @@ export default function NewUserModal({ closeModal }) {
               />
               {error && <p className="text-red-400 text-sm">Error: {error}</p>}
               <p className="text-white text-xs md:text-sm">
-                After creating a user they will need to login with their initial
-                login to get access.
+                After creating a user they will need to login with their initial login to get
+                access.
               </p>
             </div>
             <div className="flex justify-between items-center mt-6 pt-6 border-t border-theme-modal-border">

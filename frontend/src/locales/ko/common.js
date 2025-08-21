@@ -36,23 +36,20 @@ const TRANSLATIONS = {
     },
     survey: {
       title: "AnythingLLM에 오신 것을 환영합니다",
-      description:
-        "여러분의 필요에 맞는 AnythingLLM을 만들 수 있도록 도와주세요. (선택 사항)",
+      description: "여러분의 필요에 맞는 AnythingLLM을 만들 수 있도록 도와주세요. (선택 사항)",
       email: "이메일을 입력해 주세요",
       useCase: "AnythingLLM을 어떤 용도로 사용하실 예정인가요?",
       useCaseWork: "업무용",
       useCasePersonal: "개인용",
       useCaseOther: "기타",
       comment: "AnythingLLM을 어떻게 알게 되셨나요?",
-      commentPlaceholder:
-        "Reddit, Twitter, GitHub, YouTube 등 - 어떻게 알게 되셨는지 알려주세요!",
+      commentPlaceholder: "Reddit, Twitter, GitHub, YouTube 등 - 어떻게 알게 되셨는지 알려주세요!",
       skip: "설문 건너뛰기",
       thankYou: "소중한 의견 감사합니다!",
     },
     workspace: {
       title: "첫 번째 워크스페이스 만들기",
-      description:
-        "첫 번째 워크스페이스를 생성하고 AnythingLLM을 시작해보세요.",
+      description: "첫 번째 워크스페이스를 생성하고 AnythingLLM을 시작해보세요.",
     },
   },
   common: {
@@ -201,8 +198,7 @@ const TRANSLATIONS = {
         },
         slashCommands: {
           title: "슬래시 명령어",
-          description:
-            "맞춤 슬래시 명령어로 시간을 절약하고 프롬프트를 빠르게 입력하세요.",
+          description: "맞춤 슬래시 명령어로 시간을 절약하고 프롬프트를 빠르게 입력하세요.",
           primaryAction: "슬래시 명령어 만들기",
           secondaryAction: "허브에서 둘러보기",
         },
@@ -303,8 +299,7 @@ const TRANSLATIONS = {
       title: "채팅 기록",
       "desc-start": "응답의 단기 메모리에 포함될 이전 채팅의 수입니다.",
       recommend: "추천 20개 ",
-      "desc-end":
-        " 45개 이상은 메시지 크기에 따라 채팅 실패가 발생할 수 있습니다.",
+      "desc-end": " 45개 이상은 메시지 크기에 따라 채팅 실패가 발생할 수 있습니다.",
     },
     prompt: {
       title: "시스템 프롬프트",
@@ -318,8 +313,7 @@ const TRANSLATIONS = {
         delete: "삭제",
         publish: "커뮤니티 허브에 게시",
         deleteConfirm: "이 기록 항목을 삭제하시겠습니까?",
-        clearAllConfirm:
-          "모든 기록을 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.",
+        clearAllConfirm: "모든 기록을 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.",
         expand: "확장",
       },
     },
@@ -344,8 +338,7 @@ const TRANSLATIONS = {
     identifier: "벡터 데이터베이스 식별자",
     snippets: {
       title: "최대 문맥 조각",
-      description:
-        "이 설정은 채팅 또는 쿼리당 LLM에 전송될 최대 문맥 조각 수를 제어합니다.",
+      description: "이 설정은 채팅 또는 쿼리당 LLM에 전송될 최대 문맥 조각 수를 제어합니다.",
       recommend: "추천: 4",
     },
     doc: {
@@ -371,18 +364,15 @@ const TRANSLATIONS = {
       "도구 호출을 명시적으로 지원하지 않는 LLM의 성능은 모델의 기능과 정확도에 크게 좌우됩니다. 일부 기능은 제한되거나 작동하지 않을 수 있습니다.",
     provider: {
       title: "워크스페이스 에이전트 LLM 제공자",
-      description:
-        "이 워크스페이스의 @agent 에이전트에 사용할 특정 LLM 제공자 및 모델입니다.",
+      description: "이 워크스페이스의 @agent 에이전트에 사용할 특정 LLM 제공자 및 모델입니다.",
     },
     mode: {
       chat: {
         title: "워크스페이스 에이전트 채팅 모델",
-        description:
-          "이 워크스페이스의 @agent 에이전트에 사용할 특정 채팅 모델입니다.",
+        description: "이 워크스페이스의 @agent 에이전트에 사용할 특정 채팅 모델입니다.",
       },
       title: "워크스페이스 에이전트 모델",
-      description:
-        "이 워크스페이스의 @agent 에이전트에 사용할 특정 LLM 모델입니다.",
+      description: "이 워크스페이스의 @agent 에이전트에 사용할 특정 LLM 모델입니다.",
       wait: "-- 모델 기다리는 중 --",
     },
     skill: {
@@ -401,8 +391,7 @@ const TRANSLATIONS = {
       },
       scrape: {
         title: "웹사이트 스크래핑",
-        description:
-          "에이전트가 웹사이트를 방문하고 내용을 스크래핑할 수 있도록 합니다.",
+        description: "에이전트가 웹사이트를 방문하고 내용을 스크래핑할 수 있도록 합니다.",
       },
       generate: {
         title: "차트 생성",
@@ -411,15 +400,12 @@ const TRANSLATIONS = {
       },
       save: {
         title: "브라우저에서 파일 생성과 저장",
-        description:
-          "기본 에이전트가 브라우저에서 파일을 생성하고 다운로드할 수 있도록 합니다.",
+        description: "기본 에이전트가 브라우저에서 파일을 생성하고 다운로드할 수 있도록 합니다.",
       },
       web: {
         title: "실시간 웹 검색 및 탐색",
-        "desc-start":
-          "에이전트가 웹을 검색하여 질문에 답변할 수 있도록 허용합니다.",
-        "desc-end":
-          "에이전트 세션 중 웹 검색은 설정되지 않으면 작동하지 않습니다.",
+        "desc-start": "에이전트가 웹을 검색하여 질문에 답변할 수 있도록 허용합니다.",
+        "desc-end": "에이전트 세션 중 웹 검색은 설정되지 않으면 작동하지 않습니다.",
       },
     },
   },
@@ -444,16 +430,14 @@ const TRANSLATIONS = {
     },
     branding: {
       title: "브랜딩 및 화이트라벨링",
-      description:
-        "AnythingLLM 인스턴스에 맞춤 브랜딩을 적용해 화이트라벨링할 수 있습니다.",
+      description: "AnythingLLM 인스턴스에 맞춤 브랜딩을 적용해 화이트라벨링할 수 있습니다.",
     },
     chat: {
       title: "채팅",
       description: "AnythingLLM의 채팅 환경을 원하는 대로 설정하세요.",
       auto_submit: {
         title: "음성 입력 자동 전송",
-        description:
-          "일정 시간 동안 음성이 감지되지 않으면 음성 입력을 자동으로 전송합니다.",
+        description: "일정 시간 동안 음성이 감지되지 않으면 음성 입력을 자동으로 전송합니다.",
       },
       auto_speak: {
         title: "응답 자동 음성 출력",
@@ -475,13 +459,11 @@ const TRANSLATIONS = {
       },
       "support-email": {
         title: "지원 이메일",
-        description:
-          "사용자가 도움이 필요할 때 접근할 수 있는 지원 이메일 주소를 설정하세요.",
+        description: "사용자가 도움이 필요할 때 접근할 수 있는 지원 이메일 주소를 설정하세요.",
       },
       "app-name": {
         title: "이름",
-        description:
-          "로그인 페이지에 모든 사용자에게 표시될 애플리케이션 이름을 설정하세요.",
+        description: "로그인 페이지에 모든 사용자에게 표시될 애플리케이션 이름을 설정하세요.",
       },
       "chat-message-alignment": {
         title: "채팅 메시지 정렬",
@@ -514,12 +496,10 @@ const TRANSLATIONS = {
       },
       "browser-appearance": {
         title: "브라우저 표시 설정",
-        description:
-          "앱이 열려 있을 때 브라우저 탭과 제목의 표시 방식을 맞춤 설정하세요.",
+        description: "앱이 열려 있을 때 브라우저 탭과 제목의 표시 방식을 맞춤 설정하세요.",
         tab: {
           title: "탭 제목",
-          description:
-            "앱이 브라우저에서 열려 있을 때 사용할 맞춤 탭 제목을 설정하세요.",
+          description: "앱이 브라우저에서 열려 있을 때 사용할 맞춤 탭 제목을 설정하세요.",
         },
         favicon: {
           title: "파비콘",
@@ -587,8 +567,7 @@ const TRANSLATIONS = {
     title: "텍스트 분할 및 청킹 기본 설정",
     "desc-start":
       "새 문서를 벡터 데이터베이스에 삽입하기 전에 기본 텍스트 분할 방식을 변경할 수 있습니다.",
-    "desc-end":
-      "텍스트 분할 방식과 그 영향을 이해하고 있는 경우에만 이 설정을 변경해야 합니다.",
+    "desc-end": "텍스트 분할 방식과 그 영향을 이해하고 있는 경우에만 이 설정을 변경해야 합니다.",
     size: {
       title: "텍스트 청크 크기",
       description: "단일 벡터에 들어갈 수 있는 최대 문자 길이입니다.",
@@ -596,8 +575,7 @@ const TRANSLATIONS = {
     },
     overlap: {
       title: "텍스트 청크 겹침",
-      description:
-        "청킹 동안 두 인접 텍스트 청크 간에 겹칠 수 있는 최대 문자 수입니다.",
+      description: "청킹 동안 두 인접 텍스트 청크 간에 겹칠 수 있는 최대 문자 수입니다.",
     },
   },
   vector: {
@@ -635,8 +613,7 @@ const TRANSLATIONS = {
   },
   multi: {
     title: "다중 사용자 모드",
-    description:
-      "다중 사용자 모드를 활성화하여 인스턴스가 팀 사용을 지원하도록 설정합니다.",
+    description: "다중 사용자 모드를 활성화하여 인스턴스가 팀 사용을 지원하도록 설정합니다.",
     enable: {
       "is-enable": "다중 사용자 모드가 활성화되었습니다",
       enable: "다중 사용자 모드 활성화",
@@ -654,8 +631,7 @@ const TRANSLATIONS = {
   },
   event: {
     title: "이벤트 로그",
-    description:
-      "모니터링을 위해 이 인스턴스에서 발생하는 모든 작업과 이벤트를 확인합니다.",
+    description: "모니터링을 위해 이 인스턴스에서 발생하는 모든 작업과 이벤트를 확인합니다.",
     clear: "이벤트 로그 지우기",
     table: {
       type: "이벤트 유형",
@@ -665,8 +641,7 @@ const TRANSLATIONS = {
   },
   privacy: {
     title: "개인정보와 데이터 처리",
-    description:
-      "연결된 타사 제공자와 AnythingLLM이 데이터를 처리하는 방식을 구성합니다.",
+    description: "연결된 타사 제공자와 AnythingLLM이 데이터를 처리하는 방식을 구성합니다.",
     llm: "LLM 선택",
     embedding: "임베딩 기본 설정",
     vector: "벡터 데이터베이스",
@@ -679,19 +654,16 @@ const TRANSLATIONS = {
       name: "Obsidian",
       description: "Obsidian 볼트를 한 번에 가져옵니다.",
       vault_location: "볼트 위치",
-      vault_description:
-        "모든 노트와 연결을 가져오려면 Obsidian 볼트 폴더를 선택하세요.",
+      vault_description: "모든 노트와 연결을 가져오려면 Obsidian 볼트 폴더를 선택하세요.",
       selected_files: "{{count}}개의 마크다운 파일을 찾았습니다",
       importing: "볼트 가져오는 중...",
       import_vault: "볼트 가져오기",
       processing_time: "볼트 크기에 따라 시간이 다소 소요될 수 있습니다.",
-      vault_warning:
-        "충돌을 방지하려면 Obsidian 볼트가 현재 열려 있지 않은지 확인하세요.",
+      vault_warning: "충돌을 방지하려면 Obsidian 볼트가 현재 열려 있지 않은지 확인하세요.",
     },
     github: {
       name: "GitHub 저장소",
-      description:
-        "공개 또는 비공개 GitHub 저장소 전체를 한 번의 클릭으로 가져옵니다.",
+      description: "공개 또는 비공개 GitHub 저장소 전체를 한 번의 클릭으로 가져옵니다.",
       URL: "GitHub 저장소 URL",
       URL_explained: "가져오려는 GitHub 저장소의 URL을 입력하세요.",
       token: "GitHub 액세스 토큰",
@@ -713,13 +685,11 @@ const TRANSLATIONS = {
       branch_explained: "가져오려는 브랜치를 선택하세요.",
       token_information:
         "<b>GitHub 액세스 토큰</b>을 입력하지 않으면 GitHub의 공개 API 요청 제한으로 인해 이 데이터 커넥터는 저장소의 <b>최상위</b> 파일만 수집할 수 있습니다.",
-      token_personal:
-        "여기에서 GitHub 계정으로 무료 개인 액세스 토큰을 발급받을 수 있습니다.",
+      token_personal: "여기에서 GitHub 계정으로 무료 개인 액세스 토큰을 발급받을 수 있습니다.",
     },
     gitlab: {
       name: "GitLab 저장소",
-      description:
-        "공개 또는 비공개 GitLab 저장소 전체를 한 번의 클릭으로 가져옵니다.",
+      description: "공개 또는 비공개 GitLab 저장소 전체를 한 번의 클릭으로 가져옵니다.",
       URL: "GitLab 저장소 URL",
       URL_explained: "가져오려는 GitLab 저장소의 URL을 입력하세요.",
       token: "GitLab 액세스 토큰",
@@ -743,15 +713,13 @@ const TRANSLATIONS = {
       branch_explained: "가져오려는 브랜치를 선택하세요.",
       token_information:
         "<b>GitLab 액세스 토큰</b>을 입력하지 않으면 GitLab의 공개 API 요청 제한으로 인해 이 데이터 커넥터는 저장소의 <b>최상위</b> 파일만 수집할 수 있습니다.",
-      token_personal:
-        "여기에서 GitLab 계정으로 무료 개인 액세스 토큰을 발급받을 수 있습니다.",
+      token_personal: "여기에서 GitLab 계정으로 무료 개인 액세스 토큰을 발급받을 수 있습니다.",
     },
     youtube: {
       name: "YouTube 자막 가져오기",
       description: "링크를 통해 YouTube 동영상 전체의 자막을 가져옵니다.",
       URL: "YouTube 동영상 URL",
-      URL_explained_start:
-        "자막을 가져올 YouTube 동영상의 URL을 입력하세요. 동영상에는 반드시 ",
+      URL_explained_start: "자막을 가져올 YouTube 동영상의 URL을 입력하세요. 동영상에는 반드시 ",
       URL_explained_link: "자막(Closed Captions)",
       URL_explained_end: " 이 활성화되어 있어야 합니다.",
       task_explained:
@@ -762,13 +730,11 @@ const TRANSLATIONS = {
     },
     "website-depth": {
       name: "웹사이트 대량 링크 수집",
-      description:
-        "웹사이트와 하위 링크를 지정한 깊이까지 크롤링하여 수집합니다.",
+      description: "웹사이트와 하위 링크를 지정한 깊이까지 크롤링하여 수집합니다.",
       URL: "웹사이트 URL",
       URL_explained: "수집하려는 웹사이트의 URL을 입력하세요.",
       depth: "크롤링 깊이",
-      depth_explained:
-        "시작 URL에서 몇 단계의 하위 링크까지 따라가서 수집할지 지정합니다.",
+      depth_explained: "시작 URL에서 몇 단계의 하위 링크까지 따라가서 수집할지 지정합니다.",
       max_pages: "최대 페이지 수",
       max_pages_explained: "수집할 최대 링크(페이지) 개수를 설정합니다.",
       task_explained:
@@ -783,18 +749,15 @@ const TRANSLATIONS = {
       base_url: "Confluence 기본 URL",
       base_url_explained: "Confluence 공간의 기본 URL을 입력하세요.",
       space_key: "Confluence 스페이스 키",
-      space_key_explained:
-        "가져올 Confluence 스페이스의 키입니다. 보통 ~로 시작합니다.",
+      space_key_explained: "가져올 Confluence 스페이스의 키입니다. 보통 ~로 시작합니다.",
       username: "Confluence 사용자명",
       username_explained: "Confluence 계정의 사용자명을 입력하세요.",
       auth_type: "Confluence 인증 방식",
-      auth_type_explained:
-        "Confluence 페이지에 접근할 때 사용할 인증 방식을 선택하세요.",
+      auth_type_explained: "Confluence 페이지에 접근할 때 사용할 인증 방식을 선택하세요.",
       auth_type_username: "사용자명 + 액세스 토큰",
       auth_type_personal: "개인 액세스 토큰",
       token: "Confluence 액세스 토큰",
-      token_explained_start:
-        "인증을 위해 액세스 토큰이 필요합니다. 액세스 토큰은",
+      token_explained_start: "인증을 위해 액세스 토큰이 필요합니다. 액세스 토큰은",
       token_explained_link: "여기에서 생성할 수 있습니다",
       token_desc: "인증용 액세스 토큰",
       pat_token: "Confluence 개인 액세스 토큰",
@@ -836,8 +799,7 @@ const TRANSLATIONS = {
       "processor-offline-desc":
         "현재 문서 처리기가 오프라인이어서 파일을 업로드할 수 없습니다. 잠시 후 다시 시도해 주세요.",
       "click-upload": "클릭하여 업로드하거나 파일을 끌어다 놓으세요",
-      "file-types":
-        "텍스트 파일, CSV, 스프레드시트, 오디오 파일 등 다양한 파일을 지원합니다!",
+      "file-types": "텍스트 파일, CSV, 스프레드시트, 오디오 파일 등 다양한 파일을 지원합니다!",
       "or-submit-link": "또는 링크 제출",
       "placeholder-link": "https://example.com",
       fetching: "가져오는 중...",
@@ -873,8 +835,7 @@ const TRANSLATIONS = {
     get_started_default: "시작하려면",
     upload: "문서 업로드",
     or: "또는",
-    attachments_processing:
-      "첨부 파일을 처리 중입니다. 잠시만 기다려 주세요...",
+    attachments_processing: "첨부 파일을 처리 중입니다. 잠시만 기다려 주세요...",
     send_chat: "채팅을 보내세요.",
     send_message: "메시지 보내기",
     attach_file: "이 채팅에 파일 첨부",
@@ -917,8 +878,7 @@ const TRANSLATIONS = {
       search: "LLM 제공자 검색",
       loading_workspace_settings: "워크스페이스 설정을 불러오는 중...",
       available_models: "{{provider}}의 사용 가능한 모델",
-      available_models_description:
-        "이 워크스페이스에서 사용할 모델을 선택하세요.",
+      available_models_description: "이 워크스페이스에서 사용할 모델을 선택하세요.",
       save: "이 모델 사용하기",
       saving: "모델을 워크스페이스 기본값으로 설정 중...",
       missing_credentials: "이 제공자의 인증 정보가 없습니다!",
@@ -965,8 +925,7 @@ const TRANSLATIONS = {
     publish: {
       system_prompt: {
         success_title: "성공!",
-        success_description:
-          "시스템 프롬프트가 커뮤니티 허브에 성공적으로 게시되었습니다!",
+        success_description: "시스템 프롬프트가 커뮤니티 허브에 성공적으로 게시되었습니다!",
         success_thank_you: "커뮤니티에 공유해주셔서 감사합니다!",
         view_on_hub: "커뮤니티 허브에서 보기",
         modal_title: "시스템 프롬프트 게시",
@@ -974,8 +933,7 @@ const TRANSLATIONS = {
         name_description: "시스템 프롬프트의 표시 이름입니다.",
         name_placeholder: "나의 시스템 프롬프트",
         description_label: "설명",
-        description_description:
-          "시스템 프롬프트의 목적이나 용도를 설명해 주세요.",
+        description_description: "시스템 프롬프트의 목적이나 용도를 설명해 주세요.",
         tags_label: "태그",
         tags_description:
           "태그를 추가하면 시스템 프롬프트를 더 쉽게 검색할 수 있습니다. 여러 개의 태그를 추가할 수 있습니다. 최대 5개, 태그당 20자 이내로 입력해 주세요.",
@@ -987,17 +945,14 @@ const TRANSLATIONS = {
         submitting: "게시 중...",
         submit: "커뮤니티 허브에 게시",
         prompt_label: "프롬프트",
-        prompt_description:
-          "실제로 LLM을 안내하는 데 사용될 시스템 프롬프트를 입력하세요.",
+        prompt_description: "실제로 LLM을 안내하는 데 사용될 시스템 프롬프트를 입력하세요.",
         prompt_placeholder: "여기에 시스템 프롬프트를 입력하세요...",
       },
       agent_flow: {
-        public_description:
-          "공개 에이전트 플로우는 모든 사용자에게 표시됩니다.",
+        public_description: "공개 에이전트 플로우는 모든 사용자에게 표시됩니다.",
         private_description: "비공개 에이전트 플로우는 본인만 볼 수 있습니다.",
         success_title: "성공!",
-        success_description:
-          "에이전트 플로우가 커뮤니티 허브에 성공적으로 게시되었습니다!",
+        success_description: "에이전트 플로우가 커뮤니티 허브에 성공적으로 게시되었습니다!",
         success_thank_you: "커뮤니티에 공유해주셔서 감사합니다!",
         view_on_hub: "커뮤니티 허브에서 보기",
         modal_title: "에이전트 플로우 게시",
@@ -1005,8 +960,7 @@ const TRANSLATIONS = {
         name_description: "에이전트 플로우의 표시 이름입니다.",
         name_placeholder: "나의 에이전트 플로우",
         description_label: "설명",
-        description_description:
-          "에이전트 플로우의 목적이나 용도를 설명해 주세요.",
+        description_description: "에이전트 플로우의 목적이나 용도를 설명해 주세요.",
         tags_label: "태그",
         tags_description:
           "태그를 추가하면 에이전트 플로우를 더 쉽게 검색할 수 있습니다. 여러 개의 태그를 추가할 수 있습니다. 최대 5개, 태그당 20자 이내로 입력해 주세요.",
@@ -1020,8 +974,7 @@ const TRANSLATIONS = {
       },
       slash_command: {
         success_title: "성공!",
-        success_description:
-          "슬래시 커맨드가 커뮤니티 허브에 성공적으로 게시되었습니다!",
+        success_description: "슬래시 커맨드가 커뮤니티 허브에 성공적으로 게시되었습니다!",
         success_thank_you: "커뮤니티에 공유해주셔서 감사합니다!",
         view_on_hub: "커뮤니티 허브에서 보기",
         modal_title: "슬래시 커맨드 게시",
@@ -1029,11 +982,9 @@ const TRANSLATIONS = {
         name_description: "슬래시 커맨드의 표시 이름입니다.",
         name_placeholder: "나의 슬래시 커맨드",
         description_label: "설명",
-        description_description:
-          "슬래시 커맨드의 목적이나 용도를 설명해 주세요.",
+        description_description: "슬래시 커맨드의 목적이나 용도를 설명해 주세요.",
         command_label: "커맨드",
-        command_description:
-          "사용자가 이 프리셋을 실행할 때 입력할 슬래시 커맨드입니다.",
+        command_description: "사용자가 이 프리셋을 실행할 때 입력할 슬래시 커맨드입니다.",
         command_placeholder: "my-command",
         tags_label: "태그",
         tags_description:
@@ -1051,8 +1002,7 @@ const TRANSLATIONS = {
       generic: {
         unauthenticated: {
           title: "인증 필요",
-          description:
-            "항목을 게시하려면 AnythingLLM 커뮤니티 허브에 인증해야 합니다.",
+          description: "항목을 게시하려면 AnythingLLM 커뮤니티 허브에 인증해야 합니다.",
           button: "커뮤니티 허브에 연결",
         },
       },

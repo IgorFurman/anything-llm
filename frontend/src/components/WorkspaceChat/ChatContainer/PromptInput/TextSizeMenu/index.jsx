@@ -1,8 +1,8 @@
-import { useState, useRef } from "react";
-import { TextT } from "@phosphor-icons/react";
-import { Tooltip } from "react-tooltip";
-import { useTranslation } from "react-i18next";
 import { useTheme } from "@/hooks/useTheme";
+import { TextT } from "@phosphor-icons/react";
+import { useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { Tooltip } from "react-tooltip";
 
 export default function TextSizeButton() {
   const tooltipRef = useRef(null);
@@ -11,9 +11,7 @@ export default function TextSizeButton() {
 
   const toggleTooltip = () => {
     if (!tooltipRef.current) return;
-    tooltipRef.current.isOpen
-      ? tooltipRef.current.close()
-      : tooltipRef.current.open();
+    tooltipRef.current.isOpen ? tooltipRef.current.close() : tooltipRef.current.open();
   };
 
   return (
@@ -39,11 +37,7 @@ export default function TextSizeButton() {
         clickable={true}
         delayShow={300}
         delayHide={800}
-        arrowColor={
-          theme === "light"
-            ? "var(--theme-modal-border)"
-            : "var(--theme-bg-primary)"
-        }
+        arrowColor={theme === "light" ? "var(--theme-modal-border)" : "var(--theme-bg-primary)"}
         className="z-99 !w-[140px] !bg-theme-bg-primary !px-[5px] !rounded-lg !pointer-events-auto light:border-2 light:border-theme-modal-border"
       >
         <TextSizeMenu tooltipRef={tooltipRef} />
@@ -78,9 +72,7 @@ function TextSizeMenu({ tooltipRef }) {
             : "hover:bg-theme-action-menu-item-hover"
         }`}
       >
-        <div className="text-theme-text-primary text-xs">
-          {t("chat_window.small")}
-        </div>
+        <div className="text-theme-text-primary text-xs">{t("chat_window.small")}</div>
       </button>
 
       <button
@@ -94,9 +86,7 @@ function TextSizeMenu({ tooltipRef }) {
             : "hover:bg-theme-action-menu-item-hover"
         }`}
       >
-        <div className="text-theme-text-primary text-sm">
-          {t("chat_window.normal")}
-        </div>
+        <div className="text-theme-text-primary text-sm">{t("chat_window.normal")}</div>
       </button>
 
       <button
@@ -110,9 +100,7 @@ function TextSizeMenu({ tooltipRef }) {
             : "hover:bg-theme-action-menu-item-hover"
         }`}
       >
-        <div className="text-theme-text-primary text-[16px]">
-          {t("chat_window.large")}
-        </div>
+        <div className="text-theme-text-primary text-[16px]">{t("chat_window.large")}</div>
       </button>
     </div>
   );

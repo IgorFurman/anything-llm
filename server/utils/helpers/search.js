@@ -18,8 +18,7 @@ const FAST_LEVENSHTEIN_DISTANCE = 3;
 async function searchWorkspaceAndThreads(searchTerm, user = null) {
   searchTerm = String(searchTerm).trim(); // Ensure searchTerm is a string and trimmed.
 
-  if (!searchTerm || searchTerm.length < 3)
-    return { workspaces: [], threads: [] };
+  if (!searchTerm || searchTerm.length < 3) return { workspaces: [], threads: [] };
   searchTerm = searchTerm.toLowerCase();
 
   // To prevent duplicates in O(1) time, we use sets which will be
@@ -31,9 +30,7 @@ async function searchWorkspaceAndThreads(searchTerm, user = null) {
   };
 
   async function searchWorkspaces() {
-    const workspaces = !!user
-      ? await Workspace.whereWithUser(user)
-      : await Workspace.where();
+    const workspaces = !!user ? await Workspace.whereWithUser(user) : await Workspace.where();
 
     for (const workspace of workspaces) {
       const wsName = workspace.name.toLowerCase();
@@ -43,20 +40,15 @@ async function searchWorkspaceAndThreads(searchTerm, user = null) {
         wsName.endsWith(searchTerm) ||
         fastLevenshtein.get(wsName, searchTerm) <= FAST_LEVENSHTEIN_DISTANCE
       )
-        results.workspaces.add(
-          JSON.stringify({ slug: workspace.slug, name: workspace.name })
-        );
+        results.workspaces.add(JSON.stringify({ slug: workspace.slug, name: workspace.name }));
     }
   }
 
   async function searchThreads() {
     const threads = !!user
-      ? await WorkspaceThread.where(
-          { user_id: user.id },
-          undefined,
-          undefined,
-          { workspace: { select: { slug: true, name: true } } }
-        )
+      ? await WorkspaceThread.where({ user_id: user.id }, undefined, undefined, {
+          workspace: { select: { slug: true, name: true } },
+        })
       : await WorkspaceThread.where(undefined, undefined, undefined, {
           workspace: { select: { slug: true, name: true } },
         });

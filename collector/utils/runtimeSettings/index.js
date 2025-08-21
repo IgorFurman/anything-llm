@@ -58,8 +58,7 @@ class RuntimeSettings {
    * @returns {any}
    */
   get(key) {
-    if (!this.settingConfigs[key])
-      throw new Error(`Invalid runtime setting: ${key}`);
+    if (!this.settingConfigs[key]) throw new Error(`Invalid runtime setting: ${key}`);
     return this.settings.hasOwnProperty(key)
       ? this.settings[key]
       : this.settingConfigs[key].default;
@@ -74,8 +73,7 @@ class RuntimeSettings {
    * @returns {void}
    */
   set(key, value = null) {
-    if (!this.settingConfigs[key])
-      throw new Error(`Invalid runtime setting: ${key}`);
+    if (!this.settingConfigs[key]) throw new Error(`Invalid runtime setting: ${key}`);
     this.settings[key] = this.settingConfigs[key].validate(value);
   }
 }

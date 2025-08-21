@@ -25,8 +25,8 @@ const DataConnector = {
           return { branches: [], error: e.message };
         });
     },
-    collect: async function ({ repo, accessToken, branch, ignorePaths = [] }) {
-      return await fetch(`${API_BASE}/ext/github/repo`, {
+    collect: async ({ repo, accessToken, branch, ignorePaths = [] }) =>
+      await fetch(`${API_BASE}/ext/github/repo`, {
         method: "POST",
         headers: baseHeaders(),
         body: JSON.stringify({ repo, accessToken, branch, ignorePaths }),
@@ -39,8 +39,7 @@ const DataConnector = {
         .catch((e) => {
           console.error(e);
           return { data: null, error: e.message };
-        });
-    },
+        }),
   },
   gitlab: {
     branches: async ({ repo, accessToken }) => {
@@ -64,15 +63,15 @@ const DataConnector = {
           return { branches: [], error: e.message };
         });
     },
-    collect: async function ({
+    collect: async ({
       repo,
       accessToken,
       branch,
       ignorePaths = [],
       fetchIssues = false,
       fetchWikis = false,
-    }) {
-      return await fetch(`${API_BASE}/ext/gitlab/repo`, {
+    }) =>
+      await fetch(`${API_BASE}/ext/gitlab/repo`, {
         method: "POST",
         headers: baseHeaders(),
         body: JSON.stringify({
@@ -92,8 +91,7 @@ const DataConnector = {
         .catch((e) => {
           console.error(e);
           return { data: null, error: e.message };
-        });
-    },
+        }),
   },
   youtube: {
     transcribe: async ({ url }) => {
@@ -133,15 +131,8 @@ const DataConnector = {
   },
 
   confluence: {
-    collect: async function ({
-      baseUrl,
-      spaceKey,
-      username,
-      accessToken,
-      cloud,
-      personalAccessToken,
-    }) {
-      return await fetch(`${API_BASE}/ext/confluence`, {
+    collect: async ({ baseUrl, spaceKey, username, accessToken, cloud, personalAccessToken }) =>
+      await fetch(`${API_BASE}/ext/confluence`, {
         method: "POST",
         headers: baseHeaders(),
         body: JSON.stringify({
@@ -161,13 +152,12 @@ const DataConnector = {
         .catch((e) => {
           console.error(e);
           return { data: null, error: e.message };
-        });
-    },
+        }),
   },
 
   drupalwiki: {
-    collect: async function ({ baseUrl, spaceIds, accessToken }) {
-      return await fetch(`${API_BASE}/ext/drupalwiki`, {
+    collect: async ({ baseUrl, spaceIds, accessToken }) =>
+      await fetch(`${API_BASE}/ext/drupalwiki`, {
         method: "POST",
         headers: baseHeaders(),
         body: JSON.stringify({
@@ -184,12 +174,11 @@ const DataConnector = {
         .catch((e) => {
           console.error(e);
           return { data: null, error: e.message };
-        });
-    },
+        }),
   },
   obsidian: {
-    collect: async function ({ files }) {
-      return await fetch(`${API_BASE}/ext/obsidian/vault`, {
+    collect: async ({ files }) =>
+      await fetch(`${API_BASE}/ext/obsidian/vault`, {
         method: "POST",
         headers: baseHeaders(),
         body: JSON.stringify({
@@ -204,8 +193,7 @@ const DataConnector = {
         .catch((e) => {
           console.error(e);
           return { data: null, error: e.message };
-        });
-    },
+        }),
   },
 };
 

@@ -32,23 +32,16 @@ const httpSocket = {
       name: this.name,
       setup(aibitat) {
         aibitat.onError(async (error) => {
-          let errorMessage =
-            error?.message || "An error occurred while running the agent.";
+          const errorMessage = error?.message || "An error occurred while running the agent.";
           console.error(chalk.red(`   error: ${errorMessage}`), error);
-          aibitat.introspect(
-            `Error encountered while running: ${errorMessage}`
-          );
-          handler.send(
-            JSON.stringify({ type: "wssFailure", content: errorMessage })
-          );
+          aibitat.introspect(`Error encountered while running: ${errorMessage}`);
+          handler.send(JSON.stringify({ type: "wssFailure", content: errorMessage }));
           aibitat.terminate();
         });
 
         aibitat.introspect = (messageText) => {
           if (!introspection) return; // Dump thoughts when not wanted.
-          handler.send(
-            JSON.stringify({ type: "statusResponse", content: messageText })
-          );
+          handler.send(JSON.stringify({ type: "statusResponse", content: messageText }));
         };
 
         // expose function for sockets across aibitat
@@ -62,8 +55,7 @@ const httpSocket = {
         // We can only receive one message response with HTTP
         // so we end on first response.
         aibitat.onMessage((message) => {
-          if (message.from !== "USER")
-            Telemetry.sendTelemetry("agent_chat_sent");
+          if (message.from !== "USER") Telemetry.sendTelemetry("agent_chat_sent");
           if (message.from === "USER" && muteUserReply) return;
           handler.send(JSON.stringify(message));
           handler.close();

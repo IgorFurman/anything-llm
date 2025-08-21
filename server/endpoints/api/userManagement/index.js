@@ -1,9 +1,7 @@
 const { User } = require("../../../models/user");
 const { TemporaryAuthToken } = require("../../../models/temporaryAuthToken");
 const { multiUserMode } = require("../../../utils/http");
-const {
-  simpleSSOEnabled,
-} = require("../../../utils/middleware/simpleSSOEnabled");
+const { simpleSSOEnabled } = require("../../../utils/middleware/simpleSSOEnabled");
 const { validApiKey } = require("../../../utils/middleware/validApiKey");
 
 function apiUserManagementEndpoints(app) {
@@ -47,9 +45,7 @@ function apiUserManagementEndpoints(app) {
       */
     try {
       if (!multiUserMode(response))
-        return response
-          .status(401)
-          .send("Instance is not in Multi-User mode. Permission denied.");
+        return response.status(401).send("Instance is not in Multi-User mode. Permission denied.");
 
       const users = await User.where();
       const filteredUsers = users.map((user) => ({
@@ -103,8 +99,7 @@ function apiUserManagementEndpoints(app) {
       try {
         const { id: userId } = request.params;
         const user = await User.get({ id: Number(userId) });
-        if (!user)
-          return response.status(404).json({ error: "User not found" });
+        if (!user) return response.status(404).json({ error: "User not found" });
 
         const { token, error } = await TemporaryAuthToken.issue(userId);
         if (error) return response.status(500).json({ error: error });

@@ -2,14 +2,14 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 
-import BlockList, { BLOCK_TYPES, BLOCK_INFO } from "./BlockList";
-import AddBlockMenu from "./AddBlockMenu";
-import showToast from "@/utils/toast";
-import AgentFlows from "@/models/agentFlows";
-import { useTheme } from "@/hooks/useTheme";
-import HeaderMenu from "./HeaderMenu";
-import paths from "@/utils/paths";
 import PublishEntityModal from "@/components/CommunityHub/PublishEntityModal";
+import { useTheme } from "@/hooks/useTheme";
+import AgentFlows from "@/models/agentFlows";
+import paths from "@/utils/paths";
+import showToast from "@/utils/toast";
+import AddBlockMenu from "./AddBlockMenu";
+import BlockList, { BLOCK_TYPES, BLOCK_INFO } from "./BlockList";
+import HeaderMenu from "./HeaderMenu";
 
 const DEFAULT_BLOCKS = [
   {
@@ -66,9 +66,7 @@ export default function AgentBuilder() {
   }, [flowId]);
 
   useEffect(() => {
-    const flowInfoBlock = blocks.find(
-      (block) => block.type === BLOCK_TYPES.FLOW_INFO
-    );
+    const flowInfoBlock = blocks.find((block) => block.type === BLOCK_TYPES.FLOW_INFO);
     setAgentName(flowInfoBlock?.config?.name || "");
   }, [blocks]);
 
@@ -146,9 +144,7 @@ export default function AgentBuilder() {
   const updateBlockConfig = (blockId, config) => {
     setBlocks(
       blocks.map((block) =>
-        block.id === blockId
-          ? { ...block, config: { ...block.config, ...config } }
-          : block
+        block.id === blockId ? { ...block, config: { ...block.config, ...config } } : block
       )
     );
   };
@@ -162,9 +158,7 @@ export default function AgentBuilder() {
   };
 
   const saveFlow = async () => {
-    const flowInfoBlock = blocks.find(
-      (block) => block.type === BLOCK_TYPES.FLOW_INFO
-    );
+    const flowInfoBlock = blocks.find((block) => block.type === BLOCK_TYPES.FLOW_INFO);
     const name = flowInfoBlock?.config?.name;
     const description = flowInfoBlock?.config?.description;
 
@@ -173,9 +167,7 @@ export default function AgentBuilder() {
       if (!flowInfoBlock.isExpanded) {
         setBlocks(
           blocks.map((block) =>
-            block.type === BLOCK_TYPES.FLOW_INFO
-              ? { ...block, isExpanded: true }
-              : block
+            block.type === BLOCK_TYPES.FLOW_INFO ? { ...block, isExpanded: true } : block
           )
         );
         // Small delay to allow expansion animation to complete
@@ -187,13 +179,9 @@ export default function AgentBuilder() {
       } else if (!description?.trim()) {
         descriptionRef.current?.focus();
       }
-      showToast(
-        "Please provide both a name and description for your flow",
-        "error",
-        {
-          clear: true,
-        }
-      );
+      showToast("Please provide both a name and description for your flow", "error", {
+        clear: true,
+      });
       return;
     }
 
@@ -203,9 +191,7 @@ export default function AgentBuilder() {
       active,
       steps: blocks
         .filter(
-          (block) =>
-            block.type !== BLOCK_TYPES.FINISH &&
-            block.type !== BLOCK_TYPES.FLOW_INFO
+          (block) => block.type !== BLOCK_TYPES.FINISH && block.type !== BLOCK_TYPES.FLOW_INFO
         )
         .map((block) => ({
           type: block.type,
@@ -214,11 +200,7 @@ export default function AgentBuilder() {
     };
 
     try {
-      const { success, error, flow } = await AgentFlows.saveFlow(
-        name,
-        flowConfig,
-        currentFlowUuid
-      );
+      const { success, error, flow } = await AgentFlows.saveFlow(name, flowConfig, currentFlowUuid);
       if (!success) throw new Error(error);
 
       setCurrentFlowUuid(flow.uuid);
@@ -235,9 +217,7 @@ export default function AgentBuilder() {
   const toggleBlockExpansion = (blockId) => {
     setBlocks(
       blocks.map((block) =>
-        block.id === blockId
-          ? { ...block, isExpanded: !block.isExpanded }
-          : block
+        block.id === blockId ? { ...block, isExpanded: !block.isExpanded } : block
       )
     );
   };
@@ -248,11 +228,7 @@ export default function AgentBuilder() {
     return startBlock?.config?.variables?.filter((v) => v.name) || [];
   };
 
-  const renderVariableSelect = (
-    value,
-    onChange,
-    placeholder = "Select variable"
-  ) => (
+  const renderVariableSelect = (value, onChange, placeholder = "Select variable") => (
     <select
       value={value || ""}
       onChange={(e) => onChange(e.target.value)}
@@ -313,18 +289,12 @@ export default function AgentBuilder() {
     setShowPublishModal(true);
   };
 
-  const flowInfoBlock = blocks.find(
-    (block) => block.type === BLOCK_TYPES.FLOW_INFO
-  );
+  const flowInfoBlock = blocks.find((block) => block.type === BLOCK_TYPES.FLOW_INFO);
   const flowEntity = {
     name: flowInfoBlock?.config?.name || "",
     description: flowInfoBlock?.config?.description || "",
     steps: blocks
-      .filter(
-        (block) =>
-          block.type !== BLOCK_TYPES.FINISH &&
-          block.type !== BLOCK_TYPES.FLOW_INFO
-      )
+      .filter((block) => block.type !== BLOCK_TYPES.FINISH && block.type !== BLOCK_TYPES.FLOW_INFO)
       .map((block) => ({ type: block.type, config: block.config })),
   };
 
@@ -383,12 +353,10 @@ export default function AgentBuilder() {
         className="tooltip !text-xs z-99"
       >
         <p className="text-sm">
-          When enabled, long webpage content will be automatically summarized to
-          reduce token usage.
+          When enabled, long webpage content will be automatically summarized to reduce token usage.
           <br />
           <br />
-          Note: This may affect data quality and remove specific details from
-          the original content.
+          Note: This may affect data quality and remove specific details from the original content.
         </p>
       </Tooltip>
     </div>

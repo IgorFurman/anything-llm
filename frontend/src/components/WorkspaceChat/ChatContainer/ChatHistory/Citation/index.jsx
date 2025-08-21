@@ -1,27 +1,27 @@
-import { memo, useState } from "react";
-import { v4 } from "uuid";
-import { decode as HTMLDecode } from "he";
-import truncate from "truncate";
 import ModalWrapper from "@/components/ModalWrapper";
-import { middleTruncate } from "@/utils/directories";
-import {
-  CaretRight,
-  FileText,
-  Info,
-  ArrowSquareOut,
-  GithubLogo,
-  X,
-  YoutubeLogo,
-  LinkSimple,
-  GitlabLogo,
-} from "@phosphor-icons/react";
+import useTextSize from "@/hooks/useTextSize";
 import ConfluenceLogo from "@/media/dataConnectors/confluence.png";
 import DrupalWikiLogo from "@/media/dataConnectors/drupalwiki.png";
 import ObsidianLogo from "@/media/dataConnectors/obsidian.png";
+import { middleTruncate } from "@/utils/directories";
 import { toPercentString } from "@/utils/numbers";
-import { useTranslation } from "react-i18next";
+import {
+  ArrowSquareOut,
+  CaretRight,
+  FileText,
+  GithubLogo,
+  GitlabLogo,
+  Info,
+  LinkSimple,
+  X,
+  YoutubeLogo,
+} from "@phosphor-icons/react";
+import { decode as HTMLDecode } from "he";
 import pluralize from "pluralize";
-import useTextSize from "@/hooks/useTextSize";
+import { memo, useState } from "react";
+import { useTranslation } from "react-i18next";
+import truncate from "truncate";
+import { v4 } from "uuid";
 
 function combineLikeSources(sources) {
   const combined = {};
@@ -56,9 +56,7 @@ export default function Citations({ sources = [] }) {
           open ? "pb-2" : ""
         } hover:text-white/75 hover:light:text-black/75 transition-all duration-300`}
       >
-        {open
-          ? t("chat_window.hide_citations")
-          : t("chat_window.show_citations")}
+        {open ? t("chat_window.hide_citations") : t("chat_window.show_citations")}
         <CaretRight
           weight="bold"
           size={14}
@@ -80,10 +78,7 @@ export default function Citations({ sources = [] }) {
         </div>
       )}
       {selectedSource && (
-        <CitationDetailModal
-          source={selectedSource}
-          onClose={() => setSelectedSource(null)}
-        />
+        <CitationDetailModal source={selectedSource} onClose={() => setSelectedSource(null)} />
       )}
     </div>
   );
@@ -99,11 +94,7 @@ const Citation = memo(({ source, onClick, textSizeClass }) => {
     : ICONS.file;
 
   return (
-    <button
-      className={`flex doc__source gap-x-1 ${textSizeClass}`}
-      onClick={onClick}
-      type="button"
-    >
+    <button className={`flex doc__source gap-x-1 ${textSizeClass}`} onClick={onClick} type="button">
       <div className="flex items-start flex-1 pt-[4px]">
         <CitationIcon size={16} />
       </div>
@@ -156,9 +147,7 @@ function CitationDetailModal({ source, onClose }) {
             )}
           </div>
           {references > 1 && (
-            <p className="text-xs text-gray-400 mt-2">
-              Referenced {references} times.
-            </p>
+            <p className="text-xs text-gray-400 mt-2">Referenced {references} times.</p>
           )}
           <button
             onClick={onClose}
@@ -168,10 +157,7 @@ function CitationDetailModal({ source, onClose }) {
             <X size={24} weight="bold" className="text-white" />
           </button>
         </div>
-        <div
-          className="h-full w-full overflow-y-auto"
-          style={{ maxHeight: "calc(100vh - 200px)" }}
-        >
+        <div className="h-full w-full overflow-y-auto" style={{ maxHeight: "calc(100vh - 200px)" }}>
           <div className="py-7 px-9 space-y-2 flex-col">
             {chunks.map(({ text, score }, idx) => (
               <>
@@ -195,9 +181,7 @@ function CitationDetailModal({ source, onClose }) {
                     )}
                   </div>
                 </div>
-                {idx !== chunks.length - 1 && (
-                  <hr className="border-theme-modal-border" />
-                )}
+                {idx !== chunks.length - 1 && <hr className="border-theme-modal-border" />}
               </>
             ))}
             <div className="mb-6"></div>
@@ -236,16 +220,12 @@ function parseChunkSource({ title = "", chunks = [] }) {
 
   if (
     !chunks.length ||
-    !supportedSources.some((source) =>
-      chunks[0].chunkSource?.startsWith(source)
-    )
+    !supportedSources.some((source) => chunks[0].chunkSource?.startsWith(source))
   )
     return nullResponse;
 
   try {
-    const sourceID = supportedSources.find((source) =>
-      chunks[0].chunkSource?.startsWith(source)
-    );
+    const sourceID = supportedSources.find((source) => chunks[0].chunkSource?.startsWith(source));
     let url, text, icon;
 
     // Try to parse the URL from the chunk source

@@ -1,10 +1,6 @@
-import React from "react";
-import {
-  formatDate,
-  getFileExtension,
-  middleTruncate,
-} from "@/utils/directories";
+import { formatDate, getFileExtension, middleTruncate } from "@/utils/directories";
 import { File } from "@phosphor-icons/react";
+import React from "react";
 
 export default function FileRow({ item, selected, toggleSelection }) {
   return (
@@ -33,10 +29,7 @@ export default function FileRow({ item, selected, toggleSelection }) {
         >
           {selected && <div className="w-2 h-2 bg-white rounded-[2px]" />}
         </div>
-        <File
-          className="shrink-0 text-base font-bold w-4 h-4 mr-[3px]"
-          weight="fill"
-        />
+        <File className="shrink-0 text-base font-bold w-4 h-4 mr-[3px]" weight="fill" />
         <p className="whitespace-nowrap overflow-hidden text-ellipsis max-w-[400px]">
           {middleTruncate(item.title, 55)}
         </p>

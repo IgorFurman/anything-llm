@@ -20,24 +20,21 @@ const saveFileInBrowser = {
             {
               prompt: "Save me that to a file named 'output'",
               call: JSON.stringify({
-                file_content:
-                  "<content of the file we will write previous conversation>",
+                file_content: "<content of the file we will write previous conversation>",
                 filename: "output.txt",
               }),
             },
             {
               prompt: "Save me that to my desktop",
               call: JSON.stringify({
-                file_content:
-                  "<content of the file we will write previous conversation>",
+                file_content: "<content of the file we will write previous conversation>",
                 filename: "<relevant filename>.txt",
               }),
             },
             {
               prompt: "Save me that to a file",
               call: JSON.stringify({
-                file_content:
-                  "<content of the file we will write from previous conversation>",
+                file_content: "<content of the file we will write from previous conversation>",
                 filename: "<descriptive filename>.txt",
               }),
             },
@@ -60,9 +57,7 @@ const saveFileInBrowser = {
           },
           handler: async function ({ file_content = "", filename }) {
             try {
-              if (
-                this.tracker.isDuplicate(this.name, { file_content, filename })
-              ) {
+              if (this.tracker.isDuplicate(this.name, { file_content, filename })) {
                 this.super.handlerProps.log(
                   `${this.name} was called, but exited early since it was not a unique call.`
                 );
@@ -72,16 +67,13 @@ const saveFileInBrowser = {
               this.super.socket.send("fileDownload", {
                 filename,
                 b64Content:
-                  "data:text/plain;base64," +
-                  Buffer.from(file_content, "utf8").toString("base64"),
+                  "data:text/plain;base64," + Buffer.from(file_content, "utf8").toString("base64"),
               });
               this.super.introspect(`${this.caller}: Saving file ${filename}.`);
               this.tracker.trackRun(this.name, { file_content, filename });
               return `${filename} file has been saved successfully and will be downloaded automatically to the users browser.`;
             } catch (error) {
-              this.super.handlerProps.log(
-                `save-file-to-browser raised an error. ${error.message}`
-              );
+              this.super.handlerProps.log(`save-file-to-browser raised an error. ${error.message}`);
               return `Let the user know this action was not successful. An error was raised while saving a file to the browser. ${error.message}`;
             }
           },

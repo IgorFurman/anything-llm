@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { CheckCircle, CopySimple, X } from "@phosphor-icons/react";
 import showToast from "@/utils/toast";
+import { CheckCircle, CopySimple, X } from "@phosphor-icons/react";
 import hljs from "highlight.js";
+import React, { useState } from "react";
 import "@/utils/chat/themes/github-dark.css";
 import "@/utils/chat/themes/github.css";
 
@@ -60,15 +60,10 @@ https://github.com/Mintplex-Labs/anythingllm-embed/blob/main/README.md
 
 const ScriptTag = ({ embed }) => {
   const [copied, setCopied] = useState(false);
-  const scriptHost = import.meta.env.DEV
-    ? "http://localhost:3000"
-    : window.location.origin;
-  const serverHost = import.meta.env.DEV
-    ? "http://localhost:3001"
-    : window.location.origin;
+  const scriptHost = import.meta.env.DEV ? "http://localhost:3000" : window.location.origin;
+  const serverHost = import.meta.env.DEV ? "http://localhost:3001" : window.location.origin;
   const snippet = createScriptTagSnippet(embed, scriptHost, serverHost);
-  const theme =
-    window.localStorage.getItem("theme") === "light" ? "github" : "github-dark";
+  const theme = window.localStorage.getItem("theme") === "light" ? "github" : "github-dark";
 
   const handleClick = () => {
     window.navigator.clipboard.writeText(snippet);
@@ -82,12 +77,10 @@ const ScriptTag = ({ embed }) => {
   return (
     <div>
       <div className="flex flex-col mb-2">
-        <label className="block text-sm font-medium text-white">
-          HTML Script Tag Embed Code
-        </label>
+        <label className="block text-sm font-medium text-white">HTML Script Tag Embed Code</label>
         <p className="text-theme-text-secondary text-xs">
-          Have your workspace chat embed function like a help desk chat bottom
-          in the corner of your website.
+          Have your workspace chat embed function like a help desk chat bottom in the corner of your
+          website.
         </p>
         <a
           href="https://github.com/Mintplex-Labs/anythingllm-embed/blob/main/README.md"

@@ -1,7 +1,5 @@
 export function formatDate(dateString) {
-  const date = isNaN(new Date(dateString).getTime())
-    ? new Date()
-    : new Date(dateString);
+  const date = isNaN(new Date(dateString).getTime()) ? new Date() : new Date(dateString);
   const options = { year: "numeric", month: "short", day: "numeric" };
   const formattedDate = date.toLocaleDateString("en-US", options);
   return formattedDate;
@@ -22,9 +20,7 @@ export function middleTruncate(str, n) {
     const nameWithoutExtension = str.replace(fileExtensionPattern, "");
     const truncationPoint = Math.max(0, n - extension.length - 4);
     const truncatedName =
-      nameWithoutExtension.substr(0, truncationPoint) +
-      "..." +
-      nameWithoutExtension.slice(-4);
+      nameWithoutExtension.substr(0, truncationPoint) + "..." + nameWithoutExtension.slice(-4);
 
     return truncatedName + extension;
   } else {

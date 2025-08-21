@@ -13,20 +13,17 @@ const { NativeEmbeddingReranker } = require("../../EmbeddingRerankers/native");
  */
 
 const LanceDb = {
-  uri: `${
-    !!process.env.STORAGE_DIR ? `${process.env.STORAGE_DIR}/` : "./storage/"
-  }lancedb`,
+  uri: `${!!process.env.STORAGE_DIR ? `${process.env.STORAGE_DIR}/` : "./storage/"}lancedb`,
   name: "LanceDb",
 
   /** @returns {Promise<{client: LanceClient}>} */
   connect: async function () {
-    if (process.env.VECTOR_DB !== "lancedb")
-      throw new Error("LanceDB::Invalid ENV settings");
+    if (process.env.VECTOR_DB !== "lancedb") throw new Error("LanceDB::Invalid ENV settings");
 
     const client = await lancedb.connect(this.uri);
     return { client };
   },
-  distanceToSimilarity: function (distance = null) {
+  distanceToSimilarity: (distance = null) => {
     if (distance === null || typeof distance !== "number") return 0.0;
     if (distance >= 1.0) return 1;
     if (distance < 0) return 1 - Math.abs(distance);
@@ -101,10 +98,7 @@ const LanceDb = {
      * Benchmarks:
      * On Intel Mac: 2.6 GHz 6-Core Intel Core i7 - 20 docs reranked in ~5.2 sec
      */
-    const searchLimit = Math.max(
-      10,
-      Math.min(50, Math.ceil(totalEmbeddings * 0.1))
-    );
+    const searchLimit = Math.max(10, Math.min(50, Math.ceil(totalEmbeddings * 0.1)));
     const vectorSearchResults = await collection
       .vectorSearch(queryVector)
       .distanceType("cosine")
@@ -115,8 +109,7 @@ const LanceDb = {
       .rerank(query, vectorSearchResults, { topK: topN })
       .then((rerankResults) => {
         rerankResults.forEach((item) => {
-          if (this.distanceToSimilarity(item._distance) < similarityThreshold)
-            return;
+          if (this.distanceToSimilarity(item._distance) < similarityThreshold) return;
           const { vector: _, ...rest } = item;
           if (filterIdentifiers.includes(sourceIdentifier(rest))) {
             console.log(
@@ -124,8 +117,7 @@ const LanceDb = {
             );
             return;
           }
-          const score =
-            item?.rerank_score || this.distanceToSimilarity(item._distance);
+          const score = item?.rerank_score || this.distanceToSimilarity(item._distance);
 
           result.contextTexts.push(rest.text);
           result.sourceDocuments.push({
@@ -176,8 +168,7 @@ const LanceDb = {
       .toArray();
 
     response.forEach((item) => {
-      if (this.distanceToSimilarity(item._distance) < similarityThreshold)
-        return;
+      if (this.distanceToSimilarity(item._distance) < similarityThreshold) return;
       const { vector: _, ...rest } = item;
       if (filterIdentifiers.includes(sourceIdentifier(rest))) {
         console.log(
@@ -202,7 +193,7 @@ const LanceDb = {
    * @param {string} namespace
    * @returns
    */
-  namespace: async function (client, namespace = null) {
+  namespace: async (client, namespace = null) => {
     if (!namespace) throw new Error("No namespace value provided.");
     const collection = await client.openTable(namespace).catch(() => false);
     if (!collection) return null;
@@ -241,7 +232,7 @@ const LanceDb = {
    * @param {string} namespace
    * @returns
    */
-  namespaceExists: async function (client, namespace = null) {
+  namespaceExists: async (client, namespace = null) => {
     if (!namespace) throw new Error("No namespace value provided.");
     const collections = await client.tableNames();
     return collections.includes(namespace);
@@ -252,7 +243,7 @@ const LanceDb = {
    * @param {string} namespace
    * @returns
    */
-  deleteVectorsInNamespace: async function (client, namespace = null) {
+  deleteVectorsInNamespace: async (client, namespace = null) => {
     await client.dropTable(namespace);
     return true;
   },
@@ -260,17 +251,13 @@ const LanceDb = {
     const { client } = await this.connect();
     const exists = await this.namespaceExists(client, namespace);
     if (!exists) {
-      console.error(
-        `LanceDB:deleteDocumentFromNamespace - namespace ${namespace} does not exist.`
-      );
+      console.error(`LanceDB:deleteDocumentFromNamespace - namespace ${namespace} does not exist.`);
       return;
     }
 
     const { DocumentVectors } = require("../../../models/vectors");
     const table = await client.openTable(namespace);
-    const vectorIds = (await DocumentVectors.where({ docId })).map(
-      (record) => record.vectorId
-    );
+    const vectorIds = (await DocumentVectors.where({ docId })).map((record) => record.vectorId);
 
     if (vectorIds.length === 0) return;
     await table.delete(`id IN (${vectorIds.map((v) => `'${v}'`).join(",")})`);
@@ -358,9 +345,7 @@ const LanceDb = {
           documentVectors.push({ docId, vectorId: vectorRecord.id });
         }
       } else {
-        throw new Error(
-          "Could not embed document chunks! This document will not be recorded."
-        );
+        throw new Error("Could not embed document chunks! This document will not be recorded.");
       }
 
       if (vectors.length > 0) {
@@ -438,9 +423,7 @@ const LanceDb = {
     if (!(await this.namespaceExists(client, namespace)))
       throw new Error("Namespace by that name does not exist.");
     const stats = await this.namespace(client, namespace);
-    return stats
-      ? stats
-      : { message: "No stats were able to be fetched from DB for namespace" };
+    return stats ? stats : { message: "No stats were able to be fetched from DB for namespace" };
   },
   "delete-namespace": async function (reqBody = {}) {
     const { namespace = null } = reqBody;
@@ -459,7 +442,7 @@ const LanceDb = {
     fs.rm(`${client.uri}`, { recursive: true }, () => null);
     return { reset: true };
   },
-  curateSources: function (sources = []) {
+  curateSources: (sources = []) => {
     const documents = [];
     for (const source of sources) {
       const { text, vector: _v, _distance: _d, ...rest } = source;

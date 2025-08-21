@@ -1,10 +1,10 @@
-import { isMobile } from "react-device-detect";
-import { useEffect, useState } from "react";
 import Sidebar from "@/components/SettingsSidebar";
+import useQuery from "@/hooks/useQuery";
+import { useEffect, useState } from "react";
+import { isMobile } from "react-device-detect";
+import Completed from "./Completed";
 import Introduction from "./Introduction";
 import PullAndReview from "./PullAndReview";
-import Completed from "./Completed";
-import useQuery from "@/hooks/useQuery";
 
 const CommunityHubImportItemSteps = {
   itemId: {
@@ -12,11 +12,7 @@ const CommunityHubImportItemSteps = {
     name: "1. Paste in Item ID",
     next: () => "validation",
     component: ({ settings, setSettings, setStep }) => (
-      <Introduction
-        settings={settings}
-        setSettings={setSettings}
-        setStep={setStep}
-      />
+      <Introduction settings={settings} setSettings={setSettings} setStep={setStep} />
     ),
   },
   validation: {
@@ -24,22 +20,14 @@ const CommunityHubImportItemSteps = {
     name: "2. Review item",
     next: () => "completed",
     component: ({ settings, setSettings, setStep }) => (
-      <PullAndReview
-        settings={settings}
-        setSettings={setSettings}
-        setStep={setStep}
-      />
+      <PullAndReview settings={settings} setSettings={setSettings} setStep={setStep} />
     ),
   },
   completed: {
     key: "completed",
     name: "3. Completed",
     component: ({ settings, setSettings, setStep }) => (
-      <Completed
-        settings={settings}
-        setSettings={setSettings}
-        setStep={setStep}
-      />
+      <Completed settings={settings} setSettings={setSettings} setStep={setStep} />
     ),
   },
 };

@@ -1,10 +1,6 @@
 const { NativeEmbedder } = require("../../EmbeddingEngines/native");
-const {
-  LLMPerformanceMonitor,
-} = require("../../helpers/chat/LLMPerformanceMonitor");
-const {
-  handleDefaultStreamResponseV2,
-} = require("../../helpers/chat/responses");
+const { LLMPerformanceMonitor } = require("../../helpers/chat/LLMPerformanceMonitor");
+const { handleDefaultStreamResponseV2 } = require("../../helpers/chat/responses");
 const { MODEL_MAP } = require("../modelMap");
 
 class GroqLLM {
@@ -16,8 +12,7 @@ class GroqLLM {
       baseURL: "https://api.groq.com/openai/v1",
       apiKey: process.env.GROQ_API_KEY,
     });
-    this.model =
-      modelPreference || process.env.GROQ_MODEL_PREF || "llama-3.1-8b-instant";
+    this.model = modelPreference || process.env.GROQ_MODEL_PREF || "llama-3.1-8b-instant";
     this.limits = {
       history: this.promptWindowLimit() * 0.15,
       system: this.promptWindowLimit() * 0.15,
@@ -69,7 +64,7 @@ class GroqLLM {
     if (!attachments.length) return userPrompt;
 
     const content = [{ type: "text", text: userPrompt }];
-    for (let attachment of attachments) {
+    for (const attachment of attachments) {
       content.push({
         type: "image_url",
         image_url: {
@@ -99,10 +94,7 @@ class GroqLLM {
     userPrompt = "",
     attachments = [], // This is the specific attachment for only this prompt
   }) {
-    const VISION_MODELS = [
-      "llama-3.2-90b-vision-preview",
-      "llama-3.2-11b-vision-preview",
-    ];
+    const VISION_MODELS = ["llama-3.2-90b-vision-preview", "llama-3.2-11b-vision-preview"];
     const DEFAULT_PROMPT_STRUCT = [
       {
         role: "system",
@@ -171,9 +163,7 @@ class GroqLLM {
 
   async getChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!(await this.isValidChatCompletionModel(this.model)))
-      throw new Error(
-        `GroqAI:chatCompletion: ${this.model} is not valid for chat completion!`
-      );
+      throw new Error(`GroqAI:chatCompletion: ${this.model} is not valid for chat completion!`);
 
     const result = await LLMPerformanceMonitor.measureAsyncFunction(
       this.openai.chat.completions
@@ -187,11 +177,7 @@ class GroqLLM {
         })
     );
 
-    if (
-      !result.output.hasOwnProperty("choices") ||
-      result.output.choices.length === 0
-    )
-      return null;
+    if (!result.output.hasOwnProperty("choices") || result.output.choices.length === 0) return null;
 
     return {
       textResponse: result.output.choices[0].message.content,
@@ -199,9 +185,7 @@ class GroqLLM {
         prompt_tokens: result.output.usage.prompt_tokens || 0,
         completion_tokens: result.output.usage.completion_tokens || 0,
         total_tokens: result.output.usage.total_tokens || 0,
-        outputTps:
-          result.output.usage.completion_tokens /
-          result.output.usage.completion_time,
+        outputTps: result.output.usage.completion_tokens / result.output.usage.completion_time,
         duration: result.output.usage.total_time,
       },
     };

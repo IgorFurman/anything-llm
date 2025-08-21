@@ -13,8 +13,7 @@ class UnTooled {
     messages.forEach((msg) => {
       if (msg.role === "function") {
         const prevMsg = modifiedMessages[modifiedMessages.length - 1].content;
-        modifiedMessages[modifiedMessages.length - 1].content =
-          `${prevMsg}\n${msg.content}`;
+        modifiedMessages[modifiedMessages.length - 1].content = `${prevMsg}\n${msg.content}`;
         return;
       }
       modifiedMessages.push(msg);
@@ -63,8 +62,7 @@ ${JSON.stringify(def.parameters.properties, null, 4)}\n`;
     }
 
     const foundFunc = functions.find((def) => def.name === functionCall.name);
-    if (!foundFunc)
-      return { valid: false, reason: "Function name does not exist." };
+    if (!foundFunc) return { valid: false, reason: "Function name does not exist." };
 
     const schemaProps = Object.keys(foundFunc?.parameters?.properties || {});
     const requiredProps = foundFunc?.parameters?.required || [];
@@ -94,9 +92,7 @@ ${JSON.stringify(def.parameters.properties, null, 4)}\n`;
   }
 
   async functionCall(messages, functions, chatCb = null) {
-    const history = [...messages].filter((msg) =>
-      ["user", "assistant"].includes(msg.role)
-    );
+    const history = [...messages].filter((msg) => ["user", "assistant"].includes(msg.role));
     if (history[history.length - 1].role !== "user") return null;
     const response = await chatCb({
       messages: [
@@ -131,9 +127,7 @@ ${JSON.stringify(def.parameters.properties, null, 4)}\n`;
     }
 
     if (this.deduplicator.isDuplicate(call.name, call.arguments)) {
-      this.providerLog(
-        `Function tool with exact arguments has already been called this stack.`
-      );
+      this.providerLog(`Function tool with exact arguments has already been called this stack.`);
       return { toolCall: null, text: null };
     }
 

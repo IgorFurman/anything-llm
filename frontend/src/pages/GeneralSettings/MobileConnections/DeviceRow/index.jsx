@@ -1,10 +1,10 @@
-import showToast from "@/utils/toast";
 import MobileConnection from "@/models/mobile";
-import { useState } from "react";
-import moment from "moment";
-import { BugDroid, AppleLogo } from "@phosphor-icons/react";
-import { Link } from "react-router-dom";
 import paths from "@/utils/paths";
+import showToast from "@/utils/toast";
+import { AppleLogo, BugDroid } from "@phosphor-icons/react";
+import moment from "moment";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function DeviceRow({ device, removeDevice }) {
   const [status, setStatus] = useState(device.approved);
@@ -28,17 +28,9 @@ export default function DeviceRow({ device, removeDevice }) {
         <td scope="row" className="px-6 whitespace-nowrap">
           <div className="flex items-center gap-x-2">
             {device.deviceOs === "ios" ? (
-              <AppleLogo
-                weight="fill"
-                size={16}
-                className="fill-theme-text-primary"
-              />
+              <AppleLogo weight="fill" size={16} className="fill-theme-text-primary" />
             ) : (
-              <BugDroid
-                weight="fill"
-                size={16}
-                className="fill-theme-text-primary"
-              />
+              <BugDroid weight="fill" size={16} className="fill-theme-text-primary" />
             )}
             <span className="text-sm">{device.deviceName}</span>
           </div>

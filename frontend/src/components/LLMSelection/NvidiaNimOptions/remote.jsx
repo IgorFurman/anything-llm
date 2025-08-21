@@ -2,7 +2,7 @@ import PreLoader from "@/components/Preloader";
 import useProviderEndpointAutoDiscovery from "@/hooks/useProviderEndpointAutoDiscovery";
 import System from "@/models/system";
 import { NVIDIA_NIM_COMMON_URLS } from "@/utils/constants";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 /**
  * This component is used to select a remote NVIDIA NIM model endpoint
@@ -25,9 +25,7 @@ export default function RemoteNvidiaNimOptions({ settings }) {
     <div className="flex gap-[36px] mt-1.5">
       <div className="flex flex-col w-60">
         <div className="flex justify-between items-center mb-2">
-          <label className="text-white text-sm font-semibold">
-            NVIDIA Nim Base URL
-          </label>
+          <label className="text-white text-sm font-semibold">NVIDIA Nim Base URL</label>
           {loading ? (
             <PreLoader size="6" />
           ) : (
@@ -60,10 +58,7 @@ export default function RemoteNvidiaNimOptions({ settings }) {
         </p>
       </div>
       {!settings?.credentialsOnly && (
-        <NvidiaNimModelSelection
-          settings={settings}
-          basePath={basePath.value}
-        />
+        <NvidiaNimModelSelection settings={settings} basePath={basePath.value} />
       )}
     </div>
   );
@@ -75,11 +70,7 @@ function NvidiaNimModelSelection({ settings, basePath }) {
   useEffect(() => {
     async function findCustomModels() {
       setLoading(true);
-      const { models } = await System.customModels(
-        "nvidia-nim",
-        null,
-        basePath
-      );
+      const { models } = await System.customModels("nvidia-nim", null, basePath);
       setModels(models);
       setLoading(false);
     }
@@ -89,9 +80,7 @@ function NvidiaNimModelSelection({ settings, basePath }) {
   if (loading || models.length === 0) {
     return (
       <div className="flex flex-col w-60">
-        <label className="text-white text-sm font-semibold block mb-3">
-          Chat Model Selection
-        </label>
+        <label className="text-white text-sm font-semibold block mb-3">Chat Model Selection</label>
         <select
           name="NvidiaNimLLMModelPref"
           disabled={true}
@@ -107,9 +96,7 @@ function NvidiaNimModelSelection({ settings, basePath }) {
 
   return (
     <div className="flex flex-col w-60">
-      <label className="text-white text-sm font-semibold block mb-3">
-        Chat Model Selection
-      </label>
+      <label className="text-white text-sm font-semibold block mb-3">Chat Model Selection</label>
       <select
         name="NvidiaNimLLMModelPref"
         required={true}

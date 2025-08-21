@@ -2,15 +2,12 @@ const { v4 } = require("uuid");
 const { writeResponseChunk } = require("../../helpers/chat/responses");
 const { NativeEmbedder } = require("../../EmbeddingEngines/native");
 const { MODEL_MAP } = require("../modelMap");
-const {
-  LLMPerformanceMonitor,
-} = require("../../helpers/chat/LLMPerformanceMonitor");
+const { LLMPerformanceMonitor } = require("../../helpers/chat/LLMPerformanceMonitor");
 
 class CohereLLM {
   constructor(embedder = null) {
     const { CohereClient } = require("cohere-ai");
-    if (!process.env.COHERE_API_KEY)
-      throw new Error("No Cohere API key was set.");
+    if (!process.env.COHERE_API_KEY) throw new Error("No Cohere API key was set.");
 
     const cohere = new CohereClient({
       token: process.env.COHERE_API_KEY,
@@ -40,7 +37,7 @@ class CohereLLM {
   }
 
   #convertChatHistoryCohere(chatHistory = []) {
-    let cohereHistory = [];
+    const cohereHistory = [];
     chatHistory.forEach((message) => {
       switch (message.role) {
         case "system":
@@ -82,12 +79,7 @@ class CohereLLM {
     return validModels.includes(model);
   }
 
-  constructPrompt({
-    systemPrompt = "",
-    contextTexts = [],
-    chatHistory = [],
-    userPrompt = "",
-  }) {
+  constructPrompt({ systemPrompt = "", contextTexts = [], chatHistory = [], userPrompt = "" }) {
     const prompt = {
       role: "system",
       content: `${systemPrompt}${this.#appendContext(contextTexts)}`,
@@ -97,9 +89,7 @@ class CohereLLM {
 
   async getChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!(await this.isValidChatCompletionModel(this.model)))
-      throw new Error(
-        `Cohere chat: ${this.model} is not valid for chat completion!`
-      );
+      throw new Error(`Cohere chat: ${this.model} is not valid for chat completion!`);
 
     const message = messages[messages.length - 1].content; // Get the last message
     const cohereHistory = this.#convertChatHistoryCohere(messages.slice(0, -1)); // Remove the last message and convert to Cohere
@@ -113,11 +103,7 @@ class CohereLLM {
       })
     );
 
-    if (
-      !result.output.hasOwnProperty("text") ||
-      result.output.text.length === 0
-    )
-      return null;
+    if (!result.output.hasOwnProperty("text") || result.output.text.length === 0) return null;
 
     const promptTokens = result.output.meta?.tokens?.inputTokens || 0;
     const completionTokens = result.output.meta?.tokens?.outputTokens || 0;
@@ -135,9 +121,7 @@ class CohereLLM {
 
   async streamGetChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!(await this.isValidChatCompletionModel(this.model)))
-      throw new Error(
-        `Cohere chat: ${this.model} is not valid for chat completion!`
-      );
+      throw new Error(`Cohere chat: ${this.model} is not valid for chat completion!`);
 
     const message = messages[messages.length - 1].content; // Get the last message
     const cohereHistory = this.#convertChatHistoryCohere(messages.slice(0, -1)); // Remove the last message and convert to Cohere
@@ -166,7 +150,7 @@ class CohereLLM {
     return new Promise(async (resolve) => {
       const { uuid = v4(), sources = [] } = responseProps;
       let fullText = "";
-      let usage = {
+      const usage = {
         prompt_tokens: 0,
         completion_tokens: 0,
       };

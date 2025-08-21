@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from "react";
 import Appearance from "@/models/appearance";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 export default function SpellCheck() {
   const { t } = useTranslation();
   const [saving, setSaving] = useState(false);
-  const [enableSpellCheck, setEnableSpellCheck] = useState(
-    Appearance.get("enableSpellCheck")
-  );
+  const [enableSpellCheck, setEnableSpellCheck] = useState(Appearance.get("enableSpellCheck"));
 
   const handleChange = async (e) => {
     const newValue = e.target.checked;
@@ -27,9 +25,7 @@ export default function SpellCheck() {
       <p className="text-sm leading-6 font-semibold text-white">
         {t("customization.chat.spellcheck.title")}
       </p>
-      <p className="text-xs text-white/60">
-        {t("customization.chat.spellcheck.description")}
-      </p>
+      <p className="text-xs text-white/60">{t("customization.chat.spellcheck.description")}</p>
       <div className="flex items-center gap-x-4">
         <label className="relative inline-flex cursor-pointer items-center">
           <input

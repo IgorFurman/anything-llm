@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import * as Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import ModalWrapper from "@/components/ModalWrapper";
+import CTAButton from "@/components/lib/CTAButton";
+import { useModal } from "@/hooks/useModal";
+import Embed from "@/models/embed";
 import { CodeBlock } from "@phosphor-icons/react";
 import EmbedRow from "./EmbedRow";
 import NewEmbedModal from "./NewEmbedModal";
-import { useModal } from "@/hooks/useModal";
-import ModalWrapper from "@/components/ModalWrapper";
-import Embed from "@/models/embed";
-import CTAButton from "@/components/lib/CTAButton";
 
 export default function EmbedConfigsView() {
   const { isOpen, openModal, closeModal } = useModal();
@@ -55,8 +55,7 @@ export default function EmbedConfigsView() {
 
           <div>
             <CTAButton onClick={openModal} className="text-theme-bg-chat">
-              <CodeBlock className="h-4 w-4" weight="bold" />{" "}
-              {t("embeddable.create")}
+              <CodeBlock className="h-4 w-4" weight="bold" /> {t("embeddable.create")}
             </CTAButton>
           </div>
         </div>

@@ -74,20 +74,14 @@ async function loadConfluence(
       reason: error ?? "No pages found for that Confluence space.",
     };
   }
-  const outFolder = slugify(
-    `confluence-${hostname}-${v4().slice(0, 4)}`
-  ).toLowerCase();
+  const outFolder = slugify(`confluence-${hostname}-${v4().slice(0, 4)}`).toLowerCase();
 
   const outFolderPath =
     process.env.NODE_ENV === "development"
-      ? path.resolve(
-          __dirname,
-          `../../../../server/storage/documents/${outFolder}`
-        )
+      ? path.resolve(__dirname, `../../../../server/storage/documents/${outFolder}`)
       : path.resolve(process.env.STORAGE_DIR, `documents/${outFolder}`);
 
-  if (!fs.existsSync(outFolderPath))
-    fs.mkdirSync(outFolderPath, { recursive: true });
+  if (!fs.existsSync(outFolderPath)) fs.mkdirSync(outFolderPath, { recursive: true });
 
   docs.forEach((doc) => {
     if (!doc.pageContent) return;
@@ -109,13 +103,9 @@ async function loadConfluence(
       token_count_estimate: tokenizeString(doc.pageContent),
     };
 
-    console.log(
-      `[Confluence Loader]: Saving ${doc.metadata.title} to ${outFolder}`
-    );
+    console.log(`[Confluence Loader]: Saving ${doc.metadata.title} to ${outFolder}`);
 
-    const fileName = sanitizeFileName(
-      `${slugify(doc.metadata.title)}-${data.id}`
-    );
+    const fileName = sanitizeFileName(`${slugify(doc.metadata.title)}-${data.id}`);
     writeToServerDocuments({
       data,
       filename: fileName,
@@ -199,9 +189,7 @@ async function fetchConfluencePage({
     };
   }
 
-  const targetDocument = docs.find(
-    (doc) => doc.pageContent && doc.metadata.url === pageUrl
-  );
+  const targetDocument = docs.find((doc) => doc.pageContent && doc.metadata.url === pageUrl);
   if (!targetDocument) {
     return {
       success: false,

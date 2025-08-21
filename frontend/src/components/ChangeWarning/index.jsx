@@ -1,10 +1,6 @@
 import { Warning, X } from "@phosphor-icons/react";
 
-export default function ChangeWarningModal({
-  warningText = "",
-  onClose,
-  onConfirm,
-}) {
+export default function ChangeWarningModal({ warningText = "", onClose, onConfirm }) {
   return (
     <div className="w-full max-w-2xl bg-theme-bg-secondary rounded-lg shadow border-2 border-theme-modal-border overflow-hidden z-9999">
       <div className="relative px-6 py-5 border-b rounded-t border-theme-modal-border">
@@ -22,10 +18,7 @@ export default function ChangeWarningModal({
           <X size={24} weight="bold" className="text-white" />
         </button>
       </div>
-      <div
-        className="h-full w-full overflow-y-auto"
-        style={{ maxHeight: "calc(100vh - 200px)" }}
-      >
+      <div className="h-full w-full overflow-y-auto" style={{ maxHeight: "calc(100vh - 200px)" }}>
         <div className="py-7 px-9 space-y-2 flex-col">
           <p className="text-white">
             {warningText.split("\\n").map((line, index) => (

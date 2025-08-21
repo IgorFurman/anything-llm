@@ -51,16 +51,14 @@ const docSummarizer = {
               document_filename: {
                 type: "string",
                 "x-nullable": true,
-                description:
-                  "The file name of the document you want to get the full content of.",
+                description: "The file name of the document you want to get the full content of.",
               },
             },
             additionalProperties: false,
           },
           handler: async function ({ action, document_filename }) {
             if (action === "list") return await this.listDocuments();
-            if (action === "summarize")
-              return await this.summarizeDoc(document_filename);
+            if (action === "summarize") return await this.summarizeDoc(document_filename);
             return "There is nothing we can do. This function call returns no information.";
           },
 
@@ -70,18 +68,13 @@ const docSummarizer = {
            */
           listDocuments: async function () {
             try {
-              this.super.introspect(
-                `${this.caller}: Looking at the available documents.`
-              );
+              this.super.introspect(`${this.caller}: Looking at the available documents.`);
               const documents = await Document.where({
                 workspaceId: this.super.handlerProps.invocation.workspace_id,
               });
-              if (documents.length === 0)
-                return "No documents found - nothing can be done. Stop.";
+              if (documents.length === 0) return "No documents found - nothing can be done. Stop.";
 
-              this.super.introspect(
-                `${this.caller}: Found ${documents.length} documents`
-              );
+              this.super.introspect(`${this.caller}: Found ${documents.length} documents`);
               const foundDocuments = documents.map((doc) => {
                 const metadata = safeJsonParse(doc.metadata, {});
                 return {
@@ -102,20 +95,13 @@ const docSummarizer = {
 
           summarizeDoc: async function (filename) {
             try {
-              const availableDocs = safeJsonParse(
-                await this.listDocuments(),
-                []
-              );
+              const availableDocs = safeJsonParse(await this.listDocuments(), []);
               if (!availableDocs.length) {
-                this.super.handlerProps.log(
-                  `${this.caller}: No available documents to summarize.`
-                );
+                this.super.handlerProps.log(`${this.caller}: No available documents to summarize.`);
                 return "No documents were found.";
               }
 
-              const docInfo = availableDocs.find(
-                (info) => info.filename === filename
-              );
+              const docInfo = availableDocs.find((info) => info.filename === filename);
               if (!docInfo) {
                 this.super.handlerProps.log(
                   `${this.caller}: No available document by the name "${filename}".`
@@ -125,34 +111,25 @@ const docSummarizer = {
 
               const document = await Document.content(docInfo.document_id);
               this.super.introspect(
-                `${this.caller}: Grabbing all content for ${
-                  filename ?? "a discovered file."
-                }`
+                `${this.caller}: Grabbing all content for ${filename ?? "a discovered file."}`
               );
 
               if (!document.content || document.content.length === 0) {
-                throw new Error(
-                  "This document has no readable content that could be found."
-                );
+                throw new Error("This document has no readable content that could be found.");
               }
 
               const { TokenManager } = require("../../../helpers/tiktoken");
               if (
-                new TokenManager(this.super.model).countFromString(
-                  document.content
-                ) < Provider.contextLimit(this.super.provider, this.super.model)
+                new TokenManager(this.super.model).countFromString(document.content) <
+                Provider.contextLimit(this.super.provider, this.super.model)
               ) {
                 return document.content;
               }
 
-              this.super.introspect(
-                `${this.caller}: Summarizing ${filename ?? ""}...`
-              );
+              this.super.introspect(`${this.caller}: Summarizing ${filename ?? ""}...`);
 
               this.super.onAbort(() => {
-                this.super.handlerProps.log(
-                  "Abort was triggered, exiting summarization early."
-                );
+                this.super.handlerProps.log("Abort was triggered, exiting summarization early.");
                 this.controller.abort();
               });
 

@@ -1,10 +1,10 @@
-import { useState } from "react";
-import { createPortal } from "react-dom";
 import ModalWrapper from "@/components/ModalWrapper";
-import { WarningOctagon, X } from "@phosphor-icons/react";
-import { DB_LOGOS } from "./DBConnection";
 import System from "@/models/system";
 import showToast from "@/utils/toast";
+import { WarningOctagon, X } from "@phosphor-icons/react";
+import { useState } from "react";
+import { createPortal } from "react-dom";
+import { DB_LOGOS } from "./DBConnection";
 
 function assembleConnectionString({
   engine,
@@ -40,12 +40,7 @@ const DEFAULT_CONFIG = {
   encrypt: false,
 };
 
-export default function NewSQLConnection({
-  isOpen,
-  closeModal,
-  onSubmit,
-  setHasChanges,
-}) {
+export default function NewSQLConnection({ isOpen, closeModal, onSubmit, setHasChanges }) {
   const [engine, setEngine] = useState(DEFAULT_ENGINE);
   const [config, setConfig] = useState(DEFAULT_CONFIG);
   const [isValidating, setIsValidating] = useState(false);
@@ -77,14 +72,10 @@ export default function NewSQLConnection({
 
     setIsValidating(true);
     try {
-      const { success, error } = await System.validateSQLConnection(
-        engine,
-        connectionString
-      );
+      const { success, error } = await System.validateSQLConnection(engine, connectionString);
       if (!success) {
         showToast(
-          error ||
-            "Failed to establish database connection. Please check your connection details.",
+          error || "Failed to establish database connection. Please check your connection details.",
           "error",
           { clear: true }
         );
@@ -102,8 +93,7 @@ export default function NewSQLConnection({
     } catch (error) {
       console.error("Error validating connection:", error);
       showToast(
-        error?.message ||
-          "Failed to validate connection. Please check your connection details.",
+        error?.message || "Failed to validate connection. Please check your connection details.",
         "error",
         { clear: true }
       );
@@ -133,26 +123,20 @@ export default function NewSQLConnection({
               <X size={24} weight="bold" className="text-white" />
             </button>
           </div>
-          <form
-            id="sql-connection-form"
-            onChange={onFormChange}
-            onSubmit={handleUpdate}
-          >
+          <form id="sql-connection-form" onChange={onFormChange} onSubmit={handleUpdate}>
             <div className="px-7 py-6">
               <div className="space-y-6 max-h-[60vh] overflow-y-auto pr-2">
                 <p className="text-sm text-white/60">
-                  Add the connection information for your database below and it
-                  will be available for future SQL agent calls.
+                  Add the connection information for your database below and it will be available
+                  for future SQL agent calls.
                 </p>
                 <div className="flex flex-col w-full">
                   <div className="border border-red-800 bg-zinc-800 light:bg-red-200/50 p-4 rounded-lg flex items-center gap-x-2 text-sm text-red-400 light:text-red-500">
                     <WarningOctagon size={28} className="shrink-0" />
                     <p>
-                      <b>WARNING:</b> The SQL agent has been <i>instructed</i>{" "}
-                      to only perform non-modifying queries. This{" "}
-                      <b>does not</b> prevent a hallucination from still
-                      deleting data. Only connect with a user who has{" "}
-                      <b>READ_ONLY</b> permissions.
+                      <b>WARNING:</b> The SQL agent has been <i>instructed</i> to only perform
+                      non-modifying queries. This <b>does not</b> prevent a hallucination from still
+                      deleting data. Only connect with a user who has <b>READ_ONLY</b> permissions.
                     </p>
                   </div>
 
@@ -240,9 +224,7 @@ export default function NewSQLConnection({
                     />
                   </div>
                   <div>
-                    <label className="block mb-2 text-sm font-medium text-white">
-                      Port
-                    </label>
+                    <label className="block mb-2 text-sm font-medium text-white">Port</label>
                     <input
                       type="text"
                       name="port"
@@ -256,9 +238,7 @@ export default function NewSQLConnection({
                 </div>
 
                 <div className="flex flex-col">
-                  <label className="block mb-2 text-sm font-medium text-white">
-                    Database
-                  </label>
+                  <label className="block mb-2 text-sm font-medium text-white">Database</label>
                   <input
                     type="text"
                     name="database"
@@ -298,9 +278,7 @@ export default function NewSQLConnection({
                         checked={config.encrypt}
                       />
                       <div className="w-11 h-6 bg-theme-settings-input-bg peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-800 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-                      <span className="ml-3 text-sm font-medium text-white">
-                        Enable Encryption
-                      </span>
+                      <span className="ml-3 text-sm font-medium text-white">Enable Encryption</span>
                     </label>
                   </div>
                 )}
@@ -344,11 +322,7 @@ function DBEngine({ provider, active, onClick }) {
         active ? "!bg-blue-500/50" : ""
       }`}
     >
-      <img
-        src={DB_LOGOS[provider]}
-        className="h-[100px] rounded-md"
-        alt={provider}
-      />
+      <img src={DB_LOGOS[provider]} className="h-[100px] rounded-md" alt={provider} />
     </button>
   );
 }

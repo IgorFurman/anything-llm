@@ -82,8 +82,7 @@ const CommunityHub = {
     })
       .then(async (res) => {
         const response = await res.json();
-        if (!res.ok)
-          throw new Error(response.error || "Failed to update settings");
+        if (!res.ok) throw new Error(response.error || "Failed to update settings");
         return { success: true, error: null };
       })
       .catch((e) => ({
@@ -103,8 +102,7 @@ const CommunityHub = {
     })
       .then(async (res) => {
         const response = await res.json();
-        if (!res.ok)
-          throw new Error(response.error || "Failed to fetch settings");
+        if (!res.ok) throw new Error(response.error || "Failed to fetch settings");
         return { connectionKey: response.connectionKey, error: null };
       })
       .catch((e) => ({
@@ -172,8 +170,7 @@ const CommunityHub = {
     })
       .then(async (res) => {
         const response = await res.json();
-        if (!res.ok)
-          throw new Error(response.error || "Failed to create system prompt");
+        if (!res.ok) throw new Error(response.error || "Failed to create system prompt");
         return { success: true, error: null, itemId: response.item?.id };
       })
       .catch((e) => ({
@@ -194,8 +191,7 @@ const CommunityHub = {
       body: JSON.stringify(data),
     }).then(async (res) => {
       const response = await res.json();
-      if (!res.ok)
-        throw new Error(response.error || "Failed to create agent flow");
+      if (!res.ok) throw new Error(response.error || "Failed to create agent flow");
       return { success: true, error: null, itemId: response.item?.id };
     });
   },
@@ -219,8 +215,7 @@ const CommunityHub = {
     })
       .then(async (res) => {
         const response = await res.json();
-        if (!res.ok)
-          throw new Error(response.error || "Failed to create slash command");
+        if (!res.ok) throw new Error(response.error || "Failed to create slash command");
         return { success: true, error: null, itemId: response.item?.id };
       })
       .catch((e) => ({

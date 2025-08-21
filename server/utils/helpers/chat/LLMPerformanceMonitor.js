@@ -59,11 +59,7 @@ class LLMPerformanceMonitor {
    * @param {boolean} runPromptTokenCalculation - whether to run the prompt token calculation to estimate the `prompt_tokens` metric. This is useful for providers that do not return this on stream.
    * @returns {Promise<MonitoredStream>}
    */
-  static async measureStream(
-    func,
-    messages = [],
-    runPromptTokenCalculation = true
-  ) {
+  static async measureStream(func, messages = [], runPromptTokenCalculation = true) {
     const stream = await func;
     stream.start = Date.now();
     stream.duration = 0;

@@ -1,7 +1,5 @@
 const { v4 } = require("uuid");
-const {
-  PuppeteerWebBaseLoader,
-} = require("langchain/document_loaders/web/puppeteer");
+const { PuppeteerWebBaseLoader } = require("langchain/document_loaders/web/puppeteer");
 const { default: slugify } = require("slugify");
 const { parse } = require("node-html-parser");
 const { writeToServerDocuments } = require("../../files");
@@ -70,9 +68,7 @@ function extractLinks(html, baseUrl) {
     if (href) {
       const absoluteUrl = new URL(href, baseUrl.href).href;
       if (
-        absoluteUrl.startsWith(
-          baseUrl.origin + baseUrl.pathname.split("/").slice(0, -1).join("/")
-        )
+        absoluteUrl.startsWith(baseUrl.origin + baseUrl.pathname.split("/").slice(0, -1).join("/"))
       ) {
         extractedLinks.add(absoluteUrl);
       }
@@ -143,23 +139,17 @@ async function bulkScrapePages(links, outFolderPath) {
 
 async function websiteScraper(startUrl, depth = 1, maxLinks = 20) {
   const websiteName = new URL(startUrl).hostname;
-  const outFolder = slugify(
-    `${slugify(websiteName)}-${v4().slice(0, 4)}`
-  ).toLowerCase();
+  const outFolder = slugify(`${slugify(websiteName)}-${v4().slice(0, 4)}`).toLowerCase();
   const outFolderPath =
     process.env.NODE_ENV === "development"
-      ? path.resolve(
-          __dirname,
-          `../../../../server/storage/documents/${outFolder}`
-        )
+      ? path.resolve(__dirname, `../../../../server/storage/documents/${outFolder}`)
       : path.resolve(process.env.STORAGE_DIR, `documents/${outFolder}`);
 
   console.log("Discovering links...");
   const linksToScrape = await discoverLinks(startUrl, depth, maxLinks);
   console.log(`Found ${linksToScrape.length} links to scrape.`);
 
-  if (!fs.existsSync(outFolderPath))
-    fs.mkdirSync(outFolderPath, { recursive: true });
+  if (!fs.existsSync(outFolderPath)) fs.mkdirSync(outFolderPath, { recursive: true });
   console.log("Starting bulk scraping...");
   const scrapedData = await bulkScrapePages(linksToScrape, outFolderPath);
   console.log(`Scraped ${scrapedData.length} pages.`);

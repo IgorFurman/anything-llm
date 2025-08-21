@@ -1,9 +1,6 @@
 const { reqBody } = require("../utils/http");
 const MCPCompatibilityLayer = require("../utils/MCP");
-const {
-  flexUserRoleValid,
-  ROLES,
-} = require("../utils/middleware/multiUserProtected");
+const { flexUserRoleValid, ROLES } = require("../utils/middleware/multiUserProtected");
 const { validatedRequest } = require("../utils/middleware/validatedRequest");
 
 function mcpServersEndpoints(app) {
@@ -58,9 +55,7 @@ function mcpServersEndpoints(app) {
     async (request, response) => {
       try {
         const { name } = reqBody(request);
-        const result = await new MCPCompatibilityLayer().toggleServerStatus(
-          name
-        );
+        const result = await new MCPCompatibilityLayer().toggleServerStatus(name);
         return response.status(200).json({
           success: result.success,
           error: result.error,

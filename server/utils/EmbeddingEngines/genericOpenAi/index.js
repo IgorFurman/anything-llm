@@ -3,9 +3,7 @@ const { toChunks, maximumChunkLength } = require("../../helpers");
 class GenericOpenAiEmbedder {
   constructor() {
     if (!process.env.EMBEDDING_BASE_PATH)
-      throw new Error(
-        "GenericOpenAI must have a valid base path to use for the api."
-      );
+      throw new Error("GenericOpenAI must have a valid base path to use for the api.");
     const { OpenAI: OpenAIApi } = require("openai");
     this.basePath = process.env.EMBEDDING_BASE_PATH;
     this.openai = new OpenAIApi({
@@ -34,19 +32,13 @@ class GenericOpenAiEmbedder {
    * @returns {number}
    */
   get maxConcurrentChunks() {
-    if (!process.env.GENERIC_OPEN_AI_EMBEDDING_MAX_CONCURRENT_CHUNKS)
-      return 500;
-    if (
-      isNaN(Number(process.env.GENERIC_OPEN_AI_EMBEDDING_MAX_CONCURRENT_CHUNKS))
-    )
-      return 500;
+    if (!process.env.GENERIC_OPEN_AI_EMBEDDING_MAX_CONCURRENT_CHUNKS) return 500;
+    if (isNaN(Number(process.env.GENERIC_OPEN_AI_EMBEDDING_MAX_CONCURRENT_CHUNKS))) return 500;
     return Number(process.env.GENERIC_OPEN_AI_EMBEDDING_MAX_CONCURRENT_CHUNKS);
   }
 
   async embedTextInput(textInput) {
-    const result = await this.embedChunks(
-      Array.isArray(textInput) ? textInput : [textInput]
-    );
+    const result = await this.embedChunks(Array.isArray(textInput) ? textInput : [textInput]);
     return result?.[0] || [];
   }
 
@@ -67,10 +59,7 @@ class GenericOpenAiEmbedder {
               resolve({ data: result?.data, error: null });
             })
             .catch((e) => {
-              e.type =
-                e?.response?.data?.error?.code ||
-                e?.response?.status ||
-                "failed_to_embed";
+              e.type = e?.response?.data?.error?.code || e?.response?.status || "failed_to_embed";
               e.message = e?.response?.data?.error?.message || e.message;
               resolve({ data: [], error: e });
             });
@@ -78,20 +67,13 @@ class GenericOpenAiEmbedder {
       );
     }
 
-    const { data = [], error = null } = await Promise.all(
-      embeddingRequests
-    ).then((results) => {
+    const { data = [], error = null } = await Promise.all(embeddingRequests).then((results) => {
       // If any errors were returned from OpenAI abort the entire sequence because the embeddings
       // will be incomplete.
-      const errors = results
-        .filter((res) => !!res.error)
-        .map((res) => res.error)
-        .flat();
+      const errors = results.filter((res) => !!res.error).flatMap((res) => res.error);
       if (errors.length > 0) {
-        let uniqueErrors = new Set();
-        errors.map((error) =>
-          uniqueErrors.add(`[${error.type}]: ${error.message}`)
-        );
+        const uniqueErrors = new Set();
+        errors.map((error) => uniqueErrors.add(`[${error.type}]: ${error.message}`));
 
         return {
           data: [],
@@ -99,14 +81,13 @@ class GenericOpenAiEmbedder {
         };
       }
       return {
-        data: results.map((res) => res?.data || []).flat(),
+        data: results.flatMap((res) => res?.data || []),
         error: null,
       };
     });
 
     if (!!error) throw new Error(`GenericOpenAI Failed to embed: ${error}`);
-    return data.length > 0 &&
-      data.every((embd) => embd.hasOwnProperty("embedding"))
+    return data.length > 0 && data.every((embd) => embd.hasOwnProperty("embedding"))
       ? data.map((embd) => embd.embedding)
       : null;
   }

@@ -48,15 +48,10 @@ const websocket = {
       name: this.name,
       setup(aibitat) {
         aibitat.onError(async (error) => {
-          let errorMessage =
-            error?.message || "An error occurred while running the agent.";
+          const errorMessage = error?.message || "An error occurred while running the agent.";
           console.error(chalk.red(`   error: ${errorMessage}`), error);
-          aibitat.introspect(
-            `Error encountered while running: ${errorMessage}`
-          );
-          socket.send(
-            JSON.stringify({ type: "wssFailure", content: errorMessage })
-          );
+          aibitat.introspect(`Error encountered while running: ${errorMessage}`);
+          socket.send(JSON.stringify({ type: "wssFailure", content: errorMessage }));
           aibitat.terminate();
         });
 
@@ -84,8 +79,7 @@ const websocket = {
         // });
 
         aibitat.onMessage((message) => {
-          if (message.from !== "USER")
-            Telemetry.sendTelemetry("agent_chat_sent");
+          if (message.from !== "USER") Telemetry.sendTelemetry("agent_chat_sent");
           if (message.from === "USER" && muteUserReply) return;
           socket.send(JSON.stringify(message));
         });
@@ -116,7 +110,7 @@ const websocket = {
           socket.awaitResponse = (question = "waiting...") => {
             socket.send(JSON.stringify({ type: "WAITING_ON_INPUT", question }));
 
-            return new Promise(function (resolve) {
+            return new Promise((resolve) => {
               let socketTimeout = null;
               socket.handleFeedback = (message) => {
                 const data = JSON.parse(message);

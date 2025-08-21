@@ -57,7 +57,7 @@ describe("TextSplitter", () => {
     });
     let chunks = await textSplitter.splitText(text);
     expect(chunks.length).toEqual(5);
-    expect(chunks.every(chunk => chunk.startsWith("testing: "))).toBe(true);
+    expect(chunks.every((chunk) => chunk.startsWith("testing: "))).toBe(true);
 
     textSplitter = new TextSplitter({
       chunkSize: 20,
@@ -66,7 +66,7 @@ describe("TextSplitter", () => {
     });
     chunks = await textSplitter.splitText(text);
     expect(chunks.length).toEqual(5);
-    expect(chunks.every(chunk => chunk.startsWith("testing2: "))).toBe(true);
+    expect(chunks.every((chunk) => chunk.startsWith("testing2: "))).toBe(true);
 
     textSplitter = new TextSplitter({
       chunkSize: 20,
@@ -75,7 +75,7 @@ describe("TextSplitter", () => {
     });
     chunks = await textSplitter.splitText(text);
     expect(chunks.length).toEqual(5);
-    expect(chunks.every(chunk => !chunk.startsWith(": "))).toBe(true);
+    expect(chunks.every((chunk) => !chunk.startsWith(": "))).toBe(true);
 
     textSplitter = new TextSplitter({
       chunkSize: 20,
@@ -84,7 +84,7 @@ describe("TextSplitter", () => {
     });
     chunks = await textSplitter.splitText(text);
     expect(chunks.length).toEqual(5);
-    expect(chunks.every(chunk => !chunk.startsWith(": "))).toBe(true);
+    expect(chunks.every((chunk) => !chunk.startsWith(": "))).toBe(true);
 
     // Applied chunkPrefix with chunkHeaderMeta
     textSplitter = new TextSplitter({
@@ -99,6 +99,6 @@ describe("TextSplitter", () => {
     });
     chunks = await textSplitter.splitText(text);
     expect(chunks.length).toEqual(5);
-    expect(chunks.every(chunk => chunk.startsWith("testing3: <document_metadata>"))).toBe(true);
+    expect(chunks.every((chunk) => chunk.startsWith("testing3: <document_metadata>"))).toBe(true);
   });
 });

@@ -1,16 +1,12 @@
-import React, { useEffect, useRef, useState } from "react";
 import illustration from "@/media/illustrations/create-workspace.png";
+import Workspace from "@/models/workspace";
 import paths from "@/utils/paths";
 import showToast from "@/utils/toast";
-import { useNavigate } from "react-router-dom";
-import Workspace from "@/models/workspace";
+import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
-export default function CreateWorkspace({
-  setHeader,
-  setForwardBtn,
-  setBackBtn,
-}) {
+export default function CreateWorkspace({ setHeader, setForwardBtn, setBackBtn }) {
   const { t } = useTranslation();
   const [workspaceName, setWorkspaceName] = useState("");
   const navigate = useNavigate();
@@ -39,10 +35,7 @@ export default function CreateWorkspace({
       onboardingComplete: true,
     });
     if (!!workspace) {
-      showToast(
-        "Workspace created successfully! Taking you to home...",
-        "success"
-      );
+      showToast("Workspace created successfully! Taking you to home...", "success");
       await new Promise((resolve) => setTimeout(resolve, 1000));
       navigate(paths.home());
     } else {
@@ -67,10 +60,7 @@ export default function CreateWorkspace({
       <div className="flex flex-col gap-y-4 w-full max-w-[600px]">
         {" "}
         <div className="w-full mt-4">
-          <label
-            htmlFor="name"
-            className="block mb-3 text-sm font-medium text-white"
-          >
+          <label htmlFor="name" className="block mb-3 text-sm font-medium text-white">
             {t("common.workspaces-name")}
           </label>
           <input
@@ -84,12 +74,7 @@ export default function CreateWorkspace({
           />
         </div>
       </div>
-      <button
-        type="submit"
-        ref={createWorkspaceRef}
-        hidden
-        aria-hidden="true"
-      ></button>
+      <button type="submit" ref={createWorkspaceRef} hidden aria-hidden="true"></button>
     </form>
   );
 }

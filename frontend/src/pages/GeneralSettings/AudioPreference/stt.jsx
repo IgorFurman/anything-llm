@@ -1,11 +1,11 @@
-import React, { useEffect, useState, useRef } from "react";
-import System from "@/models/system";
-import showToast from "@/utils/toast";
 import LLMItem from "@/components/LLMSelection/LLMItem";
-import { CaretUpDown, MagnifyingGlass, X } from "@phosphor-icons/react";
+import BrowserNative from "@/components/SpeechToText/BrowserNative";
 import CTAButton from "@/components/lib/CTAButton";
 import AnythingLLMIcon from "@/media/logo/anything-llm-icon.png";
-import BrowserNative from "@/components/SpeechToText/BrowserNative";
+import System from "@/models/system";
+import showToast from "@/utils/toast";
+import { CaretUpDown, MagnifyingGlass, X } from "@phosphor-icons/react";
+import React, { useEffect, useState, useRef } from "react";
 
 const PROVIDERS = [
   {
@@ -70,32 +70,24 @@ export default function SpeechToTextProvider({ settings }) {
     setFilteredProviders(filtered);
   }, [searchQuery, selectedProvider]);
 
-  const selectedProviderObject = PROVIDERS.find(
-    (provider) => provider.value === selectedProvider
-  );
+  const selectedProviderObject = PROVIDERS.find((provider) => provider.value === selectedProvider);
 
   return (
     <form onSubmit={handleSubmit} className="flex w-full">
       <div className="flex flex-col w-full px-1 md:pl-6 md:pr-[50px] md:py-6 py-16">
         <div className="w-full flex flex-col gap-y-1 pb-6 border-white light:border-theme-sidebar-border border-b-2 border-opacity-10">
           <div className="flex gap-x-4 items-center">
-            <p className="text-lg leading-6 font-bold text-white">
-              Speech-to-text Preference
-            </p>
+            <p className="text-lg leading-6 font-bold text-white">Speech-to-text Preference</p>
           </div>
           <p className="text-xs leading-[18px] font-base text-white text-opacity-60">
-            Here you can specify what kind of text-to-speech and speech-to-text
-            providers you would want to use in your AnythingLLM experience. By
-            default, we use the browser's built in support for these services,
-            but you may want to use others.
+            Here you can specify what kind of text-to-speech and speech-to-text providers you would
+            want to use in your AnythingLLM experience. By default, we use the browser's built in
+            support for these services, but you may want to use others.
           </p>
         </div>
         <div className="w-full justify-end flex">
           {hasChanges && (
-            <CTAButton
-              onClick={() => handleSubmit()}
-              className="mt-3 mr-0 -mb-14 z-10"
-            >
+            <CTAButton onClick={() => handleSubmit()} className="mt-3 mr-0 -mb-14 z-10">
               {saving ? "Saving..." : "Save changes"}
             </CTAButton>
           )}
@@ -176,14 +168,9 @@ export default function SpeechToTextProvider({ settings }) {
             </button>
           )}
         </div>
-        <div
-          onChange={() => setHasChanges(true)}
-          className="mt-4 flex flex-col gap-y-1"
-        >
+        <div onChange={() => setHasChanges(true)} className="mt-4 flex flex-col gap-y-1">
           {selectedProvider &&
-            PROVIDERS.find(
-              (provider) => provider.value === selectedProvider
-            )?.options(settings)}
+            PROVIDERS.find((provider) => provider.value === selectedProvider)?.options(settings)}
         </div>
       </div>
     </form>

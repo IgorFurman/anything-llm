@@ -27,9 +27,7 @@ class EncryptionManager {
 
   #loadOrCreateKeySalt(_key = null, _salt = null) {
     if (!!_key && !!_salt) {
-      this.log(
-        "Pre-assigned key & salt for encrypting arbitrary data was used."
-      );
+      this.log("Pre-assigned key & salt for encrypting arbitrary data was used.");
       this.#encryptionKey = _key;
       this.#encryptionSalt = _salt;
       return;
@@ -40,8 +38,7 @@ class EncryptionManager {
       process.env[this.#keyENV] = crypto.randomBytes(32).toString("hex");
       process.env[this.#saltENV] = crypto.randomBytes(32).toString("hex");
       if (process.env.NODE_ENV === "production") dumpENV();
-    } else
-      this.log("Loaded existing key & salt for encrypting arbitrary data.");
+    } else this.log("Loaded existing key & salt for encrypting arbitrary data.");
 
     this.#encryptionKey = process.env[this.#keyENV];
     this.#encryptionSalt = process.env[this.#saltENV];
@@ -50,15 +47,13 @@ class EncryptionManager {
 
   encrypt(plainTextString = null) {
     try {
-      if (!plainTextString)
-        throw new Error("Empty string is not valid for this method.");
+      if (!plainTextString) throw new Error("Empty string is not valid for this method.");
       const iv = crypto.randomBytes(16);
       const cipher = crypto.createCipheriv(this.algorithm, this.key, iv);
       const encrypted = cipher.update(plainTextString, "utf8", "hex");
-      return [
-        encrypted + cipher.final("hex"),
-        Buffer.from(iv).toString("hex"),
-      ].join(this.separator);
+      return [encrypted + cipher.final("hex"), Buffer.from(iv).toString("hex")].join(
+        this.separator
+      );
     } catch (e) {
       this.log(e);
       return null;
@@ -69,11 +64,7 @@ class EncryptionManager {
     try {
       const [encrypted, iv] = encryptedString.split(this.separator);
       if (!iv) throw new Error("IV not found");
-      const decipher = crypto.createDecipheriv(
-        this.algorithm,
-        this.key,
-        Buffer.from(iv, "hex")
-      );
+      const decipher = crypto.createDecipheriv(this.algorithm, this.key, Buffer.from(iv, "hex"));
       return decipher.update(encrypted, "hex", "utf8") + decipher.final("utf8");
     } catch (e) {
       this.log(e);

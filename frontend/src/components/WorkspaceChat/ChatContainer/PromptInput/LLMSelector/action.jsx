@@ -1,11 +1,11 @@
-import { Tooltip } from "react-tooltip";
-import { Brain, CheckCircle } from "@phosphor-icons/react";
-import LLMSelectorModal from "./index";
-import { useTheme } from "@/hooks/useTheme";
-import { useRef, useEffect, useState } from "react";
-import useUser from "@/hooks/useUser";
 import { useModal } from "@/hooks/useModal";
+import { useTheme } from "@/hooks/useTheme";
+import useUser from "@/hooks/useUser";
+import { Brain, CheckCircle } from "@phosphor-icons/react";
+import { useEffect, useRef, useState } from "react";
+import { Tooltip } from "react-tooltip";
 import SetupProvider from "./SetupProvider";
+import LLMSelectorModal from "./index";
 
 export const TOGGLE_LLM_SELECTOR_EVENT = "toggle_llm_selector";
 export const SAVE_LLM_SELECTOR_EVENT = "save_llm_selector";
@@ -28,9 +28,7 @@ export default function LLMSelectorAction() {
 
   function toggleLLMSelectorTooltip() {
     if (!tooltipRef.current) return;
-    tooltipRef.current.isOpen
-      ? tooltipRef.current.close()
-      : tooltipRef.current.open();
+    tooltipRef.current.isOpen ? tooltipRef.current.close() : tooltipRef.current.open();
   }
 
   function handleSaveLLMSelector() {
@@ -40,20 +38,11 @@ export default function LLMSelectorAction() {
   }
 
   useEffect(() => {
-    window.addEventListener(
-      TOGGLE_LLM_SELECTOR_EVENT,
-      toggleLLMSelectorTooltip
-    );
+    window.addEventListener(TOGGLE_LLM_SELECTOR_EVENT, toggleLLMSelectorTooltip);
     window.addEventListener(SAVE_LLM_SELECTOR_EVENT, handleSaveLLMSelector);
     return () => {
-      window.removeEventListener(
-        TOGGLE_LLM_SELECTOR_EVENT,
-        toggleLLMSelectorTooltip
-      );
-      window.removeEventListener(
-        SAVE_LLM_SELECTOR_EVENT,
-        handleSaveLLMSelector
-      );
+      window.removeEventListener(TOGGLE_LLM_SELECTOR_EVENT, toggleLLMSelectorTooltip);
+      window.removeEventListener(SAVE_LLM_SELECTOR_EVENT, handleSaveLLMSelector);
     };
   }, []);
 
@@ -77,11 +66,7 @@ export default function LLMSelectorAction() {
     }
 
     window.addEventListener(PROVIDER_SETUP_EVENT, handleProviderSetupEvent);
-    return () =>
-      window.removeEventListener(
-        PROVIDER_SETUP_EVENT,
-        handleProviderSetupEvent
-      );
+    return () => window.removeEventListener(PROVIDER_SETUP_EVENT, handleProviderSetupEvent);
   }, []);
 
   // This feature is disabled for multi-user instances where the user is not an admin
@@ -110,11 +95,7 @@ export default function LLMSelectorAction() {
         clickable={true}
         delayShow={300} // dont trigger tooltip instantly to not spam the UI
         delayHide={800} // Prevent the travel time from icon to window hiding tooltip
-        arrowColor={
-          theme === "light"
-            ? "var(--theme-modal-border)"
-            : "var(--theme-bg-primary)"
-        }
+        arrowColor={theme === "light" ? "var(--theme-modal-border)" : "var(--theme-bg-primary)"}
         className="z-99 !w-[500px] !bg-theme-bg-primary !px-[5px] !rounded-lg !pointer-events-auto light:border-2 light:border-theme-modal-border"
       >
         <LLMSelectorModal tooltipRef={tooltipRef} />

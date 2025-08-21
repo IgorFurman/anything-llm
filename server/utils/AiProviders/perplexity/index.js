@@ -1,12 +1,7 @@
 const { v4: uuidv4 } = require("uuid");
 const { NativeEmbedder } = require("../../EmbeddingEngines/native");
-const {
-  writeResponseChunk,
-  clientAbortedHandler,
-} = require("../../helpers/chat/responses");
-const {
-  LLMPerformanceMonitor,
-} = require("../../helpers/chat/LLMPerformanceMonitor");
+const { writeResponseChunk, clientAbortedHandler } = require("../../helpers/chat/responses");
+const { LLMPerformanceMonitor } = require("../../helpers/chat/LLMPerformanceMonitor");
 
 function perplexityModels() {
   const { MODELS } = require("./models.js");
@@ -15,8 +10,7 @@ function perplexityModels() {
 
 class PerplexityLLM {
   constructor(embedder = null, modelPreference = null) {
-    if (!process.env.PERPLEXITY_API_KEY)
-      throw new Error("No Perplexity API key was set.");
+    if (!process.env.PERPLEXITY_API_KEY) throw new Error("No Perplexity API key was set.");
 
     const { OpenAI: OpenAIApi } = require("openai");
     this.openai = new OpenAIApi({
@@ -24,9 +18,7 @@ class PerplexityLLM {
       apiKey: process.env.PERPLEXITY_API_KEY ?? null,
     });
     this.model =
-      modelPreference ||
-      process.env.PERPLEXITY_MODEL_PREF ||
-      "llama-3-sonar-large-32k-online"; // Give at least a unique model to the provider as last fallback.
+      modelPreference || process.env.PERPLEXITY_MODEL_PREF || "llama-3-sonar-large-32k-online"; // Give at least a unique model to the provider as last fallback.
     this.limits = {
       history: this.promptWindowLimit() * 0.15,
       system: this.promptWindowLimit() * 0.15,
@@ -72,12 +64,7 @@ class PerplexityLLM {
     return availableModels.hasOwnProperty(model);
   }
 
-  constructPrompt({
-    systemPrompt = "",
-    contextTexts = [],
-    chatHistory = [],
-    userPrompt = "",
-  }) {
+  constructPrompt({ systemPrompt = "", contextTexts = [], chatHistory = [], userPrompt = "" }) {
     const prompt = {
       role: "system",
       content: `${systemPrompt}${this.#appendContext(contextTexts)}`,
@@ -87,9 +74,7 @@ class PerplexityLLM {
 
   async getChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!(await this.isValidChatCompletionModel(this.model)))
-      throw new Error(
-        `Perplexity chat: ${this.model} is not valid for chat completion!`
-      );
+      throw new Error(`Perplexity chat: ${this.model} is not valid for chat completion!`);
 
     const result = await LLMPerformanceMonitor.measureAsyncFunction(
       this.openai.chat.completions
@@ -103,11 +88,7 @@ class PerplexityLLM {
         })
     );
 
-    if (
-      !result.output.hasOwnProperty("choices") ||
-      result.output.choices.length === 0
-    )
-      return null;
+    if (!result.output.hasOwnProperty("choices") || result.output.choices.length === 0) return null;
 
     return {
       textResponse: result.output.choices[0].message.content,
@@ -123,9 +104,7 @@ class PerplexityLLM {
 
   async streamGetChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!(await this.isValidChatCompletionModel(this.model)))
-      throw new Error(
-        `Perplexity chat: ${this.model} is not valid for chat completion!`
-      );
+      throw new Error(`Perplexity chat: ${this.model} is not valid for chat completion!`);
 
     const measuredStreamRequest = await LLMPerformanceMonitor.measureStream(
       this.openai.chat.completions.create({
@@ -148,10 +127,8 @@ class PerplexityLLM {
   enrichToken(token, citations) {
     if (!Array.isArray(citations) || citations.length === 0) return token;
     return token.replace(/\[(\d+)\]/g, (match, index) => {
-      const citationIndex = parseInt(index) - 1;
-      return citations[citationIndex]
-        ? `[[${index}](${citations[citationIndex]})]`
-        : match;
+      const citationIndex = Number.parseInt(index) - 1;
+      return citations[citationIndex] ? `[[${index}](${citations[citationIndex]})]` : match;
     });
   }
 
@@ -160,7 +137,7 @@ class PerplexityLLM {
     const { uuid = uuidv4(), sources = [] } = responseProps;
     let hasUsageMetrics = false;
     let pplxCitations = []; // Array of links
-    let usage = {
+    const usage = {
       completion_tokens: 0,
     };
 
@@ -228,7 +205,7 @@ class PerplexityLLM {
           }
 
           if (token) {
-            let enrichedToken = this.enrichToken(token, pplxCitations);
+            const enrichedToken = this.enrichToken(token, pplxCitations);
             fullText += enrichedToken;
             if (!hasUsageMetrics) usage.completion_tokens++;
 

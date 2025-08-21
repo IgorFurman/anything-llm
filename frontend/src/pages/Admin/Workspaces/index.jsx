@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
 import Sidebar from "@/components/SettingsSidebar";
+import { useEffect, useState } from "react";
 import { isMobile } from "react-device-detect";
 import * as Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { BookOpen } from "@phosphor-icons/react";
-import Admin from "@/models/admin";
-import WorkspaceRow from "./WorkspaceRow";
-import NewWorkspaceModal from "./NewWorkspaceModal";
-import { useModal } from "@/hooks/useModal";
 import ModalWrapper from "@/components/ModalWrapper";
 import CTAButton from "@/components/lib/CTAButton";
+import { useModal } from "@/hooks/useModal";
+import Admin from "@/models/admin";
+import { BookOpen } from "@phosphor-icons/react";
+import NewWorkspaceModal from "./NewWorkspaceModal";
+import WorkspaceRow from "./WorkspaceRow";
 
 export default function AdminWorkspaces() {
   const { isOpen, openModal, closeModal } = useModal();
@@ -29,15 +29,12 @@ export default function AdminWorkspaces() {
               </p>
             </div>
             <p className="text-xs leading-[18px] font-base text-theme-text-secondary">
-              These are all the workspaces that exist on this instance. Removing
-              a workspace will delete all of its associated chats and settings.
+              These are all the workspaces that exist on this instance. Removing a workspace will
+              delete all of its associated chats and settings.
             </p>
           </div>
           <div className="w-full justify-end flex">
-            <CTAButton
-              onClick={openModal}
-              className="mt-3 mr-0 mb-4 md:-mb-14 z-10"
-            >
+            <CTAButton onClick={openModal} className="mt-3 mr-0 mb-4 md:-mb-14 z-10">
               <BookOpen className="h-4 w-4" weight="bold" /> New Workspace
             </CTAButton>
           </div>
@@ -106,11 +103,7 @@ function WorkspacesContainer() {
       </thead>
       <tbody>
         {workspaces.map((workspace) => (
-          <WorkspaceRow
-            key={workspace.id}
-            workspace={workspace}
-            users={users}
-          />
+          <WorkspaceRow key={workspace.id} workspace={workspace} users={users} />
         ))}
       </tbody>
     </table>

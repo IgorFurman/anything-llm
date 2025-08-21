@@ -3,8 +3,7 @@ import strDistance from "js-levenshtein";
 const LEVENSHTEIN_MIN = 2;
 
 // Regular expression pattern to match the v4 UUID and the ending .json
-const uuidPattern =
-  /-[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}/;
+const uuidPattern = /-[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}/;
 const jsonPattern = /\.json$/;
 
 // Function to strip UUID v4 and JSON from file names as that will impact search results.
@@ -33,9 +32,7 @@ export function filterFileSearchResults(files = [], searchTerm = "") {
     // Check children for matches
     const fileSearchResults = [];
     for (const file of folder?.items) {
-      const fileNameNormalized = stripUuidAndJsonFromString(
-        file.name
-      ).toLowerCase();
+      const fileNameNormalized = stripUuidAndJsonFromString(file.name).toLowerCase();
 
       // Exact match check
       if (fileNameNormalized.includes(normalizedSearchTerm)) {

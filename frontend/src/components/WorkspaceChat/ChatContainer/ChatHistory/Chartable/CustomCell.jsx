@@ -1,17 +1,5 @@
 export default function CustomCell({ ...props }) {
-  const {
-    root,
-    depth,
-    x,
-    y,
-    width,
-    height,
-    index,
-    payload,
-    colors,
-    rank,
-    name,
-  } = props;
+  const { root, depth, x, y, width, height, index, payload, colors, rank, name } = props;
   return (
     <g>
       <rect
@@ -20,10 +8,7 @@ export default function CustomCell({ ...props }) {
         width={width}
         height={height}
         style={{
-          fill:
-            depth < 2
-              ? colors[Math.floor((index / root.children.length) * 6)]
-              : "#ffffff00",
+          fill: depth < 2 ? colors[Math.floor((index / root.children.length) * 6)] : "#ffffff00",
           stroke: "#fff",
           strokeWidth: 2 / (depth + 1e-10),
           strokeOpacity: 1 / (depth + 1e-10),

@@ -8,8 +8,7 @@ const MODEL_MAP = {
 
 class GeminiEmbedder {
   constructor() {
-    if (!process.env.GEMINI_EMBEDDING_API_KEY)
-      throw new Error("No Gemini API key was set.");
+    if (!process.env.GEMINI_EMBEDDING_API_KEY) throw new Error("No Gemini API key was set.");
 
     const { OpenAI: OpenAIApi } = require("openai");
     this.model = process.env.EMBEDDING_MODEL_PREF || "text-embedding-004";
@@ -23,9 +22,7 @@ class GeminiEmbedder {
 
     // https://ai.google.dev/gemini-api/docs/models/gemini#text-embedding-and-embedding
     this.embeddingMaxChunkLength = MODEL_MAP[this.model] || 2_048;
-    this.log(
-      `Initialized with ${this.model} - Max Size: ${this.embeddingMaxChunkLength}`
-    );
+    this.log(`Initialized with ${this.model} - Max Size: ${this.embeddingMaxChunkLength}`);
   }
 
   log(text, ...args) {
@@ -38,9 +35,7 @@ class GeminiEmbedder {
    * @returns {Promise<Array<number>>} The embedding values
    */
   async embedTextInput(textInput) {
-    const result = await this.embedChunks(
-      Array.isArray(textInput) ? textInput : [textInput]
-    );
+    const result = await this.embedChunks(Array.isArray(textInput) ? textInput : [textInput]);
     return result?.[0] || [];
   }
 
@@ -68,10 +63,7 @@ class GeminiEmbedder {
               resolve({ data: result?.data, error: null });
             })
             .catch((e) => {
-              e.type =
-                e?.response?.data?.error?.code ||
-                e?.response?.status ||
-                "failed_to_embed";
+              e.type = e?.response?.data?.error?.code || e?.response?.status || "failed_to_embed";
               e.message = e?.response?.data?.error?.message || e.message;
               resolve({ data: [], error: e });
             });
@@ -79,20 +71,13 @@ class GeminiEmbedder {
       );
     }
 
-    const { data = [], error = null } = await Promise.all(
-      embeddingRequests
-    ).then((results) => {
+    const { data = [], error = null } = await Promise.all(embeddingRequests).then((results) => {
       // If any errors were returned from OpenAI abort the entire sequence because the embeddings
       // will be incomplete.
-      const errors = results
-        .filter((res) => !!res.error)
-        .map((res) => res.error)
-        .flat();
+      const errors = results.filter((res) => !!res.error).flatMap((res) => res.error);
       if (errors.length > 0) {
-        let uniqueErrors = new Set();
-        errors.map((error) =>
-          uniqueErrors.add(`[${error.type}]: ${error.message}`)
-        );
+        const uniqueErrors = new Set();
+        errors.map((error) => uniqueErrors.add(`[${error.type}]: ${error.message}`));
 
         return {
           data: [],
@@ -100,14 +85,13 @@ class GeminiEmbedder {
         };
       }
       return {
-        data: results.map((res) => res?.data || []).flat(),
+        data: results.flatMap((res) => res?.data || []),
         error: null,
       };
     });
 
     if (!!error) throw new Error(`Gemini Failed to embed: ${error}`);
-    return data.length > 0 &&
-      data.every((embd) => embd.hasOwnProperty("embedding"))
+    return data.length > 0 && data.every((embd) => embd.hasOwnProperty("embedding"))
       ? data.map((embd) => embd.embedding)
       : null;
   }

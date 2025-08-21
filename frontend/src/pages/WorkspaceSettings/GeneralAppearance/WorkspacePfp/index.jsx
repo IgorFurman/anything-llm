@@ -21,10 +21,7 @@ export default function WorkspacePfp({ workspace, slug }) {
 
     const formData = new FormData();
     formData.append("file", file);
-    const { success, error } = await Workspace.uploadPfp(
-      formData,
-      workspace.slug
-    );
+    const { success, error } = await Workspace.uploadPfp(formData, workspace.slug);
     if (!success) {
       showToast(`Failed to upload profile picture: ${error}`, "error");
       return;
@@ -75,9 +72,7 @@ export default function WorkspacePfp({ workspace, slug }) {
                 <span className="text-theme-text-secondary text-opacity-80 text-xs font-semibold">
                   {t("general.pfp.image")}
                 </span>
-                <span className="text-theme-text-secondary text-opacity-60 text-xs">
-                  800 x 800
-                </span>
+                <span className="text-theme-text-secondary text-opacity-60 text-xs">800 x 800</span>
               </div>
             )}
           </label>

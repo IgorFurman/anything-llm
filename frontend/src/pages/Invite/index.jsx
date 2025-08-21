@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import ModalWrapper from "@/components/ModalWrapper";
 import { FullScreenLoader } from "@/components/Preloader";
 import Invite from "@/models/invite";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import NewUserModal from "./NewUserModal";
-import ModalWrapper from "@/components/ModalWrapper";
 
 export default function InvitePage() {
   const { code } = useParams();

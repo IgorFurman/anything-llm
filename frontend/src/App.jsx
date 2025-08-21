@@ -1,11 +1,8 @@
-import React, { lazy, Suspense } from "react";
-import { Routes, Route } from "react-router-dom";
-import { I18nextProvider } from "react-i18next";
 import { ContextWrapper } from "@/AuthContext";
-import PrivateRoute, {
-  AdminRoute,
-  ManagerRoute,
-} from "@/components/PrivateRoute";
+import PrivateRoute, { AdminRoute, ManagerRoute } from "@/components/PrivateRoute";
+import React, { lazy, Suspense } from "react";
+import { I18nextProvider } from "react-i18next";
+import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Login from "@/pages/Login";
@@ -13,11 +10,11 @@ import SimpleSSOPassthrough from "@/pages/Login/SSO/simple";
 import OnboardingFlow from "@/pages/OnboardingFlow";
 import i18n from "./i18n";
 
-import { PfpProvider } from "./PfpContext";
-import { LogoProvider } from "./LogoContext";
-import { FullScreenLoader } from "./components/Preloader";
-import { ThemeProvider } from "./ThemeContext";
 import KeyboardShortcutsHelp from "@/components/KeyboardShortcutsHelp";
+import { LogoProvider } from "./LogoContext";
+import { PfpProvider } from "./PfpContext";
+import { ThemeProvider } from "./ThemeContext";
+import { FullScreenLoader } from "./components/Preloader";
 
 const Main = lazy(() => import("@/pages/Main"));
 const InvitePage = lazy(() => import("@/pages/Invite"));
@@ -28,70 +25,46 @@ const AdminWorkspaces = lazy(() => import("@/pages/Admin/Workspaces"));
 const AdminLogs = lazy(() => import("@/pages/Admin/Logging"));
 const AdminAgents = lazy(() => import("@/pages/Admin/Agents"));
 const GeneralChats = lazy(() => import("@/pages/GeneralSettings/Chats"));
-const InterfaceSettings = lazy(
-  () => import("@/pages/GeneralSettings/Settings/Interface")
-);
-const BrandingSettings = lazy(
-  () => import("@/pages/GeneralSettings/Settings/Branding")
-);
+const InterfaceSettings = lazy(() => import("@/pages/GeneralSettings/Settings/Interface"));
+const BrandingSettings = lazy(() => import("@/pages/GeneralSettings/Settings/Branding"));
 
-const ChatSettings = lazy(
-  () => import("@/pages/GeneralSettings/Settings/Chat")
-);
+const ChatSettings = lazy(() => import("@/pages/GeneralSettings/Settings/Chat"));
 
 const GeneralApiKeys = lazy(() => import("@/pages/GeneralSettings/ApiKeys"));
-const GeneralLLMPreference = lazy(
-  () => import("@/pages/GeneralSettings/LLMPreference")
-);
+const GeneralLLMPreference = lazy(() => import("@/pages/GeneralSettings/LLMPreference"));
 const GeneralTranscriptionPreference = lazy(
   () => import("@/pages/GeneralSettings/TranscriptionPreference")
 );
-const GeneralAudioPreference = lazy(
-  () => import("@/pages/GeneralSettings/AudioPreference")
-);
+const GeneralAudioPreference = lazy(() => import("@/pages/GeneralSettings/AudioPreference"));
 const GeneralEmbeddingPreference = lazy(
   () => import("@/pages/GeneralSettings/EmbeddingPreference")
 );
 const EmbeddingTextSplitterPreference = lazy(
   () => import("@/pages/GeneralSettings/EmbeddingTextSplitterPreference")
 );
-const GeneralVectorDatabase = lazy(
-  () => import("@/pages/GeneralSettings/VectorDatabase")
-);
+const GeneralVectorDatabase = lazy(() => import("@/pages/GeneralSettings/VectorDatabase"));
 const GeneralSecurity = lazy(() => import("@/pages/GeneralSettings/Security"));
 const GeneralBrowserExtension = lazy(
   () => import("@/pages/GeneralSettings/BrowserExtensionApiKey")
 );
 const WorkspaceSettings = lazy(() => import("@/pages/WorkspaceSettings"));
 
-const ChatEmbedWidgets = lazy(
-  () => import("@/pages/GeneralSettings/ChatEmbedWidgets")
-);
-const PrivacyAndData = lazy(
-  () => import("@/pages/GeneralSettings/PrivacyAndData")
-);
-const ExperimentalFeatures = lazy(
-  () => import("@/pages/Admin/ExperimentalFeatures")
-);
+const ChatEmbedWidgets = lazy(() => import("@/pages/GeneralSettings/ChatEmbedWidgets"));
+const PrivacyAndData = lazy(() => import("@/pages/GeneralSettings/PrivacyAndData"));
+const ExperimentalFeatures = lazy(() => import("@/pages/Admin/ExperimentalFeatures"));
 const LiveDocumentSyncManage = lazy(
   () => import("@/pages/Admin/ExperimentalFeatures/Features/LiveSync/manage")
 );
 const AgentBuilder = lazy(() => import("@/pages/Admin/AgentBuilder"));
-const CommunityHubTrending = lazy(
-  () => import("@/pages/GeneralSettings/CommunityHub/Trending")
-);
+const CommunityHubTrending = lazy(() => import("@/pages/GeneralSettings/CommunityHub/Trending"));
 const CommunityHubAuthentication = lazy(
   () => import("@/pages/GeneralSettings/CommunityHub/Authentication")
 );
 const CommunityHubImportItem = lazy(
   () => import("@/pages/GeneralSettings/CommunityHub/ImportItem")
 );
-const SystemPromptVariables = lazy(
-  () => import("@/pages/Admin/SystemPromptVariables")
-);
-const MobileConnections = lazy(
-  () => import("@/pages/GeneralSettings/MobileConnections")
-);
+const SystemPromptVariables = lazy(() => import("@/pages/Admin/SystemPromptVariables"));
+const MobileConnections = lazy(() => import("@/pages/GeneralSettings/MobileConnections"));
 
 export default function App() {
   return (
@@ -104,10 +77,7 @@ export default function App() {
                 <Routes>
                   <Route path="/" element={<PrivateRoute Component={Main} />} />
                   <Route path="/login" element={<Login />} />
-                  <Route
-                    path="/sso/simple"
-                    element={<SimpleSSOPassthrough />}
-                  />
+                  <Route path="/sso/simple" element={<SimpleSSOPassthrough />} />
 
                   <Route
                     path="/workspace/:slug/settings/:tab"
@@ -130,9 +100,7 @@ export default function App() {
                   />
                   <Route
                     path="/settings/transcription-preference"
-                    element={
-                      <AdminRoute Component={GeneralTranscriptionPreference} />
-                    }
+                    element={<AdminRoute Component={GeneralTranscriptionPreference} />}
                   />
                   <Route
                     path="/settings/audio-preference"
@@ -140,41 +108,24 @@ export default function App() {
                   />
                   <Route
                     path="/settings/embedding-preference"
-                    element={
-                      <AdminRoute Component={GeneralEmbeddingPreference} />
-                    }
+                    element={<AdminRoute Component={GeneralEmbeddingPreference} />}
                   />
                   <Route
                     path="/settings/text-splitter-preference"
-                    element={
-                      <AdminRoute Component={EmbeddingTextSplitterPreference} />
-                    }
+                    element={<AdminRoute Component={EmbeddingTextSplitterPreference} />}
                   />
                   <Route
                     path="/settings/vector-database"
                     element={<AdminRoute Component={GeneralVectorDatabase} />}
                   />
-                  <Route
-                    path="/settings/agents"
-                    element={<AdminRoute Component={AdminAgents} />}
-                  />
+                  <Route path="/settings/agents" element={<AdminRoute Component={AdminAgents} />} />
                   <Route
                     path="/settings/agents/builder"
-                    element={
-                      <AdminRoute
-                        Component={AgentBuilder}
-                        hideUserMenu={true}
-                      />
-                    }
+                    element={<AdminRoute Component={AgentBuilder} hideUserMenu={true} />}
                   />
                   <Route
                     path="/settings/agents/builder/:flowId"
-                    element={
-                      <AdminRoute
-                        Component={AgentBuilder}
-                        hideUserMenu={true}
-                      />
-                    }
+                    element={<AdminRoute Component={AgentBuilder} hideUserMenu={true} />}
                   />
                   <Route
                     path="/settings/event-logs"
@@ -219,9 +170,7 @@ export default function App() {
                   />
                   <Route
                     path="/settings/browser-extension"
-                    element={
-                      <ManagerRoute Component={GeneralBrowserExtension} />
-                    }
+                    element={<ManagerRoute Component={GeneralBrowserExtension} />}
                   />
                   <Route
                     path="/settings/workspace-chats"
@@ -231,20 +180,14 @@ export default function App() {
                     path="/settings/invites"
                     element={<ManagerRoute Component={AdminInvites} />}
                   />
-                  <Route
-                    path="/settings/users"
-                    element={<ManagerRoute Component={AdminUsers} />}
-                  />
+                  <Route path="/settings/users" element={<ManagerRoute Component={AdminUsers} />} />
                   <Route
                     path="/settings/workspaces"
                     element={<ManagerRoute Component={AdminWorkspaces} />}
                   />
                   {/* Onboarding Flow */}
                   <Route path="/onboarding" element={<OnboardingFlow />} />
-                  <Route
-                    path="/onboarding/:step"
-                    element={<OnboardingFlow />}
-                  />
+                  <Route path="/onboarding/:step" element={<OnboardingFlow />} />
 
                   {/* Experimental feature pages  */}
                   {/* Live Document Sync feature */}
@@ -259,9 +202,7 @@ export default function App() {
                   />
                   <Route
                     path="/settings/community-hub/authentication"
-                    element={
-                      <AdminRoute Component={CommunityHubAuthentication} />
-                    }
+                    element={<AdminRoute Component={CommunityHubAuthentication} />}
                   />
                   <Route
                     path="/settings/community-hub/import-item"

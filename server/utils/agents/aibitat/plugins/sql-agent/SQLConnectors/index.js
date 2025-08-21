@@ -37,9 +37,7 @@ function getDBClient(identifier = "", connectionConfig = {}) {
       const { MSSQLConnector } = require("./MSSQL");
       return new MSSQLConnector(connectionConfig);
     default:
-      throw new Error(
-        `There is no supported database connector for ${identifier}`
-      );
+      throw new Error(`There is no supported database connector for ${identifier}`);
   }
 }
 
@@ -48,10 +46,7 @@ function getDBClient(identifier = "", connectionConfig = {}) {
  * @returns {Promise<[SQLConnection]>}
  */
 async function listSQLConnections() {
-  return safeJsonParse(
-    (await SystemSettings.get({ label: "agent_sql_connections" }))?.value,
-    []
-  );
+  return safeJsonParse((await SystemSettings.get({ label: "agent_sql_connections" }))?.value, []);
 }
 
 /**

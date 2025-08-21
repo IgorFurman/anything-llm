@@ -1,12 +1,12 @@
-import { X } from "@phosphor-icons/react";
 import ModalWrapper from "@/components/ModalWrapper";
-import BG from "./bg.png";
-import { QRCodeSVG } from "qrcode.react";
-import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
-import MobileConnection from "@/models/mobile";
 import PreLoader from "@/components/Preloader";
 import Logo from "@/media/logo/anything-llm-infinity.png";
+import MobileConnection from "@/models/mobile";
+import { X } from "@phosphor-icons/react";
+import { QRCodeSVG } from "qrcode.react";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import BG from "./bg.png";
 
 export default function MobileConnectModal({ isOpen, onClose }) {
   return (
@@ -36,12 +36,12 @@ export default function MobileConnectModal({ isOpen, onClose }) {
               Go mobile. Stay local. AnythingLLM Mobile.
             </p>
             <p className="text-[#FFF] text-lg">
-              AnythingLLM for mobile allows you to connect or clone your
-              workspace's chats, threads and documents for you to use on the go.
+              AnythingLLM for mobile allows you to connect or clone your workspace's chats, threads
+              and documents for you to use on the go.
               <br />
               <br />
-              Run with local models on your phone privately or relay chats
-              directly to this instance seamlessly.
+              Run with local models on your phone privately or relay chats directly to this instance
+              seamlessly.
             </p>
           </div>
 
@@ -51,8 +51,8 @@ export default function MobileConnectModal({ isOpen, onClose }) {
               <ConnectionQrCode isOpen={isOpen} />
             </div>
             <p className="text-[#FFF] text-sm w-[300px] text-center">
-              Scan the QR code with the AnythingLLM Mobile app to enable live
-              sync of your workspaces, chats, threads and documents.
+              Scan the QR code with the AnythingLLM Mobile app to enable live sync of your
+              workspaces, chats, threads and documents.
               <br />
               <Link
                 to="https://docs.anythingllm.com/mobile"
@@ -120,10 +120,7 @@ const ConnectionQrCode = ({ isOpen }) => {
   }, [isOpen]);
 
   if (isLoading) return <PreLoader size="[100px]" />;
-  if (error)
-    return (
-      <p className="text-red-500 text-sm w-[300px] p-4 text-center">{error}</p>
-    );
+  if (error) return <p className="text-red-500 text-sm w-[300px] p-4 text-center">{error}</p>;
 
   const size = {
     width: 35 * 1.5,

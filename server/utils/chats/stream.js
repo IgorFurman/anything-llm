@@ -27,13 +27,7 @@ async function streamChatWithWorkspace(
   const updatedMessage = await grepCommand(message, user);
 
   if (Object.keys(VALID_COMMANDS).includes(updatedMessage)) {
-    const data = await VALID_COMMANDS[updatedMessage](
-      workspace,
-      message,
-      uuid,
-      user,
-      thread
-    );
+    const data = await VALID_COMMANDS[updatedMessage](workspace, message, uuid, user, thread);
     writeResponseChunk(response, data);
     return;
   }
@@ -97,7 +91,7 @@ async function streamChatWithWorkspace(
   let metrics = {};
   let contextTexts = [];
   let sources = [];
-  let pinnedDocIdentifiers = [];
+  const pinnedDocIdentifiers = [];
   const { rawHistory, chatHistory } = await recentChatHistory({
     user,
     workspace,
@@ -122,9 +116,7 @@ async function streamChatWithWorkspace(
         pinnedDocIdentifiers.push(sourceIdentifier(doc));
         contextTexts.push(doc.pageContent);
         sources.push({
-          text:
-            pageContent.slice(0, 1_000) +
-            "...continued on in source document...",
+          text: pageContent.slice(0, 1_000) + "...continued on in source document...",
           ...metadata,
         });
       });
@@ -228,10 +220,12 @@ async function streamChatWithWorkspace(
     console.log(
       `\x1b[31m[STREAMING DISABLED]\x1b[0m Streaming is not available for ${LLMConnector.constructor.name}. Will use regular chat method.`
     );
-    const { textResponse, metrics: performanceMetrics } =
-      await LLMConnector.getChatCompletion(messages, {
+    const { textResponse, metrics: performanceMetrics } = await LLMConnector.getChatCompletion(
+      messages,
+      {
         temperature: workspace?.openAiTemp ?? LLMConnector.defaultTemp,
-      });
+      }
+    );
 
     completeText = textResponse;
     metrics = performanceMetrics;

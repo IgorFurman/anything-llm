@@ -3,9 +3,7 @@ export default function ZillizCloudOptions({ settings }) {
     <div className="w-full flex flex-col gap-y-4">
       <div className="w-full flex items-center gap-[36px] mt-1.5">
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
-            Cluster Endpoint
-          </label>
+          <label className="text-white text-sm font-semibold block mb-3">Cluster Endpoint</label>
           <input
             type="text"
             name="ZillizEndpoint"
@@ -19,9 +17,7 @@ export default function ZillizCloudOptions({ settings }) {
         </div>
 
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
-            API Token
-          </label>
+          <label className="text-white text-sm font-semibold block mb-3">API Token</label>
           <input
             type="password"
             name="ZillizApiToken"

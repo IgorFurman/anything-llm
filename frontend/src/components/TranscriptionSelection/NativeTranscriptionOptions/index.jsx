@@ -1,6 +1,6 @@
+import { Gauge } from "@phosphor-icons/react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Gauge } from "@phosphor-icons/react";
 
 export default function NativeTranscriptionOptions({ settings }) {
   const { t } = useTranslation();
@@ -20,15 +20,13 @@ export default function NativeTranscriptionOptions({ settings }) {
             onChange={(e) => setModel(e.target.value)}
             className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
           >
-            {["Xenova/whisper-small", "Xenova/whisper-large"].map(
-              (value, i) => {
-                return (
-                  <option key={i} value={value}>
-                    {value}
-                  </option>
-                );
-              }
-            )}
+            {["Xenova/whisper-small", "Xenova/whisper-large"].map((value, i) => {
+              return (
+                <option key={i} value={value}>
+                  {value}
+                </option>
+              );
+            })}
           </select>
         </div>
       </div>

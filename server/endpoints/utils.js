@@ -8,9 +8,7 @@ function utilEndpoints(app) {
       const metrics = {
         online: true,
         version: getGitVersion(),
-        mode: (await SystemSettings.isMultiUserMode())
-          ? "multi-user"
-          : "single-user",
+        mode: (await SystemSettings.isMultiUserMode()) ? "multi-user" : "single-user",
         vectorDB: process.env.VECTOR_DB || "lancedb",
         storage: await getDiskStorage(),
         appVersion: getDeploymentVersion(),
@@ -26,10 +24,7 @@ function utilEndpoints(app) {
 function getGitVersion() {
   if (process.env.ANYTHING_LLM_RUNTIME === "docker") return "--";
   try {
-    return require("child_process")
-      .execSync("git rev-parse HEAD")
-      .toString()
-      .trim();
+    return require("child_process").execSync("git rev-parse HEAD").toString().trim();
   } catch (e) {
     console.error("getGitVersion", e.message);
     return "--";
@@ -160,8 +155,7 @@ function getModelTag() {
  * @returns {string|null} The deployment version.
  */
 function getDeploymentVersion() {
-  if (process.env.NODE_ENV === "development")
-    return require("../../package.json").version;
+  if (process.env.NODE_ENV === "development") return require("../../package.json").version;
   if (process.env.DEPLOYMENT_VERSION) return process.env.DEPLOYMENT_VERSION;
   return null;
 }

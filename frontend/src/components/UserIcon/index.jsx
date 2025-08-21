@@ -23,11 +23,7 @@ const UserIcon = memo(({ role }) => {
 function RenderUserPfp({ pfp }) {
   if (!pfp)
     return (
-      <img
-        src={UserDefaultPfp}
-        alt="User profile picture"
-        className="rounded-full border-none"
-      />
+      <img src={UserDefaultPfp} alt="User profile picture" className="rounded-full border-none" />
     );
 
   return (

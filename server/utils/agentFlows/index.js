@@ -68,9 +68,7 @@ class AgentFlows {
    */
   static loadFlow(uuid) {
     try {
-      const flowJsonPath = normalizePath(
-        path.join(AgentFlows.flowsDir, `${uuid}.json`)
-      );
+      const flowJsonPath = normalizePath(path.join(AgentFlows.flowsDir, `${uuid}.json`));
       if (!uuid || !fs.existsSync(flowJsonPath)) return null;
       const flow = safeJsonParse(fs.readFileSync(flowJsonPath, "utf8"), null);
       if (!flow) return null;
@@ -103,9 +101,7 @@ class AgentFlows {
 
       // Prevent saving flows with unsupported blocks or importing
       // flows with unsupported blocks (eg: file writing or code execution on Desktop importing to Docker)
-      const supportedFlowTypes = Object.values(FLOW_TYPES).map(
-        (definition) => definition.type
-      );
+      const supportedFlowTypes = Object.values(FLOW_TYPES).map((definition) => definition.type);
       const supportsAllBlocks = config.steps.every((step) =>
         supportedFlowTypes.includes(step.type)
       );
@@ -148,9 +144,7 @@ class AgentFlows {
    */
   static deleteFlow(uuid) {
     try {
-      const filePath = normalizePath(
-        path.join(AgentFlows.flowsDir, `${uuid}.json`)
-      );
+      const filePath = normalizePath(path.join(AgentFlows.flowsDir, `${uuid}.json`));
       if (!fs.existsSync(filePath)) throw new Error(`Flow ${uuid} not found`);
       fs.rmSync(filePath);
       return { success: true };
@@ -202,21 +196,18 @@ class AgentFlows {
       description: `Execute agent flow: ${flow.name}`,
       plugin: (_runtimeArgs = {}) => ({
         name: `flow_${uuid}`,
-        description:
-          flow.config.description || `Execute agent flow: ${flow.name}`,
+        description: flow.config.description || `Execute agent flow: ${flow.name}`,
         setup: (aibitat) => {
           aibitat.function({
             name: `flow_${uuid}`,
-            description:
-              flow.config.description || `Execute agent flow: ${flow.name}`,
+            description: flow.config.description || `Execute agent flow: ${flow.name}`,
             parameters: {
               type: "object",
               properties: variables.reduce((acc, v) => {
                 if (v.name) {
                   acc[v.name] = {
                     type: "string",
-                    description:
-                      v.description || `Value for variable ${v.name}`,
+                    description: v.description || `Value for variable ${v.name}`,
                   };
                 }
                 return acc;
@@ -226,9 +217,7 @@ class AgentFlows {
               aibitat.introspect(`Executing flow: ${flow.name}`);
               const result = await AgentFlows.executeFlow(uuid, args, aibitat);
               if (!result.success) {
-                aibitat.introspect(
-                  `Flow failed: ${result.results[0]?.error || "Unknown error"}`
-                );
+                aibitat.introspect(`Flow failed: ${result.results[0]?.error || "Unknown error"}`);
                 return `Flow execution failed: ${result.results[0]?.error || "Unknown error"}`;
               }
               aibitat.introspect(`${flow.name} completed successfully`);

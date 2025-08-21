@@ -111,8 +111,7 @@ const TRANSLATIONS = {
     },
     "password-reset": {
       title: "Password Reset",
-      description:
-        "Fornisci le informazioni necessarie qui sotto per reimpostare la tua password.",
+      description: "Fornisci le informazioni necessarie qui sotto per reimpostare la tua password.",
       "recovery-codes": "Codici di recupero",
       "recovery-code": "Codice di recupero {{index}}",
       "back-to-login": "Torna al Login",
@@ -130,8 +129,7 @@ const TRANSLATIONS = {
     part4:
       'È semplice. Tutte le raccolte sono organizzate in contenitori che chiamiamo "Aree di lavoro". Le aree di lavoro sono contenitori di file, documenti, immagini, PDF e altri file che verranno trasformati in qualcosa che gli LLM possono comprendere e utilizzare nella conversazione.\n\nPuoi aggiungere e rimuovere file in qualsiasi momento.',
     createWorkspace: "Crea la tua prima area di lavoro",
-    user2:
-      "È come Dropbox AI o qualcosa del genere? E le chat? È un chatbot, non è vero?",
+    user2: "È come Dropbox AI o qualcosa del genere? E le chat? È un chatbot, non è vero?",
     part5:
       "AnythingLLM è migliore di un Dropbox più smart.\n\nAnythingLLM offre due modi di comunicare con i tuoi dati:\n\n<i>Query:</i> Le tue chat restituiranno dati o inferenze trovate con i documenti nella tua area di lavoro a cui ha accesso. Aggiungere più documenti all'area di lavoro lo rende più intelligente! \n\n<i>Conversazionale:</i> i tuoi documenti + la cronologia delle chat in corso contribuiscono entrambi alla conoscenza dell'LLM allo stesso tempo. Ottimo per aggiungere informazioni basate su testo in tempo reale o correzioni e incomprensioni che l'LLM potrebbe avere. \n\nPuoi passare da una modalità all'altra \n<i>nel mezzo della chat!</i>",
     user3: "Wow, sembra fantastico, fammi provare!",
@@ -156,8 +154,7 @@ const TRANSLATIONS = {
       description: "Numero totale di vettori nel tuo database vettoriale.",
     },
     names: {
-      description:
-        "Questo cambierà solo il nome visualizzato della tua area di lavoro.",
+      description: "Questo cambierà solo il nome visualizzato della tua area di lavoro.",
     },
     message: {
       title: "Messaggi Chat suggeriti",
@@ -170,8 +167,7 @@ const TRANSLATIONS = {
     },
     pfp: {
       title: "Immagine del profilo dell'assistente",
-      description:
-        "Personalizza l'immagine del profilo dell'assistente per quest'area di lavoro.",
+      description: "Personalizza l'immagine del profilo dell'assistente per quest'area di lavoro.",
       image: "Immagine dell'area di lavoro",
       remove: "Rimuovi immagine dell'area di lavoro",
     },
@@ -278,10 +274,8 @@ const TRANSLATIONS = {
       resetting: "Cancellazione vettori...",
       confirm:
         "Stai per reimpostare il database vettoriale di quest'area di lavoro. Questa operazione rimuoverà tutti gli embedding vettoriali attualmente incorporati.\n\nI file sorgente originali rimarranno intatti. Questa azione è irreversibile.",
-      error:
-        "Impossibile reimpostare il database vettoriale dell'area di lavoro!",
-      success:
-        "Il database vettoriale dell'area di lavoro è stato reimpostato!",
+      error: "Impossibile reimpostare il database vettoriale dell'area di lavoro!",
+      success: "Il database vettoriale dell'area di lavoro è stato reimpostato!",
     },
   },
   agent: {
@@ -391,10 +385,8 @@ const TRANSLATIONS = {
     provider: "Provider di trascrizione",
     "warn-start":
       "L'utilizzo del modello whisper locale su macchine con RAM o CPU limitate può bloccare AnythingLLM durante l'elaborazione di file multimediali.",
-    "warn-recommend":
-      "Si consigliano almeno 2 GB di RAM e caricare file <10 Mb.",
-    "warn-end":
-      "Il modello integrato verrà scaricato automaticamente al primo utilizzo.",
+    "warn-recommend": "Si consigliano almeno 2 GB di RAM e caricare file <10 Mb.",
+    "warn-end": "Il modello integrato verrà scaricato automaticamente al primo utilizzo.",
   },
   embedding: {
     title: "Preferenza di embedding",

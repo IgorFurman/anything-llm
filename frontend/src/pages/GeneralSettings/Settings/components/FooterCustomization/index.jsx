@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import showToast from "@/utils/toast";
-import { safeJsonParse } from "@/utils/request";
-import NewIconForm from "./NewIconForm";
 import Admin from "@/models/admin";
 import System from "@/models/system";
+import { safeJsonParse } from "@/utils/request";
+import showToast from "@/utils/toast";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import NewIconForm from "./NewIconForm";
 
 export default function FooterCustomization() {
   const [footerIcons, setFooterIcons] = useState(Array(3).fill(null));
@@ -54,9 +54,7 @@ export default function FooterCustomization() {
       <p className="text-sm leading-6 font-semibold text-white">
         {t("customization.items.sidebar-footer.title")}
       </p>
-      <p className="text-xs text-white/60">
-        {t("customization.items.sidebar-footer.description")}
-      </p>
+      <p className="text-xs text-white/60">{t("customization.items.sidebar-footer.description")}</p>
       <div className="mt-2 flex gap-x-3 font-medium text-white text-sm">
         <div>{t("customization.items.sidebar-footer.icon")}</div>
         <div>{t("customization.items.sidebar-footer.link")}</div>

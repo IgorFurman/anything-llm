@@ -1,11 +1,11 @@
 import System from "@/models/system";
-import showToast from "@/utils/toast";
-import React, { useState, useEffect, useRef } from "react";
-import debounce from "lodash.debounce";
-import paths from "@/utils/paths";
-import { useNavigate } from "react-router-dom";
 import { AUTH_TIMESTAMP, AUTH_TOKEN, AUTH_USER } from "@/utils/constants";
+import paths from "@/utils/paths";
+import showToast from "@/utils/toast";
+import debounce from "lodash.debounce";
+import React, { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 export default function UserSetup({ setHeader, setForwardBtn, setBackBtn }) {
   const { t } = useTranslation();
@@ -69,9 +69,7 @@ export default function UserSetup({ setHeader, setForwardBtn, setBackBtn }) {
                 : "text-theme-text-primary border-theme-sidebar-border"
             } min-w-[230px] h-11 p-4 rounded-[10px] border-2  justify-center items-center gap-[100px] inline-flex hover:border-sky-400/70 hover:text-sky-400 transition-all duration-300`}
           >
-            <div className="text-center text-sm font-bold">
-              {t("onboarding.userSetup.justMe")}
-            </div>
+            <div className="text-center text-sm font-bold">{t("onboarding.userSetup.justMe")}</div>
           </button>
           <button
             onClick={() => setSelectedOption("my_team")}
@@ -81,9 +79,7 @@ export default function UserSetup({ setHeader, setForwardBtn, setBackBtn }) {
                 : "text-theme-text-primary border-theme-sidebar-border"
             } min-w-[230px] h-11 p-4 rounded-[10px] border-2  justify-center items-center gap-[100px] inline-flex hover:border-sky-400/70 hover:text-sky-400 transition-all duration-300`}
           >
-            <div className="text-center text-sm font-bold">
-              {t("onboarding.userSetup.myTeam")}
-            </div>
+            <div className="text-center text-sm font-bold">{t("onboarding.userSetup.myTeam")}</div>
           </button>
         </div>
       </div>
@@ -180,9 +176,7 @@ const JustMe = ({
                 : "text-theme-text-primary border-theme-sidebar-border"
             } min-w-[230px] h-11 p-4 rounded-[10px] border-2  justify-center items-center gap-[100px] inline-flex hover:border-sky-400/70 hover:text-sky-400 transition-all duration-300`}
           >
-            <div className="text-center text-sm font-bold">
-              {t("common.yes")}
-            </div>
+            <div className="text-center text-sm font-bold">{t("common.yes")}</div>
           </button>
           <button
             onClick={handleNo}
@@ -192,17 +186,12 @@ const JustMe = ({
                 : "text-theme-text-primary border-theme-sidebar-border"
             } min-w-[230px] h-11 p-4 rounded-[10px] border-2  justify-center items-center gap-[100px] inline-flex hover:border-sky-400/70 hover:text-sky-400 transition-all duration-300`}
           >
-            <div className="text-center text-sm font-bold">
-              {t("common.no")}
-            </div>
+            <div className="text-center text-sm font-bold">{t("common.no")}</div>
           </button>
         </div>
         {enablePassword && (
           <form className="w-full mt-4" onSubmit={handleSubmit}>
-            <label
-              htmlFor="name"
-              className="block mb-3 text-sm font-medium text-white"
-            >
+            <label htmlFor="name" className="block mb-3 text-sm font-medium text-white">
               {t("onboarding.userSetup.instancePassword")}
             </label>
             <input
@@ -220,12 +209,7 @@ const JustMe = ({
               <br />
               <i>{t("onboarding.userSetup.passwordWarn")}</i>{" "}
             </div>
-            <button
-              type="submit"
-              ref={justMeSubmitRef}
-              hidden
-              aria-hidden="true"
-            ></button>
+            <button type="submit" ref={justMeSubmitRef} hidden aria-hidden="true"></button>
           </form>
         )}
       </div>
@@ -280,10 +264,7 @@ const MyTeam = ({ setMultiUserLoginValid, myTeamSubmitRef, navigate }) => {
           <div className="space-y-6 flex h-full w-full">
             <div className="w-full flex flex-col gap-y-4">
               <div>
-                <label
-                  htmlFor="name"
-                  className="block mb-3 text-sm font-medium text-white"
-                >
+                <label htmlFor="name" className="block mb-3 text-sm font-medium text-white">
                   {t("onboarding.userSetup.adminUsername")}
                 </label>
                 <input
@@ -301,10 +282,7 @@ const MyTeam = ({ setMultiUserLoginValid, myTeamSubmitRef, navigate }) => {
                 {t("onboarding.userSetup.adminUsernameReq")}
               </p>
               <div className="mt-4">
-                <label
-                  htmlFor="name"
-                  className="block mb-3 text-sm font-medium text-white"
-                >
+                <label htmlFor="name" className="block mb-3 text-sm font-medium text-white">
                   {t("onboarding.userSetup.adminPassword")}
                 </label>
                 <input
@@ -329,12 +307,7 @@ const MyTeam = ({ setMultiUserLoginValid, myTeamSubmitRef, navigate }) => {
             {t("onboarding.userSetup.teamHint")}
           </div>
         </div>
-        <button
-          type="submit"
-          ref={myTeamSubmitRef}
-          hidden
-          aria-hidden="true"
-        ></button>
+        <button type="submit" ref={myTeamSubmitRef} hidden aria-hidden="true"></button>
       </form>
     </div>
   );

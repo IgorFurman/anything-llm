@@ -41,7 +41,7 @@ const chatHistory = {
           } catch {}
         });
       },
-      _store: async function (aibitat, { prompt, response } = {}) {
+      _store: async (aibitat, { prompt, response } = {}) => {
         const invocation = aibitat.handlerProps.invocation;
         await WorkspaceChats.new({
           workspaceId: Number(invocation.workspace_id),
@@ -55,10 +55,7 @@ const chatHistory = {
           threadId: invocation?.thread_id || null,
         });
       },
-      _storeSpecial: async function (
-        aibitat,
-        { prompt, response, options = {} } = {}
-      ) {
+      _storeSpecial: async (aibitat, { prompt, response, options = {} } = {}) => {
         const invocation = aibitat.handlerProps.invocation;
         await WorkspaceChats.new({
           workspaceId: Number(invocation.workspace_id),

@@ -1,14 +1,14 @@
+import WorkspaceThread from "@/models/workspaceThread";
+import { ABORT_STREAM_EVENT } from "@/utils/chat";
 import { API_BASE } from "@/utils/constants";
 import { baseHeaders, safeJsonParse } from "@/utils/request";
 import { fetchEventSource } from "@microsoft/fetch-event-source";
-import WorkspaceThread from "@/models/workspaceThread";
 import { v4 } from "uuid";
-import { ABORT_STREAM_EVENT } from "@/utils/chat";
 
 const Workspace = {
   workspaceOrderStorageKey: "anythingllm-workspace-order",
 
-  new: async function (data = {}) {
+  new: async (data = {}) => {
     const { workspace, message } = await fetch(`${API_BASE}/workspace/new`, {
       method: "POST",
       body: JSON.stringify(data),
@@ -21,15 +21,12 @@ const Workspace = {
 
     return { workspace, message };
   },
-  update: async function (slug, data = {}) {
-    const { workspace, message } = await fetch(
-      `${API_BASE}/workspace/${slug}/update`,
-      {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: baseHeaders(),
-      }
-    )
+  update: async (slug, data = {}) => {
+    const { workspace, message } = await fetch(`${API_BASE}/workspace/${slug}/update`, {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: baseHeaders(),
+    })
       .then((res) => res.json())
       .catch((e) => {
         return { workspace: null, message: e.message };
@@ -37,15 +34,12 @@ const Workspace = {
 
     return { workspace, message };
   },
-  modifyEmbeddings: async function (slug, changes = {}) {
-    const { workspace, message } = await fetch(
-      `${API_BASE}/workspace/${slug}/update-embeddings`,
-      {
-        method: "POST",
-        body: JSON.stringify(changes), // contains 'adds' and 'removes' keys that are arrays of filepaths
-        headers: baseHeaders(),
-      }
-    )
+  modifyEmbeddings: async (slug, changes = {}) => {
+    const { workspace, message } = await fetch(`${API_BASE}/workspace/${slug}/update-embeddings`, {
+      method: "POST",
+      body: JSON.stringify(changes), // contains 'adds' and 'removes' keys that are arrays of filepaths
+      headers: baseHeaders(),
+    })
       .then((res) => res.json())
       .catch((e) => {
         return { workspace: null, message: e.message };
@@ -53,7 +47,7 @@ const Workspace = {
 
     return { workspace, message };
   },
-  chatHistory: async function (slug) {
+  chatHistory: async (slug) => {
     const history = await fetch(`${API_BASE}/workspace/${slug}/chats`, {
       method: "GET",
       headers: baseHeaders(),
@@ -63,22 +57,19 @@ const Workspace = {
       .catch(() => []);
     return history;
   },
-  updateChatFeedback: async function (chatId, slug, feedback) {
-    const result = await fetch(
-      `${API_BASE}/workspace/${slug}/chat-feedback/${chatId}`,
-      {
-        method: "POST",
-        headers: baseHeaders(),
-        body: JSON.stringify({ feedback }),
-      }
-    )
+  updateChatFeedback: async (chatId, slug, feedback) => {
+    const result = await fetch(`${API_BASE}/workspace/${slug}/chat-feedback/${chatId}`, {
+      method: "POST",
+      headers: baseHeaders(),
+      body: JSON.stringify({ feedback }),
+    })
       .then((res) => res.ok)
       .catch(() => false);
     return result;
   },
 
-  deleteChats: async function (slug = "", chatIds = []) {
-    return await fetch(`${API_BASE}/workspace/${slug}/delete-chats`, {
+  deleteChats: async (slug = "", chatIds = []) =>
+    await fetch(`${API_BASE}/workspace/${slug}/delete-chats`, {
       method: "DELETE",
       headers: baseHeaders(),
       body: JSON.stringify({ chatIds }),
@@ -90,26 +81,13 @@ const Workspace = {
       .catch((e) => {
         console.log(e);
         return false;
-      });
-  },
+      }),
   deleteEditedChats: async function (slug = "", threadSlug = "", startingId) {
-    if (!!threadSlug)
-      return this.threads._deleteEditedChats(slug, threadSlug, startingId);
+    if (!!threadSlug) return this.threads._deleteEditedChats(slug, threadSlug, startingId);
     return this._deleteEditedChats(slug, startingId);
   },
-  updateChatResponse: async function (
-    slug = "",
-    threadSlug = "",
-    chatId,
-    newText
-  ) {
-    if (!!threadSlug)
-      return this.threads._updateChatResponse(
-        slug,
-        threadSlug,
-        chatId,
-        newText
-      );
+  updateChatResponse: async function (slug = "", threadSlug = "", chatId, newText) {
+    if (!!threadSlug) return this.threads._updateChatResponse(slug, threadSlug, chatId, newText);
     return this._updateChatResponse(slug, chatId, newText);
   },
   multiplexStream: async function ({
@@ -126,14 +104,9 @@ const Workspace = {
         chatHandler,
         attachments
       );
-    return this.streamChat(
-      { slug: workspaceSlug },
-      prompt,
-      chatHandler,
-      attachments
-    );
+    return this.streamChat({ slug: workspaceSlug }, prompt, chatHandler, attachments);
   },
-  streamChat: async function ({ slug }, message, handleChat, attachments = []) {
+  streamChat: async ({ slug }, message, handleChat, attachments = []) => {
     const ctrl = new AbortController();
 
     // Listen for the ABORT_STREAM_EVENT key to be emitted by the client
@@ -154,11 +127,7 @@ const Workspace = {
       async onopen(response) {
         if (response.ok) {
           return; // everything's good
-        } else if (
-          response.status >= 400 &&
-          response.status < 500 &&
-          response.status !== 429
-        ) {
+        } else if (response.status >= 400 && response.status < 500 && response.status !== 429) {
           handleChat({
             id: v4(),
             type: "abort",
@@ -202,7 +171,7 @@ const Workspace = {
       },
     });
   },
-  all: async function () {
+  all: async () => {
     const workspaces = await fetch(`${API_BASE}/workspaces`, {
       method: "GET",
       headers: baseHeaders(),
@@ -213,7 +182,7 @@ const Workspace = {
 
     return workspaces;
   },
-  bySlug: async function (slug = "") {
+  bySlug: async (slug = "") => {
     const workspace = await fetch(`${API_BASE}/workspace/${slug}`, {
       headers: baseHeaders(),
     })
@@ -222,7 +191,7 @@ const Workspace = {
       .catch(() => null);
     return workspace;
   },
-  delete: async function (slug) {
+  delete: async (slug) => {
     const result = await fetch(`${API_BASE}/workspace/${slug}`, {
       method: "DELETE",
       headers: baseHeaders(),
@@ -232,15 +201,14 @@ const Workspace = {
 
     return result;
   },
-  wipeVectorDb: async function (slug) {
-    return await fetch(`${API_BASE}/workspace/${slug}/reset-vector-db`, {
+  wipeVectorDb: async (slug) =>
+    await fetch(`${API_BASE}/workspace/${slug}/reset-vector-db`, {
       method: "DELETE",
       headers: baseHeaders(),
     })
       .then((res) => res.ok)
-      .catch(() => false);
-  },
-  uploadFile: async function (slug, formData) {
+      .catch(() => false),
+  uploadFile: async (slug, formData) => {
     const response = await fetch(`${API_BASE}/workspace/${slug}/upload`, {
       method: "POST",
       body: formData,
@@ -250,7 +218,7 @@ const Workspace = {
     const data = await response.json();
     return { response, data };
   },
-  uploadLink: async function (slug, link) {
+  uploadLink: async (slug, link) => {
     const response = await fetch(`${API_BASE}/workspace/${slug}/upload-link`, {
       method: "POST",
       body: JSON.stringify({ link }),
@@ -261,8 +229,8 @@ const Workspace = {
     return { response, data };
   },
 
-  getSuggestedMessages: async function (slug) {
-    return await fetch(`${API_BASE}/workspace/${slug}/suggested-messages`, {
+  getSuggestedMessages: async (slug) =>
+    await fetch(`${API_BASE}/workspace/${slug}/suggested-messages`, {
       method: "GET",
       cache: "no-cache",
       headers: baseHeaders(),
@@ -275,48 +243,41 @@ const Workspace = {
       .catch((e) => {
         console.error(e);
         return null;
-      });
-  },
-  setSuggestedMessages: async function (slug, messages) {
-    return fetch(`${API_BASE}/workspace/${slug}/suggested-messages`, {
+      }),
+  setSuggestedMessages: async (slug, messages) =>
+    fetch(`${API_BASE}/workspace/${slug}/suggested-messages`, {
       method: "POST",
       headers: baseHeaders(),
       body: JSON.stringify({ messages }),
     })
       .then((res) => {
         if (!res.ok) {
-          throw new Error(
-            res.statusText || "Error setting suggested messages."
-          );
+          throw new Error(res.statusText || "Error setting suggested messages.");
         }
         return { success: true, ...res.json() };
       })
       .catch((e) => {
         console.error(e);
         return { success: false, error: e.message };
-      });
-  },
-  setPinForDocument: async function (slug, docPath, pinStatus) {
-    return fetch(`${API_BASE}/workspace/${slug}/update-pin`, {
+      }),
+  setPinForDocument: async (slug, docPath, pinStatus) =>
+    fetch(`${API_BASE}/workspace/${slug}/update-pin`, {
       method: "POST",
       headers: baseHeaders(),
       body: JSON.stringify({ docPath, pinStatus }),
     })
       .then((res) => {
         if (!res.ok) {
-          throw new Error(
-            res.statusText || "Error setting pin status for document."
-          );
+          throw new Error(res.statusText || "Error setting pin status for document.");
         }
         return true;
       })
       .catch((e) => {
         console.error(e);
         return false;
-      });
-  },
-  ttsMessage: async function (slug, chatId) {
-    return await fetch(`${API_BASE}/workspace/${slug}/tts/${chatId}`, {
+      }),
+  ttsMessage: async (slug, chatId) =>
+    await fetch(`${API_BASE}/workspace/${slug}/tts/${chatId}`, {
       method: "GET",
       cache: "no-cache",
       headers: baseHeaders(),
@@ -328,10 +289,9 @@ const Workspace = {
       .then((blob) => (blob ? URL.createObjectURL(blob) : null))
       .catch((e) => {
         return null;
-      });
-  },
-  uploadPfp: async function (formData, slug) {
-    return await fetch(`${API_BASE}/workspace/${slug}/upload-pfp`, {
+      }),
+  uploadPfp: async (formData, slug) =>
+    await fetch(`${API_BASE}/workspace/${slug}/upload-pfp`, {
       method: "POST",
       body: formData,
       headers: baseHeaders(),
@@ -343,11 +303,10 @@ const Workspace = {
       .catch((e) => {
         console.log(e);
         return { success: false, error: e.message };
-      });
-  },
+      }),
 
-  fetchPfp: async function (slug) {
-    return await fetch(`${API_BASE}/workspace/${slug}/pfp`, {
+  fetchPfp: async (slug) =>
+    await fetch(`${API_BASE}/workspace/${slug}/pfp`, {
       method: "GET",
       cache: "no-cache",
       headers: baseHeaders(),
@@ -360,11 +319,10 @@ const Workspace = {
       .catch((e) => {
         // console.log(e);
         return null;
-      });
-  },
+      }),
 
-  removePfp: async function (slug) {
-    return await fetch(`${API_BASE}/workspace/${slug}/remove-pfp`, {
+  removePfp: async (slug) =>
+    await fetch(`${API_BASE}/workspace/${slug}/remove-pfp`, {
       method: "DELETE",
       headers: baseHeaders(),
     })
@@ -375,10 +333,9 @@ const Workspace = {
       .catch((e) => {
         console.log(e);
         return { success: false, error: e.message };
-      });
-  },
-  _updateChatResponse: async function (slug = "", chatId, newText) {
-    return await fetch(`${API_BASE}/workspace/${slug}/update-chat`, {
+      }),
+  _updateChatResponse: async (slug = "", chatId, newText) =>
+    await fetch(`${API_BASE}/workspace/${slug}/update-chat`, {
       method: "POST",
       headers: baseHeaders(),
       body: JSON.stringify({ chatId, newText }),
@@ -390,10 +347,9 @@ const Workspace = {
       .catch((e) => {
         console.log(e);
         return false;
-      });
-  },
-  _deleteEditedChats: async function (slug = "", startingId) {
-    return await fetch(`${API_BASE}/workspace/${slug}/delete-edited-chats`, {
+      }),
+  _deleteEditedChats: async (slug = "", startingId) =>
+    await fetch(`${API_BASE}/workspace/${slug}/delete-edited-chats`, {
       method: "DELETE",
       headers: baseHeaders(),
       body: JSON.stringify({ startingId }),
@@ -405,8 +361,7 @@ const Workspace = {
       .catch((e) => {
         console.log(e);
         return false;
-      });
-  },
+      }),
   deleteChat: async (chatId) => {
     return await fetch(`${API_BASE}/workspace/workspace-chats/${chatId}`, {
       method: "PUT",
@@ -418,8 +373,8 @@ const Workspace = {
         return { success: false, error: e.message };
       });
   },
-  forkThread: async function (slug = "", threadSlug = null, chatId = null) {
-    return await fetch(`${API_BASE}/workspace/${slug}/thread/fork`, {
+  forkThread: async (slug = "", threadSlug = null, chatId = null) =>
+    await fetch(`${API_BASE}/workspace/${slug}/thread/fork`, {
       method: "POST",
       headers: baseHeaders(),
       body: JSON.stringify({ threadSlug, chatId }),
@@ -432,23 +387,19 @@ const Workspace = {
       .catch((e) => {
         console.error("Error forking thread:", e);
         return null;
-      });
-  },
+      }),
   /**
    * Uploads and embeds a single file in a single call into a workspace
    * @param {string} slug - workspace slug
    * @param {FormData} formData
    * @returns {Promise<{response: {ok: boolean}, data: {success: boolean, error: string|null, document: {id: string, location:string}|null}}>}
    */
-  uploadAndEmbedFile: async function (slug, formData) {
-    const response = await fetch(
-      `${API_BASE}/workspace/${slug}/upload-and-embed`,
-      {
-        method: "POST",
-        body: formData,
-        headers: baseHeaders(),
-      }
-    );
+  uploadAndEmbedFile: async (slug, formData) => {
+    const response = await fetch(`${API_BASE}/workspace/${slug}/upload-and-embed`, {
+      method: "POST",
+      body: formData,
+      headers: baseHeaders(),
+    });
 
     const data = await response.json();
     return { response, data };
@@ -460,15 +411,12 @@ const Workspace = {
    * @param {string} documentLocation - location of file eg: custom-documents/my-file-uuid.json
    * @returns {Promise<boolean>}
    */
-  deleteAndUnembedFile: async function (slug, documentLocation) {
-    const response = await fetch(
-      `${API_BASE}/workspace/${slug}/remove-and-unembed`,
-      {
-        method: "DELETE",
-        body: JSON.stringify({ documentLocation }),
-        headers: baseHeaders(),
-      }
-    );
+  deleteAndUnembedFile: async (slug, documentLocation) => {
+    const response = await fetch(`${API_BASE}/workspace/${slug}/remove-and-unembed`, {
+      method: "DELETE",
+      body: JSON.stringify({ documentLocation }),
+      headers: baseHeaders(),
+    });
     return response.ok;
   },
 
@@ -479,10 +427,7 @@ const Workspace = {
    */
   storeWorkspaceOrder: function (workspaceIds = []) {
     try {
-      localStorage.setItem(
-        this.workspaceOrderStorageKey,
-        JSON.stringify(workspaceIds)
-      );
+      localStorage.setItem(this.workspaceOrderStorageKey, JSON.stringify(workspaceIds));
       return true;
     } catch (error) {
       console.error("Error reordering workspaces:", error);
@@ -501,9 +446,7 @@ const Workspace = {
     if (workspaceOrderPreference.length === 0) return workspaces;
     const orderedWorkspaces = Array.from(workspaces);
     orderedWorkspaces.sort(
-      (a, b) =>
-        workspaceOrderPreference.indexOf(a.id) -
-        workspaceOrderPreference.indexOf(b.id)
+      (a, b) => workspaceOrderPreference.indexOf(a.id) - workspaceOrderPreference.indexOf(b.id)
     );
     return orderedWorkspaces;
   },
@@ -513,7 +456,7 @@ const Workspace = {
    * @param {string} searchTerm
    * @returns {Promise<{workspaces: [{slug: string, name: string}], threads: [{slug: string, name: string, workspace: {slug: string, name: string}}]}}>}
    */
-  searchWorkspaceOrThread: async function (searchTerm) {
+  searchWorkspaceOrThread: async (searchTerm) => {
     const response = await fetch(`${API_BASE}/workspace/search`, {
       method: "POST",
       headers: baseHeaders(),

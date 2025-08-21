@@ -1,20 +1,18 @@
-import { useEffect, useState } from "react";
-import Sidebar from "@/components/SettingsSidebar";
-import { isMobile } from "react-device-detect";
-import Admin from "@/models/admin";
-import { FullScreenLoader } from "@/components/Preloader";
-import { CaretRight, Flask } from "@phosphor-icons/react";
-import { configurableFeatures } from "./features";
 import ModalWrapper from "@/components/ModalWrapper";
+import { FullScreenLoader } from "@/components/Preloader";
+import Sidebar from "@/components/SettingsSidebar";
+import Admin from "@/models/admin";
 import paths from "@/utils/paths";
 import showToast from "@/utils/toast";
+import { CaretRight, Flask } from "@phosphor-icons/react";
+import { useEffect, useState } from "react";
+import { isMobile } from "react-device-detect";
+import { configurableFeatures } from "./features";
 
 export default function ExperimentalFeatures() {
   const [featureFlags, setFeatureFlags] = useState({});
   const [loading, setLoading] = useState(true);
-  const [selectedFeature, setSelectedFeature] = useState(
-    "experimental_live_file_sync"
-  );
+  const [selectedFeature, setSelectedFeature] = useState("experimental_live_file_sync");
 
   useEffect(() => {
     async function fetchSettings() {
@@ -56,9 +54,7 @@ export default function ExperimentalFeatures() {
             features={configurableFeatures}
             selectedFeature={selectedFeature}
             handleClick={setSelectedFeature}
-            activeFeatures={Object.keys(featureFlags).filter(
-              (flag) => featureFlags[flag]
-            )}
+            activeFeatures={Object.keys(featureFlags).filter((flag) => featureFlags[flag])}
           />
         </div>
 
@@ -123,13 +119,9 @@ function FeatureList({
           className={`py-3 px-4 flex items-center justify-between ${
             index === 0 ? "rounded-t-xl" : ""
           } ${
-            index === Object.keys(features).length - 1
-              ? "rounded-b-xl"
-              : "border-b border-white/10"
+            index === Object.keys(features).length - 1 ? "rounded-b-xl" : "border-b border-white/10"
           } cursor-pointer transition-all duration-300 hover:bg-white/5 ${
-            selectedFeature === feature
-              ? "bg-white/10 light:bg-theme-bg-sidebar  "
-              : ""
+            selectedFeature === feature ? "bg-white/10 light:bg-theme-bg-sidebar  " : ""
           }`}
           onClick={() => {
             if (settings?.href) window.location.replace(settings.href);
@@ -140,9 +132,7 @@ function FeatureList({
           <div className="flex items-center gap-x-2">
             {settings.autoEnabled ? (
               <>
-                <div className="text-sm text-theme-text-secondary font-medium">
-                  On
-                </div>
+                <div className="text-sm text-theme-text-secondary font-medium">On</div>
                 <div className="w-[14px]" />
               </>
             ) : (
@@ -150,11 +140,7 @@ function FeatureList({
                 <div className="text-sm text-theme-text-secondary font-medium">
                   {activeFeatures.includes(settings.key) ? "On" : "Off"}
                 </div>
-                <CaretRight
-                  size={14}
-                  weight="bold"
-                  className="text-theme-text-secondary"
-                />
+                <CaretRight size={14} weight="bold" className="text-theme-text-secondary" />
               </>
             )}
           </div>
@@ -167,29 +153,17 @@ function FeatureList({
 function SelectedFeatureComponent({ feature, settings, refresh }) {
   const Component = feature?.component;
   return Component ? (
-    <Component
-      enabled={settings[feature.key]}
-      feature={feature.key}
-      onToggle={refresh}
-    />
+    <Component enabled={settings[feature.key]} feature={feature.key} onToggle={refresh} />
   ) : null;
 }
 
 function FeatureVerification({ children }) {
-  if (
-    !window.localStorage.getItem("anythingllm_tos_experimental_feature_set")
-  ) {
+  if (!window.localStorage.getItem("anythingllm_tos_experimental_feature_set")) {
     function acceptTos(e) {
       e.preventDefault();
 
-      window.localStorage.setItem(
-        "anythingllm_tos_experimental_feature_set",
-        "accepted"
-      );
-      showToast(
-        "Experimental Feature set enabled. Reloading the page.",
-        "success"
-      );
+      window.localStorage.setItem("anythingllm_tos_experimental_feature_set", "accepted");
+      showToast("Experimental Feature set enabled. Reloading the page.", "success");
       setTimeout(() => {
         window.location.reload();
       }, 2_500);
@@ -212,53 +186,48 @@ function FeatureVerification({ children }) {
               <div className="py-7 px-9 space-y-4 flex-col">
                 <div className="w-full text-white text-md flex flex-col gap-y-4">
                   <p>
-                    Experimental features of AnythingLLM are features that we
-                    are piloting and are <b>opt-in</b>. We proactively will
-                    condition or warn you on any potential concerns should any
-                    exist prior to approval of any feature.
+                    Experimental features of AnythingLLM are features that we are piloting and are{" "}
+                    <b>opt-in</b>. We proactively will condition or warn you on any potential
+                    concerns should any exist prior to approval of any feature.
                   </p>
 
                   <div>
                     <p>
-                      Use of any feature on this page can result in, but not
-                      limited to, the following possibilities.
+                      Use of any feature on this page can result in, but not limited to, the
+                      following possibilities.
                     </p>
                     <ul className="list-disc ml-6 text-sm font-mono mt-2">
                       <li>Loss of data.</li>
                       <li>Change in quality of results.</li>
                       <li>Increased storage.</li>
                       <li>Increased resource consumption.</li>
-                      <li>
-                        Increased cost or use of any connected LLM or embedding
-                        provider.
-                      </li>
+                      <li>Increased cost or use of any connected LLM or embedding provider.</li>
                       <li>Potential bugs or issues using AnythingLLM.</li>
                     </ul>
                   </div>
 
                   <div>
                     <p>
-                      Use of an experimental feature also comes with the
-                      following list of non-exhaustive conditions.
+                      Use of an experimental feature also comes with the following list of
+                      non-exhaustive conditions.
                     </p>
                     <ul className="list-disc ml-6 text-sm font-mono mt-2">
                       <li>Feature may not exist in future updates.</li>
                       <li>The feature being used is not currently stable.</li>
                       <li>
-                        The feature may not be available in future versions,
-                        configurations, or subscriptions of AnythingLLM.
+                        The feature may not be available in future versions, configurations, or
+                        subscriptions of AnythingLLM.
                       </li>
                       <li>
-                        Your privacy settings <b>will be honored</b> with use of
-                        any beta feature.
+                        Your privacy settings <b>will be honored</b> with use of any beta feature.
                       </li>
                       <li>These conditions may change in future updates.</li>
                     </ul>
                   </div>
 
                   <p>
-                    Access to any features requires approval of this modal. If
-                    you would like to read more you can refer to{" "}
+                    Access to any features requires approval of this modal. If you would like to
+                    read more you can refer to{" "}
                     <a
                       href="https://docs.anythingllm.com/beta-preview/overview"
                       className="underline text-blue-500"
@@ -266,10 +235,7 @@ function FeatureVerification({ children }) {
                       docs.anythingllm.com
                     </a>{" "}
                     or email{" "}
-                    <a
-                      href="mailto:team@mintplexlabs.com"
-                      className="underline text-blue-500"
-                    >
+                    <a href="mailto:team@mintplexlabs.com" className="underline text-blue-500">
                       team@mintplexlabs.com
                     </a>
                   </p>

@@ -1,19 +1,13 @@
-import AgentWebSearchSelection from "./WebSearchSelection";
-import AgentSQLConnectorSelection from "./SQLConnectorSelection";
-import GenericSkillPanel from "./GenericSkillPanel";
-import DefaultSkillPanel from "./DefaultSkillPanel";
-import {
-  Brain,
-  File,
-  Browser,
-  ChartBar,
-  FileMagnifyingGlass,
-} from "@phosphor-icons/react";
-import RAGImage from "@/media/agents/rag-memory.png";
-import SummarizeImage from "@/media/agents/view-summarize.png";
-import ScrapeWebsitesImage from "@/media/agents/scrape-websites.png";
 import GenerateChartsImage from "@/media/agents/generate-charts.png";
 import GenerateSaveImages from "@/media/agents/generate-save-files.png";
+import RAGImage from "@/media/agents/rag-memory.png";
+import ScrapeWebsitesImage from "@/media/agents/scrape-websites.png";
+import SummarizeImage from "@/media/agents/view-summarize.png";
+import { Brain, Browser, ChartBar, File, FileMagnifyingGlass } from "@phosphor-icons/react";
+import DefaultSkillPanel from "./DefaultSkillPanel";
+import GenericSkillPanel from "./GenericSkillPanel";
+import AgentSQLConnectorSelection from "./SQLConnectorSelection";
+import AgentWebSearchSelection from "./WebSearchSelection";
 
 export const defaultSkills = {
   "rag-memory": {

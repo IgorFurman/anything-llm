@@ -9,13 +9,12 @@ export default function DataConnectorOption({ slug }) {
           <img src={image} alt={name} className="h-10 w-10 rounded" />
           <div className="ml-4 text-sm font-semibold">{name}</div>
         </div>
-        <div className="mt-2 text-xs font-base text-white tracking-wide">
-          {description}
-        </div>
+        <div className="mt-2 text-xs font-base text-white tracking-wide">{description}</div>
         <a
           href={link}
           target="_blank"
           className="mt-2 text-xs text-white font-medium underline"
+          rel="noreferrer"
         >
           {link}
         </a>

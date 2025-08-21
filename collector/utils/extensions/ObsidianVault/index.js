@@ -2,17 +2,11 @@ const { v4 } = require("uuid");
 const { default: slugify } = require("slugify");
 const path = require("path");
 const fs = require("fs");
-const {
-  writeToServerDocuments,
-  sanitizeFileName,
-  documentsFolder,
-} = require("../../files");
+const { writeToServerDocuments, sanitizeFileName, documentsFolder } = require("../../files");
 
 function parseObsidianVaultPath(files = []) {
   const possiblePaths = new Set();
-  files.forEach(
-    (file) => file?.path && possiblePaths.add(file.path.split("/")[0])
-  );
+  files.forEach((file) => file?.path && possiblePaths.add(file.path.split("/")[0]));
 
   switch (possiblePaths.size) {
     case 0:
@@ -26,21 +20,17 @@ function parseObsidianVaultPath(files = []) {
 }
 
 async function loadObsidianVault({ files = [] }) {
-  if (!files || files?.length === 0)
-    return { success: false, error: "No files provided" };
+  if (!files || files?.length === 0) return { success: false, error: "No files provided" };
   const vaultName = parseObsidianVaultPath(files);
   const folderUUId = v4().slice(0, 4);
   const outFolder = vaultName
     ? slugify(`obsidian-vault-${vaultName}-${folderUUId}`).toLowerCase()
     : slugify(`obsidian-${folderUUId}`).toLowerCase();
   const outFolderPath = path.resolve(documentsFolder, outFolder);
-  if (!fs.existsSync(outFolderPath))
-    fs.mkdirSync(outFolderPath, { recursive: true });
+  if (!fs.existsSync(outFolderPath)) fs.mkdirSync(outFolderPath, { recursive: true });
 
   console.log(
-    `Processing ${files.length} files from Obsidian Vault ${
-      vaultName ? `"${vaultName}"` : ""
-    }`
+    `Processing ${files.length} files from Obsidian Vault ${vaultName ? `"${vaultName}"` : ""}`
   );
   const results = [];
   for (const file of files) {
@@ -63,9 +53,7 @@ async function loadObsidianVault({ files = [] }) {
         token_count_estimate: fullPageContent.length / 4, // rough estimate
       };
 
-      const targetFileName = sanitizeFileName(
-        `${slugify(file.name)}-${data.id}`
-      );
+      const targetFileName = sanitizeFileName(`${slugify(file.name)}-${data.id}`);
       writeToServerDocuments({
         data,
         filename: targetFileName,

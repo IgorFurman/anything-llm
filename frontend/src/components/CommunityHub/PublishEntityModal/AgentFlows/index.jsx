@@ -1,10 +1,10 @@
-import { useState, useRef } from "react";
-import { useTranslation } from "react-i18next";
 import CommunityHub from "@/models/communityHub";
-import showToast from "@/utils/toast";
-import paths from "@/utils/paths";
-import { X, CaretRight } from "@phosphor-icons/react";
 import { BLOCK_INFO } from "@/pages/Admin/AgentBuilder/BlockList";
+import paths from "@/utils/paths";
+import showToast from "@/utils/toast";
+import { CaretRight, X } from "@phosphor-icons/react";
+import { useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 export default function AgentFlows({ entity }) {
@@ -36,8 +36,7 @@ export default function AgentFlows({ entity }) {
           visibility: "private",
         }),
       };
-      const { success, error, itemId } =
-        await CommunityHub.createAgentFlow(data);
+      const { success, error, itemId } = await CommunityHub.createAgentFlow(data);
       if (!success) throw new Error(error);
       setItemId(itemId);
       setIsSuccess(true);
@@ -116,9 +115,7 @@ export default function AgentFlows({ entity }) {
               minLength={3}
               maxLength={300}
               defaultValue={entity.name}
-              placeholder={t(
-                "community_hub.publish.agent_flow.name_placeholder"
-              )}
+              placeholder={t("community_hub.publish.agent_flow.name_placeholder")}
               className="border-none w-full bg-theme-bg-secondary rounded-lg p-2 text-theme-text-primary text-sm focus:outline-primary-button active:outline-primary-button outline-none placeholder:text-theme-text-placeholder"
             />
           </div>
@@ -136,9 +133,7 @@ export default function AgentFlows({ entity }) {
               minLength={10}
               maxLength={1000}
               defaultValue={entity.description}
-              placeholder={t(
-                "community_hub.publish.agent_flow.description_description"
-              )}
+              placeholder={t("community_hub.publish.agent_flow.description_description")}
               className="border-none w-full bg-theme-bg-secondary rounded-lg p-2 text-white text-sm focus:outline-primary-button active:outline-primary-button outline-none min-h-[80px] placeholder:text-theme-text-placeholder"
             />
           </div>
@@ -170,9 +165,7 @@ export default function AgentFlows({ entity }) {
                 value={tagInput}
                 onChange={(e) => setTagInput(e.target.value)}
                 onKeyDown={handleKeyDown}
-                placeholder={t(
-                  "community_hub.publish.agent_flow.tags_placeholder"
-                )}
+                placeholder={t("community_hub.publish.agent_flow.tags_placeholder")}
                 className="flex-1 min-w-[200px] border-none text-sm bg-transparent text-theme-text-primary placeholder:text-theme-text-placeholder p-0 h-[24px] focus:outline-none"
               />
             </div>
@@ -200,9 +193,7 @@ export default function AgentFlows({ entity }) {
               entity.steps.map((step, idx) => {
                 const info = BLOCK_INFO[step.type];
                 const isExpanded = expandedStep === idx;
-                const summary = info?.getSummary
-                  ? info.getSummary(step.config)
-                  : "";
+                const summary = info?.getSummary ? info.getSummary(step.config) : "";
                 return (
                   <div key={idx} className="flex flex-col items-center w-full">
                     <div
@@ -232,17 +223,13 @@ export default function AgentFlows({ entity }) {
                       )}
                     </div>
                     {idx < entity.steps.length - 1 && (
-                      <span className="text-theme-text-secondary text-lg my-1">
-                        ↓
-                      </span>
+                      <span className="text-theme-text-secondary text-lg my-1">↓</span>
                     )}
                   </div>
                 );
               })
             ) : (
-              <div className="text-theme-text-secondary text-xs">
-                No steps defined.
-              </div>
+              <div className="text-theme-text-secondary text-xs">No steps defined.</div>
             )}
           </div>
           <button

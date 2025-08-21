@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { X } from "@phosphor-icons/react";
 import System from "@/models/system";
 import showToast from "@/utils/toast";
+import { X } from "@phosphor-icons/react";
+import React, { useState } from "react";
 
 export default function EditVariableModal({ variable, closeModal, onRefresh }) {
   const [error, setError] = useState(null);
@@ -12,8 +12,7 @@ export default function EditVariableModal({ variable, closeModal, onRefresh }) {
     setError(null);
     const formData = new FormData(e.target);
     const updatedVariable = {};
-    for (const [key, value] of formData.entries())
-      updatedVariable[key] = value.trim();
+    for (const [key, value] of formData.entries()) updatedVariable[key] = value.trim();
 
     if (!updatedVariable.key || !updatedVariable.value) {
       setError("Key and value are required");
@@ -52,10 +51,7 @@ export default function EditVariableModal({ variable, closeModal, onRefresh }) {
           <form onSubmit={handleUpdate}>
             <div className="space-y-4">
               <div>
-                <label
-                  htmlFor="key"
-                  className="block mb-2 text-sm font-medium text-white"
-                >
+                <label htmlFor="key" className="block mb-2 text-sm font-medium text-white">
                   Key
                 </label>
                 <input
@@ -71,15 +67,12 @@ export default function EditVariableModal({ variable, closeModal, onRefresh }) {
                   pattern="^[a-zA-Z0-9_]+$"
                 />
                 <p className="mt-2 text-xs text-white/60">
-                  Key must be unique and will be used in prompts as {"{key}"}.
-                  Only letters, numbers and underscores are allowed.
+                  Key must be unique and will be used in prompts as {"{key}"}. Only letters, numbers
+                  and underscores are allowed.
                 </p>
               </div>
               <div>
-                <label
-                  htmlFor="value"
-                  className="block mb-2 text-sm font-medium text-white"
-                >
+                <label htmlFor="value" className="block mb-2 text-sm font-medium text-white">
                   Value
                 </label>
                 <input
@@ -93,10 +86,7 @@ export default function EditVariableModal({ variable, closeModal, onRefresh }) {
                 />
               </div>
               <div>
-                <label
-                  htmlFor="description"
-                  className="block mb-2 text-sm font-medium text-white"
-                >
+                <label htmlFor="description" className="block mb-2 text-sm font-medium text-white">
                   Description
                 </label>
                 <input

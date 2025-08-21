@@ -3,7 +3,7 @@ const prisma = require("../utils/prisma");
 const CMD_REGEX = new RegExp(/[^a-zA-Z0-9_-]/g);
 
 const SlashCommandPresets = {
-  formatCommand: function (command = "") {
+  formatCommand: (command = "") => {
     if (!command || command.length < 2) return `/${v4().split("-")[0]}`;
 
     let adjustedCmd = command.toLowerCase(); // force lowercase
@@ -11,7 +11,7 @@ const SlashCommandPresets = {
     return `/${adjustedCmd.slice(1).toLowerCase().replace(CMD_REGEX, "-")}`; // replace any invalid chars with '-'
   },
 
-  get: async function (clause = {}) {
+  get: async (clause = {}) => {
     try {
       const preset = await prisma.slash_command_presets.findFirst({
         where: clause,
@@ -23,7 +23,7 @@ const SlashCommandPresets = {
     }
   },
 
-  where: async function (clause = {}, limit) {
+  where: async (clause = {}, limit) => {
     try {
       const presets = await prisma.slash_command_presets.findMany({
         where: clause,
@@ -45,9 +45,7 @@ const SlashCommandPresets = {
       });
 
       if (existingPreset) {
-        console.log(
-          "SlashCommandPresets.create - preset already exists - will not create"
-        );
+        console.log("SlashCommandPresets.create - preset already exists - will not create");
         return existingPreset;
       }
 
@@ -69,7 +67,7 @@ const SlashCommandPresets = {
     }
   },
 
-  getUserPresets: async function (userId = null) {
+  getUserPresets: async (userId = null) => {
     try {
       return (
         await prisma.slash_command_presets.findMany({
@@ -88,7 +86,7 @@ const SlashCommandPresets = {
     }
   },
 
-  update: async function (presetId = null, presetData = {}) {
+  update: async (presetId = null, presetData = {}) => {
     try {
       const preset = await prisma.slash_command_presets.update({
         where: { id: Number(presetId) },
@@ -101,7 +99,7 @@ const SlashCommandPresets = {
     }
   },
 
-  delete: async function (presetId = null) {
+  delete: async (presetId = null) => {
     try {
       await prisma.slash_command_presets.delete({
         where: { id: Number(presetId) },

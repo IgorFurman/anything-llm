@@ -1,25 +1,25 @@
-import React, { memo } from "react";
-import { Info, Warning } from "@phosphor-icons/react";
-import UserIcon from "../../../../UserIcon";
-import Actions from "./Actions";
+import { chatQueryRefusalResponse } from "@/utils/chat";
 import renderMarkdown from "@/utils/chat/markdown";
-import { userFromStorage } from "@/utils/request";
-import Citations from "../Citation";
-import { v4 } from "uuid";
 import DOMPurify from "@/utils/chat/purify";
-import { EditMessageForm, useEditMessage } from "./Actions/EditMessage";
-import { useWatchDeleteMessage } from "./Actions/DeleteMessage";
-import TTSMessage from "./Actions/TTSButton";
+import paths from "@/utils/paths";
+import { userFromStorage } from "@/utils/request";
+import { Info, Warning } from "@phosphor-icons/react";
+import React, { memo } from "react";
+import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
+import { v4 } from "uuid";
+import UserIcon from "../../../../UserIcon";
+import Citations from "../Citation";
 import {
   THOUGHT_REGEX_CLOSE,
   THOUGHT_REGEX_COMPLETE,
   THOUGHT_REGEX_OPEN,
   ThoughtChainComponent,
 } from "../ThoughtContainer";
-import paths from "@/utils/paths";
-import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
-import { chatQueryRefusalResponse } from "@/utils/chat";
+import Actions from "./Actions";
+import { useWatchDeleteMessage } from "./Actions/DeleteMessage";
+import { EditMessageForm, useEditMessage } from "./Actions/EditMessage";
+import TTSMessage from "./Actions/TTSButton";
 
 const HistoricalMessage = ({
   uuid = v4(),
@@ -50,22 +50,17 @@ const HistoricalMessage = ({
     element.style.height = element.scrollHeight + "px";
   };
 
-  const isRefusalMessage =
-    role === "assistant" && message === chatQueryRefusalResponse(workspace);
+  const isRefusalMessage = role === "assistant" && message === chatQueryRefusalResponse(workspace);
 
   if (!!error) {
     return (
-      <div
-        key={uuid}
-        className={`flex justify-center items-end w-full bg-theme-bg-chat`}
-      >
+      <div key={uuid} className={`flex justify-center items-end w-full bg-theme-bg-chat`}>
         <div className="py-8 px-4 w-full flex gap-x-5 md:max-w-[80%] flex-col">
           <div className={`flex gap-x-5 ${alignmentCls}`}>
             <ProfileImage role={role} workspace={workspace} />
             <div className="p-2 rounded-lg bg-red-50 text-red-500">
               <span className="inline-block">
-                <Warning className="h-4 w-4 mb-1 inline-block" /> Could not
-                respond to message.
+                <Warning className="h-4 w-4 mb-1 inline-block" /> Could not respond to message.
               </span>
               <p className="text-xs font-mono mt-2 border-l-2 border-red-300 pl-2 bg-red-200 p-2 rounded-sm">
                 {error}
@@ -93,11 +88,7 @@ const HistoricalMessage = ({
             <ProfileImage role={role} workspace={workspace} />
             <div className="mt-1 -mb-10">
               {role === "assistant" && (
-                <TTSMessage
-                  slug={workspace?.slug}
-                  chatId={chatId}
-                  message={message}
-                />
+                <TTSMessage slug={workspace?.slug} chatId={chatId} message={message} />
               )}
             </div>
           </div>
@@ -112,11 +103,7 @@ const HistoricalMessage = ({
             />
           ) : (
             <div className="break-words">
-              <RenderChatContent
-                role={role}
-                message={message}
-                expanded={isLastMessage}
-              />
+              <RenderChatContent role={role} message={message} expanded={isLastMessage} />
               {isRefusalMessage && (
                 <Link
                   data-tooltip-id="query-refusal-info"
@@ -201,11 +188,7 @@ function ChatAttachments({ attachments = [] }) {
   return (
     <div className="flex flex-wrap gap-2">
       {attachments.map((item) => (
-        <img
-          key={item.name}
-          src={item.contentString}
-          className="max-w-[300px] rounded-md"
-        />
+        <img key={item.name} src={item.contentString} className="max-w-[300px] rounded-md" />
       ))}
     </div>
   );
@@ -237,10 +220,7 @@ const RenderChatContent = memo(
     // If the message is a thought chain but not a complete thought chain (matching opening tags but not closing tags),
     // we can render it as a thought chain if we can at least find a closing tag
     // This can occur when the assistant starts with <thinking> and then <response>'s later.
-    if (
-      message.match(THOUGHT_REGEX_OPEN) &&
-      message.match(THOUGHT_REGEX_CLOSE)
-    ) {
+    if (message.match(THOUGHT_REGEX_OPEN) && message.match(THOUGHT_REGEX_CLOSE)) {
       const closingTag = message.match(THOUGHT_REGEX_CLOSE)?.[0];
       const splitMessage = message.split(closingTag);
       thoughtChain = splitMessage[0] + closingTag;
@@ -249,9 +229,7 @@ const RenderChatContent = memo(
 
     return (
       <>
-        {thoughtChain && (
-          <ThoughtChainComponent content={thoughtChain} expanded={expanded} />
-        )}
+        {thoughtChain && <ThoughtChainComponent content={thoughtChain} expanded={expanded} />}
         <span
           className="flex flex-col gap-y-1"
           dangerouslySetInnerHTML={{

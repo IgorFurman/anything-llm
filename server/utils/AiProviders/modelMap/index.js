@@ -36,12 +36,10 @@ class ContextWindowFinder {
   constructor() {
     if (ContextWindowFinder.instance) return ContextWindowFinder.instance;
     ContextWindowFinder.instance = this;
-    if (!fs.existsSync(this.cacheLocation))
-      fs.mkdirSync(this.cacheLocation, { recursive: true });
+    if (!fs.existsSync(this.cacheLocation)) fs.mkdirSync(this.cacheLocation, { recursive: true });
 
     // If the cache is stale or not found at all, pull the model map from remote
-    if (this.isCacheStale || !fs.existsSync(this.cacheFilePath))
-      this.#pullRemoteModelMap();
+    if (this.isCacheStale || !fs.existsSync(this.cacheFilePath)) this.#pullRemoteModelMap();
   }
 
   log(text, ...args) {
@@ -84,9 +82,7 @@ You can fix this by restarting AnythingLLM so the model map is re-pulled.
       this.seenStaleCacheWarning = true;
     }
 
-    return JSON.parse(
-      fs.readFileSync(this.cacheFilePath, { encoding: "utf8" })
-    );
+    return JSON.parse(fs.readFileSync(this.cacheFilePath, { encoding: "utf8" }));
   }
 
   /**
@@ -99,9 +95,7 @@ You can fix this by restarting AnythingLLM so the model map is re-pulled.
       const remoteContexWindowMap = await fetch(ContextWindowFinder.remoteUrl)
         .then((res) => {
           if (res.status !== 200)
-            throw new Error(
-              "Failed to fetch remote model map - non 200 status code"
-            );
+            throw new Error("Failed to fetch remote model map - non 200 status code");
           return res.json();
         })
         .then((data) => {
@@ -131,9 +125,7 @@ You can fix this by restarting AnythingLLM so the model map is re-pulled.
     for (const [provider, models] of Object.entries(modelMap)) {
       // If the models is null/falsey or has no keys, throw an error
       if (typeof models !== "object")
-        throw new Error(
-          `Invalid model map for ${provider} - models is not an object`
-        );
+        throw new Error(`Invalid model map for ${provider} - models is not an object`);
       if (!models || Object.keys(models).length === 0)
         throw new Error(`Invalid model map for ${provider} - no models found!`);
 
@@ -188,8 +180,7 @@ You can fix this by restarting AnythingLLM so the model map is re-pulled.
    * @returns {number|null} - The context window for the given provider and model
    */
   get(provider = null, model = null) {
-    if (!provider || !this.cachedModelMap || !this.cachedModelMap[provider])
-      return null;
+    if (!provider || !this.cachedModelMap || !this.cachedModelMap[provider]) return null;
     if (!model) return this.cachedModelMap[provider];
 
     const modelContextWindow = this.cachedModelMap[provider][model];

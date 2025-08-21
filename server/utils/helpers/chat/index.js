@@ -53,8 +53,7 @@ async function messageArrayCompressor(llm, messages = [], rawHistory = []) {
   const tokenBuffer = 600;
   const tokenManager = new TokenManager(llm.model);
   // If no work needs to be done, just pass through.
-  if (tokenManager.statsFrom(messages) + tokenBuffer < llm.promptWindowLimit())
-    return messages;
+  if (tokenManager.statsFrom(messages) + tokenBuffer < llm.promptWindowLimit()) return messages;
 
   const system = messages.shift();
   const user = messages.pop();
@@ -194,10 +193,7 @@ async function messageStringCompressor(llm, promptArgs = {}, rawHistory = []) {
   const tokenBuffer = 600;
   const tokenManager = new TokenManager(llm.model);
   const initialPrompt = llm.constructPrompt(promptArgs);
-  if (
-    tokenManager.statsFrom(initialPrompt) + tokenBuffer <
-    llm.promptWindowLimit()
-  )
+  if (tokenManager.statsFrom(initialPrompt) + tokenBuffer < llm.promptWindowLimit())
     return initialPrompt;
 
   const system = promptArgs.systemPrompt;
@@ -415,8 +411,7 @@ function fillSourceWindow({
       break;
     }
 
-    const chatSources =
-      safeJsonParse(chat.response, { sources: [] })?.sources || [];
+    const chatSources = safeJsonParse(chat.response, { sources: [] })?.sources || [];
     if (!chatSources?.length || !Array.isArray(chatSources)) continue;
 
     const validSources = chatSources.filter((source) => {

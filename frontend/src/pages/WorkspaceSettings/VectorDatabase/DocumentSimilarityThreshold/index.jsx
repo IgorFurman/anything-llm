@@ -1,9 +1,6 @@
 import { useTranslation } from "react-i18next";
 
-export default function DocumentSimilarityThreshold({
-  workspace,
-  setHasChanges,
-}) {
+export default function DocumentSimilarityThreshold({ workspace, setHasChanges }) {
   const { t } = useTranslation();
   return (
     <div>

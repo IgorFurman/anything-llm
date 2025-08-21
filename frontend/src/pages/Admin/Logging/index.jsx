@@ -1,13 +1,13 @@
 import Sidebar from "@/components/SettingsSidebar";
+import CTAButton from "@/components/lib/CTAButton";
 import useQuery from "@/hooks/useQuery";
 import System from "@/models/system";
+import showToast from "@/utils/toast";
 import { useEffect, useState } from "react";
 import { isMobile } from "react-device-detect";
+import { useTranslation } from "react-i18next";
 import * as Skeleton from "react-loading-skeleton";
 import LogRow from "./LogRow";
-import showToast from "@/utils/toast";
-import CTAButton from "@/components/lib/CTAButton";
-import { useTranslation } from "react-i18next";
 
 export default function AdminLogs() {
   const query = useQuery();
@@ -29,9 +29,7 @@ export default function AdminLogs() {
 
   const handleResetLogs = async () => {
     if (
-      !window.confirm(
-        "Are you sure you want to clear all event logs? This action is irreversible."
-      )
+      !window.confirm("Are you sure you want to clear all event logs? This action is irreversible.")
     )
       return;
     const { success, error } = await System.clearEventLogs();
@@ -72,10 +70,7 @@ export default function AdminLogs() {
             </p>
           </div>
           <div className="w-full justify-end flex">
-            <CTAButton
-              onClick={handleResetLogs}
-              className="mt-3 mr-0 mb-4 md:-mb-14 z-10"
-            >
+            <CTAButton onClick={handleResetLogs} className="mt-3 mr-0 mb-4 md:-mb-14 z-10">
               {t("event.clear")}
             </CTAButton>
           </div>
@@ -95,14 +90,7 @@ export default function AdminLogs() {
   );
 }
 
-function LogsContainer({
-  loading,
-  logs,
-  offset,
-  canNext,
-  handleNext,
-  handlePrevious,
-}) {
+function LogsContainer({ loading, logs, offset, canNext, handleNext, handlePrevious }) {
   const { t } = useTranslation();
   if (loading) {
     return (
@@ -137,9 +125,7 @@ function LogsContainer({
             </th>
           </tr>
         </thead>
-        <tbody>
-          {!!logs && logs.map((log) => <LogRow key={log.id} log={log} />)}
-        </tbody>
+        <tbody>{!!logs && logs.map((log) => <LogRow key={log.id} log={log} />)}</tbody>
       </table>
       <div className="flex w-full justify-between items-center mt-6">
         <button

@@ -1,16 +1,10 @@
 import React from "react";
 
-export default function FileNode({
-  config,
-  onConfigChange,
-  renderVariableSelect,
-}) {
+export default function FileNode({ config, onConfigChange, renderVariableSelect }) {
   return (
     <div className="space-y-4">
       <div>
-        <label className="block text-sm font-medium text-white mb-2">
-          Operation
-        </label>
+        <label className="block text-sm font-medium text-white mb-2">Operation</label>
         <select
           value={config.operation}
           onChange={(e) => onConfigChange({ operation: e.target.value })}
@@ -28,9 +22,7 @@ export default function FileNode({
         </select>
       </div>
       <div>
-        <label className="block text-sm font-medium text-white mb-2">
-          File Path
-        </label>
+        <label className="block text-sm font-medium text-white mb-2">File Path</label>
         <input
           type="text"
           placeholder="/path/to/file"
@@ -43,9 +35,7 @@ export default function FileNode({
       </div>
       {config.operation !== "read" && (
         <div>
-          <label className="block text-sm font-medium text-white mb-2">
-            Content
-          </label>
+          <label className="block text-sm font-medium text-white mb-2">Content</label>
           <textarea
             placeholder="File content..."
             value={config.content}
@@ -58,9 +48,7 @@ export default function FileNode({
         </div>
       )}
       <div>
-        <label className="block text-sm font-medium text-white mb-2">
-          Store Result In
-        </label>
+        <label className="block text-sm font-medium text-white mb-2">Store Result In</label>
         {renderVariableSelect(
           config.resultVariable,
           (value) => onConfigChange({ resultVariable: value }),

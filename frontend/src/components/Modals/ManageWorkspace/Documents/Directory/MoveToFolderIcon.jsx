@@ -1,8 +1,4 @@
-export default function MoveToFolderIcon({
-  className,
-  width = 18,
-  height = 18,
-}) {
+export default function MoveToFolderIcon({ className, width = 18, height = 18 }) {
   return (
     <svg
       width={width}

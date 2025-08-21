@@ -1,12 +1,12 @@
 import { ArrowLeft, ArrowRight } from "@phosphor-icons/react";
 import { useState } from "react";
 import { isMobile } from "react-device-detect";
+import CreateWorkspace from "./CreateWorkspace";
+import DataHandling from "./DataHandling";
 import Home from "./Home";
 import LLMPreference from "./LLMPreference";
-import UserSetup from "./UserSetup";
-import DataHandling from "./DataHandling";
 import Survey from "./Survey";
-import CreateWorkspace from "./CreateWorkspace";
+import UserSetup from "./UserSetup";
 
 const OnboardingSteps = {
   home: Home,
@@ -115,9 +115,7 @@ export function OnboardingLayout({ children }) {
           <h1 className="text-theme-text-primary font-semibold text-center text-2xl">
             {header.title}
           </h1>
-          <p className="text-theme-text-secondary text-base text-center">
-            {header.description}
-          </p>
+          <p className="text-theme-text-secondary text-base text-center">{header.description}</p>
         </div>
         {children(setHeader, setBackBtn, setForwardBtn)}
       </div>

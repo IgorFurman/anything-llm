@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import SlashCommandIcon from "./icons/SlashCommandIcon";
-import { Tooltip } from "react-tooltip";
-import ResetCommand from "./reset";
-import EndAgentSession from "./endAgentSession";
-import SlashPresets from "./SlashPresets";
 import { useTranslation } from "react-i18next";
+import { Tooltip } from "react-tooltip";
+import SlashPresets from "./SlashPresets";
+import EndAgentSession from "./endAgentSession";
+import SlashCommandIcon from "./icons/SlashCommandIcon";
+import ResetCommand from "./reset";
 
 export default function SlashCommandsButton({ showing, setShowSlashCommand }) {
   const { t } = useTranslation();
@@ -14,9 +14,7 @@ export default function SlashCommandsButton({ showing, setShowSlashCommand }) {
       data-tooltip-id="tooltip-slash-cmd-btn"
       data-tooltip-content={t("chat_window.slash")}
       onClick={() => setShowSlashCommand(!showing)}
-      className={`flex justify-center items-center cursor-pointer ${
-        showing ? "!opacity-100" : ""
-      }`}
+      className={`flex justify-center items-center cursor-pointer ${showing ? "!opacity-100" : ""}`}
     >
       <SlashCommandIcon
         color="var(--theme-sidebar-footer-icon-fill)"
@@ -58,11 +56,7 @@ export function SlashCommands({ showing, setShowing, sendCommand, promptRef }) {
         >
           <ResetCommand sendCommand={sendCommand} setShowing={setShowing} />
           <EndAgentSession sendCommand={sendCommand} setShowing={setShowing} />
-          <SlashPresets
-            sendCommand={sendCommand}
-            setShowing={setShowing}
-            promptRef={promptRef}
-          />
+          <SlashPresets sendCommand={sendCommand} setShowing={setShowing} promptRef={promptRef} />
         </div>
       </div>
     </div>

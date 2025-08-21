@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
 import System from "@/models/system";
+import { useEffect, useState } from "react";
 
 export default function GroqAiOptions({ settings }) {
   const [inputValue, setInputValue] = useState(settings?.GroqApiKey);
@@ -8,9 +8,7 @@ export default function GroqAiOptions({ settings }) {
   return (
     <div className="flex gap-[36px] mt-1.5">
       <div className="flex flex-col w-60">
-        <label className="text-white text-sm font-semibold block mb-3">
-          Groq API Key
-        </label>
+        <label className="text-white text-sm font-semibold block mb-3">Groq API Key</label>
         <input
           type="password"
           name="GroqApiKey"
@@ -25,9 +23,7 @@ export default function GroqAiOptions({ settings }) {
         />
       </div>
 
-      {!settings?.credentialsOnly && (
-        <GroqAIModelSelection settings={settings} apiKey={apiKey} />
-      )}
+      {!settings?.credentialsOnly && <GroqAIModelSelection settings={settings} apiKey={apiKey} />}
     </div>
   );
 }
@@ -61,9 +57,7 @@ function GroqAIModelSelection({ apiKey, settings }) {
   if (loading) {
     return (
       <div className="flex flex-col w-60">
-        <label className="text-white text-sm font-semibold block mb-3">
-          Chat Model Selection
-        </label>
+        <label className="text-white text-sm font-semibold block mb-3">Chat Model Selection</label>
         <select
           name="GroqModelPref"
           disabled={true}
@@ -82,9 +76,7 @@ function GroqAIModelSelection({ apiKey, settings }) {
 
   return (
     <div className="flex flex-col w-60">
-      <label className="text-white text-sm font-semibold block mb-3">
-        Chat Model Selection
-      </label>
+      <label className="text-white text-sm font-semibold block mb-3">Chat Model Selection</label>
       <select
         name="GroqModelPref"
         required={true}

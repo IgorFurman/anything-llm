@@ -1,18 +1,14 @@
-import { useState, useEffect } from "react";
 import System from "@/models/system";
+import { useEffect, useState } from "react";
 
 export default function ElevenLabsOptions({ settings }) {
   const [inputValue, setInputValue] = useState(settings?.TTSElevenLabsKey);
-  const [elevenLabsKey, setElevenLabsKey] = useState(
-    settings?.TTSElevenLabsKey
-  );
+  const [elevenLabsKey, setElevenLabsKey] = useState(settings?.TTSElevenLabsKey);
 
   return (
     <div className="flex gap-x-4">
       <div className="flex flex-col w-60">
-        <label className="text-white text-sm font-semibold block mb-3">
-          API Key
-        </label>
+        <label className="text-white text-sm font-semibold block mb-3">API Key</label>
         <input
           type="password"
           name="TTSElevenLabsKey"
@@ -62,9 +58,7 @@ function ElevenLabsModelSelection({ apiKey, settings }) {
   if (loading) {
     return (
       <div className="flex flex-col w-60">
-        <label className="text-white text-sm font-semibold block mb-3">
-          Chat Model Selection
-        </label>
+        <label className="text-white text-sm font-semibold block mb-3">Chat Model Selection</label>
         <select
           name="TTSElevenLabsVoiceModel"
           disabled={true}
@@ -80,9 +74,7 @@ function ElevenLabsModelSelection({ apiKey, settings }) {
 
   return (
     <div className="flex flex-col w-60">
-      <label className="text-white text-sm font-semibold block mb-3">
-        Chat Model Selection
-      </label>
+      <label className="text-white text-sm font-semibold block mb-3">Chat Model Selection</label>
       <select
         name="TTSElevenLabsVoiceModel"
         required={true}

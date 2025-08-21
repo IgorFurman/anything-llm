@@ -1,9 +1,9 @@
-import React, { useState } from "react";
 import Invite from "@/models/invite";
-import paths from "@/utils/paths";
-import { useParams } from "react-router-dom";
-import { AUTH_TOKEN, AUTH_USER } from "@/utils/constants";
 import System from "@/models/system";
+import { AUTH_TOKEN, AUTH_USER } from "@/utils/constants";
+import paths from "@/utils/paths";
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 
 export default function NewUserModal() {
   const { code } = useParams();
@@ -34,9 +34,7 @@ export default function NewUserModal() {
     <div className="relative w-full max-w-2xl max-h-full">
       <div className="relative w-full max-w-2xl bg-theme-bg-secondary rounded-lg shadow border-2 border-theme-modal-border">
         <div className="flex items-start justify-between p-4 border-b rounded-t border-theme-modal-border">
-          <h3 className="text-xl font-semibold text-theme-text-primary">
-            Create a new account
-          </h3>
+          <h3 className="text-xl font-semibold text-theme-text-primary">Create a new account</h3>
         </div>
         <form onSubmit={handleCreate}>
           <div className="p-6 space-y-6 flex h-full w-full">
@@ -77,8 +75,8 @@ export default function NewUserModal() {
               </div>
               {error && <p className="text-red-400 text-sm">Error: {error}</p>}
               <p className="text-theme-text-secondary text-xs md:text-sm">
-                After creating your account you will be able to login with these
-                credentials and start using workspaces.
+                After creating your account you will be able to login with these credentials and
+                start using workspaces.
               </p>
             </div>
           </div>

@@ -1,7 +1,7 @@
 const prisma = require("../utils/prisma");
 
 const PromptHistory = {
-  new: async function ({ workspaceId, prompt, modifiedBy = null }) {
+  new: async ({ workspaceId, prompt, modifiedBy = null }) => {
     try {
       const history = await prisma.prompt_history.create({
         data: {
@@ -24,19 +24,13 @@ const PromptHistory = {
    * @param {string|null} orderBy - The field to order the history by.
    * @returns {Promise<Array<{id: number, prompt: string, modifiedAt: Date, modifiedBy: number, user: {username: string}}>>} A promise that resolves to an array of prompt history objects.
    */
-  forWorkspace: async function (
-    workspaceId = null,
-    limit = null,
-    orderBy = null
-  ) {
+  forWorkspace: async (workspaceId = null, limit = null, orderBy = null) => {
     if (!workspaceId) return [];
     try {
       const history = await prisma.prompt_history.findMany({
         where: { workspaceId: Number(workspaceId) },
         ...(limit !== null ? { take: limit } : {}),
-        ...(orderBy !== null
-          ? { orderBy }
-          : { orderBy: { modifiedAt: "desc" } }),
+        ...(orderBy !== null ? { orderBy } : { orderBy: { modifiedAt: "desc" } }),
         include: {
           user: {
             select: {
@@ -52,7 +46,7 @@ const PromptHistory = {
     }
   },
 
-  get: async function (clause = {}, limit = null, orderBy = null) {
+  get: async (clause = {}, limit = null, orderBy = null) => {
     try {
       const history = await prisma.prompt_history.findFirst({
         where: clause,
@@ -75,7 +69,7 @@ const PromptHistory = {
     }
   },
 
-  delete: async function (clause = {}) {
+  delete: async (clause = {}) => {
     try {
       await prisma.prompt_history.deleteMany({ where: clause });
       return true;

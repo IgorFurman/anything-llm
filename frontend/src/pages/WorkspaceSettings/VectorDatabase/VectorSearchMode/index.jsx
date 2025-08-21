@@ -17,11 +17,8 @@ const hint = {
 };
 
 export default function VectorSearchMode({ workspace, setHasChanges }) {
-  const [selection, setSelection] = useState(
-    workspace?.vectorSearchMode ?? "default"
-  );
-  if (!workspace?.vectorDB || !supportedVectorDBs.includes(workspace?.vectorDB))
-    return null;
+  const [selection, setSelection] = useState(workspace?.vectorSearchMode ?? "default");
+  if (!workspace?.vectorDB || !supportedVectorDBs.includes(workspace?.vectorDB)) return null;
 
   return (
     <div>

@@ -2,20 +2,20 @@ import System from "@/models/system";
 import paths from "@/utils/paths";
 import {
   BookOpen,
-  DiscordLogo,
-  GithubLogo,
   Briefcase,
+  DiscordLogo,
   Envelope,
+  GithubLogo,
   Globe,
   HouseLine,
   Info,
   LinkSimple,
 } from "@phosphor-icons/react";
 import React, { useEffect, useState } from "react";
-import SettingsButton from "../SettingsButton";
 import { isMobile } from "react-device-detect";
-import { Tooltip } from "react-tooltip";
 import { Link } from "react-router-dom";
+import { Tooltip } from "react-tooltip";
+import SettingsButton from "../SettingsButton";
 
 export const MAX_ICONS = 3;
 export const ICON_COMPONENTS = {
@@ -102,12 +102,7 @@ export default function Footer() {
           </div>
           {!isMobile && <SettingsButton />}
         </div>
-        <Tooltip
-          id="footer-item"
-          place="top"
-          delayShow={300}
-          className="tooltip !text-xs z-99"
-        />
+        <Tooltip id="footer-item" place="top" delayShow={300} className="tooltip !text-xs z-99" />
       </div>
     );
   }
@@ -123,24 +118,16 @@ export default function Footer() {
             rel="noreferrer"
             className="transition-all duration-300 flex w-fit h-fit p-2 p-2 rounded-full bg-theme-sidebar-footer-icon hover:bg-theme-sidebar-footer-icon-hover hover:border-slate-100"
           >
-            {React.createElement(
-              ICON_COMPONENTS?.[item.icon] ?? ICON_COMPONENTS.Info,
-              {
-                weight: "fill",
-                className: "h-5 w-5",
-                color: "var(--theme-sidebar-footer-icon-fill)",
-              }
-            )}
+            {React.createElement(ICON_COMPONENTS?.[item.icon] ?? ICON_COMPONENTS.Info, {
+              weight: "fill",
+              className: "h-5 w-5",
+              color: "var(--theme-sidebar-footer-icon-fill)",
+            })}
           </a>
         ))}
         {!isMobile && <SettingsButton />}
       </div>
-      <Tooltip
-        id="footer-item"
-        place="top"
-        delayShow={300}
-        className="tooltip !text-xs z-99"
-      />
+      <Tooltip id="footer-item" place="top" delayShow={300} className="tooltip !text-xs z-99" />
     </div>
   );
 }

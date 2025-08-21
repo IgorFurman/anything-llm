@@ -25,7 +25,7 @@ const ApiKey = {
     }
   },
 
-  get: async function (clause = {}) {
+  get: async (clause = {}) => {
     try {
       const apiKey = await prisma.api_keys.findFirst({ where: clause });
       return apiKey;
@@ -35,7 +35,7 @@ const ApiKey = {
     }
   },
 
-  count: async function (clause = {}) {
+  count: async (clause = {}) => {
     try {
       const count = await prisma.api_keys.count({ where: clause });
       return count;
@@ -45,7 +45,7 @@ const ApiKey = {
     }
   },
 
-  delete: async function (clause = {}) {
+  delete: async (clause = {}) => {
     try {
       await prisma.api_keys.deleteMany({ where: clause });
       return true;
@@ -55,7 +55,7 @@ const ApiKey = {
     }
   },
 
-  where: async function (clause = {}, limit) {
+  where: async (clause = {}, limit) => {
     try {
       const apiKeys = await prisma.api_keys.findMany({
         where: clause,

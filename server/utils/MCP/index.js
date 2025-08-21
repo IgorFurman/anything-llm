@@ -37,59 +37,50 @@ class MCPCompatibilityLayer extends MCPHypervisor {
       plugins.push({
         name: `${name}-${tool.name}`,
         description: tool.description,
-        plugin: function () {
-          return {
-            name: `${name}-${tool.name}`,
-            setup: (aibitat) => {
-              aibitat.function({
-                super: aibitat,
-                name: `${name}-${tool.name}`,
-                controller: new AbortController(),
-                description: tool.description,
-                examples: [],
-                parameters: {
-                  $schema: "http://json-schema.org/draft-07/schema#",
-                  ...tool.inputSchema,
-                },
-                handler: async function (args = {}) {
-                  try {
-                    aibitat.handlerProps.log(
-                      `Executing MCP server: ${name}:${tool.name} with args:`,
-                      args
-                    );
-                    aibitat.introspect(
-                      `Executing MCP server: ${name} with ${JSON.stringify(args, null, 2)}`
-                    );
-                    const result = await mcp.callTool({
-                      name: tool.name,
-                      arguments: args,
-                    });
-                    aibitat.handlerProps.log(
-                      `MCP server: ${name}:${tool.name} completed successfully`,
-                      result
-                    );
-                    aibitat.introspect(
-                      `MCP server: ${name}:${tool.name} completed successfully`
-                    );
-                    return typeof result === "object"
-                      ? JSON.stringify(result)
-                      : String(result);
-                  } catch (error) {
-                    aibitat.handlerProps.log(
-                      `MCP server: ${name}:${tool.name} failed with error:`,
-                      error
-                    );
-                    aibitat.introspect(
-                      `MCP server: ${name}:${tool.name} failed with error:`,
-                      error
-                    );
-                    return `The tool ${name}:${tool.name} failed with error: ${error?.message || "An unknown error occurred"}`;
-                  }
-                },
-              });
-            },
-          };
-        },
+        plugin: () => ({
+          name: `${name}-${tool.name}`,
+          setup: (aibitat) => {
+            aibitat.function({
+              super: aibitat,
+              name: `${name}-${tool.name}`,
+              controller: new AbortController(),
+              description: tool.description,
+              examples: [],
+              parameters: {
+                $schema: "http://json-schema.org/draft-07/schema#",
+                ...tool.inputSchema,
+              },
+              handler: async (args = {}) => {
+                try {
+                  aibitat.handlerProps.log(
+                    `Executing MCP server: ${name}:${tool.name} with args:`,
+                    args
+                  );
+                  aibitat.introspect(
+                    `Executing MCP server: ${name} with ${JSON.stringify(args, null, 2)}`
+                  );
+                  const result = await mcp.callTool({
+                    name: tool.name,
+                    arguments: args,
+                  });
+                  aibitat.handlerProps.log(
+                    `MCP server: ${name}:${tool.name} completed successfully`,
+                    result
+                  );
+                  aibitat.introspect(`MCP server: ${name}:${tool.name} completed successfully`);
+                  return typeof result === "object" ? JSON.stringify(result) : String(result);
+                } catch (error) {
+                  aibitat.handlerProps.log(
+                    `MCP server: ${name}:${tool.name} failed with error:`,
+                    error
+                  );
+                  aibitat.introspect(`MCP server: ${name}:${tool.name} failed with error:`, error);
+                  return `The tool ${name}:${tool.name} failed with error: ${error?.message || "An unknown error occurred"}`;
+                }
+              },
+            });
+          },
+        }),
         toolName: `${name}:${tool.name}`,
       });
     }

@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from "react";
-import { titleCase } from "text-case";
 import Admin from "@/models/admin";
 import { Trash } from "@phosphor-icons/react";
+import { useEffect, useRef, useState } from "react";
+import { titleCase } from "text-case";
 
 export default function InviteRow({ invite }) {
   const rowRef = useRef(null);
@@ -22,9 +22,7 @@ export default function InviteRow({ invite }) {
   };
   const copyInviteLink = () => {
     if (!invite) return false;
-    window.navigator.clipboard.writeText(
-      `${window.location.origin}/accept-invite/${invite.code}`
-    );
+    window.navigator.clipboard.writeText(`${window.location.origin}/accept-invite/${invite.code}`);
     setCopied(true);
   };
 
@@ -48,9 +46,7 @@ export default function InviteRow({ invite }) {
           {titleCase(status)}
         </td>
         <td className="px-6">
-          {invite.claimedBy
-            ? invite.claimedBy?.username || "deleted user"
-            : "--"}
+          {invite.claimedBy ? invite.claimedBy?.username || "deleted user" : "--"}
         </td>
         <td className="px-6">{invite.createdBy?.username || "deleted user"}</td>
         <td className="px-6">{invite.createdAt}</td>

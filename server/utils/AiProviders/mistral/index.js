@@ -1,7 +1,5 @@
 const { NativeEmbedder } = require("../../EmbeddingEngines/native");
-const {
-  LLMPerformanceMonitor,
-} = require("../../helpers/chat/LLMPerformanceMonitor");
+const { LLMPerformanceMonitor } = require("../../helpers/chat/LLMPerformanceMonitor");
 const {
   handleDefaultStreamResponseV2,
   formatChatHistory,
@@ -9,16 +7,14 @@ const {
 
 class MistralLLM {
   constructor(embedder = null, modelPreference = null) {
-    if (!process.env.MISTRAL_API_KEY)
-      throw new Error("No Mistral API key was set.");
+    if (!process.env.MISTRAL_API_KEY) throw new Error("No Mistral API key was set.");
 
     const { OpenAI: OpenAIApi } = require("openai");
     this.openai = new OpenAIApi({
       baseURL: "https://api.mistral.ai/v1",
       apiKey: process.env.MISTRAL_API_KEY ?? null,
     });
-    this.model =
-      modelPreference || process.env.MISTRAL_MODEL_PREF || "mistral-tiny";
+    this.model = modelPreference || process.env.MISTRAL_MODEL_PREF || "mistral-tiny";
     this.limits = {
       history: this.promptWindowLimit() * 0.15,
       system: this.promptWindowLimit() * 0.15,
@@ -71,7 +67,7 @@ class MistralLLM {
     if (!attachments.length) return userPrompt;
 
     const content = [{ type: "text", text: userPrompt }];
-    for (let attachment of attachments) {
+    for (const attachment of attachments) {
       content.push({
         type: "image_url",
         image_url: attachment.contentString,
@@ -108,9 +104,7 @@ class MistralLLM {
 
   async getChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!(await this.isValidChatCompletionModel(this.model)))
-      throw new Error(
-        `Mistral chat: ${this.model} is not valid for chat completion!`
-      );
+      throw new Error(`Mistral chat: ${this.model} is not valid for chat completion!`);
 
     const result = await LLMPerformanceMonitor.measureAsyncFunction(
       this.openai.chat.completions
@@ -124,11 +118,7 @@ class MistralLLM {
         })
     );
 
-    if (
-      !result.output.hasOwnProperty("choices") ||
-      result.output.choices.length === 0
-    )
-      return null;
+    if (!result.output.hasOwnProperty("choices") || result.output.choices.length === 0) return null;
 
     return {
       textResponse: result.output.choices[0].message.content,
@@ -144,9 +134,7 @@ class MistralLLM {
 
   async streamGetChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!(await this.isValidChatCompletionModel(this.model)))
-      throw new Error(
-        `Mistral chat: ${this.model} is not valid for chat completion!`
-      );
+      throw new Error(`Mistral chat: ${this.model} is not valid for chat completion!`);
 
     const measuredStreamRequest = await LLMPerformanceMonitor.measureStream(
       this.openai.chat.completions.create({

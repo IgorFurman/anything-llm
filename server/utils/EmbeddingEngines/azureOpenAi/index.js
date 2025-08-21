@@ -3,10 +3,8 @@ const { toChunks } = require("../../helpers");
 class AzureOpenAiEmbedder {
   constructor() {
     const { AzureOpenAI } = require("openai");
-    if (!process.env.AZURE_OPENAI_ENDPOINT)
-      throw new Error("No Azure API endpoint was set.");
-    if (!process.env.AZURE_OPENAI_KEY)
-      throw new Error("No Azure API key was set.");
+    if (!process.env.AZURE_OPENAI_ENDPOINT) throw new Error("No Azure API endpoint was set.");
+    if (!process.env.AZURE_OPENAI_KEY) throw new Error("No Azure API key was set.");
 
     this.apiVersion = "2024-12-01-preview";
     const openai = new AzureOpenAI({
@@ -33,9 +31,7 @@ class AzureOpenAiEmbedder {
   }
 
   async embedTextInput(textInput) {
-    const result = await this.embedChunks(
-      Array.isArray(textInput) ? textInput : [textInput]
-    );
+    const result = await this.embedChunks(Array.isArray(textInput) ? textInput : [textInput]);
     return result?.[0] || [];
   }
 
@@ -59,10 +55,7 @@ class AzureOpenAiEmbedder {
               resolve({ data: res.data, error: null });
             })
             .catch((e) => {
-              e.type =
-                e?.response?.data?.error?.code ||
-                e?.response?.status ||
-                "failed_to_embed";
+              e.type = e?.response?.data?.error?.code || e?.response?.status || "failed_to_embed";
               e.message = e?.response?.data?.error?.message || e.message;
               resolve({ data: [], error: e });
             });
@@ -70,20 +63,13 @@ class AzureOpenAiEmbedder {
       );
     }
 
-    const { data = [], error = null } = await Promise.all(
-      embeddingRequests
-    ).then((results) => {
+    const { data = [], error = null } = await Promise.all(embeddingRequests).then((results) => {
       // If any errors were returned from Azure abort the entire sequence because the embeddings
       // will be incomplete.
-      const errors = results
-        .filter((res) => !!res.error)
-        .map((res) => res.error)
-        .flat();
+      const errors = results.filter((res) => !!res.error).flatMap((res) => res.error);
       if (errors.length > 0) {
-        let uniqueErrors = new Set();
-        errors.map((error) =>
-          uniqueErrors.add(`[${error.type}]: ${error.message}`)
-        );
+        const uniqueErrors = new Set();
+        errors.map((error) => uniqueErrors.add(`[${error.type}]: ${error.message}`));
 
         return {
           data: [],
@@ -91,14 +77,13 @@ class AzureOpenAiEmbedder {
         };
       }
       return {
-        data: results.map((res) => res?.data || []).flat(),
+        data: results.flatMap((res) => res?.data || []),
         error: null,
       };
     });
 
     if (!!error) throw new Error(`Azure OpenAI Failed to embed: ${error}`);
-    return data.length > 0 &&
-      data.every((embd) => embd.hasOwnProperty("embedding"))
+    return data.length > 0 && data.every((embd) => embd.hasOwnProperty("embedding"))
       ? data.map((embd) => embd.embedding)
       : null;
   }

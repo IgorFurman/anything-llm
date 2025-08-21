@@ -50,9 +50,7 @@ function base64ToUint8Array(base64String) {
     for (let i = 0; i < len; i++) bytes[i] = binaryString.charCodeAt(i);
     return bytes;
   } catch (e) {
-    console.error(
-      `[AWSBedrock] Error decoding base64 string with atob: ${e.message}`
-    );
+    console.error(`[AWSBedrock] Error decoding base64 string with atob: ${e.message}`);
     return null;
   }
 }

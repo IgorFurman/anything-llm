@@ -1,14 +1,14 @@
+import ModalWrapper from "@/components/ModalWrapper";
 import { useLanguageOptions } from "@/hooks/useLanguageOptions";
 import usePfp from "@/hooks/usePfp";
-import System from "@/models/system";
+import { useTheme } from "@/hooks/useTheme";
 import Appearance from "@/models/appearance";
+import System from "@/models/system";
 import { AUTH_USER } from "@/utils/constants";
 import showToast from "@/utils/toast";
 import { Info, Plus, X } from "@phosphor-icons/react";
-import ModalWrapper from "@/components/ModalWrapper";
-import { useTheme } from "@/hooks/useTheme";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useState, useEffect } from "react";
 import { Tooltip } from "react-tooltip";
 
 export default function AccountModal({ user, hideModal }) {
@@ -54,7 +54,7 @@ export default function AccountModal({ user, hideModal }) {
 
     const { success, error } = await System.updateUser(data);
     if (success) {
-      let storedUser = JSON.parse(localStorage.getItem(AUTH_USER));
+      const storedUser = JSON.parse(localStorage.getItem(AUTH_USER));
       if (storedUser) {
         storedUser.username = data.username;
         storedUser.bio = data.bio;
@@ -85,10 +85,7 @@ export default function AccountModal({ user, hideModal }) {
             <X size={24} weight="bold" className="text-white" />
           </button>
         </div>
-        <div
-          className="h-full w-full overflow-y-auto"
-          style={{ maxHeight: "calc(100vh - 200px)" }}
-        >
+        <div className="h-full w-full overflow-y-auto" style={{ maxHeight: "calc(100vh - 200px)" }}>
           <form onSubmit={handleUpdate} className="space-y-6">
             <div className="flex flex-col md:flex-row items-center justify-center gap-8">
               <div className="flex flex-col items-center">
@@ -152,10 +149,7 @@ export default function AccountModal({ user, hideModal }) {
                 </p>
               </div>
               <div>
-                <label
-                  htmlFor="password"
-                  className="block mb-2 text-sm font-medium text-white"
-                >
+                <label htmlFor="password" className="block mb-2 text-sm font-medium text-white">
                   {t("profile_settings.new_password")}
                 </label>
                 <input
@@ -170,10 +164,7 @@ export default function AccountModal({ user, hideModal }) {
                 </p>
               </div>
               <div>
-                <label
-                  htmlFor="bio"
-                  className="block mb-2 text-sm font-medium text-white"
-                >
+                <label htmlFor="bio" className="block mb-2 text-sm font-medium text-white">
                   Bio
                 </label>
                 <textarea
@@ -217,19 +208,12 @@ export default function AccountModal({ user, hideModal }) {
 }
 
 function LanguagePreference() {
-  const {
-    currentLanguage,
-    supportedLanguages,
-    getLanguageName,
-    changeLanguage,
-  } = useLanguageOptions();
+  const { currentLanguage, supportedLanguages, getLanguageName, changeLanguage } =
+    useLanguageOptions();
   const { t } = useTranslation();
   return (
     <div>
-      <label
-        htmlFor="userLang"
-        className="block mb-2 text-sm font-medium text-white"
-      >
+      <label htmlFor="userLang" className="block mb-2 text-sm font-medium text-white">
         {t("profile_settings.language")}
       </label>
       <select
@@ -255,10 +239,7 @@ function ThemePreference() {
   const { t } = useTranslation();
   return (
     <div>
-      <label
-        htmlFor="theme"
-        className="block mb-2 text-sm font-medium text-white"
-      >
+      <label htmlFor="theme" className="block mb-2 text-sm font-medium text-white">
         {t("profile_settings.theme")}
       </label>
       <select
@@ -295,10 +276,7 @@ function AutoSubmitPreference() {
   return (
     <div>
       <div className="flex items-center gap-x-1 mb-2">
-        <label
-          htmlFor="autoSubmit"
-          className="block text-sm font-medium text-white"
-        >
+        <label htmlFor="autoSubmit" className="block text-sm font-medium text-white">
           {t("customization.chat.auto_submit.title")}
         </label>
         <div
@@ -333,15 +311,12 @@ function AutoSubmitPreference() {
 }
 
 function AutoSpeakPreference() {
-  const [autoPlayAssistantTtsResponse, setAutoPlayAssistantTtsResponse] =
-    useState(false);
+  const [autoPlayAssistantTtsResponse, setAutoPlayAssistantTtsResponse] = useState(false);
   const { t } = useTranslation();
 
   useEffect(() => {
     const settings = Appearance.getSettings();
-    setAutoPlayAssistantTtsResponse(
-      settings.autoPlayAssistantTtsResponse ?? false
-    );
+    setAutoPlayAssistantTtsResponse(settings.autoPlayAssistantTtsResponse ?? false);
   }, []);
 
   const handleChange = (e) => {
@@ -353,10 +328,7 @@ function AutoSpeakPreference() {
   return (
     <div>
       <div className="flex items-center gap-x-1 mb-2">
-        <label
-          htmlFor="autoSpeak"
-          className="block text-sm font-medium text-white"
-        >
+        <label htmlFor="autoSpeak" className="block text-sm font-medium text-white">
           {t("customization.chat.auto_speak.title")}
         </label>
         <div

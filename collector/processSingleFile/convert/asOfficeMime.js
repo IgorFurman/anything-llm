@@ -1,10 +1,6 @@
 const { v4 } = require("uuid");
 const officeParser = require("officeparser");
-const {
-  createdDate,
-  trashFile,
-  writeToServerDocuments,
-} = require("../../utils/files");
+const { createdDate, trashFile, writeToServerDocuments } = require("../../utils/files");
 const { tokenizeString } = require("../../utils/tokenizer");
 const { default: slugify } = require("slugify");
 

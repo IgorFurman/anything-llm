@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { X, Copy, Check } from "@phosphor-icons/react";
 import Admin from "@/models/admin";
+import System from "@/models/system";
 import paths from "@/utils/paths";
 import { userFromStorage } from "@/utils/request";
-import System from "@/models/system";
 import showToast from "@/utils/toast";
+import { Check, Copy, X } from "@phosphor-icons/react";
+import React, { useEffect, useState } from "react";
 
 export default function NewApiKeyModal({ closeModal, onSuccess }) {
   const [apiKey, setApiKey] = useState(null);
@@ -80,11 +80,7 @@ export default function NewApiKeyModal({ closeModal, onSuccess }) {
                     className="absolute right-2 top-1/2 -translate-y-1/2 p-1 rounded-md hover:bg-theme-modal-border transition-all duration-300"
                   >
                     {copied ? (
-                      <Check
-                        size={20}
-                        className="text-green-400"
-                        weight="bold"
-                      />
+                      <Check size={20} className="text-green-400" weight="bold" />
                     ) : (
                       <Copy size={20} className="text-white" weight="bold" />
                     )}
@@ -92,8 +88,8 @@ export default function NewApiKeyModal({ closeModal, onSuccess }) {
                 </div>
               )}
               <p className="text-white text-opacity-60 text-xs md:text-sm">
-                Once created the API key can be used to programmatically access
-                and configure this AnythingLLM instance.
+                Once created the API key can be used to programmatically access and configure this
+                AnythingLLM instance.
               </p>
               <a
                 href={paths.apiDocs()}

@@ -1,7 +1,8 @@
 function toProperCase(string) {
-  return string.replace(/\w\S*/g, function (txt) {
-    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-  });
+  return string.replace(
+    /\w\S*/g,
+    (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+  );
 }
 
 export default function OpenAiTextToSpeechOptions({ settings }) {
@@ -10,9 +11,7 @@ export default function OpenAiTextToSpeechOptions({ settings }) {
   return (
     <div className="flex gap-x-4">
       <div className="flex flex-col w-60">
-        <label className="text-white text-sm font-semibold block mb-3">
-          API Key
-        </label>
+        <label className="text-white text-sm font-semibold block mb-3">API Key</label>
         <input
           type="password"
           name="TTSOpenAIKey"
@@ -25,23 +24,19 @@ export default function OpenAiTextToSpeechOptions({ settings }) {
         />
       </div>
       <div className="flex flex-col w-60">
-        <label className="text-white text-sm font-semibold block mb-3">
-          Voice Model
-        </label>
+        <label className="text-white text-sm font-semibold block mb-3">Voice Model</label>
         <select
           name="TTSOpenAIVoiceModel"
           defaultValue={settings?.TTSOpenAIVoiceModel ?? "alloy"}
           className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
         >
-          {["alloy", "echo", "fable", "onyx", "nova", "shimmer"].map(
-            (voice) => {
-              return (
-                <option key={voice} value={voice}>
-                  {toProperCase(voice)}
-                </option>
-              );
-            }
-          )}
+          {["alloy", "echo", "fable", "onyx", "nova", "shimmer"].map((voice) => {
+            return (
+              <option key={voice} value={voice}>
+                {toProperCase(voice)}
+              </option>
+            );
+          })}
         </select>
       </div>
     </div>

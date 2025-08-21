@@ -14,9 +14,7 @@ export default function EndAgentSession({ setShowing, sendCommand }) {
     >
       <div className="w-full flex-col text-left flex pointer-events-none">
         <div className="text-white text-sm font-bold">/exit</div>
-        <div className="text-white text-opacity-60 text-sm">
-          Halt the current agent session.
-        </div>
+        <div className="text-white text-opacity-60 text-sm">Halt the current agent session.</div>
       </div>
     </button>
   );

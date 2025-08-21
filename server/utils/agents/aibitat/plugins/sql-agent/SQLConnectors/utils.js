@@ -21,8 +21,7 @@ class ConnectionStringParser {
    * @param {ConnectionStringParserOptions} options
    */
   constructor(options = {}) {
-    this.scheme =
-      (options && options.scheme) || ConnectionStringParser.DEFAULT_SCHEME;
+    this.scheme = (options && options.scheme) || ConnectionStringParser.DEFAULT_SCHEME;
   }
 
   /**
@@ -44,9 +43,8 @@ class ConnectionStringParser {
     }
 
     let uri =
-      (this.scheme ||
-        connectionStringObject.scheme ||
-        ConnectionStringParser.DEFAULT_SCHEME) + "://";
+      (this.scheme || connectionStringObject.scheme || ConnectionStringParser.DEFAULT_SCHEME) +
+      "://";
 
     if (connectionStringObject.username) {
       uri += encodeURIComponent(connectionStringObject.username);
@@ -61,10 +59,7 @@ class ConnectionStringParser {
     if (connectionStringObject.endpoint) {
       uri += "/" + encodeURIComponent(connectionStringObject.endpoint);
     }
-    if (
-      connectionStringObject.options &&
-      Object.keys(connectionStringObject.options).length > 0
-    ) {
+    if (connectionStringObject.options && Object.keys(connectionStringObject.options).length > 0) {
       uri +=
         "?" +
         Object.keys(connectionStringObject.options)
@@ -109,19 +104,11 @@ class ConnectionStringParser {
       if (this.scheme && this.scheme !== connectionStringObject.scheme) {
         throw new Error(`URI must start with '${this.scheme}://'`);
       }
-      connectionStringObject.username = tokens[2]
-        ? decodeURIComponent(tokens[2])
-        : tokens[2];
-      connectionStringObject.password = tokens[3]
-        ? decodeURIComponent(tokens[3])
-        : tokens[3];
+      connectionStringObject.username = tokens[2] ? decodeURIComponent(tokens[2]) : tokens[2];
+      connectionStringObject.password = tokens[3] ? decodeURIComponent(tokens[3]) : tokens[3];
       connectionStringObject.hosts = this._parseAddress(tokens[4]);
-      connectionStringObject.endpoint = tokens[5]
-        ? decodeURIComponent(tokens[5])
-        : tokens[5];
-      connectionStringObject.options = tokens[6]
-        ? this._parseOptions(tokens[6])
-        : tokens[6];
+      connectionStringObject.endpoint = tokens[5] ? decodeURIComponent(tokens[5]) : tokens[5];
+      connectionStringObject.options = tokens[6] ? this._parseOptions(tokens[6]) : tokens[6];
     }
     return connectionStringObject;
   }
@@ -135,9 +122,7 @@ class ConnectionStringParser {
       .map(
         (address) =>
           encodeURIComponent(address.host) +
-          (address.port
-            ? ":" + encodeURIComponent(address.port.toString(10))
-            : "")
+          (address.port ? ":" + encodeURIComponent(address.port.toString(10)) : "")
       )
       .join(",");
   }

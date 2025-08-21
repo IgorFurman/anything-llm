@@ -19,9 +19,7 @@ export default function AzureAiOptions({ settings }) {
         </div>
 
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
-            API Key
-          </label>
+          <label className="text-white text-sm font-semibold block mb-3">API Key</label>
           <input
             type="password"
             name="AzureOpenAiKey"

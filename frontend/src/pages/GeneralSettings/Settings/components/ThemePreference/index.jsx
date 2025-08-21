@@ -10,9 +10,7 @@ export default function ThemePreference() {
       <p className="text-sm leading-6 font-semibold text-white">
         {t("customization.items.theme.title")}
       </p>
-      <p className="text-xs text-white/60">
-        {t("customization.items.theme.description")}
-      </p>
+      <p className="text-xs text-white/60">{t("customization.items.theme.description")}</p>
       <div className="flex items-center gap-x-4">
         <select
           value={theme}

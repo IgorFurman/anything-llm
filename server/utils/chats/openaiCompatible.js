@@ -62,7 +62,7 @@ async function chatSync({
   // 2. Chatting in "query" mode and has at least 1 embedding
   let contextTexts = [];
   let sources = [];
-  let pinnedDocIdentifiers = [];
+  const pinnedDocIdentifiers = [];
   await new DocumentManager({
     workspace,
     maxTokens: LLMConnector.promptWindowLimit(),
@@ -74,9 +74,7 @@ async function chatSync({
         pinnedDocIdentifiers.push(sourceIdentifier(doc));
         contextTexts.push(doc.pageContent);
         sources.push({
-          text:
-            pageContent.slice(0, 1_000) +
-            "...continued on in source document...",
+          text: pageContent.slice(0, 1_000) + "...continued on in source document...",
           ...metadata,
         });
       });
@@ -161,13 +159,9 @@ async function chatSync({
   });
 
   // Send the text completion.
-  const { textResponse, metrics } = await LLMConnector.getChatCompletion(
-    messages,
-    {
-      temperature:
-        temperature ?? workspace?.openAiTemp ?? LLMConnector.defaultTemp,
-    }
-  );
+  const { textResponse, metrics } = await LLMConnector.getChatCompletion(messages, {
+    temperature: temperature ?? workspace?.openAiTemp ?? LLMConnector.defaultTemp,
+  });
 
   if (!textResponse) {
     return formatJSON(
@@ -288,7 +282,7 @@ async function streamChat({
   // 2. Chatting in "query" mode and has at least 1 embedding
   let contextTexts = [];
   let sources = [];
-  let pinnedDocIdentifiers = [];
+  const pinnedDocIdentifiers = [];
   await new DocumentManager({
     workspace,
     maxTokens: LLMConnector.promptWindowLimit(),
@@ -300,9 +294,7 @@ async function streamChat({
         pinnedDocIdentifiers.push(sourceIdentifier(doc));
         contextTexts.push(doc.pageContent);
         sources.push({
-          text:
-            pageContent.slice(0, 1_000) +
-            "...continued on in source document...",
+          text: pageContent.slice(0, 1_000) + "...continued on in source document...",
           ...metadata,
         });
       });
@@ -417,17 +409,12 @@ async function streamChat({
   }
 
   const stream = await LLMConnector.streamGetChatCompletion(messages, {
-    temperature:
-      temperature ?? workspace?.openAiTemp ?? LLMConnector.defaultTemp,
+    temperature: temperature ?? workspace?.openAiTemp ?? LLMConnector.defaultTemp,
   });
-  const completeText = await LLMConnector.handleStream(
-    responseInterceptor,
-    stream,
-    {
-      uuid,
-      sources,
-    }
-  );
+  const completeText = await LLMConnector.handleStream(responseInterceptor, stream, {
+    uuid,
+    sources,
+  });
 
   if (completeText?.length > 0) {
     const { chat } = await WorkspaceChats.new({
@@ -485,10 +472,7 @@ async function streamChat({
   return;
 }
 
-function formatJSON(
-  chat,
-  { chunked = false, model, finish_reason = null, usage = {} }
-) {
+function formatJSON(chat, { chunked = false, model, finish_reason = null, usage = {} }) {
   const data = {
     id: chat.uuid ?? chat.id,
     object: "chat.completion",

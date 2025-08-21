@@ -1,13 +1,13 @@
-import { useEffect, useState, useRef, Fragment } from "react";
-import { chatPrompt } from "@/utils/chat";
-import { useTranslation } from "react-i18next";
-import SystemPromptVariable from "@/models/systemPromptVariable";
-import Highlighter from "react-highlight-words";
-import { Link, useSearchParams } from "react-router-dom";
-import paths from "@/utils/paths";
-import ChatPromptHistory from "./ChatPromptHistory";
 import PublishEntityModal from "@/components/CommunityHub/PublishEntityModal";
 import { useModal } from "@/hooks/useModal";
+import SystemPromptVariable from "@/models/systemPromptVariable";
+import { chatPrompt } from "@/utils/chat";
+import paths from "@/utils/paths";
+import { Fragment, useEffect, useRef, useState } from "react";
+import Highlighter from "react-highlight-words";
+import { useTranslation } from "react-i18next";
+import { Link, useSearchParams } from "react-router-dom";
+import ChatPromptHistory from "./ChatPromptHistory";
 
 // TODO: Move to backend and have user-language sensitive default prompt
 const DEFAULT_PROMPT =
@@ -39,8 +39,7 @@ export default function ChatPromptSettings({ workspace, setHasChanges }) {
   }, []);
 
   useEffect(() => {
-    if (searchParams.get("action") === "focus-system-prompt")
-      setIsEditing(true);
+    if (searchParams.get("action") === "focus-system-prompt") setIsEditing(true);
   }, [searchParams]);
 
   useEffect(() => {
@@ -103,10 +102,7 @@ export default function ChatPromptSettings({ workspace, setHasChanges }) {
           </p>
           <p className="text-white text-opacity-60 text-xs font-medium mb-2">
             You can insert{" "}
-            <Link
-              to={paths.settings.systemPromptVariables()}
-              className="text-primary-button"
-            >
+            <Link to={paths.settings.systemPromptVariables()} className="text-primary-button">
               prompt variables
             </Link>{" "}
             like:{" "}
@@ -119,10 +115,7 @@ export default function ChatPromptSettings({ workspace, setHasChanges }) {
               </Fragment>
             ))}
             {availableVariables.length > 3 && (
-              <Link
-                to={paths.settings.systemPromptVariables()}
-                className="text-primary-button"
-              >
+              <Link to={paths.settings.systemPromptVariables()} className="text-primary-button">
                 +{availableVariables.length - 3} more...
               </Link>
             )}
@@ -209,11 +202,7 @@ export default function ChatPromptSettings({ workspace, setHasChanges }) {
                   Clear
                 </button>
                 <PublishPromptCTA
-                  hidden={
-                    isEditing ||
-                    prompt === DEFAULT_PROMPT ||
-                    prompt?.trim().length < 10
-                  }
+                  hidden={isEditing || prompt === DEFAULT_PROMPT || prompt?.trim().length < 10}
                   onClick={() => {
                     setCurrentPrompt(prompt);
                     openPublishModal();

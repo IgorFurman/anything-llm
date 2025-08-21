@@ -8,12 +8,7 @@ const sqlAgent = {
   startupConfig: {
     params: {},
   },
-  plugin: [
-    SqlAgentListDatabase,
-    SqlAgentListTables,
-    SqlAgentGetTableSchema,
-    SqlAgentQuery,
-  ],
+  plugin: [SqlAgentListDatabase, SqlAgentListTables, SqlAgentGetTableSchema, SqlAgentQuery],
 };
 
 module.exports = {

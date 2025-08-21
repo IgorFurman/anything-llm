@@ -4,16 +4,10 @@ const ACCEPTED_MIMES = {
   "text/plain": [".txt", ".md", ".org", ".adoc", ".rst"],
   "text/html": [".html"],
 
-  "application/vnd.openxmlformats-officedocument.wordprocessingml.document": [
-    ".docx",
-  ],
-  "application/vnd.openxmlformats-officedocument.presentationml.presentation": [
-    ".pptx",
-  ],
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document": [".docx"],
+  "application/vnd.openxmlformats-officedocument.presentationml.presentation": [".pptx"],
 
-  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [
-    ".xlsx",
-  ],
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
 
   "application/vnd.oasis.opendocument.text": [".odt"],
   "application/vnd.oasis.opendocument.presentation": [".odp"],

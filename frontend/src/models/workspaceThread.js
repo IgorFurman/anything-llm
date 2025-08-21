@@ -5,14 +5,11 @@ import { fetchEventSource } from "@microsoft/fetch-event-source";
 import { v4 } from "uuid";
 
 const WorkspaceThread = {
-  all: async function (workspaceSlug) {
-    const { threads } = await fetch(
-      `${API_BASE}/workspace/${workspaceSlug}/threads`,
-      {
-        method: "GET",
-        headers: baseHeaders(),
-      }
-    )
+  all: async (workspaceSlug) => {
+    const { threads } = await fetch(`${API_BASE}/workspace/${workspaceSlug}/threads`, {
+      method: "GET",
+      headers: baseHeaders(),
+    })
       .then((res) => res.json())
       .catch((e) => {
         return { threads: [] };
@@ -20,14 +17,11 @@ const WorkspaceThread = {
 
     return { threads };
   },
-  new: async function (workspaceSlug) {
-    const { thread, error } = await fetch(
-      `${API_BASE}/workspace/${workspaceSlug}/thread/new`,
-      {
-        method: "POST",
-        headers: baseHeaders(),
-      }
-    )
+  new: async (workspaceSlug) => {
+    const { thread, error } = await fetch(`${API_BASE}/workspace/${workspaceSlug}/thread/new`, {
+      method: "POST",
+      headers: baseHeaders(),
+    })
       .then((res) => res.json())
       .catch((e) => {
         return { thread: null, error: e.message };
@@ -35,7 +29,7 @@ const WorkspaceThread = {
 
     return { thread, error };
   },
-  update: async function (workspaceSlug, threadSlug, data = {}) {
+  update: async (workspaceSlug, threadSlug, data = {}) => {
     const { thread, message } = await fetch(
       `${API_BASE}/workspace/${workspaceSlug}/thread/${threadSlug}/update`,
       {
@@ -51,30 +45,22 @@ const WorkspaceThread = {
 
     return { thread, message };
   },
-  delete: async function (workspaceSlug, threadSlug) {
-    return await fetch(
-      `${API_BASE}/workspace/${workspaceSlug}/thread/${threadSlug}`,
-      {
-        method: "DELETE",
-        headers: baseHeaders(),
-      }
-    )
+  delete: async (workspaceSlug, threadSlug) =>
+    await fetch(`${API_BASE}/workspace/${workspaceSlug}/thread/${threadSlug}`, {
+      method: "DELETE",
+      headers: baseHeaders(),
+    })
       .then((res) => res.ok)
-      .catch(() => false);
-  },
-  deleteBulk: async function (workspaceSlug, threadSlugs = []) {
-    return await fetch(
-      `${API_BASE}/workspace/${workspaceSlug}/thread-bulk-delete`,
-      {
-        method: "DELETE",
-        body: JSON.stringify({ slugs: threadSlugs }),
-        headers: baseHeaders(),
-      }
-    )
+      .catch(() => false),
+  deleteBulk: async (workspaceSlug, threadSlugs = []) =>
+    await fetch(`${API_BASE}/workspace/${workspaceSlug}/thread-bulk-delete`, {
+      method: "DELETE",
+      body: JSON.stringify({ slugs: threadSlugs }),
+      headers: baseHeaders(),
+    })
       .then((res) => res.ok)
-      .catch(() => false);
-  },
-  chatHistory: async function (workspaceSlug, threadSlug) {
+      .catch(() => false),
+  chatHistory: async (workspaceSlug, threadSlug) => {
     const history = await fetch(
       `${API_BASE}/workspace/${workspaceSlug}/thread/${threadSlug}/chats`,
       {
@@ -87,12 +73,7 @@ const WorkspaceThread = {
       .catch(() => []);
     return history;
   },
-  streamChat: async function (
-    { workspaceSlug, threadSlug },
-    message,
-    handleChat,
-    attachments = []
-  ) {
+  streamChat: async ({ workspaceSlug, threadSlug }, message, handleChat, attachments = []) => {
     const ctrl = new AbortController();
 
     // Listen for the ABORT_STREAM_EVENT key to be emitted by the client
@@ -115,11 +96,7 @@ const WorkspaceThread = {
         async onopen(response) {
           if (response.ok) {
             return; // everything's good
-          } else if (
-            response.status >= 400 &&
-            response.status < 500 &&
-            response.status !== 429
-          ) {
+          } else if (response.status >= 400 && response.status < 500 && response.status !== 429) {
             handleChat({
               id: v4(),
               type: "abort",
@@ -164,19 +141,12 @@ const WorkspaceThread = {
       }
     );
   },
-  _deleteEditedChats: async function (
-    workspaceSlug = "",
-    threadSlug = "",
-    startingId
-  ) {
-    return await fetch(
-      `${API_BASE}/workspace/${workspaceSlug}/thread/${threadSlug}/delete-edited-chats`,
-      {
-        method: "DELETE",
-        headers: baseHeaders(),
-        body: JSON.stringify({ startingId }),
-      }
-    )
+  _deleteEditedChats: async (workspaceSlug = "", threadSlug = "", startingId) =>
+    await fetch(`${API_BASE}/workspace/${workspaceSlug}/thread/${threadSlug}/delete-edited-chats`, {
+      method: "DELETE",
+      headers: baseHeaders(),
+      body: JSON.stringify({ startingId }),
+    })
       .then((res) => {
         if (res.ok) return true;
         throw new Error("Failed to delete chats.");
@@ -184,22 +154,13 @@ const WorkspaceThread = {
       .catch((e) => {
         console.log(e);
         return false;
-      });
-  },
-  _updateChatResponse: async function (
-    workspaceSlug = "",
-    threadSlug = "",
-    chatId,
-    newText
-  ) {
-    return await fetch(
-      `${API_BASE}/workspace/${workspaceSlug}/thread/${threadSlug}/update-chat`,
-      {
-        method: "POST",
-        headers: baseHeaders(),
-        body: JSON.stringify({ chatId, newText }),
-      }
-    )
+      }),
+  _updateChatResponse: async (workspaceSlug = "", threadSlug = "", chatId, newText) =>
+    await fetch(`${API_BASE}/workspace/${workspaceSlug}/thread/${threadSlug}/update-chat`, {
+      method: "POST",
+      headers: baseHeaders(),
+      body: JSON.stringify({ chatId, newText }),
+    })
       .then((res) => {
         if (res.ok) return true;
         throw new Error("Failed to update chat.");
@@ -207,8 +168,7 @@ const WorkspaceThread = {
       .catch((e) => {
         console.log(e);
         return false;
-      });
-  },
+      }),
 };
 
 export default WorkspaceThread;

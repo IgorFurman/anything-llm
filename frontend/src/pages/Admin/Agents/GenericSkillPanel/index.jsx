@@ -20,10 +20,7 @@ export default function GenericSkillPanel({
               color: "var(--theme-text-primary)",
               weight: "bold",
             })}
-          <label
-            htmlFor="name"
-            className="text-theme-text-primary text-md font-bold"
-          >
+          <label htmlFor="name" className="text-theme-text-primary text-md font-bold">
             {title}
           </label>
           <label

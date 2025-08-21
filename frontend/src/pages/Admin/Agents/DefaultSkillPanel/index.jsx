@@ -21,17 +21,12 @@ export default function DefaultSkillPanel({
                 color: "var(--theme-text-primary)",
                 weight: "bold",
               })}
-            <label
-              htmlFor="name"
-              className="text-theme-text-primary text-md font-bold"
-            >
+            <label htmlFor="name" className="text-theme-text-primary text-md font-bold">
               {title}
             </label>
             <DefaultBadge title={title} />
           </div>
-          <label
-            className={`border-none relative inline-flex items-center ml-auto cursor-pointer`}
-          >
+          <label className={`border-none relative inline-flex items-center ml-auto cursor-pointer`}>
             <input
               type="checkbox"
               className="peer sr-only"
@@ -47,8 +42,8 @@ export default function DefaultSkillPanel({
           {description}
           <br />
           <br />
-          By default, this skill is enabled, but you can disable it if you don't
-          want it to be available to the agent.
+          By default, this skill is enabled, but you can disable it if you don't want it to be
+          available to the agent.
         </p>
       </div>
     </div>

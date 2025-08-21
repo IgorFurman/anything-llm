@@ -1,7 +1,7 @@
 import { ArrowsDownUp } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
-import Workspace from "../../../../models/workspace";
 import System from "../../../../models/system";
+import Workspace from "../../../../models/workspace";
 import showToast from "../../../../utils/toast";
 import Directory from "./Directory";
 import WorkspaceDirectory from "./WorkspaceDirectory";
@@ -29,12 +29,9 @@ export default function DocumentSettings({ workspace, systemSettings }) {
   async function fetchKeys(refetchWorkspace = false) {
     setLoading(true);
     const localFiles = await System.localFiles();
-    const currentWorkspace = refetchWorkspace
-      ? await Workspace.bySlug(workspace.slug)
-      : workspace;
+    const currentWorkspace = refetchWorkspace ? await Workspace.bySlug(workspace.slug) : workspace;
 
-    const documentsInWorkspace =
-      currentWorkspace.documents.map((doc) => doc.docpath) || [];
+    const documentsInWorkspace = currentWorkspace.documents.map((doc) => doc.docpath) || [];
 
     // Documents that are not in the workspace
     const availableDocs = {
@@ -64,8 +61,7 @@ export default function DocumentSettings({ workspace, systemSettings }) {
             ...folder,
             items: folder.items.filter(
               (file) =>
-                file.type === "file" &&
-                documentsInWorkspace.includes(`${folder.name}/${file.name}`)
+                file.type === "file" && documentsInWorkspace.includes(`${folder.name}/${file.name}`)
             ),
           };
         } else {
@@ -145,9 +141,7 @@ export default function DocumentSettings({ workspace, systemSettings }) {
     // Do not do cost estimation unless the embedding engine is OpenAi.
     if (systemSettings?.EmbeddingEngine === "openai") {
       const COST_PER_TOKEN =
-        MODEL_COSTS[
-          systemSettings?.EmbeddingModelPref || "text-embedding-ada-002"
-        ];
+        MODEL_COSTS[systemSettings?.EmbeddingModelPref || "text-embedding-ada-002"];
 
       const dollarAmount = (totalTokenCount / 1000) * COST_PER_TOKEN;
       setEmbeddingsCost(dollarAmount);
@@ -155,30 +149,28 @@ export default function DocumentSettings({ workspace, systemSettings }) {
 
     setMovedItems([...movedItems, ...newMovedItems]);
 
-    let newAvailableDocs = JSON.parse(JSON.stringify(availableDocs));
-    let newWorkspaceDocs = JSON.parse(JSON.stringify(workspaceDocs));
+    const newAvailableDocs = JSON.parse(JSON.stringify(availableDocs));
+    const newWorkspaceDocs = JSON.parse(JSON.stringify(workspaceDocs));
 
     for (const itemId of Object.keys(selectedItems)) {
       let foundItem = null;
       let foundFolderIndex = null;
 
-      newAvailableDocs.items = newAvailableDocs.items.map(
-        (folder, folderIndex) => {
-          const remainingItems = folder.items.filter((file) => {
-            const match = file.id === itemId;
-            if (match) {
-              foundItem = { ...file };
-              foundFolderIndex = folderIndex;
-            }
-            return !match;
-          });
+      newAvailableDocs.items = newAvailableDocs.items.map((folder, folderIndex) => {
+        const remainingItems = folder.items.filter((file) => {
+          const match = file.id === itemId;
+          if (match) {
+            foundItem = { ...file };
+            foundFolderIndex = folderIndex;
+          }
+          return !match;
+        });
 
-          return {
-            ...folder,
-            items: remainingItems,
-          };
-        }
-      );
+        return {
+          ...folder,
+          items: remainingItems,
+        };
+      });
 
       if (foundItem) {
         newWorkspaceDocs.items[foundFolderIndex].items.push(foundItem);

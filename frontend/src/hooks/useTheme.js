@@ -1,5 +1,5 @@
 import { REFETCH_LOGO_EVENT } from "@/LogoContext";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const availableThemes = {
   default: "Default",
@@ -18,8 +18,7 @@ export function useTheme() {
   useEffect(() => {
     if (localStorage.getItem("theme") !== null) return;
     if (!window.matchMedia) return;
-    if (window.matchMedia("(prefers-color-scheme: light)").matches)
-      return _setTheme("light");
+    if (window.matchMedia("(prefers-color-scheme: light)").matches) return _setTheme("light");
     _setTheme("default");
   }, []);
 

@@ -32,13 +32,11 @@ const TRANSLATIONS = {
       title: "Datu apstrāde un privātums",
       description:
         "Mēs esam apņēmušies nodrošināt caurskatāmību un kontroli pār jūsu personīgajiem datiem.",
-      settingsHint:
-        "Šos iestatījumus var pārkonfigurēt jebkurā laikā iestatījumos.",
+      settingsHint: "Šos iestatījumus var pārkonfigurēt jebkurā laikā iestatījumos.",
     },
     survey: {
       title: "Laipni lūgti AnythingLLM",
-      description:
-        "Palīdziet mums veidot AnythingLLM atbilstoši jūsu vajadzībām. Neobligāti.",
+      description: "Palīdziet mums veidot AnythingLLM atbilstoši jūsu vajadzībām. Neobligāti.",
       email: "Kāds ir jūsu e-pasts?",
       useCase: "Kam izmantosiet AnythingLLM?",
       useCaseWork: "Darbam",
@@ -52,8 +50,7 @@ const TRANSLATIONS = {
     },
     workspace: {
       title: "Izveidojiet savu pirmo darba telpu",
-      description:
-        "Izveidojiet savu pirmo darba telpu un sāciet darbu ar AnythingLLM.",
+      description: "Izveidojiet savu pirmo darba telpu un sāciet darbu ar AnythingLLM.",
     },
   },
   common: {
@@ -119,8 +116,7 @@ const TRANSLATIONS = {
     },
     "password-reset": {
       title: "Paroles atiestatīšana",
-      description:
-        "Sniedziet nepieciešamo informāciju zemāk, lai atiestatītu savu paroli.",
+      description: "Sniedziet nepieciešamo informāciju zemāk, lai atiestatītu savu paroli.",
       "recovery-codes": "Atjaunošanas kodi",
       "recovery-code": "Atjaunošanas kods {{index}}",
       "back-to-login": "Atpakaļ uz pieteikšanos",
@@ -198,8 +194,7 @@ const TRANSLATIONS = {
       features: {
         customAgents: {
           title: "Pielāgoti AI aģenti",
-          description:
-            "Veidojiet spēcīgus AI aģentus un automatizācijas bez koda.",
+          description: "Veidojiet spēcīgus AI aģentus un automatizācijas bez koda.",
           primaryAction: "Sarunāties izmantojot @agent",
           secondaryAction: "Veidot aģenta plūsmu",
         },
@@ -212,8 +207,7 @@ const TRANSLATIONS = {
         },
         systemPrompts: {
           title: "Sistēmas uzvednes",
-          description:
-            "Modificējiet sistēmas uzvedni, lai pielāgotu AI atbildes darba telpā.",
+          description: "Modificējiet sistēmas uzvedni, lai pielāgotu AI atbildes darba telpā.",
           primaryAction: "Modificēt sistēmas uzvedni",
           secondaryAction: "Pārvaldīt uzvednes mainīgos",
         },
@@ -252,8 +246,7 @@ const TRANSLATIONS = {
     },
     message: {
       title: "Ieteiktās sarunas ziņas",
-      description:
-        "Pielāgojiet ziņas, kas tiks ieteiktas jūsu darba telpas lietotājiem.",
+      description: "Pielāgojiet ziņas, kas tiks ieteiktas jūsu darba telpas lietotājiem.",
       add: "Pievienot jaunu ziņu",
       save: "Saglabāt ziņas",
       heading: "Izskaidro man",
@@ -306,8 +299,7 @@ const TRANSLATIONS = {
     },
     history: {
       title: "Sarunu vēsture",
-      "desc-start":
-        "Iepriekšējo sarunu skaits, kas tiks iekļauts atbildes īslaicīgajā atmiņā.",
+      "desc-start": "Iepriekšējo sarunu skaits, kas tiks iekļauts atbildes īslaicīgajā atmiņā.",
       recommend: "Ieteicams 20. ",
       "desc-end":
         "Vairāk nekā 45 var novest pie nepārtrauktām sarunu kļūmēm atkarībā no ziņojuma izmēra.",
@@ -323,8 +315,7 @@ const TRANSLATIONS = {
         restore: "Atjaunot",
         delete: "Dzēst",
         deleteConfirm: "Vai tiešām vēlaties dzēst šo vēstures ierakstu?",
-        clearAllConfirm:
-          "Vai tiešām vēlaties nodzēst visu vēsturi? Šo darbību nevar atsaukt.",
+        clearAllConfirm: "Vai tiešām vēlaties nodzēst visu vēsturi? Šo darbību nevar atsaukt.",
         expand: "Paplašināt",
         publish: null,
       },
@@ -340,8 +331,7 @@ const TRANSLATIONS = {
     },
     temperature: {
       title: "LLM Temperatūra",
-      "desc-start":
-        'Šis iestatījums kontrolē, cik "radošas" būs jūsu LLM atbildes.',
+      "desc-start": 'Šis iestatījums kontrolē, cik "radošas" būs jūsu LLM atbildes.',
       "desc-end":
         "Jo lielāks skaitlis, jo radošākas atbildes. Dažiem modeļiem tas var novest pie nesaprotamām atbildēm, ja iestatīts pārāk augsts.",
       hint: "Lielākajai daļai LLM ir dažādi pieņemami derīgo vērtību diapazoni. Konsultējieties ar savu LLM pakalpojumu sniedzēju par šo informāciju.",
@@ -388,8 +378,7 @@ const TRANSLATIONS = {
           "Konkrētais sarunas modelis, kas tiks izmantots šīs darba telpas @agent aģentam.",
       },
       title: "Darba telpas aģenta modelis",
-      description:
-        "Konkrētais LLM modelis, kas tiks izmantots šīs darba telpas @agent aģentam.",
+      description: "Konkrētais LLM modelis, kas tiks izmantots šīs darba telpas @agent aģentam.",
       wait: "-- gaida modeļus --",
     },
     skill: {
@@ -424,8 +413,7 @@ const TRANSLATIONS = {
         title: "Tiešsaistes tīmekļa meklēšana un pārlūkošana",
         "desc-start":
           "Ļaujiet savam aģentam meklēt tīmeklī, lai atbildētu uz jūsu jautājumiem, savienojoties ar tīmekļa meklēšanas (SERP) pakalpojumu sniedzēju.",
-        "desc-end":
-          "Tīmekļa meklēšana aģenta sesijās nedarbosies, līdz tas nebūs iestatīts.",
+        "desc-end": "Tīmekļa meklēšana aģenta sesijās nedarbosies, līdz tas nebūs iestatīts.",
       },
     },
   },
@@ -450,8 +438,7 @@ const TRANSLATIONS = {
     },
     branding: {
       title: "Zīmolrade un identitāte",
-      description:
-        "Pielāgojiet savu AnythingLLM instanci ar pielāgotu zīmolradi.",
+      description: "Pielāgojiet savu AnythingLLM instanci ar pielāgotu zīmolradi.",
     },
     chat: {
       title: "Saruna",
@@ -466,8 +453,7 @@ const TRANSLATIONS = {
       },
       spellcheck: {
         title: "Iespējot pareizrakstības pārbaudi",
-        description:
-          "Iespējot vai atspējot pareizrakstības pārbaudi sarunas ievades laukā",
+        description: "Iespējot vai atspējot pareizrakstības pārbaudi sarunas ievades laukā",
       },
     },
     items: {
@@ -486,13 +472,11 @@ const TRANSLATIONS = {
       },
       "app-name": {
         title: "Nosaukums",
-        description:
-          "Iestatiet nosaukumu, kas tiek rādīts pieteikšanās lapā visiem lietotājiem.",
+        description: "Iestatiet nosaukumu, kas tiek rādīts pieteikšanās lapā visiem lietotājiem.",
       },
       "chat-message-alignment": {
         title: "Sarunas ziņu līdzinājums",
-        description:
-          "Izvēlieties ziņu līdzinājuma režīmu, izmantojot sarunas saskarni.",
+        description: "Izvēlieties ziņu līdzinājuma režīmu, izmantojot sarunas saskarni.",
       },
       "display-language": {
         title: "Displeja valoda",
@@ -501,8 +485,7 @@ const TRANSLATIONS = {
       },
       logo: {
         title: "Zīmola logotips",
-        description:
-          "Augšupielādējiet savu pielāgoto logotipu, lai to rādītu visās lapās.",
+        description: "Augšupielādējiet savu pielāgoto logotipu, lai to rādītu visās lapās.",
         add: "Pievienot pielāgotu logotipu",
         recommended: "Ieteicamais izmērs: 800 x 200",
         remove: "Noņemt",
@@ -536,8 +519,7 @@ const TRANSLATIONS = {
       },
       "sidebar-footer": {
         title: "Sānu joslas kājenes vienumi",
-        description:
-          "Pielāgojiet kājenes vienumus, kas tiek attēloti sānu joslas apakšā.",
+        description: "Pielāgojiet kājenes vienumus, kas tiek attēloti sānu joslas apakšā.",
         icon: "Ikona",
         link: "Saite",
       },
@@ -579,10 +561,8 @@ const TRANSLATIONS = {
     provider: "Transkripcijas pakalpojuma sniedzējs",
     "warn-start":
       "Izmantojot lokālo whisper modeli iekārtās ar ierobežotu RAM vai CPU var apstādināt AnythingLLM, apstrādājot multivides failus.",
-    "warn-recommend":
-      "Mēs iesakām vismaz 2GB RAM un augšupielādēt failus <10Mb.",
-    "warn-end":
-      "Iebūvētais modelis automātiski lejupielādēsies pirmajā lietošanas reizē.",
+    "warn-recommend": "Mēs iesakām vismaz 2GB RAM un augšupielādēt failus <10Mb.",
+    "warn-end": "Iebūvētais modelis automātiski lejupielādēsies pirmajā lietošanas reizē.",
   },
   embedding: {
     title: "Iegulšanas preferences",
@@ -602,8 +582,7 @@ const TRANSLATIONS = {
       "Jums vajadzētu mainīt šo iestatījumu tikai tad, ja saprotat, kā darbojas teksta sadalīšana un tās blakusefekti.",
     size: {
       title: "Teksta gabala izmērs",
-      description:
-        "Šis ir maksimālais rakstzīmju skaits, kas var būt vienā vektorā.",
+      description: "Šis ir maksimālais rakstzīmju skaits, kas var būt vienā vektorā.",
       recommend: "Iegult modeļa maksimālo garumu ir",
     },
     overlap: {
@@ -697,15 +676,13 @@ const TRANSLATIONS = {
       selected_files: "Atrasti {{count}} markdown faili",
       importing: "Notiek krātuves importēšana...",
       import_vault: "Importēt krātuvi",
-      processing_time:
-        "Tas var aizņemt laiku atkarībā no jūsu krātuves lieluma.",
+      processing_time: "Tas var aizņemt laiku atkarībā no jūsu krātuves lieluma.",
       vault_warning:
         "Lai izvairītos no konfliktiem, pārliecinieties, ka jūsu Obsidian krātuve pašlaik nav atvērta.",
     },
     github: {
       name: "GitHub repozitorijs",
-      description:
-        "Importējiet visu publisku vai privātu GitHub repozitoriju ar vienu klikšķi.",
+      description: "Importējiet visu publisku vai privātu GitHub repozitoriju ar vienu klikšķi.",
       URL: "GitHub repozitorija URL",
       URL_explained: "GitHub repozitorija URL, kuru vēlaties savākt.",
       token: "GitHub piekļuves tokens",
@@ -727,13 +704,11 @@ const TRANSLATIONS = {
       branch_explained: "Zars, no kura vēlaties savākt failus.",
       token_information:
         "Bez <b>GitHub piekļuves tokena</b> aizpildīšanas šis datu savienotājs varēs savākt tikai <b>augšējā līmeņa</b> failus repozitorijā GitHub publiskā API ātruma ierobežojumu dēļ.",
-      token_personal:
-        "Iegūstiet bezmaksas personisko piekļuves tokenu ar GitHub kontu šeit.",
+      token_personal: "Iegūstiet bezmaksas personisko piekļuves tokenu ar GitHub kontu šeit.",
     },
     gitlab: {
       name: "GitLab repozitorijs",
-      description:
-        "Importējiet visu publisku vai privātu GitLab repozitoriju ar vienu klikšķi.",
+      description: "Importējiet visu publisku vai privātu GitLab repozitoriju ar vienu klikšķi.",
       URL: "GitLab repozitorija URL",
       URL_explained: "GitLab repozitorija URL, kuru vēlaties savākt.",
       token: "GitLab piekļuves tokens",
@@ -757,8 +732,7 @@ const TRANSLATIONS = {
       branch_explained: "Zars, no kura vēlaties savākt failus.",
       token_information:
         "Bez <b>GitLab piekļuves tokena</b> aizpildīšanas šis datu savienotājs varēs savākt tikai <b>augšējā līmeņa</b> failus repozitorijā GitLab publiskā API ātruma ierobežojumu dēļ.",
-      token_personal:
-        "Iegūstiet bezmaksas personisko piekļuves tokenu ar GitLab kontu šeit.",
+      token_personal: "Iegūstiet bezmaksas personisko piekļuves tokenu ar GitLab kontu šeit.",
     },
     youtube: {
       name: "YouTube transkripcija",
@@ -771,19 +745,16 @@ const TRANSLATIONS = {
       task_explained:
         "Kad tas būs pabeigts, transkripcija būs pieejama iegulšanai darba vietās dokumentu atlasītājā.",
       language: "Transkripcijas valoda",
-      language_explained:
-        "Atlasiet transkripcijas valodu, kuru vēlaties savākt.",
+      language_explained: "Atlasiet transkripcijas valodu, kuru vēlaties savākt.",
       loading_languages: "-- notiek pieejamo valodu ielāde --",
     },
     "website-depth": {
       name: "Vairāku saišu skrāpētājs",
-      description:
-        "Skrāpējiet vietni un tās apakšsaites līdz noteiktam dziļumam.",
+      description: "Skrāpējiet vietni un tās apakšsaites līdz noteiktam dziļumam.",
       URL: "Vietnes URL",
       URL_explained: "URL vietnei, kuru vēlaties skrāpēt.",
       depth: "Pārmeklēšanas dziļums",
-      depth_explained:
-        "Šis ir bērnu saišu skaits, kurām darbiniekam būtu jāseko no sākotnējā URL.",
+      depth_explained: "Šis ir bērnu saišu skaits, kurām darbiniekam būtu jāseko no sākotnējā URL.",
       max_pages: "Maksimālais lapu skaits",
       max_pages_explained: "Maksimālais skrāpējamo saišu skaits.",
       task_explained:
@@ -850,10 +821,8 @@ const TRANSLATIONS = {
       "processor-offline": "Dokumentu apstrādātājs nav pieejams",
       "processor-offline-desc":
         "Mēs nevaram augšupielādēt jūsu failus, jo dokumentu apstrādātājs ir bezsaistē. Lūdzu, mēģiniet vēlāk.",
-      "click-upload":
-        "Noklikšķiniet, lai augšupielādētu, vai velciet un nometiet",
-      "file-types":
-        "atbalsta teksta failus, csv, izklājlapas, audio failus un vēl vairāk!",
+      "click-upload": "Noklikšķiniet, lai augšupielādētu, vai velciet un nometiet",
+      "file-types": "atbalsta teksta failus, csv, izklājlapas, audio failus un vēl vairāk!",
       "or-submit-link": "vai iesniedziet saiti",
       "placeholder-link": "https://example.com",
       fetching: "Iegūst...",
@@ -877,8 +846,7 @@ const TRANSLATIONS = {
         "Kad jūs <b>novērojat</b> dokumentu AnythingLLM, mēs <i>automātiski</i> sinhronizēsim jūsu dokumenta saturu no tā sākotnējā avota regulāros intervālos. Tas automātiski atjauninās saturu katrā darba vietā, kur šis fails tiek pārvaldīts.",
       watch_explained_block2:
         "Šī funkcija pašlaik atbalsta tiešsaistes saturu un nebūs pieejama manuāli augšupielādētiem dokumentiem.",
-      watch_explained_block3_start:
-        "Jūs varat pārvaldīt, kuri dokumenti tiek novēroti no ",
+      watch_explained_block3_start: "Jūs varat pārvaldīt, kuri dokumenti tiek novēroti no ",
       watch_explained_block3_link: "Failu pārvaldnieka",
       watch_explained_block3_end: " administratora skata.",
       accept: "Labi, sapratu",

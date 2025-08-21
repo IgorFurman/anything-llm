@@ -3,10 +3,8 @@ const { maximumChunkLength } = require("../../helpers");
 
 class LMStudioEmbedder {
   constructor() {
-    if (!process.env.EMBEDDING_BASE_PATH)
-      throw new Error("No embedding base path was set.");
-    if (!process.env.EMBEDDING_MODEL_PREF)
-      throw new Error("No embedding model was set.");
+    if (!process.env.EMBEDDING_BASE_PATH) throw new Error("No embedding base path was set.");
+    if (!process.env.EMBEDDING_MODEL_PREF) throw new Error("No embedding model was set.");
 
     const { OpenAI: OpenAIApi } = require("openai");
     this.lmstudio = new OpenAIApi({
@@ -35,26 +33,20 @@ class LMStudioEmbedder {
   }
 
   async embedTextInput(textInput) {
-    const result = await this.embedChunks(
-      Array.isArray(textInput) ? textInput : [textInput]
-    );
+    const result = await this.embedChunks(Array.isArray(textInput) ? textInput : [textInput]);
     return result?.[0] || [];
   }
 
   async embedChunks(textChunks = []) {
     if (!(await this.#isAlive()))
-      throw new Error(
-        `LMStudio service could not be reached. Is LMStudio running?`
-      );
+      throw new Error(`LMStudio service could not be reached. Is LMStudio running?`);
 
-    this.log(
-      `Embedding ${textChunks.length} chunks of text with ${this.model}.`
-    );
+    this.log(`Embedding ${textChunks.length} chunks of text with ${this.model}.`);
 
     // LMStudio will drop all queued requests now? So if there are many going on
     // we need to do them sequentially or else only the first resolves and the others
     // get dropped or go unanswered >:(
-    let results = [];
+    const results = [];
     let hasError = false;
     for (const chunk of textChunks) {
       if (hasError) break; // If an error occurred don't continue and exit early.
@@ -76,10 +68,7 @@ class LMStudioEmbedder {
             return { data: embedding, error: null };
           })
           .catch((e) => {
-            e.type =
-              e?.response?.data?.error?.code ||
-              e?.response?.status ||
-              "failed_to_embed";
+            e.type = e?.response?.data?.error?.code || e?.response?.status || "failed_to_embed";
             e.message = e?.response?.data?.error?.message || e.message;
             hasError = true;
             return { data: [], error: e };
@@ -89,22 +78,15 @@ class LMStudioEmbedder {
 
     // Accumulate errors from embedding.
     // If any are present throw an abort error.
-    const errors = results
-      .filter((res) => !!res.error)
-      .map((res) => res.error)
-      .flat();
+    const errors = results.filter((res) => !!res.error).flatMap((res) => res.error);
 
     if (errors.length > 0) {
-      let uniqueErrors = new Set();
+      const uniqueErrors = new Set();
       console.log(errors);
-      errors.map((error) =>
-        uniqueErrors.add(`[${error.type}]: ${error.message}`)
-      );
+      errors.map((error) => uniqueErrors.add(`[${error.type}]: ${error.message}`));
 
       if (errors.length > 0)
-        throw new Error(
-          `LMStudio Failed to embed: ${Array.from(uniqueErrors).join(", ")}`
-        );
+        throw new Error(`LMStudio Failed to embed: ${Array.from(uniqueErrors).join(", ")}`);
     }
 
     const data = results.map((res) => res?.data || []);

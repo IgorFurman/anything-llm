@@ -1,18 +1,13 @@
-import CTAButton from "@/components/lib/CTAButton";
-import CommunityHubImportItemSteps from "../..";
-import showToast from "@/utils/toast";
-import paths from "@/utils/paths";
-import {
-  CaretLeft,
-  CaretRight,
-  CircleNotch,
-  Warning,
-} from "@phosphor-icons/react";
-import { useEffect, useState } from "react";
-import renderMarkdown from "@/utils/chat/markdown";
-import DOMPurify from "dompurify";
-import CommunityHub from "@/models/communityHub";
 import { setEventDelegatorForCodeSnippets } from "@/components/WorkspaceChat";
+import CTAButton from "@/components/lib/CTAButton";
+import CommunityHub from "@/models/communityHub";
+import renderMarkdown from "@/utils/chat/markdown";
+import paths from "@/utils/paths";
+import showToast from "@/utils/toast";
+import { CaretLeft, CaretRight, CircleNotch, Warning } from "@phosphor-icons/react";
+import DOMPurify from "dompurify";
+import { useEffect, useState } from "react";
+import CommunityHubImportItemSteps from "../..";
 
 export default function AgentSkill({ item, settings, setStep }) {
   const [loading, setLoading] = useState(false);
@@ -41,16 +36,12 @@ export default function AgentSkill({ item, settings, setStep }) {
         <div className="flex flex-col gap-y-2">
           <div className="gap-x-2 flex items-center">
             <Warning size={25} />
-            <h1 className="text-lg font-semibold">
-              {" "}
-              Only import agent skills you trust{" "}
-            </h1>
+            <h1 className="text-lg font-semibold"> Only import agent skills you trust </h1>
           </div>
           <p className="text-sm">
-            Agent skills can execute code on your AnythingLLM instance, so only
-            import agent skills from sources you trust. You should also review
-            the code before importing. If you are unsure about what a skill does
-            - don't import it!
+            Agent skills can execute code on your AnythingLLM instance, so only import agent skills
+            from sources you trust. You should also review the code before importing. If you are
+            unsure about what a skill does - don't import it!
           </p>
         </div>
       </div>
@@ -76,9 +67,7 @@ export default function AgentSkill({ item, settings, setStep }) {
           {item.verified ? (
             <p className="text-green-500 text-xs font-mono">Verified code</p>
           ) : (
-            <p className="text-red-500 text-xs font-mono">
-              This skill is not verified.
-            </p>
+            <p className="text-red-500 text-xs font-mono">This skill is not verified.</p>
           )}
           <a
             href="https://docs.anythingllm.com/community-hub/faq#verification"
@@ -92,8 +81,7 @@ export default function AgentSkill({ item, settings, setStep }) {
       </div>
       <div className="flex flex-col gap-y-[25px] text-white/80 light:text-theme-text-secondary text-sm">
         <p>
-          Agent skills unlock new capabilities for your AnythingLLM workspace
-          via{" "}
+          Agent skills unlock new capabilities for your AnythingLLM workspace via{" "}
           <code className="font-mono bg-zinc-900 light:bg-slate-200 px-1 py-0.5 rounded-md text-sm">
             @agent
           </code>{" "}

@@ -2,9 +2,7 @@ const OpenAI = require("openai");
 const Provider = require("./ai-provider.js");
 const InheritMultiple = require("./helpers/classes.js");
 const UnTooled = require("./helpers/untooled.js");
-const {
-  DellProAiStudioLLM,
-} = require("../../../AiProviders/dellProAiStudio/index.js");
+const { DellProAiStudioLLM } = require("../../../AiProviders/dellProAiStudio/index.js");
 
 /**
  * The agent provider for Dell Pro AI Studio.
@@ -40,8 +38,7 @@ class DellProAiStudioProvider extends InheritMultiple([Provider, UnTooled]) {
         messages,
       })
       .then((result) => {
-        if (!result.hasOwnProperty("choices"))
-          throw new Error("DellProAiStudio chat: No results!");
+        if (!result.hasOwnProperty("choices")) throw new Error("DellProAiStudio chat: No results!");
         if (result.choices.length === 0)
           throw new Error("DellProAiStudio chat: No results length!");
         return result.choices[0].message.content;
@@ -84,9 +81,7 @@ class DellProAiStudioProvider extends InheritMultiple([Provider, UnTooled]) {
       }
 
       if (!completion?.content) {
-        this.providerLog(
-          "Will assume chat completion without tool call inputs."
-        );
+        this.providerLog("Will assume chat completion without tool call inputs.");
         const response = await this.client.chat.completions.create({
           model: this.model,
           messages: this.cleanMsgs(messages),

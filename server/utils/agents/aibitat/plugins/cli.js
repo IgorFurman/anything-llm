@@ -19,8 +19,7 @@ const cli = {
         let printing = [];
 
         aibitat.onError(async (error) => {
-          let errorMessage =
-            error?.message || "An error occurred while running the agent.";
+          const errorMessage = error?.message || "An error occurred while running the agent.";
           console.error(chalk.red(`   error: ${errorMessage}`), error);
         });
 
@@ -68,11 +67,9 @@ const cli = {
     }
    * @param simulateStream
    */
-      print: async function (message = {}, simulateStream = true) {
+      print: async (message = {}, simulateStream = true) => {
         const replying = chalk.dim(`(to ${message.to})`);
-        const reference = `${chalk.magenta("✎")} ${chalk.bold(
-          message.from
-        )} ${replying}:`;
+        const reference = `${chalk.magenta("✎")} ${chalk.bold(message.from)} ${replying}:`;
 
         if (!simulateStream) {
           console.log(reference);
@@ -119,15 +116,12 @@ const cli = {
        * @param node //{ from: string; to: string }
        * @returns
        */
-      askForFeedback: function (node = {}) {
-        return input({
-          message: `Provide feedback to ${chalk.yellow(
-            node.to
-          )} as ${chalk.yellow(
+      askForFeedback: (node = {}) =>
+        input({
+          message: `Provide feedback to ${chalk.yellow(node.to)} as ${chalk.yellow(
             node.from
           )}. Press enter to skip and use auto-reply, or type 'exit' to end the conversation: `,
-        });
-      },
+        }),
     };
   },
 };

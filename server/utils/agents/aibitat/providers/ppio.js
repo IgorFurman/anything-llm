@@ -41,8 +41,7 @@ class PPIOProvider extends InheritMultiple([Provider, UnTooled]) {
       .then((result) => {
         if (!Object.prototype.hasOwnProperty.call(result, "choices"))
           throw new Error("PPIO chat: No results!");
-        if (result.choices.length === 0)
-          throw new Error("PPIO chat: No results length!");
+        if (result.choices.length === 0) throw new Error("PPIO chat: No results length!");
         return result.choices[0].message.content;
       })
       .catch((_) => {

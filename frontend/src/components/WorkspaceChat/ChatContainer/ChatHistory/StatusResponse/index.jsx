@@ -1,5 +1,5 @@
-import React, { useState } from "react";
 import { CaretDown } from "@phosphor-icons/react";
+import React, { useState } from "react";
 
 import AgentAnimation from "@/media/animations/agent-animation.webm";
 import AgentStatic from "@/media/animations/agent-static.png";
@@ -58,16 +58,11 @@ export default function StatusResponse({
               >
                 <div className="text-theme-text-secondary font-mono leading-6">
                   {!isExpanded ? (
-                    <span className="block w-full truncate mt-[2px]">
-                      {currentThought.content}
-                    </span>
+                    <span className="block w-full truncate mt-[2px]">{currentThought.content}</span>
                   ) : (
                     <>
                       {previousThoughts.map((thought, index) => (
-                        <div
-                          key={`cot-${thought.uuid || index}`}
-                          className="mb-2"
-                        >
+                        <div key={`cot-${thought.uuid || index}`} className="mb-2">
                           {thought.content}
                         </div>
                       ))}
@@ -82,13 +77,9 @@ export default function StatusResponse({
                 <button
                   onClick={handleExpandClick}
                   data-tooltip-id="expand-cot"
-                  data-tooltip-content={
-                    isExpanded ? "Hide thought chain" : "Show thought chain"
-                  }
+                  data-tooltip-content={isExpanded ? "Hide thought chain" : "Show thought chain"}
                   className="border-none text-theme-text-secondary hover:text-theme-text-primary transition-colors p-1 rounded-full hover:bg-theme-sidebar-item-hover"
-                  aria-label={
-                    isExpanded ? "Hide thought chain" : "Show thought chain"
-                  }
+                  aria-label={isExpanded ? "Hide thought chain" : "Show thought chain"}
                 >
                   <CaretDown
                     className={`w-4 h-4 transform transition-transform duration-200 ${isExpanded ? "rotate-180" : ""}`}

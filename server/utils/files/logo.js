@@ -39,8 +39,7 @@ async function determineLogoFilepath(defaultFilename = LOGO_FILENAME) {
 
   if (currentLogoFilename && validFilename(currentLogoFilename)) {
     customLogoPath = path.join(basePath, normalizePath(currentLogoFilename));
-    if (!isWithin(path.resolve(basePath), path.resolve(customLogoPath)))
-      return defaultFilepath;
+    if (!isWithin(path.resolve(basePath), path.resolve(customLogoPath))) return defaultFilepath;
     return fs.existsSync(customLogoPath) ? customLogoPath : defaultFilepath;
   }
 
@@ -73,10 +72,7 @@ async function renameLogoFile(originalFilename = null) {
   const assetsDirectory = process.env.STORAGE_DIR
     ? path.join(process.env.STORAGE_DIR, "assets")
     : path.join(__dirname, `../../storage/assets`);
-  const originalFilepath = path.join(
-    assetsDirectory,
-    normalizePath(originalFilename)
-  );
+  const originalFilepath = path.join(assetsDirectory, normalizePath(originalFilename));
   if (!isWithin(path.resolve(assetsDirectory), path.resolve(originalFilepath)))
     throw new Error("Invalid file path.");
 

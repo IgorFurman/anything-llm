@@ -2,10 +2,7 @@ const { v4: uuidv4 } = require("uuid");
 const { getVectorDbClass, getLLMProvider } = require("../helpers");
 const { chatPrompt, sourceIdentifier } = require("./index");
 const { EmbedChats } = require("../../models/embedChats");
-const {
-  convertToPromptHistory,
-  writeResponseChunk,
-} = require("../helpers/chat/responses");
+const { convertToPromptHistory, writeResponseChunk } = require("../helpers/chat/responses");
 const { DocumentManager } = require("../DocumentManager");
 
 async function streamChatWithForEmbed(
@@ -22,10 +19,9 @@ async function streamChatWithForEmbed(
   const chatModel = embed.allow_model_override ? modelOverride : null;
 
   // If there are overrides in request & they are permitted, override the default workspace ref information.
-  if (embed.allow_prompt_override)
-    embed.workspace.openAiPrompt = promptOverride;
+  if (embed.allow_prompt_override) embed.workspace.openAiPrompt = promptOverride;
   if (embed.allow_temperature_override)
-    embed.workspace.openAiTemp = parseFloat(temperatureOverride);
+    embed.workspace.openAiTemp = Number.parseFloat(temperatureOverride);
 
   const uuid = uuidv4();
   const LLMConnector = getLLMProvider({
@@ -44,8 +40,7 @@ async function streamChatWithForEmbed(
     writeResponseChunk(response, {
       id: uuid,
       type: "textResponse",
-      textResponse:
-        "I do not have enough information to answer that. Try another question.",
+      textResponse: "I do not have enough information to answer that. Try another question.",
       sources: [],
       close: true,
       error: null,
@@ -57,12 +52,8 @@ async function streamChatWithForEmbed(
   let metrics = {};
   let contextTexts = [];
   let sources = [];
-  let pinnedDocIdentifiers = [];
-  const { rawHistory, chatHistory } = await recentEmbedChatHistory(
-    sessionId,
-    embed,
-    messageLimit
-  );
+  const pinnedDocIdentifiers = [];
+  const { rawHistory, chatHistory } = await recentEmbedChatHistory(sessionId, embed, messageLimit);
 
   // See stream.js comment for more information on this implementation.
   await new DocumentManager({
@@ -76,9 +67,7 @@ async function streamChatWithForEmbed(
         pinnedDocIdentifiers.push(sourceIdentifier(doc));
         contextTexts.push(doc.pageContent);
         sources.push({
-          text:
-            pageContent.slice(0, 1_000) +
-            "...continued on in source document...",
+          text: pageContent.slice(0, 1_000) + "...continued on in source document...",
           ...metadata,
         });
       });
@@ -166,10 +155,12 @@ async function streamChatWithForEmbed(
     console.log(
       `\x1b[31m[STREAMING DISABLED]\x1b[0m Streaming is not available for ${LLMConnector.constructor.name}. Will use regular chat method.`
     );
-    const { textResponse, metrics: performanceMetrics } =
-      await LLMConnector.getChatCompletion(messages, {
+    const { textResponse, metrics: performanceMetrics } = await LLMConnector.getChatCompletion(
+      messages,
+      {
         temperature: embed.workspace?.openAiTemp ?? LLMConnector.defaultTemp,
-      });
+      }
+    );
     completeText = textResponse;
     metrics = performanceMetrics;
     writeResponseChunk(response, {

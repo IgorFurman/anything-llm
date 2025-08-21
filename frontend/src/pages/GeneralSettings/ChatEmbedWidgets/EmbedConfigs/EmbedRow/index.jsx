@@ -1,14 +1,14 @@
-import { useRef, useState } from "react";
-import { DotsThreeOutline } from "@phosphor-icons/react";
-import showToast from "@/utils/toast";
-import { useModal } from "@/hooks/useModal";
 import ModalWrapper from "@/components/ModalWrapper";
+import { useModal } from "@/hooks/useModal";
 import Embed from "@/models/embed";
-import paths from "@/utils/paths";
 import { nFormatter } from "@/utils/numbers";
-import EditEmbedModal from "./EditEmbedModal";
-import CodeSnippetModal from "./CodeSnippetModal";
+import paths from "@/utils/paths";
+import showToast from "@/utils/toast";
+import { DotsThreeOutline } from "@phosphor-icons/react";
 import moment from "moment";
+import { useRef, useState } from "react";
+import CodeSnippetModal from "./CodeSnippetModal";
+import EditEmbedModal from "./EditEmbedModal";
 
 export default function EmbedRow({ embed }) {
   const rowRef = useRef(null);
@@ -37,11 +37,9 @@ export default function EmbedRow({ embed }) {
     });
     if (!success) showToast(error, "error", { clear: true });
     if (success) {
-      showToast(
-        `Embed ${enabled ? "has been disabled" : "is active"}.`,
-        "success",
-        { clear: true }
-      );
+      showToast(`Embed ${enabled ? "has been disabled" : "is active"}.`, "success", {
+        clear: true,
+      });
       setEnabled(!enabled);
     }
   };
@@ -66,10 +64,7 @@ export default function EmbedRow({ embed }) {
         ref={rowRef}
         className="bg-transparent text-white text-opacity-80 text-xs font-medium border-b border-white/10 h-10"
       >
-        <th
-          scope="row"
-          className="px-6 whitespace-nowrap flex item-center gap-x-1"
-        >
+        <th scope="row" className="px-6 whitespace-nowrap flex item-center gap-x-1">
           <a
             href={paths.workspace.chat(embed.workspace.slug)}
             target="_blank"
@@ -85,10 +80,7 @@ export default function EmbedRow({ embed }) {
         <th scope="row" className="px-6 whitespace-nowrap">
           <ActiveDomains domainList={embed.allowlist_domains} />
         </th>
-        <th
-          scope="row"
-          className="px-6 whitespace-nowrap text-theme-text-secondary !font-normal"
-        >
+        <th scope="row" className="px-6 whitespace-nowrap text-theme-text-secondary !font-normal">
           {
             // If the embed was created more than a day ago, show the date, otherwise show the time ago
             moment(embed.createdAt).diff(moment(), "days") > 0
@@ -101,9 +93,7 @@ export default function EmbedRow({ embed }) {
             onClick={openSnippetModal}
             className="group text-xs font-medium text-theme-text-secondary px-2 py-1 rounded-lg hover:bg-theme-button-code-hover-bg"
           >
-            <span className="group-hover:text-theme-button-code-hover-text">
-              Code
-            </span>
+            <span className="group-hover:text-theme-button-code-hover-text">Code</span>
           </button>
           <button
             onClick={handleSuspend}
@@ -117,9 +107,7 @@ export default function EmbedRow({ embed }) {
             onClick={handleDelete}
             className="group text-xs font-medium text-theme-text-secondary px-2 py-1 rounded-lg hover:bg-theme-button-delete-hover-bg"
           >
-            <span className="group-hover:text-theme-button-delete-hover-text">
-              Delete
-            </span>
+            <span className="group-hover:text-theme-button-delete-hover-text">Delete</span>
           </button>
           <button
             onClick={openSettingsModal}

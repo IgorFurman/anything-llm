@@ -1,6 +1,6 @@
+import { CheckCircle, XCircle } from "@phosphor-icons/react";
 import React, { useState, useEffect, memo } from "react";
 import truncate from "truncate";
-import { CheckCircle, XCircle } from "@phosphor-icons/react";
 import Workspace from "../../../../../../models/workspace";
 import { humanFileSize, milliToHms } from "../../../../../../utils/numbers";
 import PreLoader from "../../../../../Preloader";
@@ -110,9 +110,7 @@ function FileUploadProgressComponent({
           <p className="text-white light:text-red-600 text-xs font-semibold">
             {truncate(file.name, 30)}
           </p>
-          <p className="text-red-100 light:text-red-600 text-xs font-medium">
-            {error}
-          </p>
+          <p className="text-red-100 light:text-red-600 text-xs font-medium">{error}</p>
         </div>
       </div>
     );

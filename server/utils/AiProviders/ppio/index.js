@@ -1,13 +1,9 @@
 const { NativeEmbedder } = require("../../EmbeddingEngines/native");
-const {
-  handleDefaultStreamResponseV2,
-} = require("../../helpers/chat/responses");
+const { handleDefaultStreamResponseV2 } = require("../../helpers/chat/responses");
 const fs = require("fs");
 const path = require("path");
 const { safeJsonParse } = require("../../http");
-const {
-  LLMPerformanceMonitor,
-} = require("../../helpers/chat/LLMPerformanceMonitor");
+const { LLMPerformanceMonitor } = require("../../helpers/chat/LLMPerformanceMonitor");
 const cacheFolder = path.resolve(
   process.env.STORAGE_DIR
     ? path.resolve(process.env.STORAGE_DIR, "models", "ppio")
@@ -28,10 +24,7 @@ class PPIOLLM {
         "X-API-Source": "anythingllm",
       },
     });
-    this.model =
-      modelPreference ||
-      process.env.PPIO_MODEL_PREF ||
-      "qwen/qwen2.5-32b-instruct";
+    this.model = modelPreference || process.env.PPIO_MODEL_PREF || "qwen/qwen2.5-32b-instruct";
     this.limits = {
       history: this.promptWindowLimit() * 0.15,
       system: this.promptWindowLimit() * 0.15,
@@ -41,8 +34,7 @@ class PPIOLLM {
     this.embedder = embedder ?? new NativeEmbedder();
     this.defaultTemp = 0.7;
 
-    if (!fs.existsSync(cacheFolder))
-      fs.mkdirSync(cacheFolder, { recursive: true });
+    if (!fs.existsSync(cacheFolder)) fs.mkdirSync(cacheFolder, { recursive: true });
     this.cacheModelPath = path.resolve(cacheFolder, "models.json");
     this.cacheAtPath = path.resolve(cacheFolder, ".cached_at");
 
@@ -54,8 +46,7 @@ class PPIOLLM {
   }
 
   async #syncModels() {
-    if (fs.existsSync(this.cacheModelPath) && !this.#cacheIsStale())
-      return false;
+    if (fs.existsSync(this.cacheModelPath) && !this.#cacheIsStale()) return false;
 
     this.log("Model cache is not present or stale. Fetching from PPIO API.");
     await fetchPPIOModels();
@@ -84,10 +75,7 @@ class PPIOLLM {
 
   models() {
     if (!fs.existsSync(this.cacheModelPath)) return {};
-    return safeJsonParse(
-      fs.readFileSync(this.cacheModelPath, { encoding: "utf-8" }),
-      {}
-    );
+    return safeJsonParse(fs.readFileSync(this.cacheModelPath, { encoding: "utf-8" }), {});
   }
 
   streamingEnabled() {
@@ -117,7 +105,7 @@ class PPIOLLM {
     }
 
     const content = [{ type: "text", text: userPrompt }];
-    for (let attachment of attachments) {
+    for (const attachment of attachments) {
       content.push({
         type: "image_url",
         image_url: {
@@ -145,9 +133,7 @@ class PPIOLLM {
 
   async getChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!(await this.isValidChatCompletionModel(this.model)))
-      throw new Error(
-        `PPIO chat: ${this.model} is not valid for chat completion!`
-      );
+      throw new Error(`PPIO chat: ${this.model} is not valid for chat completion!`);
 
     const result = await LLMPerformanceMonitor.measureAsyncFunction(
       this.openai.chat.completions
@@ -181,9 +167,7 @@ class PPIOLLM {
 
   async streamGetChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!(await this.isValidChatCompletionModel(this.model)))
-      throw new Error(
-        `PPIO chat: ${this.model} is not valid for chat completion!`
-      );
+      throw new Error(`PPIO chat: ${this.model} is not valid for chat completion!`);
 
     const measuredStreamRequest = await LLMPerformanceMonitor.measureStream(
       this.openai.chat.completions.create({
@@ -236,22 +220,13 @@ async function fetchPPIOModels() {
         };
       });
 
-      if (!fs.existsSync(cacheFolder))
-        fs.mkdirSync(cacheFolder, { recursive: true });
-      fs.writeFileSync(
-        path.resolve(cacheFolder, "models.json"),
-        JSON.stringify(models),
-        {
-          encoding: "utf-8",
-        }
-      );
-      fs.writeFileSync(
-        path.resolve(cacheFolder, ".cached_at"),
-        String(Number(new Date())),
-        {
-          encoding: "utf-8",
-        }
-      );
+      if (!fs.existsSync(cacheFolder)) fs.mkdirSync(cacheFolder, { recursive: true });
+      fs.writeFileSync(path.resolve(cacheFolder, "models.json"), JSON.stringify(models), {
+        encoding: "utf-8",
+      });
+      fs.writeFileSync(path.resolve(cacheFolder, ".cached_at"), String(Number(new Date())), {
+        encoding: "utf-8",
+      });
       return models;
     })
     .catch((e) => {

@@ -38,11 +38,7 @@ export default function SettingsButton() {
         data-tooltip-id="footer-item"
         data-tooltip-content="Open settings"
       >
-        <Wrench
-          className="h-5 w-5"
-          weight="fill"
-          color="var(--theme-sidebar-footer-icon-fill)"
-        />
+        <Wrench className="h-5 w-5" weight="fill" color="var(--theme-sidebar-footer-icon-fill)" />
       </Link>
     </div>
   );

@@ -1,20 +1,15 @@
 import { CloudArrowUp } from "@phosphor-icons/react";
-import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import showToast from "../../../../../utils/toast";
-import System from "../../../../../models/system";
-import { useDropzone } from "react-dropzone";
-import { v4 } from "uuid";
-import FileUploadProgress from "./FileUploadProgress";
-import Workspace from "../../../../../models/workspace";
 import debounce from "lodash.debounce";
+import { useEffect, useState } from "react";
+import { useDropzone } from "react-dropzone";
+import { useTranslation } from "react-i18next";
+import { v4 } from "uuid";
+import System from "../../../../../models/system";
+import Workspace from "../../../../../models/workspace";
+import showToast from "../../../../../utils/toast";
+import FileUploadProgress from "./FileUploadProgress";
 
-export default function UploadFile({
-  workspace,
-  fetchKeys,
-  setLoading,
-  setLoadingMessage,
-}) {
+export default function UploadFile({ workspace, fetchKeys, setLoading, setLoadingMessage }) {
   const { t } = useTranslation();
   const [ready, setReady] = useState(false);
   const [files, setFiles] = useState([]);
@@ -27,10 +22,7 @@ export default function UploadFile({
     setFetchingUrl(true);
     const formEl = e.target;
     const form = new FormData(formEl);
-    const { response, data } = await Workspace.uploadLink(
-      workspace.slug,
-      form.get("link")
-    );
+    const { response, data } = await Workspace.uploadLink(workspace.slug, form.get("link"));
     if (!response.ok) {
       showToast(`Error uploading link: ${data.error}`, "error");
     } else {
@@ -147,9 +139,7 @@ export default function UploadFile({
           type="submit"
           className="disabled:bg-white/20 disabled:text-slate-300 disabled:border-slate-400 disabled:cursor-wait bg bg-transparent hover:bg-slate-200 hover:text-slate-800 w-auto border border-white light:border-theme-modal-border text-sm text-white p-2.5 rounded-lg"
         >
-          {fetchingUrl
-            ? t("connectors.upload.fetching")
-            : t("connectors.upload.fetch-website")}
+          {fetchingUrl ? t("connectors.upload.fetching") : t("connectors.upload.fetch-website")}
         </button>
       </form>
       <div className="mt-6 text-center text-white text-opacity-80 text-xs font-medium w-[560px]">

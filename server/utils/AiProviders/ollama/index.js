@@ -4,16 +4,13 @@ const {
   formatChatHistory,
 } = require("../../helpers/chat/responses");
 const { NativeEmbedder } = require("../../EmbeddingEngines/native");
-const {
-  LLMPerformanceMonitor,
-} = require("../../helpers/chat/LLMPerformanceMonitor");
+const { LLMPerformanceMonitor } = require("../../helpers/chat/LLMPerformanceMonitor");
 const { Ollama } = require("ollama");
 
 // Docs: https://github.com/jmorganca/ollama/blob/main/docs/api.md
 class OllamaAILLM {
   constructor(embedder = null, modelPreference = null) {
-    if (!process.env.OLLAMA_BASE_PATH)
-      throw new Error("No Ollama Base Path was set.");
+    if (!process.env.OLLAMA_BASE_PATH) throw new Error("No Ollama Base Path was set.");
 
     this.authToken = process.env.OLLAMA_AUTH_TOKEN;
     this.basePath = process.env.OLLAMA_BASE_PATH;
@@ -28,9 +25,7 @@ class OllamaAILLM {
       user: this.promptWindowLimit() * 0.7,
     };
 
-    const headers = this.authToken
-      ? { Authorization: `Bearer ${this.authToken}` }
-      : {};
+    const headers = this.authToken ? { Authorization: `Bearer ${this.authToken}` } : {};
     this.client = new Ollama({ host: this.basePath, headers: headers });
     this.embedder = embedder ?? new NativeEmbedder();
     this.defaultTemp = 0.7;
@@ -61,8 +56,7 @@ class OllamaAILLM {
 
   static promptWindowLimit(_modelName) {
     const limit = process.env.OLLAMA_MODEL_TOKEN_LIMIT || 4096;
-    if (!limit || isNaN(Number(limit)))
-      throw new Error("No Ollama token context limit was set.");
+    if (!limit || isNaN(Number(limit))) throw new Error("No Ollama token context limit was set.");
     return Number(limit);
   }
 
@@ -70,8 +64,7 @@ class OllamaAILLM {
   // and if undefined - assume 4096 window.
   promptWindowLimit() {
     const limit = process.env.OLLAMA_MODEL_TOKEN_LIMIT || 4096;
-    if (!limit || isNaN(Number(limit)))
-      throw new Error("No Ollama token context limit was set.");
+    if (!limit || isNaN(Number(limit))) throw new Error("No Ollama token context limit was set.");
     return Number(limit);
   }
 
@@ -145,9 +138,7 @@ class OllamaAILLM {
             temperature,
             use_mlock: true,
             // There are currently only two performance settings so if its not "base" - its max context.
-            ...(this.performanceMode === "base"
-              ? {}
-              : { num_ctx: this.promptWindowLimit() }),
+            ...(this.performanceMode === "base" ? {} : { num_ctx: this.promptWindowLimit() }),
           },
         })
         .then((res) => {
@@ -193,9 +184,7 @@ class OllamaAILLM {
           temperature,
           use_mlock: true,
           // There are currently only two performance settings so if its not "base" - its max context.
-          ...(this.performanceMode === "base"
-            ? {}
-            : { num_ctx: this.promptWindowLimit() }),
+          ...(this.performanceMode === "base" ? {} : { num_ctx: this.promptWindowLimit() }),
         },
       }),
       messages,
@@ -218,7 +207,7 @@ class OllamaAILLM {
 
     return new Promise(async (resolve) => {
       let fullText = "";
-      let usage = {
+      const usage = {
         prompt_tokens: 0,
         completion_tokens: 0,
       };
@@ -277,9 +266,7 @@ class OllamaAILLM {
           type: "textResponseChunk",
           textResponse: "",
           close: true,
-          error: `Ollama:streaming - could not stream chat. ${
-            error?.cause ?? error.message
-          }`,
+          error: `Ollama:streaming - could not stream chat. ${error?.cause ?? error.message}`,
         });
         response.removeListener("close", handleAbort);
         stream?.endMeasurement(usage);

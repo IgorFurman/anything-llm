@@ -1,8 +1,5 @@
 const { AgentFlows } = require("../utils/agentFlows");
-const {
-  flexUserRoleValid,
-  ROLES,
-} = require("../utils/middleware/multiUserProtected");
+const { flexUserRoleValid, ROLES } = require("../utils/middleware/multiUserProtected");
 const { validatedRequest } = require("../utils/middleware/validatedRequest");
 const { Telemetry } = require("../models/telemetry");
 
@@ -174,18 +171,14 @@ function agentFlowEndpoints(app) {
 
         const flow = AgentFlows.loadFlow(uuid);
         if (!flow) {
-          return response
-            .status(404)
-            .json({ success: false, error: "Flow not found" });
+          return response.status(404).json({ success: false, error: "Flow not found" });
         }
 
         flow.config.active = active;
         const { success } = AgentFlows.saveFlow(flow.name, flow.config, uuid);
 
         if (!success) {
-          return response
-            .status(500)
-            .json({ success: false, error: "Failed to update flow" });
+          return response.status(500).json({ success: false, error: "Failed to update flow" });
         }
 
         return response.json({ success: true, flow });

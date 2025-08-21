@@ -1,7 +1,7 @@
-import paths from "./paths";
-import { useEffect } from "react";
-import { userFromStorage } from "./request";
 import { TOGGLE_LLM_SELECTOR_EVENT } from "@/components/WorkspaceChat/ChatContainer/PromptInput/LLMSelector/action";
+import { useEffect } from "react";
+import paths from "./paths";
+import { userFromStorage } from "./request";
 
 export const KEYBOARD_SHORTCUTS_HELP_EVENT = "keyboard-shortcuts-help";
 export const isMac = navigator.platform.toUpperCase().indexOf("MAC") >= 0;
@@ -73,10 +73,7 @@ export const SHORTCUTS = {
 const LISTENERS = {};
 const modifier = isMac ? "meta" : "ctrl";
 for (const key in SHORTCUTS) {
-  const listenerKey = key
-    .replace("⌘", modifier)
-    .replaceAll(" ", "")
-    .toLowerCase();
+  const listenerKey = key.replace("⌘", modifier).replaceAll(" ", "").toLowerCase();
   LISTENERS[listenerKey] = SHORTCUTS[key].action;
 }
 

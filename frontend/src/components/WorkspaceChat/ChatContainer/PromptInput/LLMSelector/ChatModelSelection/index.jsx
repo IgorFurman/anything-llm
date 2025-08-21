@@ -1,6 +1,4 @@
-import useGetProviderModels, {
-  DISABLED_PROVIDERS,
-} from "@/hooks/useGetProvidersModels";
+import useGetProviderModels, { DISABLED_PROVIDERS } from "@/hooks/useGetProvidersModels";
 import { useTranslation } from "react-i18next";
 
 export default function ChatModelSelection({
@@ -9,8 +7,7 @@ export default function ChatModelSelection({
   selectedLLMModel,
   setSelectedLLMModel,
 }) {
-  const { defaultModels, customModels, loading } =
-    useGetProviderModels(provider);
+  const { defaultModels, customModels, loading } = useGetProviderModels(provider);
   const { t } = useTranslation();
   if (DISABLED_PROVIDERS.includes(provider)) return null;
 
@@ -24,9 +21,7 @@ export default function ChatModelSelection({
             })}
           </label>
           <p className="text-white text-opacity-60 text-xs font-medium py-1.5">
-            {t(
-              "chat_window.workspace_llm_manager.available_models_description"
-            )}
+            {t("chat_window.workspace_llm_manager.available_models_description")}
           </p>
         </div>
         <select
@@ -69,11 +64,7 @@ export default function ChatModelSelection({
           <optgroup label="General models">
             {defaultModels.map((model) => {
               return (
-                <option
-                  key={model}
-                  value={model}
-                  selected={selectedLLMModel === model}
-                >
+                <option key={model} value={model} selected={selectedLLMModel === model}>
                   {model}
                 </option>
               );
@@ -84,11 +75,7 @@ export default function ChatModelSelection({
           <optgroup label="Discovered models">
             {customModels.map((model) => {
               return (
-                <option
-                  key={model.id}
-                  value={model.id}
-                  selected={selectedLLMModel === model.id}
-                >
+                <option key={model.id} value={model.id} selected={selectedLLMModel === model.id}>
                   {model.id}
                 </option>
               );
@@ -96,24 +83,19 @@ export default function ChatModelSelection({
           </optgroup>
         )}
         {/* For providers like TogetherAi where we partition model by creator entity. */}
-        {!Array.isArray(customModels) &&
-          Object.keys(customModels).length > 0 && (
-            <>
-              {Object.entries(customModels).map(([organization, models]) => (
-                <optgroup key={organization} label={organization}>
-                  {models.map((model) => (
-                    <option
-                      key={model.id}
-                      value={model.id}
-                      selected={selectedLLMModel === model.id}
-                    >
-                      {model.name}
-                    </option>
-                  ))}
-                </optgroup>
-              ))}
-            </>
-          )}
+        {!Array.isArray(customModels) && Object.keys(customModels).length > 0 && (
+          <>
+            {Object.entries(customModels).map(([organization, models]) => (
+              <optgroup key={organization} label={organization}>
+                {models.map((model) => (
+                  <option key={model.id} value={model.id} selected={selectedLLMModel === model.id}>
+                    {model.name}
+                  </option>
+                ))}
+              </optgroup>
+            ))}
+          </>
+        )}
       </select>
     </div>
   );

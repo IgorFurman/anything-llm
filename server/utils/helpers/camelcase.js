@@ -5,18 +5,10 @@ const IDENTIFIER = /([\p{Alpha}\p{N}_]|$)/u;
 const SEPARATORS = /[_.\- ]+/;
 
 const LEADING_SEPARATORS = new RegExp("^" + SEPARATORS.source);
-const SEPARATORS_AND_IDENTIFIER = new RegExp(
-  SEPARATORS.source + IDENTIFIER.source,
-  "gu"
-);
+const SEPARATORS_AND_IDENTIFIER = new RegExp(SEPARATORS.source + IDENTIFIER.source, "gu");
 const NUMBERS_AND_IDENTIFIER = new RegExp("\\d+" + IDENTIFIER.source, "gu");
 
-const preserveCamelCase = (
-  string,
-  toLowerCase,
-  toUpperCase,
-  preserveConsecutiveUppercase
-) => {
+const preserveCamelCase = (string, toLowerCase, toUpperCase, preserveConsecutiveUppercase) => {
   let isLastCharLower = false;
   let isLastCharUpper = false;
   let isLastLastCharUpper = false;
@@ -44,12 +36,10 @@ const preserveCamelCase = (
       isLastCharLower = true;
     } else {
       isLastCharLower =
-        toLowerCase(character) === character &&
-        toUpperCase(character) !== character;
+        toLowerCase(character) === character && toUpperCase(character) !== character;
       isLastLastCharUpper = isLastCharUpper;
       isLastCharUpper =
-        toUpperCase(character) === character &&
-        toLowerCase(character) !== character;
+        toUpperCase(character) === character && toLowerCase(character) !== character;
     }
   }
 
@@ -67,9 +57,7 @@ const postProcess = (input, toUpperCase) => {
   NUMBERS_AND_IDENTIFIER.lastIndex = 0;
 
   return input
-    .replace(SEPARATORS_AND_IDENTIFIER, (_, identifier) =>
-      toUpperCase(identifier)
-    )
+    .replace(SEPARATORS_AND_IDENTIFIER, (_, identifier) => toUpperCase(identifier))
     .replace(NUMBERS_AND_IDENTIFIER, (m) => toUpperCase(m));
 };
 

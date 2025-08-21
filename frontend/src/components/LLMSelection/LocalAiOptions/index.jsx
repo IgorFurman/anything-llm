@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { Info, CaretDown, CaretUp } from "@phosphor-icons/react";
-import paths from "@/utils/paths";
-import System from "@/models/system";
 import PreLoader from "@/components/Preloader";
-import { LOCALAI_COMMON_URLS } from "@/utils/constants";
 import useProviderEndpointAutoDiscovery from "@/hooks/useProviderEndpointAutoDiscovery";
+import System from "@/models/system";
+import { LOCALAI_COMMON_URLS } from "@/utils/constants";
+import paths from "@/utils/paths";
+import { CaretDown, CaretUp, Info } from "@phosphor-icons/react";
+import React, { useEffect, useState } from "react";
 
 export default function LocalAiOptions({ settings, showAlert = false }) {
   const {
@@ -29,8 +29,7 @@ export default function LocalAiOptions({ settings, showAlert = false }) {
           <div className="gap-x-2 flex items-center">
             <Info size={12} className="hidden md:visible" />
             <p className="text-sm md:text-base">
-              LocalAI as your LLM requires you to set an embedding service to
-              use.
+              LocalAI as your LLM requires you to set an embedding service to use.
             </p>
           </div>
           <a
@@ -44,11 +43,7 @@ export default function LocalAiOptions({ settings, showAlert = false }) {
       <div className="w-full flex items-center gap-[36px] mt-1.5">
         {!settings?.credentialsOnly && (
           <>
-            <LocalAIModelSelection
-              settings={settings}
-              basePath={basePath.value}
-              apiKey={apiKey}
-            />
+            <LocalAIModelSelection settings={settings} basePath={basePath.value} apiKey={apiKey} />
             <div className="flex flex-col w-60">
               <label className="text-white text-sm font-semibold block mb-2">
                 Token context window
@@ -70,8 +65,7 @@ export default function LocalAiOptions({ settings, showAlert = false }) {
         <div className="flex flex-col w-60">
           <div className="flex flex-col gap-y-1 mb-2">
             <label className="text-white text-sm font-semibold flex items-center gap-x-2">
-              Local AI API Key{" "}
-              <p className="!text-xs !italic !font-thin">optional</p>
+              Local AI API Key <p className="!text-xs !italic !font-thin">optional</p>
             </label>
           </div>
           <input
@@ -107,9 +101,7 @@ export default function LocalAiOptions({ settings, showAlert = false }) {
         <div className="w-full flex items-center gap-4">
           <div className="flex flex-col w-60">
             <div className="flex justify-between items-center mb-2">
-              <label className="text-white text-sm font-semibold">
-                Local AI Base URL
-              </label>
+              <label className="text-white text-sm font-semibold">Local AI Base URL</label>
               {loading ? (
                 <PreLoader size="6" />
               ) : (
@@ -170,18 +162,14 @@ function LocalAIModelSelection({ settings, basePath = null, apiKey = null }) {
   if (loading || customModels.length == 0) {
     return (
       <div className="flex flex-col w-60">
-        <label className="text-white text-sm font-semibold block mb-2">
-          Chat Model Selection
-        </label>
+        <label className="text-white text-sm font-semibold block mb-2">Chat Model Selection</label>
         <select
           name="LocalAiModelPref"
           disabled={true}
           className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
         >
           <option disabled={true} selected={true}>
-            {basePath?.includes("/v1")
-              ? "-- loading available models --"
-              : "-- waiting for URL --"}
+            {basePath?.includes("/v1") ? "-- loading available models --" : "-- waiting for URL --"}
           </option>
         </select>
       </div>
@@ -190,9 +178,7 @@ function LocalAIModelSelection({ settings, basePath = null, apiKey = null }) {
 
   return (
     <div className="flex flex-col w-60">
-      <label className="text-white text-sm font-semibold block mb-2">
-        Chat Model Selection
-      </label>
+      <label className="text-white text-sm font-semibold block mb-2">Chat Model Selection</label>
       <select
         name="LocalAiModelPref"
         required={true}

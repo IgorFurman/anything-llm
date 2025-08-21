@@ -37,7 +37,7 @@ const BrowserExtensionApiKey = {
    * @param {string} key
    * @returns {Promise<{apiKey: import("@prisma/client").browser_extension_api_keys|boolean}>}
    */
-  validate: async function (key) {
+  validate: async (key) => {
     if (!key.startsWith("brx-")) return false;
     const apiKey = await prisma.browser_extension_api_keys.findUnique({
       where: { key: key.toString() },
@@ -57,7 +57,7 @@ const BrowserExtensionApiKey = {
    * @param {object} clause - Prisma props for search
    * @returns {Promise<{apiKey: import("@prisma/client").browser_extension_api_keys|boolean}>}
    */
-  get: async function (clause = {}) {
+  get: async (clause = {}) => {
     try {
       const apiKey = await prisma.browser_extension_api_keys.findFirst({
         where: clause,
@@ -74,10 +74,10 @@ const BrowserExtensionApiKey = {
    * @param {number} id - database id of browser key
    * @returns {Promise<{success: boolean, error:string|null}>}
    */
-  delete: async function (id) {
+  delete: async (id) => {
     try {
       await prisma.browser_extension_api_keys.delete({
-        where: { id: parseInt(id) },
+        where: { id: Number.parseInt(id) },
       });
       return { success: true, error: null };
     } catch (error) {
@@ -93,7 +93,7 @@ const BrowserExtensionApiKey = {
    * @param {object|null} orderBy
    * @returns {Promise<import("@prisma/client").browser_extension_api_keys[]>}
    */
-  where: async function (clause = {}, limit = null, orderBy = null) {
+  where: async (clause = {}, limit = null, orderBy = null) => {
     try {
       const apiKeys = await prisma.browser_extension_api_keys.findMany({
         where: clause,
@@ -116,15 +116,9 @@ const BrowserExtensionApiKey = {
    * @param {object|null} orderBy
    * @returns {Promise<import("@prisma/client").browser_extension_api_keys[]>}
    */
-  whereWithUser: async function (
-    user,
-    clause = {},
-    limit = null,
-    orderBy = null
-  ) {
+  whereWithUser: async function (user, clause = {}, limit = null, orderBy = null) {
     // Admin can view and use any keys
-    if ([ROLES.admin].includes(user.role))
-      return await this.where(clause, limit, orderBy);
+    if ([ROLES.admin].includes(user.role)) return await this.where(clause, limit, orderBy);
 
     try {
       const apiKeys = await prisma.browser_extension_api_keys.findMany({
@@ -148,7 +142,7 @@ const BrowserExtensionApiKey = {
    * @param {number} userId
    * @returns {Promise<void>}
    */
-  migrateApiKeysToMultiUser: async function (userId) {
+  migrateApiKeysToMultiUser: async (userId) => {
     try {
       await prisma.browser_extension_api_keys.updateMany({
         where: {

@@ -1,9 +1,4 @@
-export default function CTAButton({
-  children,
-  disabled = false,
-  onClick,
-  className = "",
-}) {
+export default function CTAButton({ children, disabled = false, onClick, className = "" }) {
   return (
     <button
       disabled={disabled}

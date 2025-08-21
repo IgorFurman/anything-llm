@@ -1,12 +1,12 @@
-import React, { useEffect, useRef, useState } from "react";
 import AnythingLLMIcon from "@/media/logo/anything-llm-icon.png";
-import WorkspaceLLMItem from "./WorkspaceLLMItem";
 import { AVAILABLE_LLM_PROVIDERS } from "@/pages/GeneralSettings/LLMPreference";
+import paths from "@/utils/paths";
 import { CaretUpDown, MagnifyingGlass, X } from "@phosphor-icons/react";
-import ChatModelSelection from "./ChatModelSelection";
+import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import paths from "@/utils/paths";
+import ChatModelSelection from "./ChatModelSelection";
+import WorkspaceLLMItem from "./WorkspaceLLMItem";
 
 // Some providers do not support model selection via /models.
 // In that case we allow the user to enter the model name manually and hope they
@@ -33,15 +33,9 @@ const LLMS = [LLM_DEFAULT, ...AVAILABLE_LLM_PROVIDERS].filter(
   (llm) => !DISABLED_PROVIDERS.includes(llm.value)
 );
 
-export default function WorkspaceLLMSelection({
-  settings,
-  workspace,
-  setHasChanges,
-}) {
+export default function WorkspaceLLMSelection({ settings, workspace, setHasChanges }) {
   const [filteredLLMs, setFilteredLLMs] = useState([]);
-  const [selectedLLM, setSelectedLLM] = useState(
-    workspace?.chatProvider ?? "default"
-  );
+  const [selectedLLM, setSelectedLLM] = useState(workspace?.chatProvider ?? "default");
   const [searchQuery, setSearchQuery] = useState("");
   const [searchMenuOpen, setSearchMenuOpen] = useState(false);
   const searchInputRef = useRef(null);
@@ -146,12 +140,8 @@ export default function WorkspaceLLMSelection({
                 className="w-10 h-10 rounded-md"
               />
               <div className="flex flex-col text-left">
-                <div className="text-sm font-semibold text-white">
-                  {selectedLLMObject.name}
-                </div>
-                <div className="mt-1 text-xs text-description">
-                  {selectedLLMObject.description}
-                </div>
+                <div className="text-sm font-semibold text-white">{selectedLLMObject.name}</div>
+                <div className="mt-1 text-xs text-description">{selectedLLMObject.description}</div>
               </div>
             </div>
             <CaretUpDown size={24} weight="bold" className="text-white" />
@@ -188,9 +178,7 @@ function ModelSelector({ selectedLLM, workspace, setHasChanges }) {
   }
 
   if (FREE_FORM_LLM_SELECTION.includes(selectedLLM)) {
-    return (
-      <FreeFormLLMInput workspace={workspace} setHasChanges={setHasChanges} />
-    );
+    return <FreeFormLLMInput workspace={workspace} setHasChanges={setHasChanges} />;
   }
 
   return (

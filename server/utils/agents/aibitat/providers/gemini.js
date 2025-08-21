@@ -2,9 +2,7 @@ const OpenAI = require("openai");
 const Provider = require("./ai-provider.js");
 const InheritMultiple = require("./helpers/classes.js");
 const UnTooled = require("./helpers/untooled.js");
-const {
-  NO_SYSTEM_PROMPT_MODELS,
-} = require("../../../AiProviders/gemini/index.js");
+const { NO_SYSTEM_PROMPT_MODELS } = require("../../../AiProviders/gemini/index.js");
 const { APIError } = require("../error.js");
 
 /**
@@ -68,10 +66,8 @@ class GeminiProvider extends InheritMultiple([Provider, UnTooled]) {
         messages: this.cleanMsgs(this.formatMessages(messages)),
       })
       .then((result) => {
-        if (!result.hasOwnProperty("choices"))
-          throw new Error("Gemini chat: No results!");
-        if (result.choices.length === 0)
-          throw new Error("Gemini chat: No results length!");
+        if (!result.hasOwnProperty("choices")) throw new Error("Gemini chat: No results!");
+        if (result.choices.length === 0) throw new Error("Gemini chat: No results length!");
         return result.choices[0].message.content;
       })
       .catch((_) => {
@@ -113,9 +109,7 @@ class GeminiProvider extends InheritMultiple([Provider, UnTooled]) {
       }
 
       if (!completion?.content) {
-        this.providerLog(
-          "Will assume chat completion without tool call inputs."
-        );
+        this.providerLog("Will assume chat completion without tool call inputs.");
         const response = await this.client.chat.completions.create({
           model: this.model,
           messages: this.cleanMsgs(this.formatMessages(messages)),

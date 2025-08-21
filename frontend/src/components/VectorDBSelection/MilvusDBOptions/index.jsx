@@ -3,9 +3,7 @@ export default function MilvusDBOptions({ settings }) {
     <div className="w-full flex flex-col gap-y-7">
       <div className="w-full flex items-center gap-[36px] mt-1.5">
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
-            Milvus DB Address
-          </label>
+          <label className="text-white text-sm font-semibold block mb-3">Milvus DB Address</label>
           <input
             type="text"
             name="MilvusAddress"
@@ -19,9 +17,7 @@ export default function MilvusDBOptions({ settings }) {
         </div>
 
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
-            Milvus Username
-          </label>
+          <label className="text-white text-sm font-semibold block mb-3">Milvus Username</label>
           <input
             type="text"
             name="MilvusUsername"
@@ -33,9 +29,7 @@ export default function MilvusDBOptions({ settings }) {
           />
         </div>
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
-            Milvus Password
-          </label>
+          <label className="text-white text-sm font-semibold block mb-3">Milvus Password</label>
           <input
             type="password"
             name="MilvusPassword"

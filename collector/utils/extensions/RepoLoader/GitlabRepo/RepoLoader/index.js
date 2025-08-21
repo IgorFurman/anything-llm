@@ -72,9 +72,7 @@ class GitLabRepoLoader {
     await this.getRepoBranches();
     if (!!this.branch && this.branches.includes(this.branch)) return;
 
-    console.log(
-      "[Gitlab Loader]: Branch not set! Auto-assigning to a default branch."
-    );
+    console.log("[Gitlab Loader]: Branch not set! Auto-assigning to a default branch.");
     this.branch = this.branches.includes("main") ? "main" : "master";
     console.log(`[Gitlab Loader]: Branch auto-assigned to ${this.branch}.`);
     return;
@@ -117,9 +115,7 @@ class GitLabRepoLoader {
     if (!this.ready) throw new Error("[Gitlab Loader]: not in ready state!");
 
     if (this.accessToken)
-      console.log(
-        `[Gitlab Loader]: Access token set! Recursive loading enabled for ${this.repo}!`
-      );
+      console.log(`[Gitlab Loader]: Access token set! Recursive loading enabled for ${this.repo}!`);
 
     const docs = [];
 
@@ -144,9 +140,7 @@ class GitLabRepoLoader {
     if (this.withIssues) {
       console.log(`[Gitlab Loader]: Fetching issues.`);
       const issues = await this.fetchIssues();
-      console.log(
-        `[Gitlab Loader]: Fetched ${issues.length} issues with discussions.`
-      );
+      console.log(`[Gitlab Loader]: Fetched ${issues.length} issues with discussions.`);
       docs.push(
         ...issues.map((issue) => ({
           issue,
@@ -266,9 +260,7 @@ class GitLabRepoLoader {
         let discussionPage = null;
         const discussions = [];
 
-        while (
-          (discussionPage = await this.fetchNextPage(discussionsRequestData))
-        ) {
+        while ((discussionPage = await this.fetchNextPage(discussionsRequestData))) {
           discussions.push(
             ...discussionPage.map(({ notes }) =>
               notes.map(
@@ -322,14 +314,10 @@ ${body}`
       const data = await fetch(
         `${this.apiBase}/api/v4/projects/${
           this.projectId
-        }/repository/files/${encodeURIComponent(sourceFilePath)}/raw?ref=${
-          this.branch
-        }`,
+        }/repository/files/${encodeURIComponent(sourceFilePath)}/raw?ref=${this.branch}`,
         {
           method: "GET",
-          headers: this.accessToken
-            ? { "PRIVATE-TOKEN": this.accessToken }
-            : {},
+          headers: this.accessToken ? { "PRIVATE-TOKEN": this.accessToken } : {},
         }
       ).then((res) => {
         if (res.ok) return res.text();

@@ -3,9 +3,7 @@ process.env.NODE_ENV === "development"
   : require("dotenv").config();
 
 function reqBody(request) {
-  return typeof request.body === "string"
-    ? JSON.parse(request.body)
-    : request.body;
+  return typeof request.body === "string" ? JSON.parse(request.body) : request.body;
 }
 
 function queryParams(request) {

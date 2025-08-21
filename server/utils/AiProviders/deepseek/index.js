@@ -1,26 +1,19 @@
 const { NativeEmbedder } = require("../../EmbeddingEngines/native");
-const {
-  LLMPerformanceMonitor,
-} = require("../../helpers/chat/LLMPerformanceMonitor");
+const { LLMPerformanceMonitor } = require("../../helpers/chat/LLMPerformanceMonitor");
 const { v4: uuidv4 } = require("uuid");
 const { MODEL_MAP } = require("../modelMap");
-const {
-  writeResponseChunk,
-  clientAbortedHandler,
-} = require("../../helpers/chat/responses");
+const { writeResponseChunk, clientAbortedHandler } = require("../../helpers/chat/responses");
 
 class DeepSeekLLM {
   constructor(embedder = null, modelPreference = null) {
-    if (!process.env.DEEPSEEK_API_KEY)
-      throw new Error("No DeepSeek API key was set.");
+    if (!process.env.DEEPSEEK_API_KEY) throw new Error("No DeepSeek API key was set.");
     const { OpenAI: OpenAIApi } = require("openai");
 
     this.openai = new OpenAIApi({
       apiKey: process.env.DEEPSEEK_API_KEY,
       baseURL: "https://api.deepseek.com/v1",
     });
-    this.model =
-      modelPreference || process.env.DEEPSEEK_MODEL_PREF || "deepseek-chat";
+    this.model = modelPreference || process.env.DEEPSEEK_MODEL_PREF || "deepseek-chat";
     this.limits = {
       history: this.promptWindowLimit() * 0.15,
       system: this.promptWindowLimit() * 0.15,
@@ -29,9 +22,7 @@ class DeepSeekLLM {
 
     this.embedder = embedder ?? new NativeEmbedder();
     this.defaultTemp = 0.7;
-    this.log(
-      `Initialized ${this.model} with context window ${this.promptWindowLimit()}`
-    );
+    this.log(`Initialized ${this.model} with context window ${this.promptWindowLimit()}`);
   }
 
   log(text, ...args) {
@@ -67,12 +58,7 @@ class DeepSeekLLM {
     return models.data.some((model) => model.id === modelName);
   }
 
-  constructPrompt({
-    systemPrompt = "",
-    contextTexts = [],
-    chatHistory = [],
-    userPrompt = "",
-  }) {
+  constructPrompt({ systemPrompt = "", contextTexts = [], chatHistory = [], userPrompt = "" }) {
     const prompt = {
       role: "system",
       content: `${systemPrompt}${this.#appendContext(contextTexts)}`,
@@ -87,19 +73,14 @@ class DeepSeekLLM {
    */
   #parseReasoningFromResponse({ message }) {
     let textResponse = message?.content;
-    if (
-      !!message?.reasoning_content &&
-      message.reasoning_content.trim().length > 0
-    )
+    if (!!message?.reasoning_content && message.reasoning_content.trim().length > 0)
       textResponse = `<think>${message.reasoning_content}</think>${textResponse}`;
     return textResponse;
   }
 
   async getChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!(await this.isValidChatCompletionModel(this.model)))
-      throw new Error(
-        `DeepSeek chat: ${this.model} is not valid for chat completion!`
-      );
+      throw new Error(`DeepSeek chat: ${this.model} is not valid for chat completion!`);
 
     const result = await LLMPerformanceMonitor.measureAsyncFunction(
       this.openai.chat.completions
@@ -113,10 +94,7 @@ class DeepSeekLLM {
         })
     );
 
-    if (
-      !result?.output?.hasOwnProperty("choices") ||
-      result?.output?.choices?.length === 0
-    )
+    if (!result?.output?.hasOwnProperty("choices") || result?.output?.choices?.length === 0)
       throw new Error(
         `Invalid response body returned from DeepSeek: ${JSON.stringify(result.output)}`
       );
@@ -135,9 +113,7 @@ class DeepSeekLLM {
 
   async streamGetChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!(await this.isValidChatCompletionModel(this.model)))
-      throw new Error(
-        `DeepSeek chat: ${this.model} is not valid for chat completion!`
-      );
+      throw new Error(`DeepSeek chat: ${this.model} is not valid for chat completion!`);
 
     const measuredStreamRequest = await LLMPerformanceMonitor.measureStream(
       this.openai.chat.completions.create({
@@ -159,7 +135,7 @@ class DeepSeekLLM {
   handleStream(response, stream, responseProps) {
     const { uuid = uuidv4(), sources = [] } = responseProps;
     let hasUsageMetrics = false;
-    let usage = {
+    const usage = {
       completion_tokens: 0,
     };
 

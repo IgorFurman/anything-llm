@@ -1,6 +1,6 @@
 module.exports.SqlAgentListDatabase = {
   name: "sql-list-databases",
-  plugin: function () {
+  plugin: () => {
     const { listSQLConnections } = require("./SQLConnectors");
     return {
       name: "sql-list-databases",
@@ -32,9 +32,7 @@ module.exports.SqlAgentListDatabase = {
           },
           handler: async function () {
             this.super.handlerProps.log(`Using the sql-list-databases tool.`);
-            this.super.introspect(
-              `${this.caller}: Checking what are the available databases.`
-            );
+            this.super.introspect(`${this.caller}: Checking what are the available databases.`);
 
             const connections = (await listSQLConnections()).map((conn) => {
               const { connectionString, ...rest } = conn;

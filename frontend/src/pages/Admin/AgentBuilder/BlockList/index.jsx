@@ -1,25 +1,25 @@
-import React from "react";
 import {
-  X,
-  CaretUp,
-  CaretDown,
-  Globe,
-  Browser,
-  Brain,
-  Flag,
-  Info,
   BracketsCurly,
+  Brain,
+  Browser,
+  CaretDown,
+  CaretUp,
+  Flag,
+  Globe,
+  Info,
+  X,
 } from "@phosphor-icons/react";
+import React from "react";
 import { Tooltip } from "react-tooltip";
-import StartNode from "../nodes/StartNode";
 import ApiCallNode from "../nodes/ApiCallNode";
-import WebsiteNode from "../nodes/WebsiteNode";
-import FileNode from "../nodes/FileNode";
 import CodeNode from "../nodes/CodeNode";
-import LLMInstructionNode from "../nodes/LLMInstructionNode";
+import FileNode from "../nodes/FileNode";
 import FinishNode from "../nodes/FinishNode";
-import WebScrapingNode from "../nodes/WebScrapingNode";
 import FlowInfoNode from "../nodes/FlowInfoNode";
+import LLMInstructionNode from "../nodes/LLMInstructionNode";
+import StartNode from "../nodes/StartNode";
+import WebScrapingNode from "../nodes/WebScrapingNode";
+import WebsiteNode from "../nodes/WebsiteNode";
 
 const BLOCK_TYPES = {
   FLOW_INFO: "flowInfo",
@@ -67,8 +67,7 @@ const BLOCK_INFO = {
       responseVariable: "",
       directOutput: false,
     },
-    getSummary: (config) =>
-      `${config.method || "GET"} ${config.url || "(no URL)"}`,
+    getSummary: (config) => `${config.method || "GET"} ${config.url || "(no URL)"}`,
   },
   // TODO: Implement website, file, and code blocks
   /* [BLOCK_TYPES.WEBSITE]: {
@@ -309,9 +308,7 @@ export default function BlockList({
             </div>
             <div
               className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                block.isExpanded
-                  ? "max-h-[1000px] opacity-100"
-                  : "max-h-0 opacity-0"
+                block.isExpanded ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"
               }`}
             >
               <div className="border-t border-white/10 p-4 bg-theme-bg-secondary rounded-b-lg">
@@ -341,12 +338,7 @@ export default function BlockList({
           )}
         </div>
       ))}
-      <Tooltip
-        id="block-action"
-        place="bottom"
-        delayShow={300}
-        className="tooltip !text-xs"
-      />
+      <Tooltip id="block-action" place="bottom" delayShow={300} className="tooltip !text-xs" />
     </div>
   );
 }

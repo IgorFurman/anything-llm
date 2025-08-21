@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import System from "@/models/system";
+import { useEffect, useState } from "react";
 
 /**
  * Checks if Simple SSO is enabled and if the user should be redirected to the SSO login page.

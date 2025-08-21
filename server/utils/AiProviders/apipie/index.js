@@ -8,9 +8,7 @@ const {
 const fs = require("fs");
 const path = require("path");
 const { safeJsonParse } = require("../../http");
-const {
-  LLMPerformanceMonitor,
-} = require("../../helpers/chat/LLMPerformanceMonitor");
+const { LLMPerformanceMonitor } = require("../../helpers/chat/LLMPerformanceMonitor");
 
 const cacheFolder = path.resolve(
   process.env.STORAGE_DIR
@@ -20,8 +18,7 @@ const cacheFolder = path.resolve(
 
 class ApiPieLLM {
   constructor(embedder = null, modelPreference = null) {
-    if (!process.env.APIPIE_LLM_API_KEY)
-      throw new Error("No ApiPie LLM API key was set.");
+    if (!process.env.APIPIE_LLM_API_KEY) throw new Error("No ApiPie LLM API key was set.");
 
     const { OpenAI: OpenAIApi } = require("openai");
     this.basePath = "https://apipie.ai/v1";
@@ -30,9 +27,7 @@ class ApiPieLLM {
       apiKey: process.env.APIPIE_LLM_API_KEY ?? null,
     });
     this.model =
-      modelPreference ||
-      process.env.APIPIE_LLM_MODEL_PREF ||
-      "openrouter/mistral-7b-instruct";
+      modelPreference || process.env.APIPIE_LLM_MODEL_PREF || "openrouter/mistral-7b-instruct";
     this.limits = {
       history: this.promptWindowLimit() * 0.15,
       system: this.promptWindowLimit() * 0.15,
@@ -42,8 +37,7 @@ class ApiPieLLM {
     this.embedder = embedder ?? new NativeEmbedder();
     this.defaultTemp = 0.7;
 
-    if (!fs.existsSync(cacheFolder))
-      fs.mkdirSync(cacheFolder, { recursive: true });
+    if (!fs.existsSync(cacheFolder)) fs.mkdirSync(cacheFolder, { recursive: true });
     this.cacheModelPath = path.resolve(cacheFolder, "models.json");
     this.cacheAtPath = path.resolve(cacheFolder, ".cached_at");
   }
@@ -70,8 +64,7 @@ class ApiPieLLM {
   // This might slow down the first request, but we need the proper token context window
   // for each model and this is a constructor property - so we can really only get it if this cache exists.
   async #syncModels() {
-    if (fs.existsSync(this.cacheModelPath) && !this.#cacheIsStale())
-      return false;
+    if (fs.existsSync(this.cacheModelPath) && !this.#cacheIsStale()) return false;
 
     this.log("Model cache is not present or stale. Fetching from ApiPie API.");
     await fetchApiPieModels();
@@ -92,28 +85,21 @@ class ApiPieLLM {
 
   models() {
     if (!fs.existsSync(this.cacheModelPath)) return {};
-    return safeJsonParse(
-      fs.readFileSync(this.cacheModelPath, { encoding: "utf-8" }),
-      {}
-    );
+    return safeJsonParse(fs.readFileSync(this.cacheModelPath, { encoding: "utf-8" }), {});
   }
 
   chatModels() {
     const allModels = this.models();
-    return Object.entries(allModels).reduce(
-      (chatModels, [modelId, modelInfo]) => {
-        // Filter for chat models
-        if (
-          modelInfo.subtype &&
-          (modelInfo.subtype.includes("chat") ||
-            modelInfo.subtype.includes("chatx"))
-        ) {
-          chatModels[modelId] = modelInfo;
-        }
-        return chatModels;
-      },
-      {}
-    );
+    return Object.entries(allModels).reduce((chatModels, [modelId, modelInfo]) => {
+      // Filter for chat models
+      if (
+        modelInfo.subtype &&
+        (modelInfo.subtype.includes("chat") || modelInfo.subtype.includes("chatx"))
+      ) {
+        chatModels[modelId] = modelInfo;
+      }
+      return chatModels;
+    }, {});
   }
 
   streamingEnabled() {
@@ -123,10 +109,7 @@ class ApiPieLLM {
   static promptWindowLimit(modelName) {
     const cacheModelPath = path.resolve(cacheFolder, "models.json");
     const availableModels = fs.existsSync(cacheModelPath)
-      ? safeJsonParse(
-          fs.readFileSync(cacheModelPath, { encoding: "utf-8" }),
-          {}
-        )
+      ? safeJsonParse(fs.readFileSync(cacheModelPath, { encoding: "utf-8" }), {})
       : {};
     return availableModels[modelName]?.maxLength || 4096;
   }
@@ -153,7 +136,7 @@ class ApiPieLLM {
     }
 
     const content = [{ type: "text", text: userPrompt }];
-    for (let attachment of attachments) {
+    for (const attachment of attachments) {
       content.push({
         type: "image_url",
         image_url: {
@@ -188,9 +171,7 @@ class ApiPieLLM {
 
   async getChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!(await this.isValidChatCompletionModel(this.model)))
-      throw new Error(
-        `ApiPie chat: ${this.model} is not valid for chat completion!`
-      );
+      throw new Error(`ApiPie chat: ${this.model} is not valid for chat completion!`);
 
     const result = await LLMPerformanceMonitor.measureAsyncFunction(
       this.openai.chat.completions
@@ -204,11 +185,7 @@ class ApiPieLLM {
         })
     );
 
-    if (
-      !result.output.hasOwnProperty("choices") ||
-      result.output.choices.length === 0
-    )
-      return null;
+    if (!result.output.hasOwnProperty("choices") || result.output.choices.length === 0) return null;
 
     return {
       textResponse: result.output.choices[0].message.content,
@@ -216,8 +193,7 @@ class ApiPieLLM {
         prompt_tokens: result.output.usage?.prompt_tokens || 0,
         completion_tokens: result.output.usage?.completion_tokens || 0,
         total_tokens: result.output.usage?.total_tokens || 0,
-        outputTps:
-          (result.output.usage?.completion_tokens || 0) / result.duration,
+        outputTps: (result.output.usage?.completion_tokens || 0) / result.duration,
         duration: result.duration,
       },
     };
@@ -225,9 +201,7 @@ class ApiPieLLM {
 
   async streamGetChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!(await this.isValidChatCompletionModel(this.model)))
-      throw new Error(
-        `ApiPie chat: ${this.model} is not valid for chat completion!`
-      );
+      throw new Error(`ApiPie chat: ${this.model} is not valid for chat completion!`);
 
     const measuredStreamRequest = await LLMPerformanceMonitor.measureStream(
       this.openai.chat.completions.create({
@@ -348,22 +322,13 @@ async function fetchApiPieModels(providedApiKey = null) {
       });
 
       // Cache all response information
-      if (!fs.existsSync(cacheFolder))
-        fs.mkdirSync(cacheFolder, { recursive: true });
-      fs.writeFileSync(
-        path.resolve(cacheFolder, "models.json"),
-        JSON.stringify(models),
-        {
-          encoding: "utf-8",
-        }
-      );
-      fs.writeFileSync(
-        path.resolve(cacheFolder, ".cached_at"),
-        String(Number(new Date())),
-        {
-          encoding: "utf-8",
-        }
-      );
+      if (!fs.existsSync(cacheFolder)) fs.mkdirSync(cacheFolder, { recursive: true });
+      fs.writeFileSync(path.resolve(cacheFolder, "models.json"), JSON.stringify(models), {
+        encoding: "utf-8",
+      });
+      fs.writeFileSync(path.resolve(cacheFolder, ".cached_at"), String(Number(new Date())), {
+        encoding: "utf-8",
+      });
 
       return models;
     })

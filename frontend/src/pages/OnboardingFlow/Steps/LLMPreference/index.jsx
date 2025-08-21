@@ -1,69 +1,69 @@
-import { MagnifyingGlass } from "@phosphor-icons/react";
-import { useEffect, useState, useRef } from "react";
-import OpenAiLogo from "@/media/llmprovider/openai.png";
-import GenericOpenAiLogo from "@/media/llmprovider/generic-openai.png";
-import AzureOpenAiLogo from "@/media/llmprovider/azure.png";
 import AnthropicLogo from "@/media/llmprovider/anthropic.png";
+import APIPieLogo from "@/media/llmprovider/apipie.png";
+import AzureOpenAiLogo from "@/media/llmprovider/azure.png";
+import AWSBedrockLogo from "@/media/llmprovider/bedrock.png";
+import CohereLogo from "@/media/llmprovider/cohere.png";
+import DeepSeekLogo from "@/media/llmprovider/deepseek.png";
+import DellProAiStudioLogo from "@/media/llmprovider/dpais.png";
+import FireworksAILogo from "@/media/llmprovider/fireworksai.jpeg";
 import GeminiLogo from "@/media/llmprovider/gemini.png";
-import OllamaLogo from "@/media/llmprovider/ollama.png";
+import GenericOpenAiLogo from "@/media/llmprovider/generic-openai.png";
+import GroqLogo from "@/media/llmprovider/groq.png";
+import HuggingFaceLogo from "@/media/llmprovider/huggingface.png";
+import KoboldCPPLogo from "@/media/llmprovider/koboldcpp.png";
+import LiteLLMLogo from "@/media/llmprovider/litellm.png";
 import LMStudioLogo from "@/media/llmprovider/lmstudio.png";
 import LocalAiLogo from "@/media/llmprovider/localai.png";
-import TogetherAILogo from "@/media/llmprovider/togetherai.png";
-import FireworksAILogo from "@/media/llmprovider/fireworksai.jpeg";
 import MistralLogo from "@/media/llmprovider/mistral.jpeg";
-import HuggingFaceLogo from "@/media/llmprovider/huggingface.png";
-import PerplexityLogo from "@/media/llmprovider/perplexity.png";
-import OpenRouterLogo from "@/media/llmprovider/openrouter.jpeg";
-import GroqLogo from "@/media/llmprovider/groq.png";
-import KoboldCPPLogo from "@/media/llmprovider/koboldcpp.png";
-import TextGenWebUILogo from "@/media/llmprovider/text-generation-webui.png";
-import LiteLLMLogo from "@/media/llmprovider/litellm.png";
-import AWSBedrockLogo from "@/media/llmprovider/bedrock.png";
-import DeepSeekLogo from "@/media/llmprovider/deepseek.png";
-import APIPieLogo from "@/media/llmprovider/apipie.png";
-import NovitaLogo from "@/media/llmprovider/novita.png";
-import XAILogo from "@/media/llmprovider/xai.png";
-import NvidiaNimLogo from "@/media/llmprovider/nvidia-nim.png";
-import CohereLogo from "@/media/llmprovider/cohere.png";
-import PPIOLogo from "@/media/llmprovider/ppio.png";
-import DellProAiStudioLogo from "@/media/llmprovider/dpais.png";
 import MoonshotAiLogo from "@/media/llmprovider/moonshotai.png";
+import NovitaLogo from "@/media/llmprovider/novita.png";
+import NvidiaNimLogo from "@/media/llmprovider/nvidia-nim.png";
+import OllamaLogo from "@/media/llmprovider/ollama.png";
+import OpenAiLogo from "@/media/llmprovider/openai.png";
+import OpenRouterLogo from "@/media/llmprovider/openrouter.jpeg";
+import PerplexityLogo from "@/media/llmprovider/perplexity.png";
+import PPIOLogo from "@/media/llmprovider/ppio.png";
+import TextGenWebUILogo from "@/media/llmprovider/text-generation-webui.png";
+import TogetherAILogo from "@/media/llmprovider/togetherai.png";
+import XAILogo from "@/media/llmprovider/xai.png";
+import { MagnifyingGlass } from "@phosphor-icons/react";
+import { useEffect, useRef, useState } from "react";
 
-import OpenAiOptions from "@/components/LLMSelection/OpenAiOptions";
-import GenericOpenAiOptions from "@/components/LLMSelection/GenericOpenAiOptions";
-import AzureAiOptions from "@/components/LLMSelection/AzureAiOptions";
 import AnthropicAiOptions from "@/components/LLMSelection/AnthropicAiOptions";
-import LMStudioOptions from "@/components/LLMSelection/LMStudioOptions";
-import LocalAiOptions from "@/components/LLMSelection/LocalAiOptions";
-import GeminiLLMOptions from "@/components/LLMSelection/GeminiLLMOptions";
-import OllamaLLMOptions from "@/components/LLMSelection/OllamaLLMOptions";
-import MistralOptions from "@/components/LLMSelection/MistralOptions";
-import HuggingFaceOptions from "@/components/LLMSelection/HuggingFaceOptions";
-import TogetherAiOptions from "@/components/LLMSelection/TogetherAiOptions";
-import FireworksAiOptions from "@/components/LLMSelection/FireworksAiOptions";
-import PerplexityOptions from "@/components/LLMSelection/PerplexityOptions";
-import OpenRouterOptions from "@/components/LLMSelection/OpenRouterOptions";
-import GroqAiOptions from "@/components/LLMSelection/GroqAiOptions";
-import CohereAiOptions from "@/components/LLMSelection/CohereAiOptions";
-import KoboldCPPOptions from "@/components/LLMSelection/KoboldCPPOptions";
-import TextGenWebUIOptions from "@/components/LLMSelection/TextGenWebUIOptions";
-import LiteLLMOptions from "@/components/LLMSelection/LiteLLMOptions";
-import AWSBedrockLLMOptions from "@/components/LLMSelection/AwsBedrockLLMOptions";
-import DeepSeekOptions from "@/components/LLMSelection/DeepSeekOptions";
 import ApiPieLLMOptions from "@/components/LLMSelection/ApiPieOptions";
-import NovitaLLMOptions from "@/components/LLMSelection/NovitaLLMOptions";
-import XAILLMOptions from "@/components/LLMSelection/XAiLLMOptions";
-import NvidiaNimOptions from "@/components/LLMSelection/NvidiaNimOptions";
-import PPIOLLMOptions from "@/components/LLMSelection/PPIOLLMOptions";
+import AWSBedrockLLMOptions from "@/components/LLMSelection/AwsBedrockLLMOptions";
+import AzureAiOptions from "@/components/LLMSelection/AzureAiOptions";
+import CohereAiOptions from "@/components/LLMSelection/CohereAiOptions";
 import DellProAiStudioOptions from "@/components/LLMSelection/DPAISOptions";
+import DeepSeekOptions from "@/components/LLMSelection/DeepSeekOptions";
+import FireworksAiOptions from "@/components/LLMSelection/FireworksAiOptions";
+import GeminiLLMOptions from "@/components/LLMSelection/GeminiLLMOptions";
+import GenericOpenAiOptions from "@/components/LLMSelection/GenericOpenAiOptions";
+import GroqAiOptions from "@/components/LLMSelection/GroqAiOptions";
+import HuggingFaceOptions from "@/components/LLMSelection/HuggingFaceOptions";
+import KoboldCPPOptions from "@/components/LLMSelection/KoboldCPPOptions";
+import LMStudioOptions from "@/components/LLMSelection/LMStudioOptions";
+import LiteLLMOptions from "@/components/LLMSelection/LiteLLMOptions";
+import LocalAiOptions from "@/components/LLMSelection/LocalAiOptions";
+import MistralOptions from "@/components/LLMSelection/MistralOptions";
 import MoonshotAiOptions from "@/components/LLMSelection/MoonshotAiOptions";
+import NovitaLLMOptions from "@/components/LLMSelection/NovitaLLMOptions";
+import NvidiaNimOptions from "@/components/LLMSelection/NvidiaNimOptions";
+import OllamaLLMOptions from "@/components/LLMSelection/OllamaLLMOptions";
+import OpenAiOptions from "@/components/LLMSelection/OpenAiOptions";
+import OpenRouterOptions from "@/components/LLMSelection/OpenRouterOptions";
+import PPIOLLMOptions from "@/components/LLMSelection/PPIOLLMOptions";
+import PerplexityOptions from "@/components/LLMSelection/PerplexityOptions";
+import TextGenWebUIOptions from "@/components/LLMSelection/TextGenWebUIOptions";
+import TogetherAiOptions from "@/components/LLMSelection/TogetherAiOptions";
+import XAILLMOptions from "@/components/LLMSelection/XAiLLMOptions";
 
 import LLMItem from "@/components/LLMSelection/LLMItem";
 import System from "@/models/system";
 import paths from "@/utils/paths";
 import showToast from "@/utils/toast";
-import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 const LLMS = [
   {
@@ -99,16 +99,14 @@ const LLMS = [
     value: "nvidia-nim",
     logo: NvidiaNimLogo,
     options: (settings) => <NvidiaNimOptions settings={settings} />,
-    description:
-      "Run full parameter LLMs directly on your NVIDIA RTX GPU using NVIDIA NIM.",
+    description: "Run full parameter LLMs directly on your NVIDIA RTX GPU using NVIDIA NIM.",
   },
   {
     name: "HuggingFace",
     value: "huggingface",
     logo: HuggingFaceLogo,
     options: (settings) => <HuggingFaceOptions settings={settings} />,
-    description:
-      "Access 150,000+ open-source LLMs and the world's AI community",
+    description: "Access 150,000+ open-source LLMs and the world's AI community",
   },
   {
     name: "Ollama",
@@ -122,16 +120,14 @@ const LLMS = [
     value: "dpais",
     logo: DellProAiStudioLogo,
     options: (settings) => <DellProAiStudioOptions settings={settings} />,
-    description:
-      "Run powerful LLMs quickly on NPU powered by Dell Pro AI Studio.",
+    description: "Run powerful LLMs quickly on NPU powered by Dell Pro AI Studio.",
   },
   {
     name: "LM Studio",
     value: "lmstudio",
     logo: LMStudioLogo,
     options: (settings) => <LMStudioOptions settings={settings} />,
-    description:
-      "Discover, download, and run thousands of cutting edge LLMs in a few clicks.",
+    description: "Discover, download, and run thousands of cutting edge LLMs in a few clicks.",
   },
   {
     name: "Local AI",
@@ -145,8 +141,7 @@ const LLMS = [
     value: "novita",
     logo: NovitaLogo,
     options: (settings) => <NovitaLLMOptions settings={settings} />,
-    description:
-      "Reliable, Scalable, and Cost-Effective for LLMs from Novita AI",
+    description: "Reliable, Scalable, and Cost-Effective for LLMs from Novita AI",
   },
   {
     name: "KoboldCPP",
@@ -189,8 +184,7 @@ const LLMS = [
     value: "perplexity",
     logo: PerplexityLogo,
     options: (settings) => <PerplexityOptions settings={settings} />,
-    description:
-      "Run powerful and internet-connected models hosted by Perplexity AI.",
+    description: "Run powerful and internet-connected models hosted by Perplexity AI.",
   },
   {
     name: "OpenRouter",
@@ -204,8 +198,7 @@ const LLMS = [
     value: "groq",
     logo: GroqLogo,
     options: (settings) => <GroqAiOptions settings={settings} />,
-    description:
-      "The fastest LLM inferencing available for real-time AI applications.",
+    description: "The fastest LLM inferencing available for real-time AI applications.",
   },
   {
     name: "Cohere",
@@ -248,8 +241,7 @@ const LLMS = [
     value: "generic-openai",
     logo: GenericOpenAiLogo,
     options: (settings) => <GenericOpenAiOptions settings={settings} />,
-    description:
-      "Connect to any OpenAi-compatible service via a custom configuration",
+    description: "Connect to any OpenAi-compatible service via a custom configuration",
   },
   {
     name: "AWS Bedrock",
@@ -274,11 +266,7 @@ const LLMS = [
   },
 ];
 
-export default function LLMPreference({
-  setHeader,
-  setForwardBtn,
-  setBackBtn,
-}) {
+export default function LLMPreference({ setHeader, setForwardBtn, setBackBtn }) {
   const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredLLMs, setFilteredLLMs] = useState([]);
@@ -384,15 +372,9 @@ export default function LLMPreference({
           </div>
         </div>
         <div className="mt-4 flex flex-col gap-y-1">
-          {selectedLLM &&
-            LLMS.find((llm) => llm.value === selectedLLM)?.options(settings)}
+          {selectedLLM && LLMS.find((llm) => llm.value === selectedLLM)?.options(settings)}
         </div>
-        <button
-          type="submit"
-          ref={hiddenSubmitButtonRef}
-          hidden
-          aria-hidden="true"
-        ></button>
+        <button type="submit" ref={hiddenSubmitButtonRef} hidden aria-hidden="true"></button>
       </form>
     </div>
   );

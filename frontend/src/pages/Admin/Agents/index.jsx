@@ -1,32 +1,25 @@
-import { useEffect, useRef, useState } from "react";
-import Sidebar from "@/components/SettingsSidebar";
-import { isMobile } from "react-device-detect";
-import Admin from "@/models/admin";
-import System from "@/models/system";
-import showToast from "@/utils/toast";
-import {
-  CaretLeft,
-  CaretRight,
-  Plug,
-  Robot,
-  Hammer,
-  FlowArrow,
-} from "@phosphor-icons/react";
 import ContextualSaveBar from "@/components/ContextualSaveBar";
-import { castToType } from "@/utils/types";
 import { FullScreenLoader } from "@/components/Preloader";
-import { defaultSkills, configurableSkills } from "./skills";
-import { DefaultBadge } from "./Badges/default";
-import ImportedSkillList from "./Imported/SkillList";
-import ImportedSkillConfig from "./Imported/ImportedSkillConfig";
+import Sidebar from "@/components/SettingsSidebar";
+import Admin from "@/models/admin";
+import AgentFlows from "@/models/agentFlows";
+import System from "@/models/system";
+import paths from "@/utils/paths";
+import showToast from "@/utils/toast";
+import { castToType } from "@/utils/types";
+import { CaretLeft, CaretRight, FlowArrow, Hammer, Plug, Robot } from "@phosphor-icons/react";
+import { useEffect, useRef, useState } from "react";
+import { isMobile } from "react-device-detect";
+import { Link } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 import AgentFlowsList from "./AgentFlows";
 import FlowPanel from "./AgentFlows/FlowPanel";
-import { MCPServersList, MCPServerHeader } from "./MCPServers";
+import { DefaultBadge } from "./Badges/default";
+import ImportedSkillConfig from "./Imported/ImportedSkillConfig";
+import ImportedSkillList from "./Imported/SkillList";
+import { MCPServerHeader, MCPServersList } from "./MCPServers";
 import ServerPanel from "./MCPServers/ServerPanel";
-import { Link } from "react-router-dom";
-import paths from "@/utils/paths";
-import AgentFlows from "@/models/agentFlows";
+import { configurableSkills, defaultSkills } from "./skills";
 
 export default function AdminAgents() {
   const formEl = useRef(null);
@@ -75,9 +68,7 @@ export default function AdminAgents() {
 
       setSettings({ ..._settings, preferences: _preferences.settings } ?? {});
       setAgentSkills(_preferences.settings?.default_agent_skills ?? []);
-      setDisabledAgentSkills(
-        _preferences.settings?.disabled_agent_skills ?? []
-      );
+      setDisabledAgentSkills(_preferences.settings?.disabled_agent_skills ?? []);
       setImportedSkills(_preferences.settings?.imported_agent_skills ?? []);
       setActiveFlowIds(_preferences.settings?.active_agent_flows ?? []);
       setAgentFlows(flows);
@@ -160,9 +151,7 @@ export default function AdminAgents() {
       ]);
       setSettings({ ..._settings, preferences: _preferences.settings } ?? {});
       setAgentSkills(_preferences.settings?.default_agent_skills ?? []);
-      setDisabledAgentSkills(
-        _preferences.settings?.disabled_agent_skills ?? []
-      );
+      setDisabledAgentSkills(_preferences.settings?.disabled_agent_skills ?? []);
       setImportedSkills(_preferences.settings?.imported_agent_skills ?? []);
       showToast(`Agent preferences saved successfully.`, "success", {
         clear: true,
@@ -224,9 +213,7 @@ export default function AdminAgents() {
 
   const handleMCPServerDelete = (serverName) => {
     setSelectedMcpServer(null);
-    setMcpServers((prev) =>
-      prev.filter((server) => server.name !== serverName)
-    );
+    setMcpServers((prev) => prev.filter((server) => server.name !== serverName));
   };
 
   if (loading) {
@@ -253,11 +240,7 @@ export default function AdminAgents() {
           ref={formEl}
           className="flex flex-col w-full p-4 mt-10"
         >
-          <input
-            name="system::default_agent_skills"
-            type="hidden"
-            value={agentSkills.join(",")}
-          />
+          <input name="system::default_agent_skills" type="hidden" value={agentSkills.join(",")} />
           <input
             name="system::disabled_agent_skills"
             type="hidden"
@@ -383,9 +366,7 @@ export default function AdminAgents() {
                                 settings={settings}
                                 toggleSkill={toggleDefaultSkill}
                                 enabled={
-                                  !disabledAgentSkills.includes(
-                                    defaultSkills[selectedSkill]?.skill
-                                  )
+                                  !disabledAgentSkills.includes(defaultSkills[selectedSkill]?.skill)
                                 }
                                 setHasChanges={setHasChanges}
                                 {...defaultSkills[selectedSkill]}
@@ -432,17 +413,11 @@ export default function AdminAgents() {
     >
       <form
         onSubmit={handleSubmit}
-        onChange={() =>
-          !selectedSkill?.imported && !selectedFlow && setHasChanges(true)
-        }
+        onChange={() => !selectedSkill?.imported && !selectedFlow && setHasChanges(true)}
         ref={formEl}
         className="flex-1 flex gap-x-6 p-4 mt-10"
       >
-        <input
-          name="system::default_agent_skills"
-          type="hidden"
-          value={agentSkills.join(",")}
-        />
+        <input name="system::default_agent_skills" type="hidden" value={agentSkills.join(",")} />
         <input
           name="system::disabled_agent_skills"
           type="hidden"
@@ -573,11 +548,7 @@ export default function AdminAgents() {
                         skill={defaultSkills[selectedSkill]?.skill}
                         settings={settings}
                         toggleSkill={toggleDefaultSkill}
-                        enabled={
-                          !disabledAgentSkills.includes(
-                            defaultSkills[selectedSkill]?.skill
-                          )
-                        }
+                        enabled={!disabledAgentSkills.includes(defaultSkills[selectedSkill]?.skill)}
                         setHasChanges={setHasChanges}
                         {...defaultSkills[selectedSkill]}
                       />
@@ -587,9 +558,7 @@ export default function AdminAgents() {
                         skill={configurableSkills[selectedSkill]?.skill}
                         settings={settings}
                         toggleSkill={toggleAgentSkill}
-                        enabled={agentSkills.includes(
-                          configurableSkills[selectedSkill]?.skill
-                        )}
+                        enabled={agentSkills.includes(configurableSkills[selectedSkill]?.skill)}
                         setHasChanges={setHasChanges}
                         {...configurableSkills[selectedSkill]}
                       />
@@ -600,9 +569,7 @@ export default function AdminAgents() {
             ) : (
               <div className="flex flex-col items-center justify-center h-full text-theme-text-secondary">
                 <Robot size={40} />
-                <p className="font-medium">
-                  Select an Agent Skill, Agent Flow, or MCP Server
-                </p>
+                <p className="font-medium">Select an Agent Skill, Agent Flow, or MCP Server</p>
               </div>
             )}
           </div>
@@ -624,11 +591,7 @@ function SkillLayout({ children, hasChanges, handleSubmit, handleCancel }) {
         className="relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] w-full h-full flex"
       >
         {children}
-        <ContextualSaveBar
-          showing={hasChanges}
-          onSave={handleSubmit}
-          onCancel={handleCancel}
-        />
+        <ContextualSaveBar showing={hasChanges} onSave={handleSubmit} onCancel={handleCancel} />
       </div>
     </div>
   );
@@ -656,13 +619,9 @@ function SkillList({
             className={`py-3 px-4 flex items-center justify-between ${
               index === 0 ? "rounded-t-xl" : ""
             } ${
-              index === Object.keys(skills).length - 1
-                ? "rounded-b-xl"
-                : "border-b border-white/10"
+              index === Object.keys(skills).length - 1 ? "rounded-b-xl" : "border-b border-white/10"
             } cursor-pointer transition-all duration-300  hover:bg-theme-bg-primary ${
-              selectedSkill === skill
-                ? "bg-white/10 light:bg-theme-bg-sidebar"
-                : ""
+              selectedSkill === skill ? "bg-white/10 light:bg-theme-bg-sidebar" : ""
             }`}
             onClick={() => handleClick?.(skill)}
           >
@@ -675,11 +634,7 @@ function SkillList({
                   {activeSkills.includes(skill) ? "On" : "Off"}
                 </div>
               )}
-              <CaretRight
-                size={14}
-                weight="bold"
-                className="text-theme-text-secondary"
-              />
+              <CaretRight size={14} weight="bold" className="text-theme-text-secondary" />
             </div>
           </div>
         ))}

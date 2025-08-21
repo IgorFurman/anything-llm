@@ -1,10 +1,10 @@
 import React from "react";
-import QuickLinks from "./QuickLinks";
-import ExploreFeatures from "./ExploreFeatures";
-import Updates from "./Updates";
-import Resources from "./Resources";
-import Checklist from "./Checklist";
 import { isMobile } from "react-device-detect";
+import Checklist from "./Checklist";
+import ExploreFeatures from "./ExploreFeatures";
+import QuickLinks from "./QuickLinks";
+import Resources from "./Resources";
+import Updates from "./Updates";
 
 export default function Home() {
   return (

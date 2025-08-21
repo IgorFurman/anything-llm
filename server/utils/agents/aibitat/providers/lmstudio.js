@@ -2,9 +2,7 @@ const OpenAI = require("openai");
 const Provider = require("./ai-provider.js");
 const InheritMultiple = require("./helpers/classes.js");
 const UnTooled = require("./helpers/untooled.js");
-const {
-  parseLMStudioBasePath,
-} = require("../../../AiProviders/lmStudio/index.js");
+const { parseLMStudioBasePath } = require("../../../AiProviders/lmStudio/index.js");
 
 /**
  * The agent provider for the LMStudio.
@@ -18,8 +16,7 @@ class LMStudioProvider extends InheritMultiple([Provider, UnTooled]) {
    */
   constructor(config = {}) {
     super();
-    const model =
-      config?.model || process.env.LMSTUDIO_MODEL_PREF || "Loaded from Chat UI";
+    const model = config?.model || process.env.LMSTUDIO_MODEL_PREF || "Loaded from Chat UI";
     const client = new OpenAI({
       baseURL: parseLMStudioBasePath(process.env.LMSTUDIO_BASE_PATH),
       apiKey: null,
@@ -43,10 +40,8 @@ class LMStudioProvider extends InheritMultiple([Provider, UnTooled]) {
         messages,
       })
       .then((result) => {
-        if (!result.hasOwnProperty("choices"))
-          throw new Error("LMStudio chat: No results!");
-        if (result.choices.length === 0)
-          throw new Error("LMStudio chat: No results length!");
+        if (!result.hasOwnProperty("choices")) throw new Error("LMStudio chat: No results!");
+        if (result.choices.length === 0) throw new Error("LMStudio chat: No results length!");
         return result.choices[0].message.content;
       })
       .catch((_) => {
@@ -87,9 +82,7 @@ class LMStudioProvider extends InheritMultiple([Provider, UnTooled]) {
       }
 
       if (!completion?.content) {
-        this.providerLog(
-          "Will assume chat completion without tool call inputs."
-        );
+        this.providerLog("Will assume chat completion without tool call inputs.");
         const response = await this.client.chat.completions.create({
           model: this.model,
           messages: this.cleanMsgs(messages),

@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import DBConnection from "./DBConnection";
-import { Plus, Database } from "@phosphor-icons/react";
-import NewSQLConnection from "./NewConnectionModal";
 import { useModal } from "@/hooks/useModal";
 import SQLAgentImage from "@/media/agents/sql-agent.png";
 import Admin from "@/models/admin";
+import { Database, Plus } from "@phosphor-icons/react";
+import React, { useEffect, useState } from "react";
+import DBConnection from "./DBConnection";
+import NewSQLConnection from "./NewConnectionModal";
 
 export default function AgentSQLConnectorSelection({
   skill,
@@ -25,8 +25,7 @@ export default function AgentSQLConnectorSelection({
     setHasChanges(true);
     setConnections((prev) =>
       prev.map((conn) => {
-        if (conn.database_id === databaseId)
-          return { ...conn, action: "remove" };
+        if (conn.database_id === databaseId) return { ...conn, action: "remove" };
         return conn;
       })
     );
@@ -37,15 +36,8 @@ export default function AgentSQLConnectorSelection({
       <div className="p-2">
         <div className="flex flex-col gap-y-[18px] max-w-[500px]">
           <div className="flex items-center gap-x-2">
-            <Database
-              size={24}
-              color="var(--theme-text-primary)"
-              weight="bold"
-            />
-            <label
-              htmlFor="name"
-              className="text-theme-text-primary text-md font-bold"
-            >
+            <Database size={24} color="var(--theme-text-primary)" weight="bold" />
+            <label htmlFor="name" className="text-theme-text-primary text-md font-bold">
               SQL Agent
             </label>
             <label className="border-none relative inline-flex items-center ml-auto cursor-pointer">
@@ -59,14 +51,10 @@ export default function AgentSQLConnectorSelection({
               <span className="ml-3 text-sm font-medium"></span>
             </label>
           </div>
-          <img
-            src={SQLAgentImage}
-            alt="SQL Agent"
-            className="w-full rounded-md"
-          />
+          <img src={SQLAgentImage} alt="SQL Agent" className="w-full rounded-md" />
           <p className="text-theme-text-secondary text-opacity-60 text-xs font-medium py-1.5">
-            Enable your agent to be able to leverage SQL to answer you questions
-            by connecting to various SQL database providers.
+            Enable your agent to be able to leverage SQL to answer you questions by connecting to
+            various SQL database providers.
           </p>
           {enabled && (
             <>
@@ -77,9 +65,7 @@ export default function AgentSQLConnectorSelection({
               />
               <input
                 type="hidden"
-                value={JSON.stringify(
-                  connections.filter((conn) => conn.action !== "remove")
-                )}
+                value={JSON.stringify(connections.filter((conn) => conn.action !== "remove"))}
               />
               <div className="flex flex-col mt-2 gap-y-2">
                 <p className="text-theme-text-primary font-semibold text-sm">
@@ -123,9 +109,7 @@ export default function AgentSQLConnectorSelection({
         isOpen={isOpen}
         closeModal={closeModal}
         setHasChanges={setHasChanges}
-        onSubmit={(newDb) =>
-          setConnections((prev) => [...prev, { action: "add", ...newDb }])
-        }
+        onSubmit={(newDb) => setConnections((prev) => [...prev, { action: "add", ...newDb }])}
       />
     </>
   );

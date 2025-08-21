@@ -1,15 +1,11 @@
 const { v4 } = require("uuid");
 const { tokenizeString } = require("../../utils/tokenizer");
-const {
-  createdDate,
-  trashFile,
-  writeToServerDocuments,
-} = require("../../utils/files");
+const { createdDate, trashFile, writeToServerDocuments } = require("../../utils/files");
 const OCRLoader = require("../../utils/OCRLoader");
 const { default: slugify } = require("slugify");
 
 async function asImage({ fullFilePath = "", filename = "", options = {} }) {
-  let content = await new OCRLoader({
+  const content = await new OCRLoader({
     targetLanguages: options?.ocr?.langList,
   }).ocrImage(fullFilePath);
 

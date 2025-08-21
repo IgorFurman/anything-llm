@@ -1,10 +1,6 @@
 const { v4 } = require("uuid");
 const { DocxLoader } = require("langchain/document_loaders/fs/docx");
-const {
-  createdDate,
-  trashFile,
-  writeToServerDocuments,
-} = require("../../utils/files");
+const { createdDate, trashFile, writeToServerDocuments } = require("../../utils/files");
 const { tokenizeString } = require("../../utils/tokenizer");
 const { default: slugify } = require("slugify");
 
@@ -12,7 +8,7 @@ async function asDocX({ fullFilePath = "", filename = "" }) {
   const loader = new DocxLoader(fullFilePath);
 
   console.log(`-- Working ${filename} --`);
-  let pageContent = [];
+  const pageContent = [];
   const docs = await loader.load();
   for (const doc of docs) {
     console.log(`-- Parsing content from docx page --`);

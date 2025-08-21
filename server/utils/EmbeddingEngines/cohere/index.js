@@ -2,8 +2,7 @@ const { toChunks } = require("../../helpers");
 
 class CohereEmbedder {
   constructor() {
-    if (!process.env.COHERE_API_KEY)
-      throw new Error("No Cohere API key was set.");
+    if (!process.env.COHERE_API_KEY) throw new Error("No Cohere API key was set.");
 
     const { CohereClient } = require("cohere-ai");
     const cohere = new CohereClient({
@@ -42,10 +41,7 @@ class CohereEmbedder {
               resolve({ data: res.embeddings, error: null });
             })
             .catch((e) => {
-              e.type =
-                e?.response?.data?.error?.code ||
-                e?.response?.status ||
-                "failed_to_embed";
+              e.type = e?.response?.data?.error?.code || e?.response?.status || "failed_to_embed";
               e.message = e?.response?.data?.error?.message || e.message;
               resolve({ data: [], error: e });
             });
@@ -53,24 +49,17 @@ class CohereEmbedder {
       );
     }
 
-    const { data = [], error = null } = await Promise.all(
-      embeddingRequests
-    ).then((results) => {
-      const errors = results
-        .filter((res) => !!res.error)
-        .map((res) => res.error)
-        .flat();
+    const { data = [], error = null } = await Promise.all(embeddingRequests).then((results) => {
+      const errors = results.filter((res) => !!res.error).flatMap((res) => res.error);
 
       if (errors.length > 0) {
-        let uniqueErrors = new Set();
-        errors.map((error) =>
-          uniqueErrors.add(`[${error.type}]: ${error.message}`)
-        );
+        const uniqueErrors = new Set();
+        errors.map((error) => uniqueErrors.add(`[${error.type}]: ${error.message}`));
         return { data: [], error: Array.from(uniqueErrors).join(", ") };
       }
 
       return {
-        data: results.map((res) => res?.data || []).flat(),
+        data: results.flatMap((res) => res?.data || []),
         error: null,
       };
     });

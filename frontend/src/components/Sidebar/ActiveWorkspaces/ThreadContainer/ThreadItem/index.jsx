@@ -1,13 +1,7 @@
 import Workspace from "@/models/workspace";
 import paths from "@/utils/paths";
 import showToast from "@/utils/toast";
-import {
-  ArrowCounterClockwise,
-  DotsThree,
-  PencilSimple,
-  Trash,
-  X,
-} from "@phosphor-icons/react";
+import { ArrowCounterClockwise, DotsThree, PencilSimple, Trash, X } from "@phosphor-icons/react";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -57,19 +51,14 @@ export default function ThreadItem({
       )}
 
       {/* Curved line inline placeholder for spacing - not visible */}
-      <div
-        style={{ width: THREAD_CALLOUT_DETAIL_WIDTH + 8 }}
-        className="h-full"
-      />
+      <div style={{ width: THREAD_CALLOUT_DETAIL_WIDTH + 8 }} className="h-full" />
       <div
         className={`flex w-full items-center justify-between pr-2 group relative ${isActive ? "bg-[var(--theme-sidebar-thread-selected)] border border-solid border-transparent light:border-blue-400" : "hover:bg-theme-sidebar-subitem-hover"} rounded-[4px]`}
       >
         {thread.deleted ? (
           <div className="w-full flex justify-between">
             <div className="w-full pl-2 py-1">
-              <p
-                className={`text-left text-sm text-slate-400/50 light:text-slate-500 italic`}
-              >
+              <p className={`text-left text-sm text-slate-400/50 light:text-slate-500 italic`}>
                 deleted thread
               </p>
             </div>
@@ -88,9 +77,7 @@ export default function ThreadItem({
           </div>
         ) : (
           <a
-            href={
-              window.location.pathname === linkTo || ctrlPressed ? "#" : linkTo
-            }
+            href={window.location.pathname === linkTo || ctrlPressed ? "#" : linkTo}
             className="w-full pl-2 py-1 overflow-hidden"
             aria-current={isActive ? "page" : ""}
           >
@@ -151,24 +138,13 @@ export default function ThreadItem({
   );
 }
 
-function OptionsMenu({
-  containerRef,
-  workspace,
-  thread,
-  onRemove,
-  close,
-  currentThreadSlug,
-}) {
+function OptionsMenu({ containerRef, workspace, thread, onRemove, close, currentThreadSlug }) {
   const menuRef = useRef(null);
 
   // Ref menu options
   const outsideClick = (e) => {
     if (!menuRef.current) return false;
-    if (
-      !menuRef.current?.contains(e.target) &&
-      !containerRef.current?.contains(e.target)
-    )
-      close();
+    if (!menuRef.current?.contains(e.target) && !containerRef.current?.contains(e.target)) close();
     return false;
   };
 
@@ -194,19 +170,13 @@ function OptionsMenu({
   }, [menuRef.current, containerRef.current]);
 
   const renameThread = async () => {
-    const name = window
-      .prompt("What would you like to rename this thread to?")
-      ?.trim();
+    const name = window.prompt("What would you like to rename this thread to?")?.trim();
     if (!name || name.length === 0) {
       close();
       return;
     }
 
-    const { message } = await Workspace.threads.update(
-      workspace.slug,
-      thread.slug,
-      { name }
-    );
+    const { message } = await Workspace.threads.update(workspace.slug, thread.slug, { name });
     if (!!message) {
       showToast(`Thread could not be updated! ${message}`, "error", {
         clear: true,

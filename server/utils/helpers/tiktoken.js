@@ -90,10 +90,7 @@ class TokenManager {
     // which means as of Nov 1, 2023 the additional factor on ln: 476 changed from 3 to 5.
     if (Array.isArray(input)) {
       const perMessageFactorTokens = input.length * 3;
-      const tokensFromContent = input.reduce(
-        (a, b) => a + this.countFromString(b.content),
-        0
-      );
+      const tokensFromContent = input.reduce((a, b) => a + this.countFromString(b.content), 0);
       const diffCoefficient = 5;
       return perMessageFactorTokens + tokensFromContent + diffCoefficient;
     }

@@ -7,9 +7,7 @@ const { jsonrepair } = require("jsonrepair");
 const extract = require("extract-json-from-string");
 
 function reqBody(request) {
-  return typeof request.body === "string"
-    ? JSON.parse(request.body)
-    : request.body;
+  return typeof request.body === "string" ? JSON.parse(request.body) : request.body;
 }
 
 function queryParams(request) {
@@ -23,8 +21,7 @@ function queryParams(request) {
  * @returns {string} The JWT
  */
 function makeJWT(info = {}, expiry = "30d") {
-  if (!process.env.JWT_SECRET)
-    throw new Error("Cannot create JWT as JWT_SECRET is unset.");
+  if (!process.env.JWT_SECRET) throw new Error("Cannot create JWT as JWT_SECRET is unset.");
   return JWT.sign(info, process.env.JWT_SECRET, { expiresIn: expiry });
 }
 
@@ -64,8 +61,7 @@ function multiUserMode(response) {
 
 function parseAuthHeader(headerValue = null, apiKey = null) {
   if (headerValue === null || apiKey === null) return {};
-  if (headerValue === "Authorization")
-    return { Authorization: `Bearer ${apiKey}` };
+  if (headerValue === "Authorization") return { Authorization: `Bearer ${apiKey}` };
   return { [headerValue]: apiKey };
 }
 

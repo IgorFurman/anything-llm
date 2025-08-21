@@ -33,8 +33,7 @@ class AnthropicProvider extends Provider {
 
     // If the first message is not a USER, Anthropic will abort so keep shifting the
     // message array until that is the case.
-    while (sanitized.length > 0 && sanitized[0].role !== "user")
-      sanitized.shift();
+    while (sanitized.length > 0 && sanitized[0].role !== "user") sanitized.shift();
 
     return sanitized.map((msg) => {
       const { role, content } = msg;
@@ -55,9 +54,7 @@ class AnthropicProvider extends Provider {
       // and go through its content "thought" from ~ln:143 and get the tool_call id so we can resolve
       // this tool call properly.
       const functionCompletion = msg;
-      const toolCallId = messages[i - 1]?.content?.find(
-        (msg) => msg.type === "tool_use"
-      )?.id;
+      const toolCallId = messages[i - 1]?.content?.find((msg) => msg.type === "tool_use")?.id;
 
       // Append the Anthropic acceptable node to the message chain so function can resolve.
       normalized.push({
@@ -137,9 +134,7 @@ class AnthropicProvider extends Provider {
       // https://docs.anthropic.com/claude/docs/tool-use#how-tool-use-works
       if (response.stop_reason === "tool_use") {
         // Get the tool call explicitly.
-        const toolCall = response.content.find(
-          (res) => res.type === "tool_use"
-        );
+        const toolCall = response.content.find((res) => res.type === "tool_use");
 
         // Here we need the chain of thought the model may or may not have generated alongside the call.
         // this needs to be in a very specific format so we always ensure there is a 2-item content array
@@ -152,10 +147,7 @@ class AnthropicProvider extends Provider {
           thought?.content?.length > 0
             ? {
                 role: thought.role,
-                content: [
-                  { type: "text", text: thought.content },
-                  { ...toolCall },
-                ],
+                content: [{ type: "text", text: thought.content }, { ...toolCall }],
               }
             : {
                 role: "assistant",

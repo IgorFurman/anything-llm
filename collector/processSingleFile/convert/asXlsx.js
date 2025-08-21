@@ -17,8 +17,7 @@ function convertToCSV(data) {
       row
         .map((cell) => {
           if (cell === null || cell === undefined) return "";
-          if (typeof cell === "string" && cell.includes(","))
-            return `"${cell}"`;
+          if (typeof cell === "string" && cell.includes(",")) return `"${cell}"`;
           return cell;
         })
         .join(",")
@@ -36,8 +35,7 @@ async function asXlsx({ fullFilePath = "", filename = "" }) {
   const outFolderPath = path.resolve(documentsFolder, folderName);
   try {
     const workSheetsFromFile = xlsx.parse(fullFilePath);
-    if (!fs.existsSync(outFolderPath))
-      fs.mkdirSync(outFolderPath, { recursive: true });
+    if (!fs.existsSync(outFolderPath)) fs.mkdirSync(outFolderPath, { recursive: true });
 
     for (const sheet of workSheetsFromFile) {
       try {
@@ -70,9 +68,7 @@ async function asXlsx({ fullFilePath = "", filename = "" }) {
           destinationOverride: outFolderPath,
         });
         documents.push(document);
-        console.log(
-          `[SUCCESS]: Sheet "${name}" converted & ready for embedding.`
-        );
+        console.log(`[SUCCESS]: Sheet "${name}" converted & ready for embedding.`);
       } catch (err) {
         console.error(`Error processing sheet "${name}":`, err);
         continue;
@@ -98,9 +94,7 @@ async function asXlsx({ fullFilePath = "", filename = "" }) {
     };
   }
 
-  console.log(
-    `[SUCCESS]: ${filename} fully processed. Created ${documents.length} document(s).\n`
-  );
+  console.log(`[SUCCESS]: ${filename} fully processed. Created ${documents.length} document(s).\n`);
   return { success: true, reason: null, documents };
 }
 

@@ -1,11 +1,7 @@
 const { v4 } = require("uuid");
 const { EPubLoader } = require("langchain/document_loaders/fs/epub");
 const { tokenizeString } = require("../../utils/tokenizer");
-const {
-  createdDate,
-  trashFile,
-  writeToServerDocuments,
-} = require("../../utils/files");
+const { createdDate, trashFile, writeToServerDocuments } = require("../../utils/files");
 const { default: slugify } = require("slugify");
 
 async function asEPub({ fullFilePath = "", filename = "" }) {

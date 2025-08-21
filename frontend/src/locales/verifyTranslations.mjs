@@ -46,11 +46,7 @@ function compareStructures(lang, a, b, subdir = null) {
     }
 
     //if keys aren't all the same, unequal
-    if (
-      !keysA.every(function (k, i) {
-        return k === keysB[i];
-      })
-    ) {
+    if (!keysA.every((k, i) => k === keysB[i])) {
       console.log("Keys are not equal!", {
         [lang]: keysA,
         en: keysB,
@@ -60,7 +56,7 @@ function compareStructures(lang, a, b, subdir = null) {
     }
 
     //recurse on the values for each key
-    return keysA.every(function (key) {
+    return keysA.every((key) => {
       //if we made it here, they have identical keys
       return compareStructures(lang, a[key], b[key], key);
     });
@@ -73,15 +69,12 @@ function compareStructures(lang, a, b, subdir = null) {
 
 const failed = [];
 const TRANSLATIONS = {};
-for (const [lang, { common }] of Object.entries(resources))
-  TRANSLATIONS[lang] = common;
+for (const [lang, { common }] of Object.entries(resources)) TRANSLATIONS[lang] = common;
 const PRIMARY = { ...TRANSLATIONS["en"] };
 delete TRANSLATIONS["en"];
 
 console.log(
-  `The following translation files will be verified: [${Object.keys(
-    TRANSLATIONS
-  ).join(",")}]`
+  `The following translation files will be verified: [${Object.keys(TRANSLATIONS).join(",")}]`
 );
 for (const [lang, translations] of Object.entries(TRANSLATIONS)) {
   const passed = compareStructures(lang, translations, PRIMARY);
@@ -94,7 +87,5 @@ if (failed.length !== 0)
     `The following translations files are INVALID and need fixing. Please see logs`,
     failed
   );
-console.log(
-  `👍 All translation files located match the schema defined by the English file!`
-);
+console.log(`👍 All translation files located match the schema defined by the English file!`);
 process.exit(0);

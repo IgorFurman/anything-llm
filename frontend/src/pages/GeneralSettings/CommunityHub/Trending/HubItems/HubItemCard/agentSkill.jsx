@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
 import paths from "@/utils/paths";
 import pluralize from "pluralize";
+import { Link } from "react-router-dom";
 import { VisibilityIcon } from "./generic";
 
 export default function AgentSkillHubCard({ item }) {
@@ -27,8 +27,8 @@ export default function AgentSkillHubCard({ item }) {
             Skill
           </p>
           <p className="font-mono text-xs mt-1 text-white/60">
-            {item.manifest.files?.length || 0}{" "}
-            {pluralize("file", item.manifest.files?.length || 0)} found
+            {item.manifest.files?.length || 0} {pluralize("file", item.manifest.files?.length || 0)}{" "}
+            found
           </p>
         </div>
         <div className="flex justify-end mt-2">

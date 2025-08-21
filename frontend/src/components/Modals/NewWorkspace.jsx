@@ -1,9 +1,9 @@
-import React, { useRef, useState } from "react";
-import { X } from "@phosphor-icons/react";
+import ModalWrapper from "@/components/ModalWrapper";
 import Workspace from "@/models/workspace";
 import paths from "@/utils/paths";
+import { X } from "@phosphor-icons/react";
+import React, { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import ModalWrapper from "@/components/ModalWrapper";
 
 const noop = () => false;
 export default function NewWorkspaceModal({ hideModal = noop }) {
@@ -40,18 +40,12 @@ export default function NewWorkspaceModal({ hideModal = noop }) {
             <X size={24} weight="bold" className="text-white" />
           </button>
         </div>
-        <div
-          className="h-full w-full overflow-y-auto"
-          style={{ maxHeight: "calc(100vh - 200px)" }}
-        >
+        <div className="h-full w-full overflow-y-auto" style={{ maxHeight: "calc(100vh - 200px)" }}>
           <form ref={formEl} onSubmit={handleCreate}>
             <div className="py-7 px-9 space-y-2 flex-col">
               <div className="w-full flex flex-col gap-y-4">
                 <div>
-                  <label
-                    htmlFor="name"
-                    className="block mb-2 text-sm font-medium text-white"
-                  >
+                  <label htmlFor="name" className="block mb-2 text-sm font-medium text-white">
                     {t("common.workspaces-name")}
                   </label>
                   <input
@@ -65,9 +59,7 @@ export default function NewWorkspaceModal({ hideModal = noop }) {
                     autoFocus={true}
                   />
                 </div>
-                {error && (
-                  <p className="text-red-400 text-sm">Error: {error}</p>
-                )}
+                {error && <p className="text-red-400 text-sm">Error: {error}</p>}
               </div>
             </div>
             <div className="flex w-full justify-end items-center p-6 space-x-2 border-t border-theme-modal-border rounded-b">

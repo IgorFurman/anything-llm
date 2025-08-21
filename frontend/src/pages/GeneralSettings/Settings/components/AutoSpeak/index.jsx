@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
 import Appearance from "@/models/appearance";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 export default function AutoSpeak() {
   const [saving, setSaving] = useState(false);
-  const [autoPlayAssistantTtsResponse, setAutoPlayAssistantTtsResponse] =
-    useState(false);
+  const [autoPlayAssistantTtsResponse, setAutoPlayAssistantTtsResponse] = useState(false);
   const { t } = useTranslation();
 
   const handleChange = async (e) => {
@@ -24,9 +23,7 @@ export default function AutoSpeak() {
   useEffect(() => {
     function fetchSettings() {
       const settings = Appearance.getSettings();
-      setAutoPlayAssistantTtsResponse(
-        settings.autoPlayAssistantTtsResponse ?? false
-      );
+      setAutoPlayAssistantTtsResponse(settings.autoPlayAssistantTtsResponse ?? false);
     }
     fetchSettings();
   }, []);
@@ -36,9 +33,7 @@ export default function AutoSpeak() {
       <p className="text-sm leading-6 font-semibold text-white">
         {t("customization.chat.auto_speak.title")}
       </p>
-      <p className="text-xs text-white/60">
-        {t("customization.chat.auto_speak.description")}
-      </p>
+      <p className="text-xs text-white/60">{t("customization.chat.auto_speak.description")}</p>
       <div className="flex items-center gap-x-4">
         <label className="relative inline-flex cursor-pointer items-center">
           <input

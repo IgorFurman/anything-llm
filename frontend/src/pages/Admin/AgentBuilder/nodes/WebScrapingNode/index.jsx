@@ -1,11 +1,7 @@
 import { Info } from "@phosphor-icons/react";
 import React from "react";
 
-export default function WebScrapingNode({
-  config,
-  onConfigChange,
-  renderVariableSelect,
-}) {
+export default function WebScrapingNode({ config, onConfigChange, renderVariableSelect }) {
   return (
     <div className="space-y-4">
       <div>
@@ -32,9 +28,7 @@ export default function WebScrapingNode({
         </label>
         <select
           value={config.captureAs}
-          onChange={(e) =>
-            onConfigChange({ ...config, captureAs: e.target.value })
-          }
+          onChange={(e) => onConfigChange({ ...config, captureAs: e.target.value })}
           className="w-full border-none bg-theme-settings-input-bg text-theme-text-primary text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none p-2.5"
         >
           {[
@@ -63,9 +57,7 @@ export default function WebScrapingNode({
           </p>
           <input
             value={config.querySelector}
-            onChange={(e) =>
-              onConfigChange({ ...config, querySelector: e.target.value })
-            }
+            onChange={(e) => onConfigChange({ ...config, querySelector: e.target.value })}
             placeholder=".article-content, #content, .main-content, etc."
             className="w-full border-none bg-theme-settings-input-bg text-theme-text-primary text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none p-2.5"
           />

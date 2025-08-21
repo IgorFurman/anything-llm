@@ -2,12 +2,7 @@ import System from "@/models/system";
 import { useEffect, useState } from "react";
 
 // Providers which cannot use this feature for workspace<>model selection
-export const DISABLED_PROVIDERS = [
-  "azure",
-  "textgenwebui",
-  "generic-openai",
-  "bedrock",
-];
+export const DISABLED_PROVIDERS = ["azure", "textgenwebui", "generic-openai", "bedrock"];
 const PROVIDER_DEFAULT_MODELS = {
   openai: [],
   gemini: [],
@@ -45,14 +40,7 @@ function groupModels(models) {
   }, {});
 }
 
-const groupedProviders = [
-  "togetherai",
-  "fireworksai",
-  "openai",
-  "novita",
-  "openrouter",
-  "ppio",
-];
+const groupedProviders = ["togetherai", "fireworksai", "openai", "novita", "openrouter", "ppio"];
 export default function useGetProviderModels(provider = null) {
   const [defaultModels, setDefaultModels] = useState([]);
   const [customModels, setCustomModels] = useState([]);

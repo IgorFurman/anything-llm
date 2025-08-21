@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react";
 import Sidebar from "@/components/SettingsSidebar";
+import { useEffect, useState } from "react";
 import * as Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { QrCode } from "@phosphor-icons/react";
-import { useModal } from "@/hooks/useModal";
 import CTAButton from "@/components/lib/CTAButton";
+import { useModal } from "@/hooks/useModal";
 import MobileConnection from "@/models/mobile";
+import { QrCode } from "@phosphor-icons/react";
+import { isMobile } from "react-device-detect";
 import ConnectionModal from "./ConnectionModal";
 import DeviceRow from "./DeviceRow";
-import { isMobile } from "react-device-detect";
 
 export default function MobileDevices() {
   const { isOpen, openModal, closeModal } = useModal();
@@ -37,9 +37,7 @@ export default function MobileDevices() {
   }, []);
 
   const removeDevice = (id) => {
-    setDevices((prevDevices) =>
-      prevDevices.filter((device) => device.id !== id)
-    );
+    setDevices((prevDevices) => prevDevices.filter((device) => device.id !== id));
   };
 
   return (
@@ -57,15 +55,12 @@ export default function MobileDevices() {
               </p>
             </div>
             <p className="text-xs leading-[18px] font-base text-theme-text-secondary mt-2">
-              These are the devices that are connected to your desktop
-              application to sync chats, workspaces, and more.
+              These are the devices that are connected to your desktop application to sync chats,
+              workspaces, and more.
             </p>
           </div>
           <div className="w-full justify-end flex">
-            <CTAButton
-              onClick={openModal}
-              className="mt-3 mr-0 mb-4 md:-mb-14 z-10"
-            >
+            <CTAButton onClick={openModal} className="mt-3 mr-0 mb-4 md:-mb-14 z-10">
               <QrCode className="h-4 w-4" weight="bold" /> Register New Device
             </CTAButton>
           </div>
@@ -104,11 +99,7 @@ export default function MobileDevices() {
                     </tr>
                   ) : (
                     devices.map((device) => (
-                      <DeviceRow
-                        key={device.id}
-                        device={device}
-                        removeDevice={removeDevice}
-                      />
+                      <DeviceRow key={device.id} device={device} removeDevice={removeDevice} />
                     ))
                   )}
                 </tbody>

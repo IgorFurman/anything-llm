@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
 import CommunityHub from "@/models/communityHub";
+import { useEffect, useState } from "react";
 
 /**
  * Hook to check if the user is authenticated with the community hub by checking

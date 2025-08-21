@@ -1,11 +1,11 @@
+import ModalWrapper from "@/components/ModalWrapper";
+import RecoveryCodeModal from "@/components/Modals/DisplayRecoveryCodeModal";
+import { useModal } from "@/hooks/useModal";
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import System from "../../../models/system";
 import { AUTH_TOKEN } from "../../../utils/constants";
 import paths from "../../../utils/paths";
-import ModalWrapper from "@/components/ModalWrapper";
-import { useModal } from "@/hooks/useModal";
-import RecoveryCodeModal from "@/components/Modals/DisplayRecoveryCodeModal";
-import { useTranslation } from "react-i18next";
 
 export default function SingleUserAuth() {
   const { t } = useTranslation();
@@ -29,8 +29,7 @@ export default function SingleUserAuth() {
     const data = {};
     const form = new FormData(e.target);
     for (var [key, value] of form.entries()) data[key] = value;
-    const { valid, token, message, recoveryCodes } =
-      await System.requestToken(data);
+    const { valid, token, message, recoveryCodes } = await System.requestToken(data);
     if (valid && !!token) {
       setToken(token);
       if (recoveryCodes) {
@@ -82,8 +81,7 @@ export default function SingleUserAuth() {
                 </p>
               </div>
               <p className="text-sm text-theme-text-secondary text-center">
-                {t("login.sign-in.start")} {customAppName || "AnythingLLM"}{" "}
-                {t("login.sign-in.end")}
+                {t("login.sign-in.start")} {customAppName || "AnythingLLM"} {t("login.sign-in.end")}
               </p>
             </div>
           </div>
@@ -108,9 +106,7 @@ export default function SingleUserAuth() {
               type="submit"
               className="md:text-primary-button md:bg-transparent text-dark-text text-sm font-bold focus:ring-4 focus:outline-none rounded-md border-[1.5px] border-primary-button md:h-[34px] h-[48px] md:hover:text-white md:hover:bg-primary-button bg-primary-button focus:z-10 w-full"
             >
-              {loading
-                ? t("login.multi-user.validating")
-                : t("login.multi-user.login")}
+              {loading ? t("login.multi-user.validating") : t("login.multi-user.login")}
             </button>
           </div>
         </div>

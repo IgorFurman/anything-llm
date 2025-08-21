@@ -1,11 +1,7 @@
 const { v4 } = require("uuid");
 const fs = require("fs");
 const { mboxParser } = require("mbox-parser");
-const {
-  createdDate,
-  trashFile,
-  writeToServerDocuments,
-} = require("../../utils/files");
+const { createdDate, trashFile, writeToServerDocuments } = require("../../utils/files");
 const { tokenizeString } = require("../../utils/tokenizer");
 const { default: slugify } = require("slugify");
 
@@ -36,9 +32,7 @@ async function asMbox({ fullFilePath = "", filename = "" }) {
 
     const content = mail.text;
     if (!content) continue;
-    console.log(
-      `-- Working on message "${mail.subject || "Unknown subject"}" --`
-    );
+    console.log(`-- Working on message "${mail.subject || "Unknown subject"}" --`);
 
     const data = {
       id: v4(),
@@ -65,9 +59,7 @@ async function asMbox({ fullFilePath = "", filename = "" }) {
   }
 
   trashFile(fullFilePath);
-  console.log(
-    `[SUCCESS]: ${filename} messages converted & ready for embedding.\n`
-  );
+  console.log(`[SUCCESS]: ${filename} messages converted & ready for embedding.\n`);
   return { success: true, reason: null, documents };
 }
 

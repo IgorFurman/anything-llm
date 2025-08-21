@@ -75,11 +75,8 @@ function apiEmbedEndpoints(app) {
     }
   });
 
-  app.get(
-    "/v1/embed/:embedUuid/chats",
-    [validApiKey],
-    async (request, response) => {
-      /*
+  app.get("/v1/embed/:embedUuid/chats", [validApiKey], async (request, response) => {
+    /*
       #swagger.tags = ['Embed']
       #swagger.description = 'Get all chats for a specific embed'
       #swagger.parameters['embedUuid'] = {
@@ -124,24 +121,20 @@ function apiEmbedEndpoints(app) {
         description: "Embed not found",
       }
     */
-      try {
-        const { embedUuid } = request.params;
-        const chats = await EmbedChats.where({
-          embed_config: { uuid: String(embedUuid) },
-        });
-        response.status(200).json({ chats });
-      } catch (e) {
-        console.error(e.message, e);
-        response.sendStatus(500).end();
-      }
+    try {
+      const { embedUuid } = request.params;
+      const chats = await EmbedChats.where({
+        embed_config: { uuid: String(embedUuid) },
+      });
+      response.status(200).json({ chats });
+    } catch (e) {
+      console.error(e.message, e);
+      response.sendStatus(500).end();
     }
-  );
+  });
 
-  app.get(
-    "/v1/embed/:embedUuid/chats/:sessionUuid",
-    [validApiKey],
-    async (request, response) => {
-      /*
+  app.get("/v1/embed/:embedUuid/chats/:sessionUuid", [validApiKey], async (request, response) => {
+    /*
       #swagger.tags = ['Embed']
       #swagger.description = 'Get chats for a specific embed and session'
       #swagger.parameters['embedUuid'] = {
@@ -184,19 +177,18 @@ function apiEmbedEndpoints(app) {
         description: "Embed or session not found",
       }
     */
-      try {
-        const { embedUuid, sessionUuid } = request.params;
-        const chats = await EmbedChats.where({
-          embed_config: { uuid: String(embedUuid) },
-          session_id: String(sessionUuid),
-        });
-        response.status(200).json({ chats });
-      } catch (e) {
-        console.error(e.message, e);
-        response.sendStatus(500).end();
-      }
+    try {
+      const { embedUuid, sessionUuid } = request.params;
+      const chats = await EmbedChats.where({
+        embed_config: { uuid: String(embedUuid) },
+        session_id: String(sessionUuid),
+      });
+      response.status(200).json({ chats });
+    } catch (e) {
+      console.error(e.message, e);
+      response.sendStatus(500).end();
     }
-  );
+  });
 
   app.post("/v1/embed/new", [validApiKey], async (request, response) => {
     /*
@@ -262,15 +254,12 @@ function apiEmbedEndpoints(app) {
       const data = reqBody(request);
 
       if (!data.workspace_slug)
-        return response
-          .status(400)
-          .json({ error: "Workspace slug is required" });
+        return response.status(400).json({ error: "Workspace slug is required" });
       const workspace = await Workspace.get({
         slug: String(data.workspace_slug),
       });
 
-      if (!workspace)
-        return response.status(404).json({ error: "Workspace not found" });
+      if (!workspace) return response.status(404).json({ error: "Workspace not found" });
 
       const { embed, message: error } = await EmbedConfig.new({
         ...data,
@@ -354,11 +343,8 @@ function apiEmbedEndpoints(app) {
     }
   });
 
-  app.delete(
-    "/v1/embed/:embedUuid",
-    [validApiKey],
-    async (request, response) => {
-      /*
+  app.delete("/v1/embed/:embedUuid", [validApiKey], async (request, response) => {
+    /*
       #swagger.tags = ['Embed']
       #swagger.description = 'Delete an existing embed configuration'
       #swagger.parameters['embedUuid'] = {
@@ -389,21 +375,17 @@ function apiEmbedEndpoints(app) {
         description: "Embed not found"
       }
     */
-      try {
-        const { embedUuid } = request.params;
-        const embed = await EmbedConfig.get({ uuid: String(embedUuid) });
-        if (!embed)
-          return response.status(404).json({ error: "Embed not found" });
-        const success = await EmbedConfig.delete({ id: embed.id });
-        response
-          .status(200)
-          .json({ success, error: success ? null : "Failed to delete embed" });
-      } catch (e) {
-        console.error(e.message, e);
-        response.sendStatus(500).end();
-      }
+    try {
+      const { embedUuid } = request.params;
+      const embed = await EmbedConfig.get({ uuid: String(embedUuid) });
+      if (!embed) return response.status(404).json({ error: "Embed not found" });
+      const success = await EmbedConfig.delete({ id: embed.id });
+      response.status(200).json({ success, error: success ? null : "Failed to delete embed" });
+    } catch (e) {
+      console.error(e.message, e);
+      response.sendStatus(500).end();
     }
-  );
+  });
 }
 
 module.exports = { apiEmbedEndpoints };

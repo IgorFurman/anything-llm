@@ -1,14 +1,12 @@
 import System from "@/models/system";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function ApiPieLLMOptions({ settings }) {
   return (
     <div className="flex flex-col gap-y-4 mt-1.5">
       <div className="flex gap-[36px]">
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
-            APIpie API Key
-          </label>
+          <label className="text-white text-sm font-semibold block mb-3">APIpie API Key</label>
           <input
             type="password"
             name="ApipieLLMApiKey"
@@ -20,9 +18,7 @@ export default function ApiPieLLMOptions({ settings }) {
             spellCheck={false}
           />
         </div>
-        {!settings?.credentialsOnly && (
-          <APIPieModelSelection settings={settings} />
-        )}
+        {!settings?.credentialsOnly && <APIPieModelSelection settings={settings} />}
       </div>
     </div>
   );
@@ -54,9 +50,7 @@ function APIPieModelSelection({ settings }) {
   if (loading || Object.keys(groupedModels).length === 0) {
     return (
       <div className="flex flex-col w-60">
-        <label className="text-white text-sm font-semibold block mb-3">
-          Chat Model Selection
-        </label>
+        <label className="text-white text-sm font-semibold block mb-3">Chat Model Selection</label>
         <select
           name="ApipieLLMModelPref"
           disabled={true}
@@ -72,9 +66,7 @@ function APIPieModelSelection({ settings }) {
 
   return (
     <div className="flex flex-col w-60">
-      <label className="text-white text-sm font-semibold block mb-3">
-        Chat Model Selection
-      </label>
+      <label className="text-white text-sm font-semibold block mb-3">Chat Model Selection</label>
       <select
         name="ApipieLLMModelPref"
         required={true}

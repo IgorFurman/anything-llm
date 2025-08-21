@@ -5,11 +5,7 @@
 const express = require("express");
 const chalk = require("chalk");
 const AIbitat = require("../../index.js");
-const {
-  websocket,
-  webBrowsing,
-  webScraping,
-} = require("../../plugins/index.js");
+const { websocket, webBrowsing, webScraping } = require("../../plugins/index.js");
 const path = require("path");
 const port = 3000;
 const app = express();
@@ -24,13 +20,13 @@ require("dotenv").config({ path: `../../../../../.env.development` });
 // });
 
 // Set up WSS sockets for listening.
-app.ws("/ws", function (ws, _response) {
+app.ws("/ws", (ws, _response) => {
   try {
-    ws.on("message", function (msg) {
+    ws.on("message", (msg) => {
       if (ws?.handleFeedback) ws.handleFeedback(msg);
     });
 
-    ws.on("close", function () {
+    ws.on("close", () => {
       console.log("Socket killed");
       return;
     });
@@ -48,7 +44,7 @@ app.ws("/ws", function (ws, _response) {
   } catch (error) {}
 });
 
-app.all("*", function (_, response) {
+app.all("*", (_, response) => {
   response.sendFile(path.join(__dirname, "index.html"));
 });
 
@@ -84,11 +80,7 @@ async function runAIbitat(socket) {
       risks or issues that arise.`,
       interrupt: "ALWAYS",
     })
-    .channel("<b>#branding</b>", [
-      "creativeDirector",
-      "marketResearcher",
-      "PM",
-    ]);
+    .channel("<b>#branding</b>", ["creativeDirector", "marketResearcher", "PM"]);
 
   await aibitat.start({
     from: "PM",

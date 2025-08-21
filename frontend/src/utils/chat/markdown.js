@@ -1,7 +1,7 @@
 import { encode as HTMLEncode } from "he";
+import hljs from "highlight.js";
 import markdownIt from "markdown-it";
 import markdownItKatexPlugin from "./plugins/markdown-katex";
-import hljs from "highlight.js";
 import "./themes/github-dark.css";
 import "./themes/github.css";
 import { v4 } from "uuid";
@@ -9,12 +9,9 @@ import { v4 } from "uuid";
 const markdown = markdownIt({
   html: false,
   typographer: true,
-  highlight: function (code, lang) {
+  highlight: (code, lang) => {
     const uuid = v4();
-    const theme =
-      window.localStorage.getItem("theme") === "light"
-        ? "github"
-        : "github-dark";
+    const theme = window.localStorage.getItem("theme") === "light" ? "github" : "github-dark";
 
     if (lang && hljs.getLanguage(lang)) {
       try {
@@ -62,7 +59,7 @@ markdown.renderer.rules.link_open = (tokens, idx) => {
 };
 
 // Custom renderer for responsive images rendered in markdown
-markdown.renderer.rules.image = function (tokens, idx) {
+markdown.renderer.rules.image = (tokens, idx) => {
   const token = tokens[idx];
   const srcIndex = token.attrIndex("src");
   const src = token.attrs[srcIndex][1];

@@ -1,7 +1,7 @@
 const prisma = require("../utils/prisma");
 
 const WorkspaceSuggestedMessages = {
-  get: async function (clause = {}) {
+  get: async (clause = {}) => {
     try {
       const message = await prisma.workspace_suggested_messages.findFirst({
         where: clause,
@@ -13,7 +13,7 @@ const WorkspaceSuggestedMessages = {
     }
   },
 
-  where: async function (clause = {}, limit) {
+  where: async (clause = {}, limit) => {
     try {
       const messages = await prisma.workspace_suggested_messages.findMany({
         where: clause,
@@ -26,7 +26,7 @@ const WorkspaceSuggestedMessages = {
     }
   },
 
-  saveAll: async function (messages, workspaceSlug) {
+  saveAll: async (messages, workspaceSlug) => {
     try {
       const workspace = await prisma.workspaces.findUnique({
         where: { slug: workspaceSlug },
@@ -56,7 +56,7 @@ const WorkspaceSuggestedMessages = {
     }
   },
 
-  getMessages: async function (workspaceSlug) {
+  getMessages: async (workspaceSlug) => {
     try {
       const workspace = await prisma.workspaces.findUnique({
         where: { slug: workspaceSlug },

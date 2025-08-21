@@ -1,14 +1,13 @@
 import CTAButton from "@/components/lib/CTAButton";
-import CommunityHubImportItemSteps from "../..";
-import { useEffect, useState } from "react";
-import Workspace from "@/models/workspace";
-import showToast from "@/utils/toast";
-import paths from "@/utils/paths";
 import CommunityHub from "@/models/communityHub";
+import Workspace from "@/models/workspace";
+import paths from "@/utils/paths";
+import showToast from "@/utils/toast";
+import { useEffect, useState } from "react";
+import CommunityHubImportItemSteps from "../..";
 
 export default function SystemPrompt({ item, setStep }) {
-  const [destinationWorkspaceSlug, setDestinationWorkspaceSlug] =
-    useState(null);
+  const [destinationWorkspaceSlug, setDestinationWorkspaceSlug] = useState(null);
   const [workspaces, setWorkspaces] = useState([]);
   useEffect(() => {
     async function getWorkspaces() {
@@ -58,8 +57,8 @@ export default function SystemPrompt({ item, setStep }) {
       </div>
       <div className="flex flex-col gap-y-[25px] text-white/80 light:text-theme-text-secondary text-sm">
         <p>
-          System prompts are used to guide the behavior of the AI agents and can
-          be applied to any existing workspace.
+          System prompts are used to guide the behavior of the AI agents and can be applied to any
+          existing workspace.
         </p>
 
         <div className="flex flex-col gap-y-2">

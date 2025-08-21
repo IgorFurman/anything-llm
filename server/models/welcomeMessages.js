@@ -1,7 +1,7 @@
 const prisma = require("../utils/prisma");
 
 const WelcomeMessages = {
-  get: async function (clause = {}) {
+  get: async (clause = {}) => {
     try {
       const message = await prisma.welcome_messages.findFirst({
         where: clause,
@@ -13,7 +13,7 @@ const WelcomeMessages = {
     }
   },
 
-  where: async function (clause = {}, limit) {
+  where: async (clause = {}, limit) => {
     try {
       const messages = await prisma.welcome_messages.findMany({
         where: clause,
@@ -26,7 +26,7 @@ const WelcomeMessages = {
     }
   },
 
-  saveAll: async function (messages) {
+  saveAll: async (messages) => {
     try {
       await prisma.welcome_messages.deleteMany({}); // Delete all existing messages
 
@@ -48,7 +48,7 @@ const WelcomeMessages = {
     }
   },
 
-  getMessages: async function () {
+  getMessages: async () => {
     try {
       const messages = await prisma.welcome_messages.findMany({
         orderBy: { orderIndex: "asc" },

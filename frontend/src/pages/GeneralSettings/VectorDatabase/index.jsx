@@ -1,36 +1,36 @@
-import React, { useState, useEffect, useRef } from "react";
-import Sidebar from "@/components/SettingsSidebar";
-import { isMobile } from "react-device-detect";
-import System from "@/models/system";
-import showToast from "@/utils/toast";
-import { useModal } from "@/hooks/useModal";
-import CTAButton from "@/components/lib/CTAButton";
-import { CaretUpDown, MagnifyingGlass, X } from "@phosphor-icons/react";
-import { useTranslation } from "react-i18next";
-import PreLoader from "@/components/Preloader";
 import ChangeWarningModal from "@/components/ChangeWarning";
 import ModalWrapper from "@/components/ModalWrapper";
+import PreLoader from "@/components/Preloader";
+import Sidebar from "@/components/SettingsSidebar";
 import VectorDBItem from "@/components/VectorDBSelection/VectorDBItem";
+import CTAButton from "@/components/lib/CTAButton";
+import { useModal } from "@/hooks/useModal";
+import System from "@/models/system";
+import showToast from "@/utils/toast";
+import { CaretUpDown, MagnifyingGlass, X } from "@phosphor-icons/react";
+import React, { useState, useEffect, useRef } from "react";
+import { isMobile } from "react-device-detect";
+import { useTranslation } from "react-i18next";
 
-import LanceDbLogo from "@/media/vectordbs/lancedb.png";
-import ChromaLogo from "@/media/vectordbs/chroma.png";
-import PineconeLogo from "@/media/vectordbs/pinecone.png";
-import WeaviateLogo from "@/media/vectordbs/weaviate.png";
-import QDrantLogo from "@/media/vectordbs/qdrant.png";
-import MilvusLogo from "@/media/vectordbs/milvus.png";
-import ZillizLogo from "@/media/vectordbs/zilliz.png";
 import AstraDBLogo from "@/media/vectordbs/astraDB.png";
+import ChromaLogo from "@/media/vectordbs/chroma.png";
+import LanceDbLogo from "@/media/vectordbs/lancedb.png";
+import MilvusLogo from "@/media/vectordbs/milvus.png";
 import PGVectorLogo from "@/media/vectordbs/pgvector.png";
+import PineconeLogo from "@/media/vectordbs/pinecone.png";
+import QDrantLogo from "@/media/vectordbs/qdrant.png";
+import WeaviateLogo from "@/media/vectordbs/weaviate.png";
+import ZillizLogo from "@/media/vectordbs/zilliz.png";
 
-import LanceDBOptions from "@/components/VectorDBSelection/LanceDBOptions";
-import ChromaDBOptions from "@/components/VectorDBSelection/ChromaDBOptions";
-import PineconeDBOptions from "@/components/VectorDBSelection/PineconeDBOptions";
-import WeaviateDBOptions from "@/components/VectorDBSelection/WeaviateDBOptions";
-import QDrantDBOptions from "@/components/VectorDBSelection/QDrantDBOptions";
-import MilvusDBOptions from "@/components/VectorDBSelection/MilvusDBOptions";
-import ZillizCloudOptions from "@/components/VectorDBSelection/ZillizCloudOptions";
 import AstraDBOptions from "@/components/VectorDBSelection/AstraDBOptions";
+import ChromaDBOptions from "@/components/VectorDBSelection/ChromaDBOptions";
+import LanceDBOptions from "@/components/VectorDBSelection/LanceDBOptions";
+import MilvusDBOptions from "@/components/VectorDBSelection/MilvusDBOptions";
 import PGVectorOptions from "@/components/VectorDBSelection/PGVectorOptions";
+import PineconeDBOptions from "@/components/VectorDBSelection/PineconeDBOptions";
+import QDrantDBOptions from "@/components/VectorDBSelection/QDrantDBOptions";
+import WeaviateDBOptions from "@/components/VectorDBSelection/WeaviateDBOptions";
+import ZillizCloudOptions from "@/components/VectorDBSelection/ZillizCloudOptions";
 
 export default function GeneralVectorDatabase() {
   const [saving, setSaving] = useState(false);
@@ -115,8 +115,7 @@ export default function GeneralVectorDatabase() {
       value: "lancedb",
       logo: LanceDbLogo,
       options: <LanceDBOptions />,
-      description:
-        "100% local vector DB that runs on the same instance as AnythingLLM.",
+      description: "100% local vector DB that runs on the same instance as AnythingLLM.",
     },
     {
       name: "PGVector",
@@ -130,8 +129,7 @@ export default function GeneralVectorDatabase() {
       value: "chroma",
       logo: ChromaLogo,
       options: <ChromaDBOptions settings={settings} />,
-      description:
-        "Open source vector database you can host yourself or on the cloud.",
+      description: "Open source vector database you can host yourself or on the cloud.",
     },
     {
       name: "Pinecone",
@@ -145,8 +143,7 @@ export default function GeneralVectorDatabase() {
       value: "zilliz",
       logo: ZillizLogo,
       options: <ZillizCloudOptions settings={settings} />,
-      description:
-        "Cloud hosted vector database built for enterprise with SOC 2 compliance.",
+      description: "Cloud hosted vector database built for enterprise with SOC 2 compliance.",
     },
     {
       name: "QDrant",
@@ -160,8 +157,7 @@ export default function GeneralVectorDatabase() {
       value: "weaviate",
       logo: WeaviateLogo,
       options: <WeaviateDBOptions settings={settings} />,
-      description:
-        "Open source local and cloud hosted multi-modal vector database.",
+      description: "Open source local and cloud hosted multi-modal vector database.",
     },
     {
       name: "Milvus",
@@ -198,17 +194,11 @@ export default function GeneralVectorDatabase() {
           style={{ height: isMobile ? "100%" : "calc(100% - 32px)" }}
           className="relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full h-full overflow-y-scroll p-4 md:p-0"
         >
-          <form
-            id="vectordb-form"
-            onSubmit={handleSubmit}
-            className="flex w-full"
-          >
+          <form id="vectordb-form" onSubmit={handleSubmit} className="flex w-full">
             <div className="flex flex-col w-full px-1 md:pl-6 md:pr-[50px] py-16 md:py-6">
               <div className="w-full flex flex-col gap-y-1 pb-6 border-white light:border-theme-sidebar-border border-b-2 border-opacity-10">
                 <div className="flex gap-x-4 items-center">
-                  <p className="text-lg leading-6 font-bold text-white">
-                    {t("vector.title")}
-                  </p>
+                  <p className="text-lg leading-6 font-bold text-white">{t("vector.title")}</p>
                 </div>
                 <p className="text-xs leading-[18px] font-base text-white text-opacity-60">
                   {t("vector.description")}
@@ -216,10 +206,7 @@ export default function GeneralVectorDatabase() {
               </div>
               <div className="w-full justify-end flex">
                 {hasChanges && (
-                  <CTAButton
-                    onClick={() => handleSubmit()}
-                    className="mt-3 mr-0 -mb-14 z-10"
-                  >
+                  <CTAButton onClick={() => handleSubmit()} className="mt-3 mr-0 -mb-14 z-10">
                     {saving ? t("common.saving") : t("common.save")}
                   </CTAButton>
                 )}
@@ -298,20 +285,12 @@ export default function GeneralVectorDatabase() {
                         </div>
                       </div>
                     </div>
-                    <CaretUpDown
-                      size={24}
-                      weight="bold"
-                      className="text-white"
-                    />
+                    <CaretUpDown size={24} weight="bold" className="text-white" />
                   </button>
                 )}
               </div>
-              <div
-                onChange={() => setHasChanges(true)}
-                className="mt-4 flex flex-col gap-y-1"
-              >
-                {selectedVDB &&
-                  VECTOR_DBS.find((vdb) => vdb.value === selectedVDB)?.options}
+              <div onChange={() => setHasChanges(true)} className="mt-4 flex flex-col gap-y-1">
+                {selectedVDB && VECTOR_DBS.find((vdb) => vdb.value === selectedVDB)?.options}
               </div>
             </div>
           </form>

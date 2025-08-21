@@ -1,5 +1,5 @@
+import { DotsThreeVertical, Trash, TreeView } from "@phosphor-icons/react";
 import React, { useState, useEffect, useRef } from "react";
-import { Trash, DotsThreeVertical, TreeView } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
 
 function ActionMenu({ chatId, forkThread, isEditing, role }) {
@@ -15,9 +15,7 @@ function ActionMenu({ chatId, forkThread, isEditing, role }) {
   };
 
   const handleDelete = () => {
-    window.dispatchEvent(
-      new CustomEvent("delete-message", { detail: { chatId } })
-    );
+    window.dispatchEvent(new CustomEvent("delete-message", { detail: { chatId } }));
     setOpen(false);
   };
 

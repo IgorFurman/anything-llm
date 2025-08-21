@@ -7,7 +7,7 @@ export function castToType(key, value) {
       cast: (value) => Number(value),
     },
     similarityThreshold: {
-      cast: (value) => parseFloat(value),
+      cast: (value) => Number.parseFloat(value),
     },
     topN: {
       cast: (value) => Number(value),

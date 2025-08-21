@@ -1,10 +1,10 @@
 import Sidebar from "@/components/SettingsSidebar";
 import { isMobile } from "react-device-detect";
 import { useTranslation } from "react-i18next";
-import AutoSubmit from "../components/AutoSubmit";
 import AutoSpeak from "../components/AutoSpeak";
-import SpellCheck from "../components/SpellCheck";
+import AutoSubmit from "../components/AutoSubmit";
 import ShowScrollbar from "../components/ShowScrollbar";
+import SpellCheck from "../components/SpellCheck";
 
 export default function ChatSettings() {
   const { t } = useTranslation();

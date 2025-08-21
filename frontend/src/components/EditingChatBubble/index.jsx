@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { X } from "@phosphor-icons/react";
-import { useTranslation } from "react-i18next";
 import renderMarkdown from "@/utils/chat/markdown";
 import DOMPurify from "@/utils/chat/purify";
+import { X } from "@phosphor-icons/react";
+import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function EditingChatBubble({
   message,
@@ -18,12 +18,8 @@ export default function EditingChatBubble({
 
   return (
     <div>
-      <p
-        className={`text-xs text-white light:text-black/80 ${isUser ? "text-right" : ""}`}
-      >
-        {isUser
-          ? t("common.user")
-          : t("customization.items.welcome-messages.assistant")}
+      <p className={`text-xs text-white light:text-black/80 ${isUser ? "text-right" : ""}`}>
+        {isUser ? t("common.user") : t("customization.items.welcome-messages.assistant")}
       </p>
       <div
         className={`relative flex w-full mt-2 items-start ${

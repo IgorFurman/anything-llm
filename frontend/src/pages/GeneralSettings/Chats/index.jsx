@@ -1,16 +1,16 @@
-import { useEffect, useRef, useState } from "react";
 import Sidebar from "@/components/SettingsSidebar";
+import { useEffect, useRef, useState } from "react";
 import { isMobile } from "react-device-detect";
 import * as Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { CanViewChatHistory } from "@/components/CanViewChatHistory";
 import useQuery from "@/hooks/useQuery";
-import ChatRow from "./ChatRow";
-import showToast from "@/utils/toast";
 import System from "@/models/system";
+import showToast from "@/utils/toast";
 import { CaretDown, Download, Trash } from "@phosphor-icons/react";
 import { saveAs } from "file-saver";
 import { useTranslation } from "react-i18next";
-import { CanViewChatHistory } from "@/components/CanViewChatHistory";
+import ChatRow from "./ChatRow";
 
 const exportOptions = {
   csv: {
@@ -61,8 +61,7 @@ export default function WorkspaceChats() {
   const handleDumpChats = async (exportType) => {
     const chats = await System.exportChats(exportType, "workspace");
     if (!!chats) {
-      const { name, mimeType, fileExtension, filenameFunc } =
-        exportOptions[exportType];
+      const { name, mimeType, fileExtension, filenameFunc } = exportOptions[exportType];
       const blob = new Blob([chats], { type: mimeType });
       saveAs(blob, `${filenameFunc()}.${fileExtension}`);
       showToast(`Chats exported successfully as ${name}.`, "success");
@@ -73,9 +72,7 @@ export default function WorkspaceChats() {
 
   const handleClearAllChats = async () => {
     if (
-      !window.confirm(
-        `Are you sure you want to clear all chats?\n\nThis action is irreversible.`
-      )
+      !window.confirm(`Are you sure you want to clear all chats?\n\nThis action is irreversible.`)
     )
       return false;
     await System.deleteChat(-1);
@@ -106,8 +103,7 @@ export default function WorkspaceChats() {
 
   useEffect(() => {
     async function fetchChats() {
-      const { chats: _chats = [], hasPages = false } =
-        await System.chats(offset);
+      const { chats: _chats = [], hasPages = false } = await System.chats(offset);
       setChats(_chats);
       setCanNext(hasPages);
       setLoading(false);
@@ -193,15 +189,7 @@ export default function WorkspaceChats() {
   );
 }
 
-function ChatsContainer({
-  loading,
-  chats,
-  setChats,
-  offset,
-  setOffset,
-  canNext,
-  t,
-}) {
+function ChatsContainer({ loading, chats, setChats, offset, setOffset, canNext, t }) {
   const handlePrevious = () => {
     setOffset(Math.max(offset - 1, 0));
   };
@@ -258,9 +246,7 @@ function ChatsContainer({
         </thead>
         <tbody>
           {!!chats &&
-            chats.map((chat) => (
-              <ChatRow key={chat.id} chat={chat} onDelete={handleDeleteChat} />
-            ))}
+            chats.map((chat) => <ChatRow key={chat.id} chat={chat} onDelete={handleDeleteChat} />)}
         </tbody>
       </table>
       <div className="flex w-full justify-between items-center mt-6">

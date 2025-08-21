@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
 import { FullScreenLoader } from "@/components/Preloader";
 import System from "@/models/system";
 import paths from "@/utils/paths";
+import { useEffect, useState } from "react";
 
 /**
  * Protects the view from system set ups who cannot view chat history.

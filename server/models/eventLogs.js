@@ -1,7 +1,7 @@
 const prisma = require("../utils/prisma");
 
 const EventLogs = {
-  logEvent: async function (event, metadata = {}, userId = null) {
+  logEvent: async (event, metadata = {}, userId = null) => {
     try {
       const eventLog = await prisma.event_logs.create({
         data: {
@@ -14,22 +14,17 @@ const EventLogs = {
       console.log(`\x1b[32m[Event Logged]\x1b[0m - ${event}`);
       return { eventLog, message: null };
     } catch (error) {
-      console.error(
-        `\x1b[31m[Event Logging Failed]\x1b[0m - ${event}`,
-        error.message
-      );
+      console.error(`\x1b[31m[Event Logging Failed]\x1b[0m - ${event}`, error.message);
       return { eventLog: null, message: error.message };
     }
   },
 
-  getByEvent: async function (event, limit = null, orderBy = null) {
+  getByEvent: async (event, limit = null, orderBy = null) => {
     try {
       const logs = await prisma.event_logs.findMany({
         where: { event },
         ...(limit !== null ? { take: limit } : {}),
-        ...(orderBy !== null
-          ? { orderBy }
-          : { orderBy: { occurredAt: "desc" } }),
+        ...(orderBy !== null ? { orderBy } : { orderBy: { occurredAt: "desc" } }),
       });
       return logs;
     } catch (error) {
@@ -38,14 +33,12 @@ const EventLogs = {
     }
   },
 
-  getByUserId: async function (userId, limit = null, orderBy = null) {
+  getByUserId: async (userId, limit = null, orderBy = null) => {
     try {
       const logs = await prisma.event_logs.findMany({
         where: { userId },
         ...(limit !== null ? { take: limit } : {}),
-        ...(orderBy !== null
-          ? { orderBy }
-          : { orderBy: { occurredAt: "desc" } }),
+        ...(orderBy !== null ? { orderBy } : { orderBy: { occurredAt: "desc" } }),
       });
       return logs;
     } catch (error) {
@@ -54,20 +47,13 @@ const EventLogs = {
     }
   },
 
-  where: async function (
-    clause = {},
-    limit = null,
-    orderBy = null,
-    offset = null
-  ) {
+  where: async (clause = {}, limit = null, orderBy = null, offset = null) => {
     try {
       const logs = await prisma.event_logs.findMany({
         where: clause,
         ...(limit !== null ? { take: limit } : {}),
         ...(offset !== null ? { skip: offset } : {}),
-        ...(orderBy !== null
-          ? { orderBy }
-          : { orderBy: { occurredAt: "desc" } }),
+        ...(orderBy !== null ? { orderBy } : { orderBy: { occurredAt: "desc" } }),
       });
       return logs;
     } catch (error) {
@@ -76,12 +62,7 @@ const EventLogs = {
     }
   },
 
-  whereWithData: async function (
-    clause = {},
-    limit = null,
-    offset = null,
-    orderBy = null
-  ) {
+  whereWithData: async function (clause = {}, limit = null, offset = null, orderBy = null) {
     const { User } = require("./user");
 
     try {
@@ -89,9 +70,7 @@ const EventLogs = {
 
       for (const res of results) {
         const user = res.userId ? await User.get({ id: res.userId }) : null;
-        res.user = user
-          ? { username: user.username }
-          : { username: "unknown user" };
+        res.user = user ? { username: user.username } : { username: "unknown user" };
       }
 
       return results;
@@ -101,7 +80,7 @@ const EventLogs = {
     }
   },
 
-  count: async function (clause = {}) {
+  count: async (clause = {}) => {
     try {
       const count = await prisma.event_logs.count({
         where: clause,
@@ -113,7 +92,7 @@ const EventLogs = {
     }
   },
 
-  delete: async function (clause = {}) {
+  delete: async (clause = {}) => {
     try {
       await prisma.event_logs.deleteMany({
         where: clause,

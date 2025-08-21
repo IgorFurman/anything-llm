@@ -1,5 +1,5 @@
-import LiveSyncToggle from "./Features/LiveSync/toggle";
 import paths from "@/utils/paths";
+import LiveSyncToggle from "./Features/LiveSync/toggle";
 
 export const configurableFeatures = {
   experimental_live_file_sync: {

@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 const RecoveryCode = {
   tablename: "recovery_codes",
   writable: [],
-  create: async function (userId, code) {
+  create: async (userId, code) => {
     try {
       const codeHash = await bcrypt.hash(code, 10);
       const recoveryCode = await prisma.recovery_codes.create({
@@ -17,12 +17,10 @@ const RecoveryCode = {
       return { recoveryCode: null, error: error.message };
     }
   },
-  createMany: async function (data) {
+  createMany: async (data) => {
     try {
       const recoveryCodes = await prisma.$transaction(
-        data.map((recoveryCode) =>
-          prisma.recovery_codes.create({ data: recoveryCode })
-        )
+        data.map((recoveryCode) => prisma.recovery_codes.create({ data: recoveryCode }))
       );
       return { recoveryCodes, error: null };
     } catch (error) {
@@ -30,7 +28,7 @@ const RecoveryCode = {
       return { recoveryCodes: null, error: error.message };
     }
   },
-  findFirst: async function (clause = {}) {
+  findFirst: async (clause = {}) => {
     try {
       const recoveryCode = await prisma.recovery_codes.findFirst({
         where: clause,
@@ -41,7 +39,7 @@ const RecoveryCode = {
       return null;
     }
   },
-  findMany: async function (clause = {}) {
+  findMany: async (clause = {}) => {
     try {
       const recoveryCodes = await prisma.recovery_codes.findMany({
         where: clause,
@@ -52,7 +50,7 @@ const RecoveryCode = {
       return null;
     }
   },
-  deleteMany: async function (clause = {}) {
+  deleteMany: async (clause = {}) => {
     try {
       await prisma.recovery_codes.deleteMany({ where: clause });
       return true;
@@ -63,9 +61,7 @@ const RecoveryCode = {
   },
   hashesForUser: async function (userId = null) {
     if (!userId) return [];
-    return (await this.findMany({ user_id: userId })).map(
-      (recovery) => recovery.code_hash
-    );
+    return (await this.findMany({ user_id: userId })).map((recovery) => recovery.code_hash);
   },
 };
 
@@ -87,7 +83,7 @@ const PasswordResetToken = {
       return { passwordResetToken: null, error: error.message };
     }
   },
-  findUnique: async function (clause = {}) {
+  findUnique: async (clause = {}) => {
     try {
       const passwordResetToken = await prisma.password_reset_tokens.findUnique({
         where: clause,
@@ -98,7 +94,7 @@ const PasswordResetToken = {
       return null;
     }
   },
-  deleteMany: async function (clause = {}) {
+  deleteMany: async (clause = {}) => {
     try {
       await prisma.password_reset_tokens.deleteMany({ where: clause });
       return true;

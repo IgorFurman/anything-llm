@@ -6,15 +6,9 @@ const { AgentFlows } = require("../agentFlows");
 const { httpSocket } = require("./aibitat/plugins/http-socket.js");
 const { WorkspaceChats } = require("../../models/workspaceChats");
 const { safeJsonParse } = require("../http");
-const {
-  USER_AGENT,
-  WORKSPACE_AGENT,
-  agentSkillsFromSystemSettings,
-} = require("./defaults");
+const { USER_AGENT, WORKSPACE_AGENT, agentSkillsFromSystemSettings } = require("./defaults");
 const { AgentHandler } = require(".");
-const {
-  WorkspaceAgentInvocation,
-} = require("../../models/workspaceAgentInvocation");
+const { WorkspaceAgentInvocation } = require("../../models/workspaceAgentInvocation");
 
 /**
  * This is an instance and functional Agent handler, but it does not utilize
@@ -56,14 +50,7 @@ class EphemeralAgentHandler extends AgentHandler {
    * sessionId: string|null
    * }} parameters
    */
-  constructor({
-    uuid,
-    workspace,
-    prompt,
-    userId = null,
-    threadId = null,
-    sessionId = null,
-  }) {
+  constructor({ uuid, workspace, prompt, userId = null, threadId = null, sessionId = null }) {
     super({ uuid });
     this.#invocationUUID = uuid;
     this.#workspace = workspace;
@@ -182,8 +169,7 @@ class EphemeralAgentHandler extends AgentHandler {
     this.provider = this.#workspace.agentProvider ?? null;
     this.model = this.#fetchModel();
 
-    if (!this.provider)
-      throw new Error("No valid provider found for the agent.");
+    if (!this.provider) throw new Error("No valid provider found for the agent.");
     this.log(`Start ${this.#invocationUUID}::${this.provider}:${this.model}`);
     this.checkSetup();
   }
@@ -194,9 +180,7 @@ class EphemeralAgentHandler extends AgentHandler {
       if (name.includes("#")) {
         const [parent, childPluginName] = name.split("#");
         if (!AgentPlugins.hasOwnProperty(parent)) {
-          this.log(
-            `${parent} is not a valid plugin. Skipping inclusion to agent cluster.`
-          );
+          this.log(`${parent} is not a valid plugin. Skipping inclusion to agent cluster.`);
           continue;
         }
 
@@ -210,15 +194,9 @@ class EphemeralAgentHandler extends AgentHandler {
           continue;
         }
 
-        const callOpts = this.parseCallOptions(
-          args,
-          childPlugin?.startupConfig?.params,
-          name
-        );
+        const callOpts = this.parseCallOptions(args, childPlugin?.startupConfig?.params, name);
         this.aibitat.use(childPlugin.plugin(callOpts));
-        this.log(
-          `Attached ${parent}:${childPluginName} plugin to Agent cluster`
-        );
+        this.log(`Attached ${parent}:${childPluginName} plugin to Agent cluster`);
         continue;
       }
 
@@ -234,9 +212,7 @@ class EphemeralAgentHandler extends AgentHandler {
         }
 
         this.aibitat.use(plugin.plugin());
-        this.log(
-          `Attached flow ${plugin.name} (${plugin.flowName}) plugin to Agent cluster`
-        );
+        this.log(`Attached flow ${plugin.name} (${plugin.flowName}) plugin to Agent cluster`);
         continue;
       }
 
@@ -248,11 +224,10 @@ class EphemeralAgentHandler extends AgentHandler {
       // safely assume that the MCP server is running and the tools are available/loaded.
       if (name.startsWith("@@mcp_")) {
         const mcpPluginName = name.replace("@@mcp_", "");
-        const plugins =
-          await new MCPCompatibilityLayer().convertServerToolsToPlugins(
-            mcpPluginName,
-            this.aibitat
-          );
+        const plugins = await new MCPCompatibilityLayer().convertServerToolsToPlugins(
+          mcpPluginName,
+          this.aibitat
+        );
         if (!plugins) {
           this.log(
             `MCP ${mcpPluginName} not found in MCP server config. Skipping inclusion to agent cluster.`
@@ -265,14 +240,11 @@ class EphemeralAgentHandler extends AgentHandler {
         this.aibitat.agents.get("@agent").functions = this.aibitat.agents
           .get("@agent")
           .functions.filter((f) => f.name !== name);
-        for (const plugin of plugins)
-          this.aibitat.agents.get("@agent").functions.push(plugin.name);
+        for (const plugin of plugins) this.aibitat.agents.get("@agent").functions.push(plugin.name);
 
         plugins.forEach((plugin) => {
           this.aibitat.use(plugin.plugin());
-          this.log(
-            `Attached MCP::${plugin.toolName} MCP tool to Agent cluster`
-          );
+          this.log(`Attached MCP::${plugin.toolName} MCP tool to Agent cluster`);
         });
         continue;
       }
@@ -292,24 +264,17 @@ class EphemeralAgentHandler extends AgentHandler {
         const plugin = ImportedPlugin.loadPluginByHubId(hubId);
         const callOpts = plugin.parseCallOptions();
         this.aibitat.use(plugin.plugin(callOpts));
-        this.log(
-          `Attached ${plugin.name} (${hubId}) imported plugin to Agent cluster`
-        );
+        this.log(`Attached ${plugin.name} (${hubId}) imported plugin to Agent cluster`);
         continue;
       }
 
       // Load single-stage plugin.
       if (!AgentPlugins.hasOwnProperty(name)) {
-        this.log(
-          `${name} is not a valid plugin. Skipping inclusion to agent cluster.`
-        );
+        this.log(`${name} is not a valid plugin. Skipping inclusion to agent cluster.`);
         continue;
       }
 
-      const callOpts = this.parseCallOptions(
-        args,
-        AgentPlugins[name].startupConfig.params
-      );
+      const callOpts = this.parseCallOptions(args, AgentPlugins[name].startupConfig.params);
       const AIbitatPlugin = AgentPlugins[name];
       this.aibitat.use(AIbitatPlugin.plugin(callOpts));
       this.log(`Attached ${name} plugin to Agent cluster`);
@@ -320,10 +285,7 @@ class EphemeralAgentHandler extends AgentHandler {
     // Default User agent and workspace agent
     this.log(`Attaching user and default agent to Agent cluster.`);
     this.aibitat.agent(USER_AGENT.name, await USER_AGENT.getDefinition());
-    this.aibitat.agent(
-      WORKSPACE_AGENT.name,
-      await WORKSPACE_AGENT.getDefinition(this.provider)
-    );
+    this.aibitat.agent(WORKSPACE_AGENT.name, await WORKSPACE_AGENT.getDefinition(this.provider));
 
     this.#funcsToLoad = [
       ...(await agentSkillsFromSystemSettings()),
@@ -426,7 +388,7 @@ class EphemeralEventListener extends EventEmitter {
   packMessages() {
     const thoughts = [];
     let textResponse = null;
-    for (let msg of this.messages) {
+    for (const msg of this.messages) {
       if (msg.type !== "statusResponse") {
         textResponse = msg.content;
       } else {

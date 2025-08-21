@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 export default function ContextMenu({
   contextMenu,
@@ -11,10 +11,7 @@ export default function ContextMenu({
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (
-        contextMenuRef.current &&
-        !contextMenuRef.current.contains(event.target)
-      ) {
+      if (contextMenuRef.current && !contextMenuRef.current.contains(event.target)) {
         closeContextMenu();
       }
     };

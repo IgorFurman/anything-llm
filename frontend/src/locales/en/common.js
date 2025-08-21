@@ -18,8 +18,7 @@ const TRANSLATIONS = {
       instancePassword: "Instance Password",
       setPassword: "Would you like to set up a password?",
       passwordReq: "Passwords must be at least 8 characters.",
-      passwordWarn:
-        "It's important to save this password because there is no recovery method.",
+      passwordWarn: "It's important to save this password because there is no recovery method.",
 
       adminUsername: "Admin account username",
       adminUsernameReq:
@@ -33,8 +32,7 @@ const TRANSLATIONS = {
       title: "Data Handling & Privacy",
       description:
         "We are committed to transparency and control when it comes to your personal data.",
-      settingsHint:
-        "These settings can be reconfigured at any time in the settings.",
+      settingsHint: "These settings can be reconfigured at any time in the settings.",
     },
     survey: {
       title: "Welcome to AnythingLLM",
@@ -46,15 +44,13 @@ const TRANSLATIONS = {
       useCasePersonal: "For personal use",
       useCaseOther: "Other",
       comment: "How did you hear about AnythingLLM?",
-      commentPlaceholder:
-        "Reddit, Twitter, GitHub, YouTube, etc. - Let us know how you found us!",
+      commentPlaceholder: "Reddit, Twitter, GitHub, YouTube, etc. - Let us know how you found us!",
       skip: "Skip Survey",
       thankYou: "Thank you for your feedback!",
     },
     workspace: {
       title: "Create your first workspace",
-      description:
-        "Create your first workspace and get started with AnythingLLM.",
+      description: "Create your first workspace and get started with AnythingLLM.",
     },
   },
   common: {
@@ -124,8 +120,7 @@ const TRANSLATIONS = {
     },
     "password-reset": {
       title: "Password Reset",
-      description:
-        "Provide the necessary information below to reset your password.",
+      description: "Provide the necessary information below to reset your password.",
       "recovery-codes": "Recovery Codes",
       "recovery-code": "Recovery Code {{index}}",
       "back-to-login": "Back to Login",
@@ -211,15 +206,13 @@ const TRANSLATIONS = {
         },
         slashCommands: {
           title: "Slash Commands",
-          description:
-            "Save time and inject prompts using custom slash commands.",
+          description: "Save time and inject prompts using custom slash commands.",
           primaryAction: "Create a Slash Command",
           secondaryAction: "Explore on Hub",
         },
         systemPrompts: {
           title: "System Prompts",
-          description:
-            "Modify the system prompt to customize the AI replies of a workspace.",
+          description: "Modify the system prompt to customize the AI replies of a workspace.",
           primaryAction: "Modify a System Prompt",
           secondaryAction: "Manage prompt variables",
         },
@@ -263,8 +256,7 @@ const TRANSLATIONS = {
     },
     message: {
       title: "Suggested Chat Messages",
-      description:
-        "Customize the messages that will be suggested to your workspace users.",
+      description: "Customize the messages that will be suggested to your workspace users.",
       add: "Add new message",
       save: "Save Messages",
       heading: "Explain to me",
@@ -272,8 +264,7 @@ const TRANSLATIONS = {
     },
     pfp: {
       title: "Assistant Profile Image",
-      description:
-        "Customize the profile image of the assistant for this workspace.",
+      description: "Customize the profile image of the assistant for this workspace.",
       image: "Workspace Image",
       remove: "Remove Workspace Image",
     },
@@ -355,8 +346,7 @@ const TRANSLATIONS = {
     },
     temperature: {
       title: "LLM Temperature",
-      "desc-start":
-        'This setting controls how "creative" your LLM responses will be.',
+      "desc-start": 'This setting controls how "creative" your LLM responses will be.',
       "desc-end":
         "The higher the number the more creative. For some models this can lead to incoherent responses when set too high.",
       hint: "Most LLMs have various acceptable ranges of valid values. Consult your LLM provider for that information.",
@@ -403,12 +393,10 @@ const TRANSLATIONS = {
     mode: {
       chat: {
         title: "Workspace Agent Chat model",
-        description:
-          "The specific chat model that will be used for this workspace's @agent agent.",
+        description: "The specific chat model that will be used for this workspace's @agent agent.",
       },
       title: "Workspace Agent model",
-      description:
-        "The specific LLM model that will be used for this workspace's @agent agent.",
+      description: "The specific LLM model that will be used for this workspace's @agent agent.",
       wait: "-- waiting for models --",
     },
 
@@ -428,8 +416,7 @@ const TRANSLATIONS = {
       },
       scrape: {
         title: "Scrape websites",
-        description:
-          "Allow the agent to visit and scrape the content of websites.",
+        description: "Allow the agent to visit and scrape the content of websites.",
       },
       generate: {
         title: "Generate charts",
@@ -445,8 +432,7 @@ const TRANSLATIONS = {
         title: "Live web search and browsing",
         "desc-start":
           "Enable your agent to search the web to answer your questions by connecting to a web-search (SERP) provider.",
-        "desc-end":
-          "Web search during agent sessions will not work until this is set up.",
+        "desc-end": "Web search during agent sessions will not work until this is set up.",
       },
     },
   },
@@ -474,16 +460,14 @@ const TRANSLATIONS = {
     },
     branding: {
       title: "Branding & Whitelabeling",
-      description:
-        "White-label your AnythingLLM instance with custom branding.",
+      description: "White-label your AnythingLLM instance with custom branding.",
     },
     chat: {
       title: "Chat",
       description: "Set your chat preferences for AnythingLLM.",
       auto_submit: {
         title: "Auto-Submit Speech Input",
-        description:
-          "Automatically submit speech input after a period of silence",
+        description: "Automatically submit speech input after a period of silence",
       },
       auto_speak: {
         title: "Auto-Speak Responses",
@@ -510,13 +494,11 @@ const TRANSLATIONS = {
       },
       "app-name": {
         title: "Name",
-        description:
-          "Set a name that is displayed on the login page to all users.",
+        description: "Set a name that is displayed on the login page to all users.",
       },
       "chat-message-alignment": {
         title: "Chat Message Alignment",
-        description:
-          "Select the message alignment mode when using the chat interface.",
+        description: "Select the message alignment mode when using the chat interface.",
       },
       "display-language": {
         title: "Display Language",
@@ -545,12 +527,10 @@ const TRANSLATIONS = {
       },
       "browser-appearance": {
         title: "Browser Appearance",
-        description:
-          "Customize the appearance of the browser tab and title when the app is open.",
+        description: "Customize the appearance of the browser tab and title when the app is open.",
         tab: {
           title: "Title",
-          description:
-            "Set a custom tab title when the app is open in a browser.",
+          description: "Set a custom tab title when the app is open in a browser.",
         },
         favicon: {
           title: "Favicon",
@@ -559,8 +539,7 @@ const TRANSLATIONS = {
       },
       "sidebar-footer": {
         title: "Sidebar Footer Items",
-        description:
-          "Customize the footer items displayed on the bottom of the sidebar.",
+        description: "Customize the footer items displayed on the bottom of the sidebar.",
         icon: "Icon",
         link: "Link",
       },
@@ -606,10 +585,8 @@ const TRANSLATIONS = {
     provider: "Transcription Provider",
     "warn-start":
       "Using the local whisper model on machines with limited RAM or CPU can stall AnythingLLM when processing media files.",
-    "warn-recommend":
-      "We recommend at least 2GB of RAM and upload files <10Mb.",
-    "warn-end":
-      "The built-in model will automatically download on the first use.",
+    "warn-recommend": "We recommend at least 2GB of RAM and upload files <10Mb.",
+    "warn-end": "The built-in model will automatically download on the first use.",
   },
 
   embedding: {
@@ -684,8 +661,7 @@ const TRANSLATIONS = {
 
   multi: {
     title: "Multi-User Mode",
-    description:
-      "Set up your instance to support your team by activating Multi-User Mode.",
+    description: "Set up your instance to support your team by activating Multi-User Mode.",
     enable: {
       "is-enable": "Multi-User Mode is Enabled",
       enable: "Enable Multi-User Mode",
@@ -705,8 +681,7 @@ const TRANSLATIONS = {
   // Event Logs
   event: {
     title: "Event Logs",
-    description:
-      "View all actions and events happening on this instance for monitoring.",
+    description: "View all actions and events happening on this instance for monitoring.",
     clear: "Clear Event Logs",
     table: {
       type: "Event Type",
@@ -738,15 +713,12 @@ const TRANSLATIONS = {
       selected_files: "Found {{count}} markdown files",
       importing: "Importing vault...",
       import_vault: "Import Vault",
-      processing_time:
-        "This may take a while depending on the size of your vault.",
-      vault_warning:
-        "To avoid any conflicts, make sure your Obsidian vault is not currently open.",
+      processing_time: "This may take a while depending on the size of your vault.",
+      vault_warning: "To avoid any conflicts, make sure your Obsidian vault is not currently open.",
     },
     github: {
       name: "GitHub Repo",
-      description:
-        "Import an entire public or private GitHub repository in a single click.",
+      description: "Import an entire public or private GitHub repository in a single click.",
       URL: "GitHub Repo URL",
       URL_explained: "Url of the GitHub repo you wish to collect.",
       token: "GitHub Access Token",
@@ -768,20 +740,17 @@ const TRANSLATIONS = {
       branch_explained: "Branch you wish to collect files from.",
       token_information:
         "Without filling out the <b>GitHub Access Token</b> this data connector will only be able to collect the <b>top-level</b> files of the repo due to GitHub's public API rate-limits.",
-      token_personal:
-        "Get a free Personal Access Token with a GitHub account here.",
+      token_personal: "Get a free Personal Access Token with a GitHub account here.",
     },
     gitlab: {
       name: "GitLab Repo",
-      description:
-        "Import an entire public or private GitLab repository in a single click.",
+      description: "Import an entire public or private GitLab repository in a single click.",
       URL: "GitLab Repo URL",
       URL_explained: "URL of the GitLab repo you wish to collect.",
       token: "GitLab Access Token",
       optional: "optional",
       token_explained: "Access Token to prevent rate limiting.",
-      token_description:
-        "Select additional entities to fetch from the GitLab API.",
+      token_description: "Select additional entities to fetch from the GitLab API.",
       token_explained_start: "Without a ",
       token_explained_link1: "Personal Access Token",
       token_explained_middle:
@@ -799,13 +768,11 @@ const TRANSLATIONS = {
       branch_explained: "Branch you wish to collect files from.",
       token_information:
         "Without filling out the <b>GitLab Access Token</b> this data connector will only be able to collect the <b>top-level</b> files of the repo due to GitLab's public API rate-limits.",
-      token_personal:
-        "Get a free Personal Access Token with a GitLab account here.",
+      token_personal: "Get a free Personal Access Token with a GitLab account here.",
     },
     youtube: {
       name: "YouTube Transcript",
-      description:
-        "Import the transcription of an entire YouTube video from a link.",
+      description: "Import the transcription of an entire YouTube video from a link.",
       URL: "YouTube Video URL",
       URL_explained_start:
         "Enter the URL of any YouTube video to fetch its transcript. The video must have ",
@@ -814,8 +781,7 @@ const TRANSLATIONS = {
       task_explained:
         "Once complete, the transcript will be available for embedding into workspaces in the document picker.",
       language: "Transcript Language",
-      language_explained:
-        "Select the language of the transcript you want to collect.",
+      language_explained: "Select the language of the transcript you want to collect.",
       loading_languages: "-- loading available languages --",
     },
     "website-depth": {
@@ -877,8 +843,7 @@ const TRANSLATIONS = {
       name: "Name",
       "delete-confirmation":
         "Are you sure you want to delete these files and folders?\nThis will remove the files from the system and remove them from any existing workspaces automatically.\nThis action is not reversible.",
-      "removing-message":
-        "Removing {{count}} documents and {{folderCount}} folders. Please wait.",
+      "removing-message": "Removing {{count}} documents and {{folderCount}} folders. Please wait.",
       "move-success": "Successfully moved {{count}} documents.",
       date: "Date",
       type: "Type",
@@ -894,8 +859,7 @@ const TRANSLATIONS = {
       "processor-offline-desc":
         "We can't upload your files right now because the document processor is offline. Please try again later.",
       "click-upload": "Click to upload or drag and drop",
-      "file-types":
-        "supports text files, csv's, spreadsheets, audio files, and more!",
+      "file-types": "supports text files, csv's, spreadsheets, audio files, and more!",
       "or-submit-link": "or submit a link",
       "placeholder-link": "https://example.com",
       fetching: "Fetching...",
@@ -919,8 +883,7 @@ const TRANSLATIONS = {
         "When you <b>watch</b> a document in AnythingLLM we will <i>automatically</i> sync your document content from it's original source on regular intervals. This will automatically update the content in every workspace where this file is managed.",
       watch_explained_block2:
         "This feature currently supports online-based content and will not be available for manually uploaded documents.",
-      watch_explained_block3_start:
-        "You can manage what documents are watched from the ",
+      watch_explained_block3_start: "You can manage what documents are watched from the ",
       watch_explained_block3_link: "File manager",
       watch_explained_block3_end: " admin view.",
       accept: "Okay, got it",
@@ -965,8 +928,7 @@ const TRANSLATIONS = {
     add_new_preset: " Add New Preset",
     command: "Command",
     your_command: "your-command",
-    placeholder_prompt:
-      "This is the content that will be injected in front of your prompt.",
+    placeholder_prompt: "This is the content that will be injected in front of your prompt.",
     description: "Description",
     placeholder_description: "Responds with a poem about LLMs.",
     save: "Save",
@@ -1026,8 +988,7 @@ const TRANSLATIONS = {
     publish: {
       system_prompt: {
         success_title: "Success!",
-        success_description:
-          "Your System Prompt has been published to the Community Hub!",
+        success_description: "Your System Prompt has been published to the Community Hub!",
         success_thank_you: "Thank you for sharing to the Community!",
         view_on_hub: "View on Community Hub",
         modal_title: "Publish System Prompt",
@@ -1048,16 +1009,14 @@ const TRANSLATIONS = {
         submitting: "Publishing...",
         submit: "Publish to Community Hub",
         prompt_label: "Prompt",
-        prompt_description:
-          "This is the actual system prompt that will be used to guide the LLM.",
+        prompt_description: "This is the actual system prompt that will be used to guide the LLM.",
         prompt_placeholder: "Enter your system prompt here...",
       },
       agent_flow: {
         public_description: "Public agent flows are visible to everyone.",
         private_description: "Private agent flows are only visible to you.",
         success_title: "Success!",
-        success_description:
-          "Your Agent Flow has been published to the Community Hub!",
+        success_description: "Your Agent Flow has been published to the Community Hub!",
         success_thank_you: "Thank you for sharing to the Community!",
         view_on_hub: "View on Community Hub",
         modal_title: "Publish Agent Flow",
@@ -1080,8 +1039,7 @@ const TRANSLATIONS = {
       },
       slash_command: {
         success_title: "Success!",
-        success_description:
-          "Your Slash Command has been published to the Community Hub!",
+        success_description: "Your Slash Command has been published to the Community Hub!",
         success_thank_you: "Thank you for sharing to the Community!",
         view_on_hub: "View on Community Hub",
         modal_title: "Publish Slash Command",

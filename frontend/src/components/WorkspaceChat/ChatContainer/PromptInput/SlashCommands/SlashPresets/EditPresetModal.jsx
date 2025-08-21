@@ -1,15 +1,9 @@
-import { useState, useEffect } from "react";
-import { X } from "@phosphor-icons/react";
 import ModalWrapper from "@/components/ModalWrapper";
+import { X } from "@phosphor-icons/react";
+import { useEffect, useState } from "react";
 import { CMD_REGEX } from ".";
 
-export default function EditPresetModal({
-  isOpen,
-  onClose,
-  onSave,
-  onDelete,
-  preset,
-}) {
+export default function EditPresetModal({ isOpen, onClose, onSave, onDelete, preset }) {
   const [command, setCommand] = useState("");
   const [deleting, setDeleting] = useState(false);
 
@@ -62,18 +56,12 @@ export default function EditPresetModal({
             <X size={24} weight="bold" className="text-white" />
           </button>
         </div>
-        <div
-          className="h-full w-full overflow-y-auto"
-          style={{ maxHeight: "calc(100vh - 200px)" }}
-        >
+        <div className="h-full w-full overflow-y-auto" style={{ maxHeight: "calc(100vh - 200px)" }}>
           <form onSubmit={handleSubmit}>
             <div className="py-7 px-9 space-y-2 flex-col">
               <div className="w-full flex flex-col gap-y-4">
                 <div>
-                  <label
-                    htmlFor="command"
-                    className="block mb-2 text-sm font-medium text-white"
-                  >
+                  <label htmlFor="command" className="block mb-2 text-sm font-medium text-white">
                     Command
                   </label>
                   <div className="flex items-center">
@@ -90,10 +78,7 @@ export default function EditPresetModal({
                   </div>
                 </div>
                 <div>
-                  <label
-                    htmlFor="prompt"
-                    className="block mb-2 text-sm font-medium text-white"
-                  >
+                  <label htmlFor="prompt" className="block mb-2 text-sm font-medium text-white">
                     Prompt
                   </label>
                   <textarea

@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
 import System from "@/models/system";
 import showToast from "@/utils/toast";
+import { useEffect, useState } from "react";
 
 export default function useProviderEndpointAutoDiscovery({
   provider = null,
@@ -26,8 +26,7 @@ export default function useProviderEndpointAutoDiscovery({
         new Promise((resolve, reject) => {
           System.customModels(provider, authTokenValue, endpoint, 2_000)
             .then((results) => {
-              if (!results?.models || results.models.length === 0)
-                throw new Error("No models");
+              if (!results?.models || results.models.length === 0) throw new Error("No models");
               resolve({ endpoint, models: results.models });
             })
             .catch(() => {

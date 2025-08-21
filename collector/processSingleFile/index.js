@@ -1,22 +1,11 @@
 const path = require("path");
 const fs = require("fs");
-const {
-  WATCH_DIRECTORY,
-  SUPPORTED_FILETYPE_CONVERTERS,
-} = require("../utils/constants");
-const {
-  trashFile,
-  isTextType,
-  normalizePath,
-  isWithin,
-} = require("../utils/files");
+const { WATCH_DIRECTORY, SUPPORTED_FILETYPE_CONVERTERS } = require("../utils/constants");
+const { trashFile, isTextType, normalizePath, isWithin } = require("../utils/files");
 const RESERVED_FILES = ["__HOTDIR__.md"];
 
 async function processSingleFile(targetFilename, options = {}) {
-  const fullFilePath = path.resolve(
-    WATCH_DIRECTORY,
-    normalizePath(targetFilename)
-  );
+  const fullFilePath = path.resolve(WATCH_DIRECTORY, normalizePath(targetFilename));
   if (!isWithin(path.resolve(WATCH_DIRECTORY), fullFilePath))
     return {
       success: false,
@@ -63,9 +52,7 @@ async function processSingleFile(targetFilename, options = {}) {
     }
   }
 
-  const FileTypeProcessor = require(SUPPORTED_FILETYPE_CONVERTERS[
-    processFileAs
-  ]);
+  const FileTypeProcessor = require(SUPPORTED_FILETYPE_CONVERTERS[processFileAs]);
   return await FileTypeProcessor({
     fullFilePath,
     filename: targetFilename,

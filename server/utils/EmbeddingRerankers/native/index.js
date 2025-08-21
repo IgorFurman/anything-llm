@@ -25,9 +25,7 @@ class NativeEmbeddingReranker {
     // Make directory when it does not exist in existing installations
     if (!fs.existsSync(this.cacheDir)) fs.mkdirSync(this.cacheDir);
 
-    this.modelDownloaded = fs.existsSync(
-      path.resolve(this.cacheDir, this.model)
-    );
+    this.modelDownloaded = fs.existsSync(path.resolve(this.cacheDir, this.model));
     this.log("Initialized");
   }
 
@@ -58,9 +56,7 @@ class NativeEmbeddingReranker {
     try {
       this.log(`Preloading reranker suite...`);
       await this.initClient();
-      this.log(
-        `Preloaded reranker suite. Reranking is available as a service now.`
-      );
+      this.log(`Preloaded reranker suite. Reranking is available as a service now.`);
       return;
     } catch (e) {
       console.error(e);
@@ -89,8 +85,9 @@ class NativeEmbeddingReranker {
 
     NativeEmbeddingReranker.#initializationPromise = (async () => {
       try {
-        const { AutoModelForSequenceClassification, AutoTokenizer, env } =
-          await import("@xenova/transformers");
+        const { AutoModelForSequenceClassification, AutoTokenizer, env } = await import(
+          "@xenova/transformers"
+        );
         this.log(`Loading reranker suite...`);
         NativeEmbeddingReranker.#transformers = {
           AutoModelForSequenceClassification,
@@ -130,9 +127,7 @@ class NativeEmbeddingReranker {
           {
             progress_callback: (p) => {
               if (!this.modelDownloaded && p.status === "progress") {
-                this.log(
-                  `[${this.host}] Loading model ${this.model}... ${p?.progress}%`
-                );
+                this.log(`[${this.host}] Loading model ${this.model}... ${p?.progress}%`);
               }
             },
             cache_dir: this.cacheDir,
@@ -142,15 +137,8 @@ class NativeEmbeddingReranker {
       NativeEmbeddingReranker.#model = model;
       return model;
     } catch (e) {
-      this.log(
-        `Failed to load model ${this.model} from ${this.host}.`,
-        e.message,
-        e.stack
-      );
-      if (
-        NativeEmbeddingReranker.#transformers.env.remoteHost ===
-        this.#fallbackHost
-      ) {
+      this.log(`Failed to load model ${this.model} from ${this.host}.`, e.message, e.stack);
+      if (NativeEmbeddingReranker.#transformers.env.remoteHost === this.#fallbackHost) {
         this.log(`Failed to load model ${this.model} from fallback host.`);
         throw e;
       }
@@ -175,33 +163,23 @@ class NativeEmbeddingReranker {
     }
 
     try {
-      const tokenizer =
-        await NativeEmbeddingReranker.#transformers.AutoTokenizer.from_pretrained(
-          this.model,
-          {
-            progress_callback: (p) => {
-              if (!this.modelDownloaded && p.status === "progress") {
-                this.log(
-                  `[${this.host}] Loading tokenizer ${this.model}... ${p?.progress}%`
-                );
-              }
-            },
-            cache_dir: this.cacheDir,
-          }
-        );
+      const tokenizer = await NativeEmbeddingReranker.#transformers.AutoTokenizer.from_pretrained(
+        this.model,
+        {
+          progress_callback: (p) => {
+            if (!this.modelDownloaded && p.status === "progress") {
+              this.log(`[${this.host}] Loading tokenizer ${this.model}... ${p?.progress}%`);
+            }
+          },
+          cache_dir: this.cacheDir,
+        }
+      );
       this.log(`Loaded tokenizer ${this.model}`);
       NativeEmbeddingReranker.#tokenizer = tokenizer;
       return tokenizer;
     } catch (e) {
-      this.log(
-        `Failed to load tokenizer ${this.model} from ${this.host}.`,
-        e.message,
-        e.stack
-      );
-      if (
-        NativeEmbeddingReranker.#transformers.env.remoteHost ===
-        this.#fallbackHost
-      ) {
+      this.log(`Failed to load tokenizer ${this.model} from ${this.host}.`, e.message, e.stack);
+      if (NativeEmbeddingReranker.#transformers.env.remoteHost === this.#fallbackHost) {
         this.log(`Failed to load tokenizer ${this.model} from fallback host.`);
         throw e;
       }

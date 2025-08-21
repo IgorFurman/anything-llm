@@ -4,9 +4,7 @@ class LiteLLMEmbedder {
   constructor() {
     const { OpenAI: OpenAIApi } = require("openai");
     if (!process.env.LITE_LLM_BASE_PATH)
-      throw new Error(
-        "LiteLLM must have a valid base path to use for the api."
-      );
+      throw new Error("LiteLLM must have a valid base path to use for the api.");
     this.basePath = process.env.LITE_LLM_BASE_PATH;
     this.openai = new OpenAIApi({
       baseURL: this.basePath,
@@ -20,9 +18,7 @@ class LiteLLMEmbedder {
   }
 
   async embedTextInput(textInput) {
-    const result = await this.embedChunks(
-      Array.isArray(textInput) ? textInput : [textInput]
-    );
+    const result = await this.embedChunks(Array.isArray(textInput) ? textInput : [textInput]);
     return result?.[0] || [];
   }
 
@@ -43,10 +39,7 @@ class LiteLLMEmbedder {
               resolve({ data: result?.data, error: null });
             })
             .catch((e) => {
-              e.type =
-                e?.response?.data?.error?.code ||
-                e?.response?.status ||
-                "failed_to_embed";
+              e.type = e?.response?.data?.error?.code || e?.response?.status || "failed_to_embed";
               e.message = e?.response?.data?.error?.message || e.message;
               resolve({ data: [], error: e });
             });
@@ -54,20 +47,13 @@ class LiteLLMEmbedder {
       );
     }
 
-    const { data = [], error = null } = await Promise.all(
-      embeddingRequests
-    ).then((results) => {
+    const { data = [], error = null } = await Promise.all(embeddingRequests).then((results) => {
       // If any errors were returned from LiteLLM abort the entire sequence because the embeddings
       // will be incomplete.
-      const errors = results
-        .filter((res) => !!res.error)
-        .map((res) => res.error)
-        .flat();
+      const errors = results.filter((res) => !!res.error).flatMap((res) => res.error);
       if (errors.length > 0) {
-        let uniqueErrors = new Set();
-        errors.map((error) =>
-          uniqueErrors.add(`[${error.type}]: ${error.message}`)
-        );
+        const uniqueErrors = new Set();
+        errors.map((error) => uniqueErrors.add(`[${error.type}]: ${error.message}`));
 
         return {
           data: [],
@@ -75,14 +61,13 @@ class LiteLLMEmbedder {
         };
       }
       return {
-        data: results.map((res) => res?.data || []).flat(),
+        data: results.flatMap((res) => res?.data || []),
         error: null,
       };
     });
 
     if (!!error) throw new Error(`LiteLLM Failed to embed: ${error}`);
-    return data.length > 0 &&
-      data.every((embd) => embd.hasOwnProperty("embedding"))
+    return data.length > 0 && data.every((embd) => embd.hasOwnProperty("embedding"))
       ? data.map((embd) => embd.embedding)
       : null;
   }

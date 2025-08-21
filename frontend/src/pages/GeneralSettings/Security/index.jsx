@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
-import Sidebar from "@/components/SettingsSidebar";
-import { isMobile } from "react-device-detect";
-import showToast from "@/utils/toast";
-import System from "@/models/system";
-import paths from "@/utils/paths";
-import { AUTH_TIMESTAMP, AUTH_TOKEN, AUTH_USER } from "@/utils/constants";
 import PreLoader from "@/components/Preloader";
+import Sidebar from "@/components/SettingsSidebar";
 import CTAButton from "@/components/lib/CTAButton";
+import System from "@/models/system";
+import { AUTH_TIMESTAMP, AUTH_TOKEN, AUTH_USER } from "@/utils/constants";
+import paths from "@/utils/paths";
+import showToast from "@/utils/toast";
+import { useEffect, useState } from "react";
+import { isMobile } from "react-device-detect";
 import { useTranslation } from "react-i18next";
 
 export default function GeneralSecurity() {
@@ -91,9 +91,7 @@ function MultiUserMode() {
       <div className="w-full flex flex-col gap-y-1 pb-6 border-white light:border-theme-sidebar-border border-b-2 border-opacity-10">
         <div className="w-full flex flex-col gap-y-1 border-white light:border-theme-sidebar-border border-b-2 border-opacity-10 pb-8">
           <div className="items-center flex gap-x-4">
-            <p className="text-lg leading-6 font-bold text-white">
-              {t("multi.title")}
-            </p>
+            <p className="text-lg leading-6 font-bold text-white">{t("multi.title")}</p>
           </div>
           <p className="text-xs leading-[18px] font-base text-white text-opacity-60">
             {t("multi.description")}
@@ -101,10 +99,7 @@ function MultiUserMode() {
         </div>
         {hasChanges && (
           <div className="flex justify-end">
-            <CTAButton
-              onClick={() => handleSubmit()}
-              className="mt-3 mr-0 -mb-20 z-10"
-            >
+            <CTAButton onClick={() => handleSubmit()} className="mt-3 mr-0 -mb-20 z-10">
               {saving ? t("common.saving") : t("common.save")}
             </CTAButton>
           </div>
@@ -116,9 +111,7 @@ function MultiUserMode() {
               <div className="w-full flex flex-col gap-y-4">
                 <div className="">
                   <label className="mb-2.5 block font-medium text-white">
-                    {multiUserModeEnabled
-                      ? t("multi.enable.is-enable")
-                      : t("multi.enable.enable")}
+                    {multiUserModeEnabled ? t("multi.enable.is-enable") : t("multi.enable.enable")}
                   </label>
 
                   <label className="relative inline-flex cursor-pointer items-center">
@@ -137,10 +130,7 @@ function MultiUserMode() {
                 {useMultiUserMode && (
                   <div className="w-full flex flex-col gap-y-2 my-5">
                     <div className="w-80">
-                      <label
-                        htmlFor="username"
-                        className="block mb-3 font-medium text-white"
-                      >
+                      <label htmlFor="username" className="block mb-3 font-medium text-white">
                         {t("multi.enable.username")}
                       </label>
                       <input
@@ -156,10 +146,7 @@ function MultiUserMode() {
                       />
                     </div>
                     <div className="mt-4 w-80">
-                      <label
-                        htmlFor="password"
-                        className="block mb-3 font-medium text-white"
-                      >
+                      <label htmlFor="password" className="block mb-3 font-medium text-white">
                         {t("multi.enable.password")}
                       </label>
                       <input
@@ -268,9 +255,7 @@ function PasswordProtection() {
       <div className="w-full flex flex-col gap-y-1 pb-6 border-white light:border-theme-sidebar-border border-b-2 border-opacity-10">
         <div className="w-full flex flex-col gap-y-1">
           <div className="items-center flex gap-x-4">
-            <p className="text-lg leading-6 font-bold text-white">
-              {t("multi.password.title")}
-            </p>
+            <p className="text-lg leading-6 font-bold text-white">{t("multi.password.title")}</p>
           </div>
           <p className="text-xs leading-[18px] font-base text-white text-opacity-60">
             {t("multi.password.description")}
@@ -278,10 +263,7 @@ function PasswordProtection() {
         </div>
         {hasChanges && (
           <div className="flex justify-end">
-            <CTAButton
-              onClick={() => handleSubmit()}
-              className="mt-3 mr-0 -mb-20 z-10"
-            >
+            <CTAButton onClick={() => handleSubmit()} className="mt-3 mr-0 -mb-20 z-10">
               {saving ? t("common.saving") : t("common.save")}
             </CTAButton>
           </div>
@@ -309,10 +291,7 @@ function PasswordProtection() {
                 {usePassword && (
                   <div className="w-full flex flex-col gap-y-2 my-5">
                     <div className="mt-4 w-80">
-                      <label
-                        htmlFor="password"
-                        className="block mb-3 font-medium text-white"
-                      >
+                      <label htmlFor="password" className="block mb-3 font-medium text-white">
                         {t("multi.password.password-label")}
                       </label>
                       <input

@@ -155,13 +155,11 @@ const TRANSLATIONS = {
       description: "Vektör veritabanınızdaki toplam vektör sayısı.",
     },
     names: {
-      description:
-        "Bu, yalnızca çalışma alanınızın görüntü adını değiştirecektir.",
+      description: "Bu, yalnızca çalışma alanınızın görüntü adını değiştirecektir.",
     },
     message: {
       title: "Önerilen Sohbet Mesajları",
-      description:
-        "Çalışma alanı kullanıcılarınıza önerilecek sohbet mesajlarını özelleştirin.",
+      description: "Çalışma alanı kullanıcılarınıza önerilecek sohbet mesajlarını özelleştirin.",
       add: "Yeni mesaj ekle",
       save: "Mesajları Kaydet",
       heading: "Bana açıkla",
@@ -169,8 +167,7 @@ const TRANSLATIONS = {
     },
     pfp: {
       title: "Asistan Profil Görseli",
-      description:
-        "Bu çalışma alanı için asistanın profil resmini özelleştirin.",
+      description: "Bu çalışma alanı için asistanın profil resmini özelleştirin.",
       image: "Çalışma Alanı Görseli",
       remove: "Çalışma Alanı Görselini Kaldır",
     },
@@ -215,11 +212,9 @@ const TRANSLATIONS = {
     },
     history: {
       title: "Sohbet Geçmişi",
-      "desc-start":
-        "Yanıta dahil edilecek önceki sohbetlerin sayısı (kısa süreli hafıza).",
+      "desc-start": "Yanıta dahil edilecek önceki sohbetlerin sayısı (kısa süreli hafıza).",
       recommend: "20 önerilir. ",
-      "desc-end":
-        "45'ten fazlası, mesaj boyutuna göre sürekli sohbet hatalarına yol açabilir.",
+      "desc-end": "45'ten fazlası, mesaj boyutuna göre sürekli sohbet hatalarına yol açabilir.",
     },
     prompt: {
       title: "Komut (Prompt)",
@@ -241,15 +236,13 @@ const TRANSLATIONS = {
       title: "Sorgu Modu Ret Yanıtı",
       "desc-start": "Eğer",
       query: "sorgu",
-      "desc-end":
-        "modunda bağlam bulunamazsa, özel bir ret yanıtı döndürmek isteyebilirsiniz.",
+      "desc-end": "modunda bağlam bulunamazsa, özel bir ret yanıtı döndürmek isteyebilirsiniz.",
       "tooltip-title": null,
       "tooltip-description": null,
     },
     temperature: {
       title: "LLM Sıcaklığı",
-      "desc-start":
-        'Bu ayar, LLM yanıtlarının ne kadar "yaratıcı" olacağını kontrol eder.',
+      "desc-start": 'Bu ayar, LLM yanıtlarının ne kadar "yaratıcı" olacağını kontrol eder.',
       "desc-end":
         "Sayı yükseldikçe yaratıcı yanıtlar artar. Bazı modeller için bu değer çok yüksek ayarlandığında anlamsız yanıtlar ortaya çıkabilir.",
       hint: "Çoğu LLM'in farklı kabul edilebilir değer aralıkları vardır. Ayrıntılar için LLM sağlayıcınıza danışın.",
@@ -292,12 +285,10 @@ const TRANSLATIONS = {
     mode: {
       chat: {
         title: "Çalışma Alanı Ajan Sohbet Modeli",
-        description:
-          "Bu çalışma alanındaki @agent ajanı için kullanılacak spesifik sohbet modeli.",
+        description: "Bu çalışma alanındaki @agent ajanı için kullanılacak spesifik sohbet modeli.",
       },
       title: "Çalışma Alanı Ajan Modeli",
-      description:
-        "Bu çalışma alanındaki @agent ajanı için kullanılacak spesifik LLM modeli.",
+      description: "Bu çalışma alanındaki @agent ajanı için kullanılacak spesifik LLM modeli.",
       wait: "-- modeller bekleniyor --",
     },
     skill: {
@@ -316,8 +307,7 @@ const TRANSLATIONS = {
       },
       scrape: {
         title: "Web sitelerini tarama",
-        description:
-          "Ajana, web sitelerini ziyaret edip içeriklerini tarama izni verin.",
+        description: "Ajana, web sitelerini ziyaret edip içeriklerini tarama izni verin.",
       },
       generate: {
         title: "Grafik oluşturma",
@@ -388,10 +378,8 @@ const TRANSLATIONS = {
     provider: "Transkripsiyon Sağlayıcısı",
     "warn-start":
       "Sınırlı RAM veya CPU'ya sahip makinelerde yerel Whisper modelini kullanmak, medya dosyalarını işlerken AnythingLLM'nin duraksamasına neden olabilir.",
-    "warn-recommend":
-      "En az 2GB RAM öneriyoruz ve 10MB üzerinde dosya yüklememeye dikkat edin.",
-    "warn-end":
-      "Yerleşik model, ilk kullanımda otomatik olarak indirilecektir.",
+    "warn-recommend": "En az 2GB RAM öneriyoruz ve 10MB üzerinde dosya yüklememeye dikkat edin.",
+    "warn-end": "Yerleşik model, ilk kullanımda otomatik olarak indirilecektir.",
   },
   embedding: {
     title: "Gömme (Embedding) Tercihi",
@@ -411,8 +399,7 @@ const TRANSLATIONS = {
       "Metin bölmenin nasıl çalıştığını ve olası yan etkilerini tam olarak bilmiyorsanız bu ayarı değiştirmemelisiniz.",
     size: {
       title: "Metin Parça Boyutu",
-      description:
-        "Tek bir vektörde bulunabilecek maksimum karakter uzunluğunu ifade eder.",
+      description: "Tek bir vektörde bulunabilecek maksimum karakter uzunluğunu ifade eder.",
       recommend: "Gömme modelinin maksimum karakter uzunluğu",
     },
     overlap: {
@@ -476,8 +463,7 @@ const TRANSLATIONS = {
   },
   event: {
     title: "Olay Kayıtları",
-    description:
-      "Bu örnek üzerinde gerçekleşen tüm eylem ve olayları izlemek için görüntüleyin.",
+    description: "Bu örnek üzerinde gerçekleşen tüm eylem ve olayları izlemek için görüntüleyin.",
     clear: "Olay Kayıtlarını Temizle",
     table: {
       type: "Olay Türü",

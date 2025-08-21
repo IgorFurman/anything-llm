@@ -22,8 +22,7 @@ async function executeApiCall(config, context) {
       const formDataObj = new URLSearchParams();
       formData.forEach(({ key, value }) => formDataObj.append(key, value));
       requestConfig.body = formDataObj.toString();
-      requestConfig.headers["Content-Type"] =
-        "application/x-www-form-urlencoded";
+      requestConfig.headers["Content-Type"] = "application/x-www-form-urlencoded";
     } else if (bodyType === "json") {
       const parsedBody = safeJsonParse(body, null);
       if (parsedBody !== null) {
@@ -48,9 +47,7 @@ async function executeApiCall(config, context) {
     introspect(`API call completed`);
     return await response
       .text()
-      .then((text) =>
-        safeJsonParse(text, "Failed to parse output from API call block")
-      );
+      .then((text) => safeJsonParse(text, "Failed to parse output from API call block"));
   } catch (error) {
     console.error(error);
     throw new Error(`API Call failed: ${error.message}`);

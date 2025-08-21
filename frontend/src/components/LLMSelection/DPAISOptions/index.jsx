@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { CaretDown, CaretUp } from "@phosphor-icons/react";
-import System from "@/models/system";
 import PreLoader from "@/components/Preloader";
-import { DPAIS_COMMON_URLS } from "@/utils/constants";
 import useProviderEndpointAutoDiscovery from "@/hooks/useProviderEndpointAutoDiscovery";
+import System from "@/models/system";
+import { DPAIS_COMMON_URLS } from "@/utils/constants";
+import { CaretDown, CaretUp } from "@phosphor-icons/react";
+import React, { useEffect, useState } from "react";
 
-export default function DellProAIStudioOptions({
-  settings,
-  showAlert = false,
-}) {
+export default function DellProAIStudioOptions({ settings, showAlert = false }) {
   const {
     autoDetecting: loading,
     basePath,
@@ -27,10 +24,7 @@ export default function DellProAIStudioOptions({
       <div className="w-full flex items-center gap-[36px] mt-1.5">
         {!settings?.credentialsOnly && (
           <>
-            <DellProAiStudioModelSelection
-              settings={settings}
-              basePath={basePath.value}
-            />
+            <DellProAiStudioModelSelection settings={settings} basePath={basePath.value} />
             <div className="flex flex-col w-60">
               <label className="text-white text-sm font-semibold block mb-2">
                 Token context window
@@ -119,12 +113,7 @@ function DellProAiStudioModelSelection({ settings, basePath = null }) {
         return;
       }
       setLoading(true);
-      const { models } = await System.customModels(
-        "dpais",
-        null,
-        basePath,
-        2_000
-      );
+      const { models } = await System.customModels("dpais", null, basePath, 2_000);
       setCustomModels(models || []);
       setLoading(false);
     }
@@ -134,9 +123,7 @@ function DellProAiStudioModelSelection({ settings, basePath = null }) {
   if (loading || customModels.length == 0) {
     return (
       <div className="flex flex-col w-60">
-        <label className="text-white text-sm font-semibold block mb-2">
-          Chat Model Selection
-        </label>
+        <label className="text-white text-sm font-semibold block mb-2">Chat Model Selection</label>
         <select
           name="DellProAiStudioModelPref"
           disabled={true}
@@ -152,9 +139,7 @@ function DellProAiStudioModelSelection({ settings, basePath = null }) {
 
   return (
     <div className="flex flex-col w-60">
-      <label className="text-white text-sm font-semibold block mb-2">
-        Chat Model Selection
-      </label>
+      <label className="text-white text-sm font-semibold block mb-2">Chat Model Selection</label>
       <select
         name="DellProAiStudioModelPref"
         required={true}

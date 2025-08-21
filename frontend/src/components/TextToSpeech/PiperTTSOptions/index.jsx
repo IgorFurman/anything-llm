@@ -1,16 +1,16 @@
-import { useState, useEffect, useRef } from "react";
-import PiperTTSClient from "@/utils/piperTTS";
-import { titleCase } from "text-case";
 import { humanFileSize } from "@/utils/numbers";
+import PiperTTSClient from "@/utils/piperTTS";
 import showToast from "@/utils/toast";
 import { CircleNotch, PauseCircle, PlayCircle } from "@phosphor-icons/react";
+import { useEffect, useRef, useState } from "react";
+import { titleCase } from "text-case";
 
 export default function PiperTTSOptions({ settings }) {
   return (
     <>
       <p className="text-sm font-base text-white text-opacity-60 mb-4">
-        All PiperTTS models will run in your browser locally. This can be
-        resource intensive on lower-end devices.
+        All PiperTTS models will run in your browser locally. This can be resource intensive on
+        lower-end devices.
       </p>
       <div className="flex gap-x-4 items-center">
         <PiperTTSModelSelection settings={settings} />
@@ -39,9 +39,7 @@ function voiceDisplayName(voice) {
 function PiperTTSModelSelection({ settings }) {
   const [loading, setLoading] = useState(true);
   const [voices, setVoices] = useState([]);
-  const [selectedVoice, setSelectedVoice] = useState(
-    settings?.TTSPiperTTSVoiceModel
-  );
+  const [selectedVoice, setSelectedVoice] = useState(settings?.TTSPiperTTSVoiceModel);
 
   function flushVoices() {
     PiperTTSClient.flush()
@@ -68,9 +66,7 @@ function PiperTTSModelSelection({ settings }) {
   if (loading) {
     return (
       <div className="flex flex-col w-60">
-        <label className="text-white text-sm font-semibold block mb-3">
-          Voice Model Selection
-        </label>
+        <label className="text-white text-sm font-semibold block mb-3">Voice Model Selection</label>
         <select
           name="TTSPiperTTSVoiceModel"
           value=""
@@ -88,9 +84,7 @@ function PiperTTSModelSelection({ settings }) {
   return (
     <div className="flex flex-col w-fit">
       <div className="flex flex-col w-60">
-        <label className="text-white text-sm font-semibold block mb-3">
-          Voice Model Selection
-        </label>
+        <label className="text-white text-sm font-semibold block mb-3">Voice Model Selection</label>
         <div className="flex items-center w-fit gap-x-4 mb-2">
           <select
             name="TTSPiperTTSVoiceModel"
@@ -114,8 +108,8 @@ function PiperTTSModelSelection({ settings }) {
           <DemoVoiceSample voiceId={selectedVoice} />
         </div>
         <p className="text-xs text-white/40">
-          The "✔" indicates this model is already stored locally and does not
-          need to be downloaded when run.
+          The "✔" indicates this model is already stored locally and does not need to be downloaded
+          when run.
         </p>
       </div>
       {!!voices.find((voice) => voice.is_stored) && (
@@ -148,9 +142,7 @@ function DemoVoiceSample({ voiceId }) {
       if (!audioSrc) {
         setLoading(true);
         const client = new PiperTTSClient({ voiceId });
-        const blobUrl = await client.getAudioBlobForText(
-          "Hello, welcome to AnythingLLM!"
-        );
+        const blobUrl = await client.getAudioBlobForText("Hello, welcome to AnythingLLM!");
         setAudioSrc(blobUrl);
         setLoading(false);
         client.worker?.terminate();
@@ -208,13 +200,7 @@ function DemoVoiceSample({ voiceId }) {
           )}
         </>
       )}
-      <audio
-        ref={playerRef}
-        hidden={true}
-        src={audioSrc}
-        autoPlay={true}
-        controls={false}
-      />
+      <audio ref={playerRef} hidden={true} src={audioSrc} autoPlay={true} controls={false} />
     </button>
   );
 }

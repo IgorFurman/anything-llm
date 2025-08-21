@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import System from "@/models/system";
 import PreLoader from "@/components/Preloader";
+import useProviderEndpointAutoDiscovery from "@/hooks/useProviderEndpointAutoDiscovery";
+import System from "@/models/system";
 import { KOBOLDCPP_COMMON_URLS } from "@/utils/constants";
 import { CaretDown, CaretUp } from "@phosphor-icons/react";
-import useProviderEndpointAutoDiscovery from "@/hooks/useProviderEndpointAutoDiscovery";
+import { useEffect, useState } from "react";
 
 export default function KoboldCPPOptions({ settings }) {
   const {
@@ -19,12 +19,8 @@ export default function KoboldCPPOptions({ settings }) {
     ENDPOINTS: KOBOLDCPP_COMMON_URLS,
   });
 
-  const [tokenLimit, setTokenLimit] = useState(
-    settings?.KoboldCPPTokenLimit || 4096
-  );
-  const [maxTokens, setMaxTokens] = useState(
-    settings?.KoboldCPPMaxTokens || 2048
-  );
+  const [tokenLimit, setTokenLimit] = useState(settings?.KoboldCPPTokenLimit || 4096);
+  const [maxTokens, setMaxTokens] = useState(settings?.KoboldCPPMaxTokens || 2048);
 
   const handleTokenLimitChange = (e) => {
     setTokenLimit(Number(e.target.value));
@@ -37,10 +33,7 @@ export default function KoboldCPPOptions({ settings }) {
   return (
     <div className="w-full flex flex-col gap-y-7">
       <div className="w-full flex items-start gap-[36px] mt-1.5">
-        <KoboldCPPModelSelection
-          settings={settings}
-          basePath={basePath.value}
-        />
+        <KoboldCPPModelSelection settings={settings} basePath={basePath.value} />
         <div className="flex flex-col w-60">
           <label className="text-white text-sm font-semibold block mb-2">
             Token context window
@@ -62,9 +55,7 @@ export default function KoboldCPPOptions({ settings }) {
           </p>
         </div>
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-2">
-            Max response tokens
-          </label>
+          <label className="text-white text-sm font-semibold block mb-2">Max response tokens</label>
           <input
             type="number"
             name="KoboldCPPMaxTokens"
@@ -103,9 +94,7 @@ export default function KoboldCPPOptions({ settings }) {
         <div className="w-full flex items-start gap-4">
           <div className="flex flex-col w-60">
             <div className="flex justify-between items-center mb-2">
-              <label className="text-white text-sm font-semibold">
-                KoboldCPP Base URL
-              </label>
+              <label className="text-white text-sm font-semibold">KoboldCPP Base URL</label>
               {loading ? (
                 <PreLoader size="6" />
               ) : (
@@ -156,11 +145,7 @@ function KoboldCPPModelSelection({ settings, basePath = null }) {
       }
       setLoading(true);
       try {
-        const { models } = await System.customModels(
-          "koboldcpp",
-          null,
-          basePath
-        );
+        const { models } = await System.customModels("koboldcpp", null, basePath);
         setCustomModels(models || []);
       } catch (error) {
         console.error("Failed to fetch custom models:", error);
@@ -174,9 +159,7 @@ function KoboldCPPModelSelection({ settings, basePath = null }) {
   if (loading || customModels.length === 0) {
     return (
       <div className="flex flex-col w-60">
-        <label className="text-white text-sm font-semibold block mb-2">
-          KoboldCPP Model
-        </label>
+        <label className="text-white text-sm font-semibold block mb-2">KoboldCPP Model</label>
         <select
           name="KoboldCPPModelPref"
           disabled={true}
@@ -189,8 +172,8 @@ function KoboldCPPModelSelection({ settings, basePath = null }) {
           </option>
         </select>
         <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
-          Select the KoboldCPP model you want to use. Models will load after
-          entering a valid KoboldCPP URL.
+          Select the KoboldCPP model you want to use. Models will load after entering a valid
+          KoboldCPP URL.
         </p>
       </div>
     );
@@ -198,9 +181,7 @@ function KoboldCPPModelSelection({ settings, basePath = null }) {
 
   return (
     <div className="flex flex-col w-60">
-      <label className="text-white text-sm font-semibold block mb-2">
-        KoboldCPP Model
-      </label>
+      <label className="text-white text-sm font-semibold block mb-2">KoboldCPP Model</label>
       <select
         name="KoboldCPPModelPref"
         required={true}

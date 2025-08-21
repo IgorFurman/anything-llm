@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
-import { Info, CaretDown, CaretUp } from "@phosphor-icons/react";
-import paths from "@/utils/paths";
-import System from "@/models/system";
 import PreLoader from "@/components/Preloader";
-import { LMSTUDIO_COMMON_URLS } from "@/utils/constants";
 import useProviderEndpointAutoDiscovery from "@/hooks/useProviderEndpointAutoDiscovery";
+import System from "@/models/system";
+import { LMSTUDIO_COMMON_URLS } from "@/utils/constants";
+import paths from "@/utils/paths";
+import { CaretDown, CaretUp, Info } from "@phosphor-icons/react";
+import { useEffect, useState } from "react";
 
 export default function LMStudioOptions({ settings, showAlert = false }) {
   const {
@@ -20,9 +20,7 @@ export default function LMStudioOptions({ settings, showAlert = false }) {
     ENDPOINTS: LMSTUDIO_COMMON_URLS,
   });
 
-  const [maxTokens, setMaxTokens] = useState(
-    settings?.LMStudioTokenLimit || 4096
-  );
+  const [maxTokens, setMaxTokens] = useState(settings?.LMStudioTokenLimit || 4096);
 
   const handleMaxTokensChange = (e) => {
     setMaxTokens(Number(e.target.value));
@@ -35,8 +33,7 @@ export default function LMStudioOptions({ settings, showAlert = false }) {
           <div className="gap-x-2 flex items-center">
             <Info size={12} className="hidden md:visible" />
             <p className="text-sm md:text-base">
-              LMStudio as your LLM requires you to set an embedding service to
-              use.
+              LMStudio as your LLM requires you to set an embedding service to use.
             </p>
           </div>
           <a
@@ -50,9 +47,7 @@ export default function LMStudioOptions({ settings, showAlert = false }) {
       <div className="w-full flex items-start gap-[36px] mt-1.5">
         <LMStudioModelSelection settings={settings} basePath={basePath.value} />
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-2">
-            Max Tokens
-          </label>
+          <label className="text-white text-sm font-semibold block mb-2">Max Tokens</label>
           <input
             type="number"
             name="LMStudioTokenLimit"
@@ -92,9 +87,7 @@ export default function LMStudioOptions({ settings, showAlert = false }) {
         <div className="w-full flex items-start gap-4">
           <div className="flex flex-col w-60">
             <div className="flex justify-between items-center mb-2">
-              <label className="text-white text-sm font-semibold">
-                LM Studio Base URL
-              </label>
+              <label className="text-white text-sm font-semibold">LM Studio Base URL</label>
               {loading ? (
                 <PreLoader size="6" />
               ) : (
@@ -145,11 +138,7 @@ function LMStudioModelSelection({ settings, basePath = null }) {
       }
       setLoading(true);
       try {
-        const { models } = await System.customModels(
-          "lmstudio",
-          null,
-          basePath
-        );
+        const { models } = await System.customModels("lmstudio", null, basePath);
         setCustomModels(models || []);
       } catch (error) {
         console.error("Failed to fetch custom models:", error);
@@ -163,23 +152,19 @@ function LMStudioModelSelection({ settings, basePath = null }) {
   if (loading || customModels.length == 0) {
     return (
       <div className="flex flex-col w-60">
-        <label className="text-white text-sm font-semibold block mb-2">
-          LM Studio Model
-        </label>
+        <label className="text-white text-sm font-semibold block mb-2">LM Studio Model</label>
         <select
           name="LMStudioModelPref"
           disabled={true}
           className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
         >
           <option disabled={true} selected={true}>
-            {!!basePath
-              ? "--loading available models--"
-              : "Enter LM Studio URL first"}
+            {!!basePath ? "--loading available models--" : "Enter LM Studio URL first"}
           </option>
         </select>
         <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
-          Select the LM Studio model you want to use. Models will load after
-          entering a valid LM Studio URL.
+          Select the LM Studio model you want to use. Models will load after entering a valid LM
+          Studio URL.
         </p>
       </div>
     );
@@ -187,9 +172,7 @@ function LMStudioModelSelection({ settings, basePath = null }) {
 
   return (
     <div className="flex flex-col w-60">
-      <label className="text-white text-sm font-semibold block mb-2">
-        LM Studio Model
-      </label>
+      <label className="text-white text-sm font-semibold block mb-2">LM Studio Model</label>
       <select
         name="LMStudioModelPref"
         required={true}

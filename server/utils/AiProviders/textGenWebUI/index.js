@@ -3,17 +3,13 @@ const {
   handleDefaultStreamResponseV2,
   formatChatHistory,
 } = require("../../helpers/chat/responses");
-const {
-  LLMPerformanceMonitor,
-} = require("../../helpers/chat/LLMPerformanceMonitor");
+const { LLMPerformanceMonitor } = require("../../helpers/chat/LLMPerformanceMonitor");
 
 class TextGenWebUILLM {
   constructor(embedder = null) {
     const { OpenAI: OpenAIApi } = require("openai");
     if (!process.env.TEXT_GEN_WEB_UI_BASE_PATH)
-      throw new Error(
-        "TextGenWebUI must have a valid base path to use for the api."
-      );
+      throw new Error("TextGenWebUI must have a valid base path to use for the api.");
 
     this.basePath = process.env.TEXT_GEN_WEB_UI_BASE_PATH;
     this.openai = new OpenAIApi({
@@ -54,8 +50,7 @@ class TextGenWebUILLM {
 
   static promptWindowLimit(_modelName) {
     const limit = process.env.TEXT_GEN_WEB_UI_MODEL_TOKEN_LIMIT || 4096;
-    if (!limit || isNaN(Number(limit)))
-      throw new Error("No token context limit was set.");
+    if (!limit || isNaN(Number(limit))) throw new Error("No token context limit was set.");
     return Number(limit);
   }
 
@@ -63,8 +58,7 @@ class TextGenWebUILLM {
   // and if undefined - assume 4096 window.
   promptWindowLimit() {
     const limit = process.env.TEXT_GEN_WEB_UI_MODEL_TOKEN_LIMIT || 4096;
-    if (!limit || isNaN(Number(limit)))
-      throw new Error("No token context limit was set.");
+    if (!limit || isNaN(Number(limit))) throw new Error("No token context limit was set.");
     return Number(limit);
   }
 
@@ -85,7 +79,7 @@ class TextGenWebUILLM {
     }
 
     const content = [{ type: "text", text: userPrompt }];
-    for (let attachment of attachments) {
+    for (const attachment of attachments) {
       content.push({
         type: "image_url",
         image_url: {
@@ -135,11 +129,7 @@ class TextGenWebUILLM {
         })
     );
 
-    if (
-      !result.output.hasOwnProperty("choices") ||
-      result.output.choices.length === 0
-    )
-      return null;
+    if (!result.output.hasOwnProperty("choices") || result.output.choices.length === 0) return null;
 
     return {
       textResponse: result.output.choices[0].message.content,

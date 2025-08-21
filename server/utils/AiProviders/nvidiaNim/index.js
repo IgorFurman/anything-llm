@@ -1,7 +1,5 @@
 const { NativeEmbedder } = require("../../EmbeddingEngines/native");
-const {
-  LLMPerformanceMonitor,
-} = require("../../helpers/chat/LLMPerformanceMonitor");
+const { LLMPerformanceMonitor } = require("../../helpers/chat/LLMPerformanceMonitor");
 const {
   handleDefaultStreamResponseV2,
   formatChatHistory,
@@ -27,9 +25,7 @@ class NvidiaNimLLM {
 
     this.embedder = embedder ?? new NativeEmbedder();
     this.defaultTemp = 0.7;
-    this.#log(
-      `Loaded with model: ${this.model} with context window: ${this.promptWindowLimit()}`
-    );
+    this.#log(`Loaded with model: ${this.model} with context window: ${this.promptWindowLimit()}`);
   }
 
   #log(text, ...args) {
@@ -58,9 +54,7 @@ class NvidiaNimLLM {
     if (!modelId) return;
     const { OpenAI: OpenAIApi } = require("openai");
     const openai = new OpenAIApi({
-      baseURL: parseNvidiaNimBasePath(
-        basePath || process.env.NVIDIA_NIM_LLM_BASE_PATH
-      ),
+      baseURL: parseNvidiaNimBasePath(basePath || process.env.NVIDIA_NIM_LLM_BASE_PATH),
       apiKey: null,
     });
     const model = await openai.models
@@ -73,9 +67,7 @@ class NvidiaNimLLM {
     if (!model.length) return;
     const modelInfo = model.find((model) => model.id === modelId);
     if (!modelInfo) return;
-    process.env.NVIDIA_NIM_LLM_MODEL_TOKEN_LIMIT = Number(
-      modelInfo.max_model_len || 4096
-    );
+    process.env.NVIDIA_NIM_LLM_MODEL_TOKEN_LIMIT = Number(modelInfo.max_model_len || 4096);
   }
 
   streamingEnabled() {
@@ -113,7 +105,7 @@ class NvidiaNimLLM {
     }
 
     const content = [{ type: "text", text: userPrompt }];
-    for (let attachment of attachments) {
+    for (const attachment of attachments) {
       content.push({
         type: "image_url",
         image_url: {
@@ -169,11 +161,7 @@ class NvidiaNimLLM {
         })
     );
 
-    if (
-      !result.output.hasOwnProperty("choices") ||
-      result.output.choices.length === 0
-    )
-      return null;
+    if (!result.output.hasOwnProperty("choices") || result.output.choices.length === 0) return null;
 
     return {
       textResponse: result.output.choices[0].message.content,

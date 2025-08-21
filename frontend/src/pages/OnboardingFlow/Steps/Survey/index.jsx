@@ -1,12 +1,9 @@
-import {
-  COMPLETE_QUESTIONNAIRE,
-  ONBOARDING_SURVEY_URL,
-} from "@/utils/constants";
+import { COMPLETE_QUESTIONNAIRE, ONBOARDING_SURVEY_URL } from "@/utils/constants";
 import paths from "@/utils/paths";
 import { CheckCircle } from "@phosphor-icons/react";
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 async function sendQuestionnaire({ email, useCase, comment }) {
   if (import.meta.env.DEV) {
@@ -65,11 +62,7 @@ export default function Survey({ setHeader, setForwardBtn, setBackBtn }) {
     // Check if any inputs are not empty. If that is the case, trigger form validation.
     // via the requestSubmit() handler
     const formData = new FormData(formRef.current);
-    if (
-      !!formData.get("email") ||
-      !!formData.get("use_case") ||
-      !!formData.get("comment")
-    ) {
+    if (!!formData.get("email") || !!formData.get("use_case") || !!formData.get("comment")) {
       formRef.current.requestSubmit();
       return;
     }
@@ -111,13 +104,8 @@ export default function Survey({ setHeader, setForwardBtn, setBackBtn }) {
         <div className="w-full flex items-center justify-center px-1 md:px-8 py-4">
           <div className="w-auto flex flex-col gap-y-1 items-center">
             <CheckCircle size={60} className="text-green-500" />
-            <p className="text-white text-lg">
-              {t("onboarding.survey.thankYou")}
-            </p>
-            <a
-              href={paths.mailToMintplex()}
-              className="text-sky-400 underline text-xs"
-            >
+            <p className="text-white text-lg">{t("onboarding.survey.thankYou")}</p>
+            <a href={paths.mailToMintplex()} className="text-sky-400 underline text-xs">
               team@mintplexlabs.com
             </a>
           </div>
@@ -130,10 +118,7 @@ export default function Survey({ setHeader, setForwardBtn, setBackBtn }) {
     <div className="w-full flex justify-center bo">
       <form onSubmit={handleSubmit} ref={formRef} className="">
         <div className="md:min-w-[400px]">
-          <label
-            htmlFor="email"
-            className="text-theme-text-primary text-base font-medium"
-          >
+          <label htmlFor="email" className="text-theme-text-primary text-base font-medium">
             {t("onboarding.survey.email")}{" "}
           </label>
           <input
@@ -146,10 +131,7 @@ export default function Survey({ setHeader, setForwardBtn, setBackBtn }) {
         </div>
 
         <div className="mt-8">
-          <label
-            className="text-theme-text-primary text-base font-medium"
-            htmlFor="use_case"
-          >
+          <label className="text-theme-text-primary text-base font-medium" htmlFor="use_case">
             {t("onboarding.survey.useCase")}{" "}
           </label>
           <div className="mt-2 gap-y-3 flex flex-col">
@@ -170,9 +152,7 @@ export default function Survey({ setHeader, setForwardBtn, setBackBtn }) {
               />
               <div
                 className={`w-4 h-4 rounded-full border-2 border-theme-sidebar-border mr-2 ${
-                  selectedOption === "job"
-                    ? "bg-[var(--theme-sidebar-item-workspace-active)]"
-                    : ""
+                  selectedOption === "job" ? "bg-[var(--theme-sidebar-item-workspace-active)]" : ""
                 }`}
               ></div>
               <div className="text-theme-text-primary text-sm font-medium font-['Plus Jakarta Sans'] leading-tight">
@@ -237,9 +217,7 @@ export default function Survey({ setHeader, setForwardBtn, setBackBtn }) {
         <div className="mt-8">
           <label htmlFor="comment" className="text-white text-base font-medium">
             {t("onboarding.survey.comment")}{" "}
-            <span className="text-neutral-400 text-base font-light">
-              ({t("common.optional")})
-            </span>
+            <span className="text-neutral-400 text-base font-light">({t("common.optional")})</span>
           </label>
           <textarea
             name="comment"
@@ -250,12 +228,7 @@ export default function Survey({ setHeader, setForwardBtn, setBackBtn }) {
             autoComplete="off"
           />
         </div>
-        <button
-          type="submit"
-          ref={submitRef}
-          hidden
-          aria-hidden="true"
-        ></button>
+        <button type="submit" ref={submitRef} hidden aria-hidden="true"></button>
 
         <div className="w-full flex items-center justify-center">
           <button

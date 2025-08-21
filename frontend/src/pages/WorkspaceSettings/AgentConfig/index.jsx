@@ -1,14 +1,14 @@
+import Admin from "@/models/admin";
 import System from "@/models/system";
 import Workspace from "@/models/workspace";
 import showToast from "@/utils/toast";
 import { castToType } from "@/utils/types";
 import { useEffect, useRef, useState } from "react";
-import AgentLLMSelection from "./AgentLLMSelection";
-import Admin from "@/models/admin";
 import * as Skeleton from "react-loading-skeleton";
+import AgentLLMSelection from "./AgentLLMSelection";
 import "react-loading-skeleton/dist/skeleton.css";
-import paths from "@/utils/paths";
 import useUser from "@/hooks/useUser";
+import paths from "@/utils/paths";
 
 export default function WorkspaceAgentConfiguration({ workspace }) {
   const { user } = useUser();
@@ -97,9 +97,8 @@ export default function WorkspaceAgentConfiguration({ workspace }) {
                   Configure Agent Skills
                 </a>
                 <p className="text-white text-opacity-60 text-xs font-medium">
-                  Customize and enhance the default agent's capabilities by
-                  enabling or disabling specific skills. These settings will be
-                  applied across all workspaces.
+                  Customize and enhance the default agent's capabilities by enabling or disabling
+                  specific skills. These settings will be applied across all workspaces.
                 </p>
               </div>
             )}

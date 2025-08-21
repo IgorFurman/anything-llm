@@ -39,13 +39,10 @@ class GitHubRepoLoader {
     if (!repoUrl) return repoUrl;
     try {
       const url = new URL(repoUrl);
-      if (url.pathname.endsWith(".git"))
-        url.pathname = url.pathname.slice(0, -4);
+      if (url.pathname.endsWith(".git")) url.pathname = url.pathname.slice(0, -4);
       return url.toString();
     } catch (e) {
-      console.error(
-        `[GitHub Loader]: Error processing repository URL ${this.repo}: ${e.message}`
-      );
+      console.error(`[GitHub Loader]: Error processing repository URL ${this.repo}: ${e.message}`);
       return repoUrl;
     }
   }
@@ -84,9 +81,7 @@ class GitHubRepoLoader {
       this.project = project;
       return true;
     } catch (e) {
-      console.log(
-        `[GitHub Loader]: Invalid GitHub URL provided! Error: ${e.message}`
-      );
+      console.log(`[GitHub Loader]: Invalid GitHub URL provided! Error: ${e.message}`);
       return false;
     }
   }
@@ -97,9 +92,7 @@ class GitHubRepoLoader {
     await this.getRepoBranches();
     if (!!this.branch && this.branches.includes(this.branch)) return;
 
-    console.log(
-      "[GitHub Loader]: Branch not set! Auto-assigning to a default branch."
-    );
+    console.log("[GitHub Loader]: Branch not set! Auto-assigning to a default branch.");
     this.branch = this.branches.includes("main") ? "main" : "master";
     console.log(`[GitHub Loader]: Branch auto-assigned to ${this.branch}.`);
     return;
@@ -154,9 +147,7 @@ class GitHubRepoLoader {
     } = require("@langchain/community/document_loaders/web/github");
 
     if (this.accessToken)
-      console.log(
-        `[GitHub Loader]: Access token set! Recursive loading enabled!`
-      );
+      console.log(`[GitHub Loader]: Access token set! Recursive loading enabled!`);
 
     const loader = new LCGithubLoader(this.repo, {
       branch: this.branch,
@@ -200,9 +191,7 @@ class GitHubRepoLoader {
         {
           method: "GET",
           headers: {
-            ...(this.accessToken
-              ? { Authorization: `Bearer ${this.accessToken}` }
-              : {}),
+            ...(this.accessToken ? { Authorization: `Bearer ${this.accessToken}` } : {}),
             "X-GitHub-Api-Version": "2022-11-28",
           },
         }
@@ -240,9 +229,7 @@ class GitHubRepoLoader {
           headers: {
             Accept: "application/vnd.github+json",
             "X-GitHub-Api-Version": "2022-11-28",
-            ...(!!this.accessToken
-              ? { Authorization: `Bearer ${this.accessToken}` }
-              : {}),
+            ...(!!this.accessToken ? { Authorization: `Bearer ${this.accessToken}` } : {}),
           },
         }
       )

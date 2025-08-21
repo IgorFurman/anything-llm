@@ -1,14 +1,14 @@
+import CTAButton from "@/components/lib/CTAButton";
 import Workspace from "@/models/workspace";
 import showToast from "@/utils/toast";
 import { castToType } from "@/utils/types";
 import { useRef, useState } from "react";
-import VectorDBIdentifier from "./VectorDBIdentifier";
-import MaxContextSnippets from "./MaxContextSnippets";
 import DocumentSimilarityThreshold from "./DocumentSimilarityThreshold";
+import MaxContextSnippets from "./MaxContextSnippets";
 import ResetDatabase from "./ResetDatabase";
 import VectorCount from "./VectorCount";
+import VectorDBIdentifier from "./VectorDBIdentifier";
 import VectorSearchMode from "./VectorSearchMode";
-import CTAButton from "@/components/lib/CTAButton";
 
 export default function VectorDatabase({ workspace }) {
   const [hasChanges, setHasChanges] = useState(false);
@@ -21,10 +21,7 @@ export default function VectorDatabase({ workspace }) {
     const data = {};
     const form = new FormData(formEl.current);
     for (var [key, value] of form.entries()) data[key] = castToType(key, value);
-    const { workspace: updatedWorkspace, message } = await Workspace.update(
-      workspace.slug,
-      data
-    );
+    const { workspace: updatedWorkspace, message } = await Workspace.update(workspace.slug, data);
     if (!!updatedWorkspace) {
       showToast("Workspace updated!", "success", { clear: true });
     } else {
@@ -37,16 +34,10 @@ export default function VectorDatabase({ workspace }) {
   if (!workspace) return null;
   return (
     <div className="w-full relative">
-      <form
-        ref={formEl}
-        onSubmit={handleUpdate}
-        className="w-1/2 flex flex-col gap-y-6"
-      >
+      <form ref={formEl} onSubmit={handleUpdate} className="w-1/2 flex flex-col gap-y-6">
         {hasChanges && (
           <div className="absolute top-0 right-0">
-            <CTAButton type="submit">
-              {saving ? "Updating..." : "Update Workspace"}
-            </CTAButton>
+            <CTAButton type="submit">{saving ? "Updating..." : "Update Workspace"}</CTAButton>
           </div>
         )}
         <div className="flex items-start gap-x-5">
@@ -54,14 +45,8 @@ export default function VectorDatabase({ workspace }) {
           <VectorCount reload={true} workspace={workspace} />
         </div>
         <VectorSearchMode workspace={workspace} setHasChanges={setHasChanges} />
-        <MaxContextSnippets
-          workspace={workspace}
-          setHasChanges={setHasChanges}
-        />
-        <DocumentSimilarityThreshold
-          workspace={workspace}
-          setHasChanges={setHasChanges}
-        />
+        <MaxContextSnippets workspace={workspace} setHasChanges={setHasChanges} />
+        <DocumentSimilarityThreshold workspace={workspace} setHasChanges={setHasChanges} />
         <ResetDatabase workspace={workspace} />
       </form>
     </div>

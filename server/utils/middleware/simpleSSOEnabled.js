@@ -26,9 +26,7 @@ async function simpleSSOEnabled(_, response, next) {
   if (!response.locals.multiUserMode) {
     return response
       .status(403)
-      .send(
-        "Multi-User mode is not enabled. It must be enabled to use Simple SSO."
-      );
+      .send("Multi-User mode is not enabled. It must be enabled to use Simple SSO.");
   }
 
   next();
@@ -43,9 +41,7 @@ async function simpleSSOEnabled(_, response, next) {
  * @returns {boolean}
  */
 function simpleSSOLoginDisabled() {
-  return (
-    "SIMPLE_SSO_ENABLED" in process.env && "SIMPLE_SSO_NO_LOGIN" in process.env
-  );
+  return "SIMPLE_SSO_ENABLED" in process.env && "SIMPLE_SSO_NO_LOGIN" in process.env;
 }
 
 /**

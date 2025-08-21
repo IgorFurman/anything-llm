@@ -1,6 +1,6 @@
 import React from "react";
-import OnboardingSteps, { OnboardingLayout } from "./Steps";
 import { useParams } from "react-router-dom";
+import OnboardingSteps, { OnboardingLayout } from "./Steps";
 
 export default function OnboardingFlow() {
   const { step } = useParams();
@@ -10,11 +10,7 @@ export default function OnboardingFlow() {
   return (
     <OnboardingLayout>
       {(setHeader, setBackBtn, setForwardBtn) => (
-        <StepPage
-          setHeader={setHeader}
-          setBackBtn={setBackBtn}
-          setForwardBtn={setForwardBtn}
-        />
+        <StepPage setHeader={setHeader} setBackBtn={setBackBtn} setForwardBtn={setForwardBtn} />
       )}
     </OnboardingLayout>
   );

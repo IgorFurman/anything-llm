@@ -75,9 +75,7 @@ class OllamaProvider extends InheritMultiple([Provider, UnTooled]) {
       }
 
       if (!completion?.content) {
-        this.providerLog(
-          "Will assume chat completion without tool call inputs."
-        );
+        this.providerLog("Will assume chat completion without tool call inputs.");
         const response = await this.client.chat({
           model: this.model,
           messages: this.cleanMsgs(messages),

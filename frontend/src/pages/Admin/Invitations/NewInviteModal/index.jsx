@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { X, Copy, Check } from "@phosphor-icons/react";
 import Admin from "@/models/admin";
 import Workspace from "@/models/workspace";
 import showToast from "@/utils/toast";
+import { Check, Copy, X } from "@phosphor-icons/react";
+import React, { useEffect, useState } from "react";
 
 export default function NewInviteModal({ closeModal, onSuccess }) {
   const [invite, setInvite] = useState(null);
@@ -28,9 +28,7 @@ export default function NewInviteModal({ closeModal, onSuccess }) {
 
   const copyInviteLink = () => {
     if (!invite) return false;
-    window.navigator.clipboard.writeText(
-      `${window.location.origin}/accept-invite/${invite.code}`
-    );
+    window.navigator.clipboard.writeText(`${window.location.origin}/accept-invite/${invite.code}`);
     setCopied(true);
     showToast("Invite link copied to clipboard", "success", {
       clear: true,
@@ -101,11 +99,7 @@ export default function NewInviteModal({ closeModal, onSuccess }) {
                     className="absolute right-2 top-1/2 -translate-y-1/2 p-1 rounded-md hover:bg-theme-modal-border transition-all duration-300"
                   >
                     {copied ? (
-                      <Check
-                        size={20}
-                        className="text-green-400"
-                        weight="bold"
-                      />
+                      <Check size={20} className="text-green-400" weight="bold" />
                     ) : (
                       <Copy size={20} className="text-white" weight="bold" />
                     )}
@@ -113,10 +107,9 @@ export default function NewInviteModal({ closeModal, onSuccess }) {
                 </div>
               )}
               <p className="text-white text-opacity-60 text-xs md:text-sm">
-                After creation you will be able to copy the invite and send it
-                to a new user where they can create an account as the{" "}
-                <b>default</b> role and automatically be added to workspaces
-                selected.
+                After creation you will be able to copy the invite and send it to a new user where
+                they can create an account as the <b>default</b> role and automatically be added to
+                workspaces selected.
               </p>
             </div>
 
@@ -124,17 +117,13 @@ export default function NewInviteModal({ closeModal, onSuccess }) {
               <div className="mt-6">
                 <div className="w-full">
                   <div className="flex flex-col gap-y-1 mb-2">
-                    <label
-                      htmlFor="workspaces"
-                      className="block text-sm font-medium text-white"
-                    >
+                    <label htmlFor="workspaces" className="block text-sm font-medium text-white">
                       Auto-add invitee to workspaces
                     </label>
                     <p className="text-white text-opacity-60 text-xs">
-                      You can optionally automatically assign the user to the
-                      workspaces below by selecting them. By default, the user
-                      will not have any workspaces visible. You can assign
-                      workspaces later post-invite acceptance.
+                      You can optionally automatically assign the user to the workspaces below by
+                      selecting them. By default, the user will not have any workspaces visible. You
+                      can assign workspaces later post-invite acceptance.
                     </p>
                   </div>
 
